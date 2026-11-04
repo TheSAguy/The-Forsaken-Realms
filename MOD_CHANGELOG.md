@@ -14264,6 +14264,65 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 944: the Capitol's buildings in the world icon's colors - sandstone, gold trim, teal roofs (2026-11-03)
+
+The Art thread's recolor of the golden Capitol (Orazca). The user showed the Capitol's world-map icon: "So this is how
+the Capitol looks from outside. I'd like to change the color scheme of the city buildings to be closer to this." After
+three samples ("Yes, try three") and the whole set ("Yes, the whole set"), the user approved: "Yes, install it". Art
+only: no code, no atlas text, every region keeps its size and place.
+
+- **The method:** a palette remap of the installed pixels, not a redraw. Every changed pixel keeps its exact luma, so
+  each building's light and dark steps are unchanged (luma spread, range and edge contrast match before and after).
+  - Gold walls take the icon's sandstone ramp. Thin bright-gold lines, edges and finials stay gold as trim.
+  - Crimson roofs take the icon's dark teal slate, and crimson doors its dark brown.
+  - Banners, awnings, steel, glass, fires, windows and lamps are untouched.
+- **Per-building masks:**
+  - **Armory Level 1 and Level 2:** fully sandstone tower bodies with gold rings.
+  - **Temple:** its sun crown and top tier stay gold.
+  - **Arenas:** their fires and lamps stay orange.
+  - **Spellsmith:** one lit block stays gold.
+  - **Booster Shop, Card Shop, Inn, Job Board hall:** the roof goes teal, and their other reds stay.
+- **13 regions on five plane pages:**
+  - `capitol_gold.png`: ArmoryLevel1, ArmoryLevel2, PlainShop, SpecialShop.
+  - `economy_buildings.png`: Bank and Exchange only. The mines, Lumber Mill, the old PlainShop/SpecialShop and Armory
+    regions are byte-identical.
+  - `new_buildings.png`: Spellsmith, Archaeologist, Temple, Arena, ArenaLevel1. Outlook, Trader and the old Armory
+    regions are byte-identical.
+  - `capitol_gold_lab.png` (Research Lab) and `capitol_gold_civic.png` (Inn, Job Board hall).
+- **Capitol only, by the code:**
+  - The four `capitol_gold` regions draw only when `isCurrentTownCapitol()` (rounds 867/874/940).
+  - The Bank, Temple and Archaeologist are Capitol-only builds, and the Exchange is a Capitol-only Trader upgrade
+    (`EconomyBuildings`).
+  - The Arena and Spellsmith rebuilt icons draw only in wasteland-template towns (`OnCollide.draw`). Of the colorless
+    towns' maps, only `player_capital.tmx` has those objects: the story capitals and `plains_town.tmx` aren't
+    colorless, and `player_town.tmx` has none.
+  - The two tile pages are used only by `player_capital.tmx`.
+- **Left as they are:**
+  - The Gold Mine, Shard Mine, Stone Mine and Lumber Mill, which every town shares.
+  - The Trader, which is already sandstone.
+  - The world icon and the rubble.
+- **Where the work is:**
+  - Staged by the Art project's `notes/capitol_gold/tools/stage_install6.py`, made by `sandstone_remap.py`.
+  - Art Library: `Projects/The Forsaken Realms/Game Art/Capitol Buildings Sandstone (round 944)` (`7dce661`, pushed).
+
+Checked:
+- **Pages:** each page is byte-identical to before outside the replaced regions. Each replaced region equals its
+  approved sprite.
+- **Agent game:** a temporary copy of the agent game (`C:\TFR\agent-sand`, 1.26 + rounds 939-942, its own profile and
+  cache) with the five pages swapped in. It ran a fresh cheats world with `capitol raise`.
+  - **Built:** the Booster Shop, the Armory (Level 1), the Bank, the Temple and the Archaeologist.
+  - **Shown in the new colors:** those five, plus the Research Lab, the Inn and the Job Board hall.
+  - **Ordinary town:** Benalia's shops show unchanged.
+  - **Duels:** two wandering-enemy duels on the way, both at 50x (`[TFR-Agent] duel speed set to 50x`).
+  - Shots: `C:\TFR\notes\r944-shots`; log: `C:\TFR\notes\r944-agent-forge.log`. The copy was deleted afterward.
+
+Not checked:
+- **In game:** the Card Shop (a fresh world's card-shop menus held only locked choices), the Exchange and the Armory's
+  Level 2 (the town reached its 6-building cap), and the Arena and Spellsmith (their rubble did not open a rebuild
+  dialog on the tiles tried). Their pixels are byte-checked against the approved previews.
+- **Ordinary waste towns:** none had a built mine or Trader to look at. Those regions are byte-identical on the pages.
+- Maven, packaging and Android: the tree held round 943's unfinished code, so none was run.
+
 ## Round 943: the Bounty - armed enemies pay more (2026-11-03)
 
 A Reddit player asked for "extra rewards if you take those enemies with these advantages": today it pays to throw a
