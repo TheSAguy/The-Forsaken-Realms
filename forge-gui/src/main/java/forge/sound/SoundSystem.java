@@ -460,6 +460,44 @@ public class SoundSystem {
                 .orElse(null);
     }
 
+    // TFR round 957: a plane's music/<playlist>/ folder normally REPLACES adventure/common's (findMusicDirectory takes
+    // the first non-empty folder). With the plane's ConfigData.planeMusicAddsToCommon on, a playlist plays the plane's
+    // tracks AND common's, so a plane adds music without copying the stock tracks. Player overrides (custom/ and cache/)
+    // and planes without the flag keep stock behavior. Set by forge.adventure.util.Config on load.
+    private static boolean planeMusicAddsToCommon = false;
+
+    public static void setPlaneMusicAddsToCommon(boolean value) {
+        if (value != planeMusicAddsToCommon) {
+            planeMusicAddsToCommon = value;
+            MusicPlaylist.invalidateMusicPlaylist();
+        }
+    }
+
+    /** The playable files of a playlist: findMusicDirectory's folder, plus common's when planeMusicAddsToCommon applies. */
+    public static File[] findMusicFiles(MusicPlaylist playlist) {
+        File dir = findMusicDirectory(playlist);
+        if (dir == null)
+            return new File[0];
+        File[] files = dir.listFiles(PLAYABLE_AUDIO);
+        if (files == null)
+            files = new File[0];
+        String adventureDirectory = GuiBase.getAdventureDirectory();
+        if (!planeMusicAddsToCommon || adventureDirectory == null)
+            return files;
+        File plane = new File(adventureDirectory + ForgeConstants.MUSIC_DIR, playlist.getSubDir());
+        if (!dir.getAbsoluteFile().equals(plane.getAbsoluteFile()))
+            return files; // a player override, or the plane has no tracks here: stock behavior
+        File[] common = new File(ForgeConstants.ADVENTURE_COMMON_DIR + ForgeConstants.MUSIC_DIR, playlist.getSubDir())
+                .listFiles(PLAYABLE_AUDIO);
+        if (common == null || common.length == 0)
+            return files;
+        File[] all = Arrays.copyOf(files, files.length + common.length);
+        System.arraycopy(common, 0, all, files.length, common.length);
+        System.out.println("[TFR-Music] " + playlist.getSubDir() + " " + all.length + " tracks (" + files.length
+                + " plane + " + common.length + " common)");
+        return all;
+    }
+
     private static List<String> collectProfiles(String subPath) {
         Set<String> foundSets = new HashSet<>();
         for(String path : SOUND_RESOURCE_PATHS) {

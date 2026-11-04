@@ -214,6 +214,10 @@ public class ConfigData {
     // choice is ignored) and every switch to Classic is refused with a [TFR-Classic] line (Forge.isClassicLocked).
     // The start menu's Classic button is gone through the plane's own ui/start_menu*.json. False = stock.
     public boolean adventureOnly = false;
+    // Round 957: a playlist with tracks in the plane's music/<playlist>/ folder plays them AND common's
+    // (SoundSystem.findMusicFiles), so the plane adds music without copying the stock tracks. False = stock: the plane's
+    // folder replaces common's.
+    public boolean planeMusicAddsToCommon = false;
     // Round 954 (a Reddit player: nearby Inns nearly all offered the same draft or sealed set): an AI color town's Inn
     // deals Draft/Sealed from that town's color shard + the neutral shard + the player's unlocked sets, the shard its
     // shops use (EditionProgression.innEventEditionCodes). Player towns and the Capitol are unchanged; neutral towns see innNeutralNearestColor.

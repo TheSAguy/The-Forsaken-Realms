@@ -521,6 +521,18 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
 - **Doppelganger portrait** (round 880, both genders) - the art of the card *Alternate Reality Doppelganger*, cropped
   from a screenshot supplied by the user, with our thanks to its creator.
 
+## Music
+
+- The Adventure soundtrack bundled with Forge: **Derek Fiechter**, **Brandon Fiechter**, **Vindsvept**, **Logan Epic
+  Canto**, **Kevin MacLeod** and **Juhani Junkala** (boss battles), as listed in Forge's `docs/Credit-and-Thanks.md`.
+- Eight more pieces (round 957, both versions), by **Kevin MacLeod** ([incompetech.com](https://incompetech.com)),
+  licensed under Creative Commons: By Attribution 3.0 (https://creativecommons.org/licenses/by/3.0/), loudness-matched
+  and re-encoded for this game: *Dangerous*, *Failing Defense*, *Hitman*, *Prelude and Action*, *Heroic Age*, *Evil
+  March*, *The Pyre* and *Lord of the Land*.
+- Thirteen more pieces in the Windows version (round 957, the `pc_` files under `music/`), from fantasy music
+  compilations in the user's collection, cut into single pieces and loudness-matched; our thanks to their composers.
+  <!-- MUSIC-SOURCE: when the user names the source, add its composer(s) and website here. -->
+
 ## Fonts
 
 - The text of the Adventure screens (the Font setting's Clean, the default): **Samsung Sharp Sans** Medium,

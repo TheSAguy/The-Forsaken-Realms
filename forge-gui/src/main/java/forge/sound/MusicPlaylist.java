@@ -21,14 +21,17 @@ public enum MusicPlaylist {
     private final String subDir;
     private int mostRecentTrackIdx = -1;
     private File[] filenames;
-    private static boolean isInvalidated = false;
+    // TFR round 957: a generation count instead of stock's one shared boolean, which the first playlist to reload
+    // cleared, so every other playlist kept its stale file list.
+    private static int generation = 0;
+    private int loadedGeneration = -1;
 
     MusicPlaylist(String subDir0) {
         subDir = subDir0;
     }
 
     public static void invalidateMusicPlaylist() {
-        isInvalidated = true;
+        generation++;
     }
 
     public String getSubDir() {
@@ -36,22 +39,16 @@ public enum MusicPlaylist {
     }
 
     public String getRandomFilename() {
-        if (filenames == null || isInvalidated) {
+        if (filenames == null || loadedGeneration != generation) {
             try {
-                File musicDir = SoundSystem.findMusicDirectory(this);
-                if(musicDir != null)
-                    filenames = musicDir.listFiles(SoundSystem.PLAYABLE_AUDIO);
-                else
-                    filenames = new File[0];
-
-                if (filenames == null)
-                    filenames = new File[0];
+                filenames = SoundSystem.findMusicFiles(this);
             }
             catch (Exception e) {
                 e.printStackTrace();
                 filenames = new File[0];
             }
-            isInvalidated = false;
+            loadedGeneration = generation;
+            mostRecentTrackIdx = -1;
         }
 
         if (filenames.length == 0) { return null; }
@@ -65,6 +62,7 @@ public enum MusicPlaylist {
             mostRecentTrackIdx = index;
         }
 
+        System.out.println("[TFR-Music] " + subDir + " plays " + filenames[mostRecentTrackIdx].getName());
         return filenames[mostRecentTrackIdx].getPath();
     }
 }

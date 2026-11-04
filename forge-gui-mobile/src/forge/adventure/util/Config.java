@@ -167,6 +167,7 @@ public class Config {
             configData = new ConfigData();
         }
         applyDigitalOnlyEditions();
+        forge.sound.SoundSystem.setPlaneMusicAddsToCommon(configData.planeMusicAddsToCommon); // round 957
 
         // Tuning file (2026-08-14 user request): same plane-local/fallback-to-common load pattern
         // as config.json above, but for numeric game-balance tunables rather than boolean feature

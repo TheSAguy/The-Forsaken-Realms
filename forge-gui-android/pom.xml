@@ -529,6 +529,8 @@
                                             <fileset dir="${basedir}/../forge-gui/">
                                                 <include name="res/adventure/common/**" />
                                                 <include name="res/adventure/The Forsaken Realms/**" />
+                                                <!-- TFR round 957: the user's extra music is PC-only (size) -->
+                                                <exclude name="res/adventure/The Forsaken Realms/music/**/pc_*" />
                                             </fileset>
                                         </copy>
                                         <copy todir="${project.build.directory}/res/res">

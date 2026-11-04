@@ -35,6 +35,23 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 957 - more adventure music (a plane's music adds to common's)
+- `forge-gui/src/main/java/forge/sound/SoundSystem.java` (STOCK): new static `planeMusicAddsToCommon` with
+  `setPlaneMusicAddsToCommon(boolean)` (invalidates the playlists on a change), and `findMusicFiles(MusicPlaylist)`:
+  `findMusicDirectory`'s folder, plus `adventure/common/music/<playlist>/` when the flag is on and that folder is the
+  plane's own (player overrides in `custom/` and `cache/` keep stock behavior); a `[TFR-Music] <playlist> N tracks`
+  line. `findMusicDirectory` itself is unchanged.
+- `forge-gui/src/main/java/forge/sound/MusicPlaylist.java` (STOCK): `getRandomFilename` loads through
+  `SoundSystem.findMusicFiles`; stock's shared `isInvalidated` boolean is a static `generation` counter with a
+  per-playlist `loadedGeneration` (stock cleared the one flag on the first playlist's reload, leaving the others stale);
+  a `[TFR-Music] <playlist> plays <file>` line per pick.
+- `forge-gui-mobile/src/forge/adventure/util/Config.java` (STOCK): after `applyDigitalOnlyEditions()`, one line passes
+  `configData.planeMusicAddsToCommon` to `SoundSystem.setPlaneMusicAddsToCommon` (the base config, before any save's
+  custom-difficulty copy).
+- `forge-gui-mobile/src/forge/adventure/data/ConfigData.java` (STOCK): `planeMusicAddsToCommon` (false).
+- `forge-gui-android/pom.xml` (STOCK): one `<exclude name="res/adventure/The Forsaken Realms/music/**/pc_*" />` on the
+  `assets.zip` copy's adventure fileset (the PC-only tracks).
+
 ### Round 955 - the clean font in the skin's widget styles
 - `forge-gui-mobile/src/forge/adventure/util/Controls.java` (STOCK): `getSkin()` calls `TfrFonts.restyle(skin)` before
   returning (one line; restyle runs once per skin object).

@@ -304,6 +304,8 @@
     "spellsmithPaysFirst": true,
     // Round 945: Adventure only - always starts in the adventure, Classic is unreachable.
     "adventureOnly": true,
+    // Round 957: the plane's music/<playlist>/ tracks play alongside common's instead of replacing them.
+    "planeMusicAddsToCommon": true,
     // Round 954: AI color towns' Inns use their color shard too, blocks are picked evenly, and an Inn skips sets
     // already showing at the 6 nearest towns' Inns.
     "innColorShardEvents": true,

@@ -14264,6 +14264,53 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 957: 21 more adventure music tracks - 8 on both versions, 13 Windows-only (2026-11-04)
+
+The user: "I'd like to look into expanding the music selection for TFR", from round 946's Classic tracks and their own
+`D:\Forge\res\Music`, "Maybe only for PC, since it will increase the file size?", with a ceiling of "I probably don't
+want to increase the total size by more than 150MB." The study: `C:\CLAUDE\PROJECTS\TFR1\notes\music-expansion.md`.
+The user picked the pieces on a listening page (`C:\CLAUDE\PROJECTS\TFR1\notes\music-picker\index.html`; the cut list
+for every candidate is `pieces.json` there).
+
+- **The picks (21):**
+  - 8 Kevin MacLeod tracks from stock Classic's `res/music` (round 946 stopped shipping them): match Dangerous, Failing
+    Defense, Hitman, Prelude and Action; menus Heroic Age; castle Lord of the Land; black Evil March, The Pyre.
+  - 13 pieces cut at silences from the user's compilations (`Magic_Duel_Playlist_10` and `_20`,
+    `Menu_Music_Playlist_03`): match +4, menus +2, and boss, castle, blue, green, red, white, colorless +1 each.
+- **Files:** `forge-gui/res/adventure/The Forsaken Realms/music/<playlist>/`. Classic tracks keep their titles
+  (`Hitman.ogg`); the user's pieces are `pc_<Mix><NN>_<piece>.ogg` (`pc_Match10_01.ogg`). Each was normalized with ffmpeg's
+  two-pass `loudnorm` (I=-14 LUFS, true peak -1.5 dB, LRA 11), which is where TFR's own 32 tracks sit (-8.8 to -17.5, typically
+  -13 to -15), and encoded as OGG Vorbis q2 (~90 kbps), 44.1 kHz. Measured afterward: -13.2 to -14.6 LUFS. The user's
+  pieces came in at -21.8 to -38.4 LUFS (the quietest, `pc_Match10_07`, was raised by ~24 dB). Cuts got a 0.5 s fade-in
+  and a 1.5 s fade-out.
+- **Sizes:** 50.8 MB for all 21 files (the user's cap was +150 MB). PC gains 50.8 MB. Android's `assets.zip` gains 11.9 MB
+  (the 8 Classic tracks only).
+- **Placement:** `adventure/common/music` is stock Forge (no change since upstream; no stock plane has a music folder).
+  So the tracks go in the plane, per the ground rules. A plane's `music/<playlist>/` used to REPLACE common's
+  (`SoundSystem.findMusicDirectory` takes the first non-empty folder). Copying common's tracks into the 10 touched plane
+  folders would have cost ~40 MB on both versions. Instead:
+  - **The flag:** `ConfigData.planeMusicAddsToCommon` (false = stock), true in `The Forsaken Realms/config.json`, set
+    from the base config in `Config` through `SoundSystem.setPlaneMusicAddsToCommon`.
+  - **What it does:** `SoundSystem.findMusicFiles` returns the plane folder's tracks plus common's. Player overrides
+    (`custom/music/<plane>/`) still replace, as in stock.
+  - **What the player hears:** match 5 -> 13 tracks on PC (9 on Android); menus 2 -> 5 (3); castle 1 -> 3 (2); black 2 -> 4
+    (4); boss and the five biome playlists 2 -> 3 on PC. Cave and town are unchanged.
+  - **A stock fix on the way:** `MusicPlaylist`'s one shared `isInvalidated` flag was cleared by the first playlist to
+    reload, so the others kept a stale list. It is now a generation count per playlist.
+  - **Logging:** `[TFR-Music] <playlist> N tracks (P plane + C common)` when a list loads, and
+    `[TFR-Music] <playlist> plays <file>` per pick.
+- **Windows-only:** `forge-gui-android/pom.xml` excludes `res/adventure/The Forsaken Realms/music/**/pc_*` from
+  `assets.zip`. Real Ant 1.10.14 over the pom's adventure fileset listed the 8 Classic `.ogg` files under the plane's
+  `music/` and no `pc_` file; common's 32 tracks were still included. Android plays its folders from disk the same way, so a
+  plane folder holding only `pc_` files is simply absent there and the playlist falls back to common's.
+- **Credits:** `standalone-packaging/CREDITS.md` has a new Music section: the bundled Adventure soundtrack's composers,
+  Kevin MacLeod's 8 titles with the CC BY 3.0 notice and incompetech.com, and a general thanks for the user's pieces. Their
+  source is not known yet; a `MUSIC-SOURCE` comment marks where to name it.
+- **Build:** `mvn -pl forge-gui-mobile -am compile` and `-pl forge-gui-mobile-dev -am package` both passed.
+- **Not run:** Android playback.
+- **Stock files:** `SoundSystem.java`, `MusicPlaylist.java`, `Config.java`, `ConfigData.java`, `forge-gui-android/pom.xml`
+  (`CORE_ENGINE_CHANGES.md`).
+
 ## Round 956: the full ban list in the Game Guide & FAQ (docs only) (2026-11-04)
 
 The user: "Yes, add it" - a Discord player asked where to see the restricted cards, and the full list lived only in the
