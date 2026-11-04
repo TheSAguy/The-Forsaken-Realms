@@ -35,6 +35,16 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 941 - a timer race no longer crashes a duel at its first priority
+
+- `forge-gui/src/main/java/forge/gamemodes/match/AbstractGuiGame.java` (STOCK): `awaitNextInput` keeps its new `TimerTask`
+  in a local `task`, stores it in `awaitNextInputTask`, and schedules `task` (was: the field) inside a catch of
+  `IllegalStateException` that logs `[TFR-InputTimer]`. Marked `TFR round 941`. Upstream `master` has the old code (an
+  upstream PR candidate); if upstream fixes the race its own way, take theirs and drop this.
+- `forge-gui/src/test/java/forge/gamemodes/match/AbstractGuiGameShould.java`: new test, three threads race
+  `awaitNextInput` and `cancelAwaitNextInput`. It reads the private field `awaitNextInputTimer` by name (reflection): if
+  upstream renames it, the test fails at setup.
+
 ### Round 939 - a running game can change its level
 
 - `forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java` (STOCK): a `levelHistory` field ("Hard@0,Normal@34"),

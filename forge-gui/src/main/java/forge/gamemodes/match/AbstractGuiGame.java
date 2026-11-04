@@ -528,7 +528,7 @@ public abstract class AbstractGuiGame implements IGuiGame, IMayViewCards {
     public void awaitNextInput() {
         checkAwaitNextInputTimer();
         //delay updating prompt to await next input briefly so buttons don't flicker disabled then enabled
-        awaitNextInputTask = new TimerTask() {
+        final TimerTask task = new TimerTask() {
             @Override
             public void run() {
                 FThreads.invokeInEdtLater(() -> {
@@ -545,7 +545,15 @@ public abstract class AbstractGuiGame implements IGuiGame, IMayViewCards {
                 });
             }
         };
-        awaitNextInputTimer.schedule(awaitNextInputTask, 250);
+        awaitNextInputTask = task;
+        // TFR round 941: the game thread and the GUI thread both get here, and the GUI thread cancels the stored task
+        // when the next input shows; scheduling the field threw "Task already scheduled or cancelled" and killed the
+        // game thread. Schedule this call's own task, and a task cancelled before it was scheduled just skips the prompt.
+        try {
+            awaitNextInputTimer.schedule(task, 250);
+        } catch (final IllegalStateException ex) {
+            System.out.println("[TFR-InputTimer] skipped a waiting-prompt update: " + ex.getMessage());
+        }
     }
 
     private void checkAwaitNextInputTimer() {

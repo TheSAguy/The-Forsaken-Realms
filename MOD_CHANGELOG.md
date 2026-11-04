@@ -14264,6 +14264,66 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 941: a timer race no longer crashes a duel at its first priority (stock Forge) (2026-11-03)
+
+The user approved the fix from today's log review ("Yes, both"; `C:\CLAUDE\PROJECTS\TFR1\notes\logs-1103b.md` P2-1). One
+duel of Tallennar's died at its first priority with `IllegalStateException: Task already scheduled or cancelled` in
+`AbstractGuiGame.awaitNextInput`, under `PlayerControllerHuman.chooseSpellAbilityToPlay` and `PhaseHandler.startFirstTurn`.
+The exception killed the game thread and showed the crash dialog.
+
+**The cause.** `awaitNextInput` (the 250 ms delay before the "Waiting for opponent..." prompt) stored a new `TimerTask`
+in the field `awaitNextInputTask`, then scheduled the FIELD. Three callers reach it on two threads: the game thread
+(`PlayerControllerHuman.chooseSpellAbilityToPlay`'s auto-pass, `autoPassCancel`, `GameAction`'s "who goes first"), and
+the GUI thread when an input finishes (`InputBase.setFinished`; the mulligan inputs allow it). The GUI thread also runs
+`cancelAwaitNextInput` when the next input shows, which cancels the stored task and clears the field. So between the
+store and the schedule, the field could hold another call's task (scheduled twice: "already scheduled"), a cancelled
+task ("cancelled"), or null (a `NullPointerException`).
+
+**The fix**, in `awaitNextInput` only:
+- the new task stays in a local `task`, which is stored in the field and then scheduled itself;
+- `schedule` is wrapped in a catch of `IllegalStateException`, which skips that call's prompt update and logs
+  `[TFR-InputTimer] skipped a waiting-prompt update: <message>`.
+
+**Why both parts, and why not `synchronized`.** The local variable alone still threw in the test (below): the GUI thread
+can cancel the task between the store and the schedule. That case means the next input is already showing, so
+skipping the "waiting" prompt is the right outcome, and the catch gives it. A `synchronized (awaitNextInputTimer)` block
+around the store and the schedule would close the same two windows without a catch, but it changes the lock's reach
+in a stock method and still throws when `afterGameEnd` has cancelled the timer. The local variable and the catch are 3
+changed lines plus the catch, and they leave `cancelAwaitNextInput`, the task's `run()` and `checkAwaitNextInputTimer`
+as upstream has them.
+
+**The handoff checked** (the code graph lists 4 callers of `awaitNextInput` in the GUI code: `chooseSpellAbilityToPlay`,
+`PlayerControllerHuman.awaitNextInput`, `autoPassCancel`, `InputBase.setFinished`; Grep adds `GameAction`'s first-player
+call through `PlayerController.awaitNextInput`, and `ProtocolGuiGame`, which overrides it for net play):
+- two calls at once now schedule two tasks; the first to run updates the prompt and clears the field, the second
+  finds it cleared and does nothing. One update, as before.
+- a cancel that lands after the schedule works as before (it cancels the stored task).
+- a stale task that runs after a newer call stored its own does what it did before: the `run()` checks only that the
+  field isn't null.
+- no path leaves the prompt stuck: the only skipped update is one whose task was cancelled because the next input showed.
+
+Not changed: `afterGameEnd` can still null the timer while another thread is in `awaitNextInput` (an NPE in stock code,
+never seen in a log). Upstream `master` has the same method (`git diff HEAD upstream/master` on the file was empty before
+this round): an upstream issue or PR for later. Nothing was posted.
+
+**Test:** `forge-gui/src/test/java/forge/gamemodes/match/AbstractGuiGameShould.java` (new, forge-gui's TestNG +
+Mockito, `*Should` like its neighbors). A Mockito subclass of `AbstractGuiGame` with real methods, a mocked `IGuiBase`
+(the prompt update is posted to it and counted), and a test timer. Two threads call `awaitNextInput` and a third
+`cancelAwaitNextInput`, in tight loops for 1 s. `stillUpdateTheWaitingPromptAfterARace` then calls it once more and
+expects the prompt update within 2 s.
+- On the stock code: both tests FAIL, `IllegalStateException: Task already scheduled or cancelled` at
+  `AbstractGuiGame.awaitNextInput` after 93 ms (`C:\CLAUDE\PROJECTS\TFR1\notes\r941-942\test-on-stock-code.txt`).
+- With the local variable only: both FAIL with the same exception (the cancel window).
+- With the fix: 2 run, 0 failures.
+
+Checked:
+- Maven: `mvn -pl forge-gui-mobile-dev -am package -DskipTests`, exit 0 (it compiles the new test too).
+- The test results above: `C:\CLAUDE\PROJECTS\TFR1\notes\r941-942\test-results.txt`.
+
+Not checked: a real race in a duel. It was seen once in 63 duel starts, so a few agent duels can't prove it gone; the
+test and the code reading carry it. The agent duels (mulligans, then the first priority) are in the round's follow-up.
+Android: the same `AbstractGuiGame`, not run there.
+
 ## Round 940: the golden Capitol's Card Shop and Booster Shop (2026-11-03)
 
 The Art thread's next pair for the golden Capitol (Orazca). The user picked one cell from each of two ChatGPT sheets
