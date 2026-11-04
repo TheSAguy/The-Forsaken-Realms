@@ -14264,6 +14264,37 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 952: the Welcome page no longer sends players to the settings files (2026-11-04)
+
+The user: "Let's update the home page. We can remove the last paragraph, settings has moved to in-game settings. Not sure
+if anything else needs updated." The page is `welcomePopupText` in the plane's `config.json` (data only, no Java).
+
+- **Removed:** "Most of the game's numbers can be tuned in its settings files. The main one is settings.json, in The
+  Forsaken Realms\res\adventure\The Forsaken Realms\config tables - make a copy before you edit it." Custom Difficulty
+  (rounds 822-841, 939) moved those numbers in-game.
+- **Added in its place:** "Want it easier or harder? Settings > Difficulty > Edit... changes your game's difficulty
+  mid-game." (the Settings row and button from round 826, the mid-game level change from round 939).
+- **The bug line** gains "Settings > Export Logs saves your logs as one zip to attach." (round 696's button; the FAQ's
+  bug-report answer already says the same).
+- **The guide line:** "explains everything this game adds to Forge's Adventure mode - how reputation, territory,
+  dungeons and your Capitol work" became "explains how the Realms work - reputation, territory, dungeons, your Capitol
+  and more". TFR is Adventure-only since round 945, and the GUIDE opens as a standalone game built on the Forge engine.
+  "It is also in your game folder as GAME_GUIDE.html" became "On a computer it is also ...": Android has no game folder
+  to open.
+- **Checked and kept:** the three buttons (Discord invite, Ko-fi through `SupportPrompt`, and the guide: the plane's
+  `GUIDE.html` on desktop, which the packager also copies to the game root as `GAME_GUIDE.html`, else
+  `welcomeGuideLink`); "Recommended settings (already on): Fog of War, Play for Ante and Match Ante Rarity" (defaults
+  `SettingData.fogOfWarEnabled = true`, `UI_ANTE` and `UI_ANTE_MATCH_RARITY` "true", all three rows on the Settings
+  screen); the Ko-fi line and the sign-off.
+- **Not changed (listed for the main thread):** GUIDE's Loot section still ends "Every number here is a setting:
+  `cardBudget...` and `resourcePurse...` in the plane's `config tables/settings.json`" (and Ascendance names
+  `config tables/ascendance.json`). Not wrong, the numbers are there, but "Cards per win" is now a Custom Difficulty
+  knob. The Discord FAQ has no settings-file advice.
+
+Checked (agent game, a new game each, shots in `C:\CLAUDE\PROJECTS\TFR1\notes\r952\`): 1280x720 shows the page through
+the difficulty line and scrolls as before; portrait 540x960 shows the whole page without scrolling. The guide button
+logged `[TFR-Welcome] guide button -> ...\GUIDE.html`.
+
 ## Round 951: a window that is 0x0 at launch no longer makes the clean font soft (2026-11-04)
 
 The user approved the fix from today's log review ("Yes, build it"; `C:\CLAUDE\PROJECTS\TFR1\notes\logs-1104.md` P3-3).
