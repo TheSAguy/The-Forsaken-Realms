@@ -60,7 +60,7 @@ public final class TfrPlates {
     /** The controller's right stick held in (HudScene: buttons arrive as key codes). */
     private static boolean stickHeld;
     private static boolean wasShown, countNext, loggedShown, frameShown, frameColorView;
-    private static int exact, family, unknown, lifted, raiders, questTargets;
+    private static int exact, family, unknown, lifted, raiders, questTargets, bounties;
     /** A mana pip's side and the gap between parts, in world px (the text is [%55]: about 5 px). */
     private static final float PIP = 4f, GAP = 1.2f, ICON = 5f;
     /** Where a [%55] label's letters sit in its height (measured in the agent game: the lower ~40% is line gap): the
@@ -216,11 +216,12 @@ public final class TfrPlates {
             System.out.println("[TFR-Plates] shown: " + queue.size() + " plate(s) - " + exact + " battled, " + family
                     + " family only, " + unknown + " unknown, " + lifted + " lifted" + (raiders > 0 ? ", " + raiders
                     + " raider(s)" : "") + (questTargets > 0 ? ", " + questTargets + " quest target(s)" : "")
+                    + (bounties > 0 ? ", " + bounties + " with a bounty" : "")
                     + (frameColorView ? " (Manasight)" : ""));
             countNext = false;
             loggedShown = true;
         }
-        exact = family = unknown = lifted = raiders = questTargets = 0;
+        exact = family = unknown = lifted = raiders = questTargets = bounties = 0;
         queue.clear();
     }
 
@@ -581,7 +582,7 @@ public final class TfrPlates {
     }
 
     public static final class Plate {
-        private TextraLabel rank, life, raider;
+        private TextraLabel rank, life, raider, bounty;
         private String key = "", colors = "";
         /** Round 866: the town this raider pillages (TownPillage.raiderTown), or null - its plate's RAIDER line. */
         private String raiderTown;
@@ -591,6 +592,9 @@ public final class TfrPlates {
         private boolean unknownColors, legend, coin, showLife, line;
         private int lifeNow = -1;
         private long lifeAt;
+        /** Round 943: the Bounty a win would pay now (StreakBounty.percentFor), 0 for none; read twice a second. */
+        private int bountyPct;
+        private long bountyAt;
 
         void update(EnemySprite sprite) {
             EnemyData d = sprite.getData();
@@ -626,8 +630,16 @@ public final class TfrPlates {
             String quest = raiderTown == null ? questName : null;
             if (quest != null)
                 questTargets++;
+            long nowB = System.currentTimeMillis();
+            if (bountyAt == 0 || nowB - bountyAt > 500) {
+                bountyPct = StreakBounty.percentFor(d);
+                bountyAt = nowB;
+            }
+            if (bountyPct > 0)
+                bounties++;
             int r = Math.max(0, Math.min(3, EnemyData.tierRank(d.tier)));
-            String k = r + "/" + d.boss + "/" + showLife + "/" + lifeNow + "/" + buffed + "/" + raiderTown + "/" + quest;
+            String k = r + "/" + d.boss + "/" + showLife + "/" + lifeNow + "/" + buffed + "/" + raiderTown + "/" + quest
+                    + "/" + bountyPct;
             if (k.equals(key))
                 return;
             key = k;
@@ -635,6 +647,12 @@ public final class TfrPlates {
                 rank = Controls.newTextraLabel("");
                 life = Controls.newTextraLabel("");
                 raider = Controls.newTextraLabel("");
+                bounty = Controls.newTextraLabel("");
+            }
+            if (bountyPct > 0) { // round 943: the Bounty, in the RAIDER/QUEST line's slot, above it when both show; the
+                // gold coin is drawn after it at the plate's icon size (a [+Gold] glyph keeps its full size at [%55])
+                bounty.setText("[%55][#e8b84a]BOUNTY +" + bountyPct + "%");
+                bounty.pack();
             }
             if (raiderTown != null) {
                 raider.setText("[%55][#e67e22]RAIDER[#a8a296] - [#e67e22]" + raiderTown.toUpperCase(Locale.ROOT));
@@ -665,9 +683,13 @@ public final class TfrPlates {
             // y is the labels' origin; the band of letters [lo, hi] above it is what the plate frames
             float lo = th * BAND_LO, hi = th * BAND_HI, mid = (lo + hi) / 2f;
             // Round 866: a raider's RAIDER line (round 894: a hunted enemy's QUEST line) sits right above, so the two are
-            // placed as one box
-            float extra = line ? hi - lo + 2f : 0f, raw = line ? raider.getWidth() : 0f;
-            float x = cx - w / 2f, bw = Math.max(w, raw);
+            // placed as one box. Round 943: the BOUNTY line above that (or in its place).
+            float step = hi - lo + 2f;
+            boolean showBounty = bountyPct > 0;
+            int lines = (line ? 1 : 0) + (showBounty ? 1 : 0);
+            float extra = lines * step, raw = line ? raider.getWidth() : 0f;
+            float bwid = showBounty ? bounty.getWidth() + GAP + ICON : 0f;
+            float x = cx - w / 2f, bw = Math.max(w, Math.max(raw, bwid));
             float y = placeBox(cx - bw / 2f, foot + 1f - lo, bw, lo, hi + extra);
             Color was = batch.getColor().cpy();
             drawBox(batch, parentAlpha, x, y, w, lo, hi);
@@ -713,10 +735,19 @@ public final class TfrPlates {
                     batch.draw(c, px + GAP, y + mid - (ICON - 1f) / 2f, ICON - 1f, ICON - 1f);
             }
             if (line) {
-                float rx = cx - raw / 2f, ry = y + extra;
+                float rx = cx - raw / 2f, ry = y + step;
                 drawBox(batch, parentAlpha, rx, ry, raw, lo, hi);
                 raider.setPosition(rx, ry);
                 raider.draw(batch, parentAlpha);
+            }
+            if (showBounty) {
+                float bx = cx - bwid / 2f, by = y + lines * step;
+                drawBox(batch, parentAlpha, bx, by, bwid, lo, hi);
+                bounty.setPosition(bx, by);
+                bounty.draw(batch, parentAlpha);
+                TextureRegion gold = items.findRegion("Gold");
+                if (gold != null)
+                    batch.draw(gold, bx + bounty.getWidth() + GAP, by + mid - (ICON - 1f) / 2f, ICON - 1f, ICON - 1f);
             }
             batch.setColor(was);  // the HUD shares the batch: no color left behind (GameHUD.draw, round 329)
         }

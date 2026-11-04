@@ -468,6 +468,9 @@ public class DuelScene extends ForgeScene {
         // Round 813: the hunted color's bounty - the same duels; the loot site raises the gold and shards (applyBounty).
         forge.adventure.util.WrathHunt.onDuelEnded(winner && !isArena && enemy != null && enemy.getData().fixedDeck == null
                 && eventData == null && guardDeck == null ? enemy : null);
+        // Round 943: the Bounty - the same duels; the loot site raises the gold and resources (StreakBounty.applyBounty).
+        forge.adventure.util.StreakBounty.onDuelEnded(winner && !isArena && enemy != null && enemy.getData().fixedDeck == null
+                && eventData == null && guardDeck == null ? enemy : null);
         // Round 726: a loss the next load may undo (ReloadJab) - any duel of the player's, Arena and Inn included; not
         // Deck Tester and not a guard's fight. Round 796: an Arena loss is not counted (the user: "Arena losses do not
         // count") - ReloadJab still passes it to DifficultyHints. Round 801: whether this loss cost Notoriety (the branch
@@ -1150,6 +1153,11 @@ public class DuelScene extends ForgeScene {
 
         currentEnemy = enemy.getData();
         boolean bossBattle = currentEnemy.boss;
+        // Round 943: the Bounty's duels - the Temple's (WrathHunt.onDuelEnded's): not the Arena, an Inn match, a guard's
+        // fight, a fixed-deck enemy (Deck Tester's too) or an AI-only test duel. Each seat is scored below.
+        forge.adventure.util.StreakBounty.beginDuel();
+        boolean bountyDuel = !isArena && eventData == null && guardDeck == null && !aiControlsPlayerSide && !chaosBattle
+                && currentEnemy.fixedDeck == null;
         for (int i = 0; i < playerCount && currentEnemy != null; i++) {
             Deck deck;
 
@@ -1368,6 +1376,15 @@ public class DuelScene extends ForgeScene {
                             + forge.adventure.util.SpawnTierWeighting.describeWinRatio());
                 }
             }
+
+            // Round 943: the Bounty - what this seat started with, from the same answers the blocks above used (the
+            // Archmage's own Wastes is not a streak card; the Wrath's deck card below the gate is the Wrath's).
+            if (bountyDuel)
+                forge.adventure.util.StreakBounty.scoreSeat(currentEnemy, Current.player().notorietyWallsFor(currentEnemy),
+                        deckCard != null && deckCard.card != null && forge.adventure.util.StreakBounty.deckCardGateMet(),
+                        Current.player().winStreakReached(currentEnemy.getName())
+                                ? Current.player().winStreakCards(currentEnemy.getName()).length : 0,
+                        currentEnemy.fixedDeck == null ? forge.adventure.util.SpawnTierWeighting.winRatioEnemyTokens().length : 0);
 
             //add extra cards for challenger mode
             if (chaosBattle) {

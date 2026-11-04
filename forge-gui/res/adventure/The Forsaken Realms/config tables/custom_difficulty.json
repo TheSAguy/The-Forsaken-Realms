@@ -611,6 +611,18 @@
             "tooltip": "Chance the hunter's prize card is a mythic."
         },
         {
+            "id": "bountySharePerPoint", "label": "Bounty per point", "category": "Loot & Rewards", "group": "Bounty",
+            "target": "tuning.bountySharePerPoint{D}",
+            "min": 0, "max": 0.2, "step": 0.005, "scope": "anytime", "level": "expert", "format": "percent",
+            "tooltip": "A win over an enemy that started with bonus cards pays this much more gold and resources per point it brought: a Notoriety Wall 1-4 by size, each 45+/50+ flying Wall 4, the Notoriety deck card 4, each win-streak Wastes 2, each Clue or Treasure 1. 0 = no Bounty."
+        },
+        {
+            "id": "bountyCap", "label": "Bounty cap", "category": "Loot & Rewards", "group": "Bounty",
+            "target": "tuning.bountyCap",
+            "min": 0, "max": 3, "step": 0.05, "scope": "anytime", "level": "expert", "format": "percent",
+            "tooltip": "The most a Bounty can add to a win's gold and resources. 0 = no cap."
+        },
+        {
             "id": "startingSets", "label": "Starting sets", "category": "Research & Sets", "group": "Research",
             "target": "difficulty.startingSets", "min": 1, "max": 4, "step": 1, "scope": "newGame",
             "tooltip": "How many of your race's 4 sets start unlocked (Easy 4, Normal 3, Hard 2, Insane 1). A new game picks which on its screen (or leaves them random); New Game+ draws them at random."

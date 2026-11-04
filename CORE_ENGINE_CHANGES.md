@@ -35,6 +35,17 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 943 - the Bounty
+- `forge-gui-mobile/src/forge/adventure/scene/DuelScene.java` (STOCK): `enter()` calls `StreakBounty.beginDuel()` and sets
+  a local `bountyDuel` before the seat loop; each seat calls `StreakBounty.scoreSeat(...)` right before the
+  "add extra cards for challenger mode" block; `afterGameEnd` calls `StreakBounty.onDuelEnded(...)` right after
+  `WrathHunt.onDuelEnded`, with the same condition. Each marked `round 943`.
+- `forge-gui-mobile/src/forge/adventure/stage/MapStage.java` (STOCK): `getReward` calls `StreakBounty.applyBounty(loot,
+  currentMob)` right after `WrathHunt.applyBounty`.
+- `forge-gui-mobile/src/forge/adventure/stage/WorldStage.java` (STOCK): the same call after `WrathHunt.applyBounty` in
+  `setWinner`'s loot; `clearCache` calls `StreakBounty.resetSessionState()` after `WrathHunt.resetSessionState()`.
+- `StreakBounty`, `TuningData`, `TfrPlates` and `JournalScene` are TFR's own.
+
 ### Round 941 - a timer race no longer crashes a duel at its first priority
 
 - `forge-gui/src/main/java/forge/gamemodes/match/AbstractGuiGame.java` (STOCK): `awaitNextInput` keeps its new `TimerTask`

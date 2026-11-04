@@ -14264,6 +14264,102 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 943: the Bounty - armed enemies pay more (2026-11-03)
+
+A Reddit player asked for "extra rewards if you take those enemies with these advantages": today it pays to throw a
+quick loss before a hard fight. The user replied publicly "It's harder but also more rewarding. Will add." and approved
+Option 1 of `C:\CLAUDE\PROJECTS\TFR1\notes\streak-rewards-options.md` ("Yes, the Bounty"). The player means
+Notoriety (its Walls, the 45+/50+ flying Walls, the deck card) together with the per-enemy streak's Wastes and the
+win-ratio Clue/Treasure.
+
+**The inflation check changed the numbers.** The first proposal was 3/5/5/6% per point, capped at +100%. Long-runners
+sit at Notoriety 45-50+: Tallennar on Hard went 41 -> 52, and aeab35b5 on Normal NG+ is at 161-174. There, an
+Adept/Master/Archmage brings about 21 points, which hits the cap. The purse is about 85% of recurring income, so those
+numbers added roughly +70-85% to a late-game week's gold. With a third of the shares and a +30% cap it is about +21%.
+Evidence: `C:\CLAUDE\PROJECTS\TFR1\notes\r943-bounty-inflation-check.md`. The user: "Yes, those numbers".
+
+**The rule** (new `util/StreakBounty`):
+- **Points for what the enemy seat started with:**
+  - a Notoriety Wall by size: 0/1 = 1, 1/2 = 2, 2/4 = 3, 3/6 = 4
+  - each 45+/50+ flying Wall: 4
+  - the Notoriety deck card where its gate is met: 4. The Wrath's own card below the gate scores 0.
+  - each streak Wastes: 2
+  - each win-ratio Clue/Treasure: 1
+
+  The Archmage's own Wastes (round 390) scores 0.
+- **Bounty** = points x share per point (Easy 1%, Normal 1.5%, Hard 1.5%, Insane 2%), capped at +30%, in whole percent.
+- **What a win pays:** the loot's gold, shards, wood and stone rise by the Bounty, rounded up (the Wrath's `raised()`).
+  A boss gets it on its own loot's gold and shards.
+- **Several enemies:** the largest single seat's Bounty is paid.
+- **Which duels:** the Temple's duels (WrathHunt's). No Arena, Inn tournament, guard fight, fixed-deck enemy (Deck
+  Tester's too) or AI-only test duel.
+- **Disable Notoriety:** removes the Walls and the card, and their points; streak Wastes and help tokens still score.
+- **No save change:** a mark lives for one duel; `WorldStage.clearCache` resets it.
+
+**What the player sees:**
+- **The Alt plate:** a gold `BOUNTY +12%` line with a coin icon, in the RAIDER/QUEST line's slot, stacked above that
+  line when both apply. `[TFR-Plates] shown` counts "with a bounty".
+  - The coin is drawn at the plate's icon size: a `[+Gold]` glyph keeps its full size under `[%55]` and spilled out of
+    the box. A first build showed that, and it was fixed in the round.
+  - The plate reads the answer twice a second (`StreakBounty.percentFor`: the enemy's chain, the largest seat, the deck
+    card counted only where its gate is met).
+- **The Realm Journal**, on a streak enemy's page: "Its Wastes put a bounty on it: beat it for +9% [+Gold] and
+  resources, more with Notoriety's cards." (the Wastes alone; Walls depend on the rank met).
+- **After a win:** the HUD notice `Bounty! <name> came armed: +N% [+Gold] and resources.`. It carries no color tags,
+  so GameHUD draws the coin in its own colors. The loot shows the raised amounts.
+
+**Knobs** (custom difficulty, Loot & Rewards > Bounty, `anytime`, expert):
+- `bountySharePerPoint` -> `tuning.bountySharePerPoint{D}`, 0-0.2, step 0.005, percent
+- `bountyCap`, 0-3, percent
+
+The point table stays in `settings.json` (`bountyPointsWall` [1,2,3,4], `bountyPointsBonusWall` 4,
+`bountyPointsDeckCard` 4, `bountyPointsStreakCard` 2, `bountyPointsHelpToken` 1). The Java defaults are 0, so a
+stock plane is unchanged.
+
+**Log lines:**
+- `[TFR-Bounty] marked: Master White Wizard (Master, Normal): reach 3/6 + reach 3/6 + flying 3/6 (bonus) + flying 3/6
+  (bonus) + deck card + help token = 21 points x 1.5% = +30% (cap 30%)`. One line per seat; a later seat adds "- the
+  best seat's bounty stands (+N%)".
+- At the loot: `[TFR-Bounty] <who>: <parts> = N points x S = +P% (cap) - gold 272 -> 354, wood 13 -> 15`.
+- `[TFR-Bounty] <who>: +P% not paid - the duel was not won`, and `[TFR-Bounty] dropped - ...` like the Wrath's.
+
+**Files:**
+- New `util/StreakBounty.java`.
+- `TuningData` (fields and `bountySharePerPointFor`), `TfrPlates` (the line), `JournalScene` (the sentence).
+- `settings.json` and `custom_difficulty.json` (the two knobs).
+- Stock `DuelScene` (beginDuel, scoreSeat per seat, onDuelEnded beside the Wrath's), `MapStage` and `WorldStage` (one
+  applyBounty call at each loot site; `clearCache` reset). These are in `CORE_ENGINE_CHANGES.md`.
+- GUIDE: "The Bounty" paragraph in Enemies That Adapt to You, the win-streak paragraph, the losing-on-purpose sentence;
+  GUIDE.html regenerated (`--check` OK).
+- No shared method's behavior or signature changed: every edit adds a call, so the graph check had no callers to list.
+
+**Checked:**
+- Maven: `mvn -pl forge-gui-mobile-dev -am package -DskipTests`, exit 0.
+- Agent game over this round's classes, every duel at 50x, a new save on Normal then Insane (slot 60). Shots and the
+  three forge.log copies are in `C:\CLAUDE\PROJECTS\TFR1\notes\r943-shots\`. Every payout matched the formula:
+
+| Case | Bounty | Loot (rounded up) |
+|---|---|---|
+| Normal, Notoriety 20, Master (reach 3/6) | +6% | gold 127 -> 135, stone 15 -> 16 |
+| Normal, Notoriety 0, Master with 3 Wastes + Clue + Treasure | +12% | gold 231 -> 259 |
+| Normal, Notoriety 40, Master (2x reach 3/6 + Treasure) | +14% | gold 108 -> 124, wood 13 -> 15 |
+| Normal, Notoriety 50, Master (21 points) | +30% (cap) | gold 272 -> 354 |
+| Normal, Goblin Pack: head 3 points, Goblin seats 7 | +11% (largest seat) | gold 53 -> 59, wood 6 -> 7 |
+| Normal, Disable Notoriety at 50, Master with 1 Wastes + Treasure | +5% | gold 89 -> 94, wood 10 -> 11 |
+| Insane, Notoriety 20, Apprentice (3/6 + Treasure) | +10% | gold 22 -> 25, wood 3 -> 4 |
+| Insane, Notoriety 40, Adept (2x 3/6 + deck card + Treasure) | +26% | gold 106 -> 134 |
+| Normal Adept / Apprentice with the Treasure only | +2% (1.5 rounds up) | gold 60 -> 62, wood 7 -> 8 |
+
+- Lost duels logged "not paid". An Arena duel (Island Capital, Notoriety 40) logged no `[TFR-Bounty]` line.
+- The plates showed the same numbers before each fight: +6, +15, +30, +3, +11, +5, +10, +26.
+- Shots: 1280x720, plus one at 540x960. On the desktop a tall window stretches the landscape view and the plate stays
+  in its box.
+- The knobs show in the panel (Insane 2% / 30%).
+- No exception from the round. Upstream's Monte Carlo "Essence of the Wild" rollout message is not this round's.
+
+**Not checked:** Android's real portrait layout, a controller's R3 plates, a boss's loot, a town or Capitol fight, an
+Inn tournament (excluded by the same condition as the Arena), Easy and Hard (the shares come from the same switch).
+
 ## Round 942: `floor=` on the `[TFR-Memory]` lines (diagnostic only) (2026-11-03)
 
 The user approved the second recommendation from today's log review ("Yes, both"; `C:\CLAUDE\PROJECTS\TFR1\notes\logs-1103b.md`

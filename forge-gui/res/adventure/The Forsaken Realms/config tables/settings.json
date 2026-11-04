@@ -602,6 +602,25 @@
     "wrathBountyOnDifficulty": [1, 1, 1, 1],
     "wrathBountyGold": 0.25,
     "wrathBountyShards": 0.25,
+    // Round 943 - THE BOUNTY (a Reddit player asked for "extra rewards if you take those enemies with these advantages";
+    // the user: "It's harder but also more rewarding. Will add."). The Temple's duels (no Arena, Inn, guard fight,
+    // fixed-deck enemy or Deck Tester), won against an enemy that started with bonus cards, pay this much more gold,
+    // shards, wood and stone, rounded up: points x the share per point (Easy, Normal, Hard, Insane; 0 = off), capped.
+    // Points for what the enemy seat started with: a Notoriety Wall by size (0/1, 1/2, 2/4, 3/6), each 45+/50+ flying
+    // Wall, the Notoriety deck card (where its gate is met), each streak Wastes (not the Archmage's own), each win-ratio
+    // Clue/Treasure. A fight against several enemies pays its largest seat's. The shares are a third of the first
+    // proposal after the inflation check (notes/r943-bounty-inflation-check.md): at Notoriety 50 an Adept+ brings ~21
+    // points, so the uncapped first numbers doubled a late-game week's purses.
+    "bountySharePerPointEasy": 0.01,
+    "bountySharePerPointNormal": 0.015,
+    "bountySharePerPointHard": 0.015,
+    "bountySharePerPointInsane": 0.02,
+    "bountyCap": 0.3,
+    "bountyPointsWall": [1, 2, 3, 4],
+    "bountyPointsBonusWall": 4,
+    "bountyPointsDeckCard": 4,
+    "bountyPointsStreakCard": 2,
+    "bountyPointsHelpToken": 1,
     // Round 814: the Wrath hunter - one walking mage of the hunted color sets out from its castle and hunts you all week.
     // A Master until the week below (Easy, Normal, Hard, Insane; 0 = never an Archmage). Its speed is yours when it sets out
     // x wrathSpeedFactor (1.05 = +5%), then roads and lands as for you. Path: a straight chase within wrathDirectTiles,

@@ -552,10 +552,18 @@ public class JournalScene extends UIScene {
             who.add(wrapped("[%65]" + DIM + "Roams " + String.join(", ", lands) + " land")).left().width(width - 52f).row();
         head.add(who).left().expandX().fillX();
         page.add(head).left().width(width).row();
-        if (Current.player().winStreakReached(e.name))
+        if (Current.player().winStreakReached(e.name)) {
             page.add(wrapped("[%65]Starts with " + Current.player().winStreakCardNames(e.name) + " in play: you have beaten it "
                     + Current.player().winStreak(e.name) + " times in a row. One win for it, and it forgets."))
                     .left().width(width).padTop(4f).row();
+            // Round 943: the Bounty its Wastes alone are worth (Notoriety's cards depend on the rank met, so the plate says
+            // the rest).
+            int bounty = forge.adventure.util.StreakBounty.percent(forge.adventure.util.StreakBounty.score(null, false,
+                    Current.player().winStreakCards(e.name).length, 0).points);
+            if (bounty > 0)
+                page.add(wrapped("[%65]" + INK + "Its Wastes put a bounty on it: beat it for +" + bounty + "% [WHITE][+Gold]" + INK
+                        + " and resources, more with Notoriety's cards.")).left().width(width).padTop(2f).row();
+        }
         page.add(label("[%80]What you know")).left().padTop(6f).padBottom(2f).row();
         for (EnemyData r : e.ranks)
             rankLines(page, e, r, width);

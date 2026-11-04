@@ -813,6 +813,31 @@ public class TuningData {
     public int[] wrathBountyOnDifficulty = {0, 0, 0, 0};
     public float wrathBountyGold = 0f;
     public float wrathBountyShards = 0f;
+    // Round 943 (util/StreakBounty): the Bounty - a won duel's gold, shards, wood and stone rise by points x the share per
+    // point (by difficulty; 0 = off), capped at bountyCap (0 = no cap). Points for what the enemy seat started with: a
+    // Notoriety Wall by size (bountyPointsWall: 0/1, 1/2, 2/4, 3/6), each 45+/50+ bonus Wall, the Notoriety deck card,
+    // each streak Wastes, each win-ratio Clue/Treasure. All off by default, so a stock plane is unchanged.
+    public float bountySharePerPointEasy = 0f;
+    public float bountySharePerPointNormal = 0f;
+    public float bountySharePerPointHard = 0f;
+    public float bountySharePerPointInsane = 0f;
+    public float bountyCap = 0f;
+    public int[] bountyPointsWall = {1, 2, 3, 4};
+    public int bountyPointsBonusWall = 4;
+    public int bountyPointsDeckCard = 4;
+    public int bountyPointsStreakCard = 2;
+    public int bountyPointsHelpToken = 1;
+
+    /** Round 943: the Bounty's share per point on this difficulty; an unknown difficulty takes Easy's. */
+    public float bountySharePerPointFor(String difficultyName) {
+        String name = difficultyName == null ? "" : difficultyName.trim().toLowerCase();
+        switch (name) {
+            case "normal": return Math.max(0f, bountySharePerPointNormal);
+            case "hard":   return Math.max(0f, bountySharePerPointHard);
+            case "insane": return Math.max(0f, bountySharePerPointInsane);
+            default:       return Math.max(0f, bountySharePerPointEasy);
+        }
+    }
     // Round 814: the Wrath hunter. wrathHunterOnDifficulty switches it per difficulty; it is a Master until the 1-based
     // week in wrathArchmageWeekByDifficulty (0 = never an Archmage), held under the week's spawn-tier bracket like a
     // castle's attack mage. Its speed is the player's when it sets out x wrathSpeedFactor, then the roads and lands as

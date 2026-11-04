@@ -1355,7 +1355,9 @@ until it beats you once (a Bronze Coin still counts as a loss); then its count s
 enemy, whichever of its decks it brings, and covers every duel but Inn tournaments and your guards' fights.
 **Archmages** start every duel with a Wastes as well, except in town, Ring City, capital and Capitol fights
 and Inn tournaments - so an Archmage on a streak starts with two.
-The **Realm Journal** marks every enemy on such a streak, with its number of Wastes.
+The **Realm Journal** marks every enemy on such a streak, with its number of Wastes. Each streak Wastes also puts a
+**Bounty** on the enemy: beat it for more gold and resources (see the Bounty in
+[Enemies That Adapt to You](#enemies-that-adapt-to-you)). The Archmage's own Wastes earns no bounty.
 
 **The first two weeks are eased.** In week 1 (days 1-7) a monster starts its duel with half its life,
 but never fewer than 20; in week 2 (days 8-14) with three quarters, never fewer than 25. A monster that
@@ -1463,7 +1465,8 @@ Arena.
   again; only a new appearance of the place rolls afresh.
 
 A loss takes 5 off your notoriety, so its Walls, its tilt and its dungeon odds all drop one step - not back to nothing.
-Losing on purpose to clear the Walls before a dungeon costs a duel's gold, life and ante for every step.
+Losing on purpose to clear the Walls before a dungeon costs a duel's gold, life and ante for every step - and the
+Bounty those Walls would have paid (below).
 Closing the game in the middle of a live duel counts as that loss: the next load takes the 5 off (no gold or life),
 and loading an older save doesn't undo it. Neither does loading a save from before a lost duel: that load takes the 5
 off again. A duel that had stalled - nothing happening for 20 seconds - costs nothing,
@@ -1502,6 +1505,31 @@ it's there, the way the Walls do:
 The enemy's cards read "You're a formidable opponent - I need some help.", yours "We see you need a little help."
 They come in the same duels as the Walls - not Inn tournaments, the Deck Tester or your guards' fights - and every
 enemy of a chained fight brings its own.
+
+**The Bounty.** An enemy that comes armed is worth more. Win against one that started with bonus cards and its loot
+pays a **Bounty**: more gold, shards, wood and stone, rounded up. It counts each card the enemy brought:
+
+| The enemy started with | Points |
+|---|---|
+| a Notoriety Wall: 0/1, 1/2, 2/4, 3/6 | 1, 2, 3, 4 |
+| each flying Wall from notoriety 45 and 50 | 4 |
+| its own Notoriety card | 4 |
+| each Wastes from your win streak over it | 2 |
+| each Clue or Treasure from your win ratio | 1 |
+
+Each point adds 1% on Easy, 1.5% on Normal and Hard and 2% on Insane, up to +30% in all. Examples on Normal: a
+Master at notoriety 20 (one 3/6 Wall) pays +6%, at 40 (two) +12%, and at 50 - four Walls and its own card - the full
++30%. An Adept you have beaten 15 times in a row (three Wastes) pays +9%.
+
+- **Before the fight**, hold Alt (or turn on the Units toggle) and an armed enemy's plate shows **BOUNTY +12%**
+  [+Gold]. The Realm Journal's page for a streak enemy says what its Wastes alone are worth.
+- **After the win**, a notice says "Bounty! ... came armed: +12% [+Gold] and resources.", and the loot shows the raised
+  amounts. A boss pays it on its own gold and shards.
+- **A fight against several enemies** pays the largest single enemy's bounty.
+- **No Bounty** in the Arena, Inn tournaments, your guards' fights or the Deck Tester. **Disable Notoriety** takes away
+  the Walls and the card, and their points with them; a win streak's Wastes and the help tokens still count.
+
+Custom difficulty sets the share per point and the cap (Loot & Rewards > Bounty).
 
 
 ---

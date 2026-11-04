@@ -1053,6 +1053,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
                         // Round 302: an enemy's +Life is paid once per game, out here as well (PlaceRewards).
                         forge.adventure.util.PlaceRewards.filterWorldPayout(loot, currentMob);
                         forge.adventure.util.WrathHunt.applyBounty(loot, currentMob); // round 813: the hunted color's bounty
+                        forge.adventure.util.StreakBounty.applyBounty(loot, currentMob); // round 943: the Bounty
                         forge.adventure.util.WrathHunt.onHunterBeaten(loot, currentMob); // round 814: the Wrath's prize
                         if (treasureRegion >= 0) // round 478: the treasure rides in the guardian's own rewards
                             forge.adventure.util.TreasureHunt.onGuardianBeaten(treasureRegion);
@@ -3411,6 +3412,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
         MapMarkerRefresh.resetSessionState(); // round 190: the shared marker-refresh batch baseline
         forge.adventure.util.TreasureHunt.resetSessionState(); // round 478
         forge.adventure.util.WrathHunt.resetSessionState(); // round 814
+        forge.adventure.util.StreakBounty.resetSessionState(); // round 943
         World.resetVisionLog(); // round 790: [TFR-Vision] prints once per load
         treasureActorsStamp = -1;
         forge.adventure.util.TownPillage.resetSessionState(); // round 484
