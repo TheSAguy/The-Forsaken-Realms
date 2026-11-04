@@ -35,6 +35,13 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 955 - the clean font in the skin's widget styles
+- `forge-gui-mobile/src/forge/adventure/util/Controls.java` (STOCK): `getSkin()` calls `TfrFonts.restyle(skin)` before
+  returning (one line; restyle runs once per skin object).
+- `forge-gui-mobile/src/forge/adventure/util/UIActor.java` (STOCK): `readTableProperties` `"font"` - after the stock
+  line sets the shared default LabelStyle's font, it is set to `TfrFonts.bitmapFont()` when the clean font is on.
+- (`TfrFonts.java` is TFR's own file.)
+
 ### Round 954 - Inn events: the town's color shard, an even pick, different sets at neighboring Inns
 - `forge-gui-mobile/src/forge/adventure/data/AdventureEventData.java` (STOCK): a new constructor
   `(seed, format, playerTown, innPointID)` and overloads `pickCardBlockByFormat(format, playerTown, innPointID)` /

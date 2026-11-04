@@ -14264,6 +14264,54 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 955: menus and HUD check boxes use the clean font too (2026-11-04)
+
+The user, with a shot of the map's Speed-Up / Wait boxes in LanaPixel: "I'd like to update this font also to match the
+other font. There are several places it's still being used in menus."
+
+- **Cause:** round 723's clean font is a textra `Font`, handed out by `Controls.getTextraFont()` to TextraLabels and
+  TextraButtons. The plain libGDX widgets (CheckBox, SelectBox and its List, Label, TextField, Window/Dialog titles,
+  TextTooltip) draw with the skin's BitmapFont: every font-bearing style in `common/skin/ui_skin.json` names the one
+  BitmapFont `default` = `LanaPixel.fnt`. Round 723 had left them on purpose ("text fields, lists ... keep their fonts").
+- **Fix (TFR code only, no skin JSON edit):** `TfrFonts.textraFont` now also makes `cleanBitmap`, a BitmapFont over the
+  same FreeType glyphs and pages (its own `BitmapFontData` copy, so the textra Font's metrics are untouched), drawn at
+  1/k, integer positions off, on LanaPixel's line height (13) so every widget keeps its height. `TfrFonts.restyle(skin)`
+  puts it into each style whose font is LanaPixel; `Controls.getSkin()` calls it once per skin object (a WeakReference;
+  a skin reloaded after `Assets.dispose` is restyled again), before any widget takes a style. The skin's `default`
+  BitmapFont itself stays LanaPixel: the Pixel family of the textra font, the key-cap font, reward card pictures and
+  `Controls.getBitmapFont` read it. Pixel mode, a non-Latin UI language or a plane without `cleanFontEnabled`: no
+  `cleanBitmap`, nothing changes.
+- **`UIActor.readTableProperties`:** a layout Table with `"font"` (`common/ui/statistic_portrait.json`) set the SHARED
+  default LabelStyle's font back to LanaPixel for the rest of the session; with the clean font on it keeps the clean one.
+- **Log:** `[TFR-Font] skin styles: 15 font(s) set to the clean BitmapFont (line 13.0, cap 6.6)` once per skin.
+
+| Place | Cause | Result |
+|---|---|---|
+| Map HUD Speed-Up / Wait (`GameHUD` 203, 211) | `CheckBoxStyle` default | fixed |
+| Settings check boxes and select boxes (World, Video Mode, card ratios) | `CheckBoxStyle`, `SelectBoxStyle` + its `ListStyle` | fixed |
+| New Game: Name field, Starting sets boxes (`NewGameScene.newSetBox`) | `TextFieldStyle`, `SelectBoxStyle` | fixed |
+| Load / Save slot labels (`SaveLoadScene`) | `LabelStyle` default | fixed |
+| Quest log "Quest Name" header (`QuestLogScene` 80) | `LabelStyle` default | fixed |
+| Dialog titles (`UIScene.showDialog`, Roaming Guards, Balance Sheet, Deck Tester, Research, Economy, Custom Difficulty) | `WindowStyle` titleFont | fixed (same swap; not each shot) |
+| Layout-JSON Label / TextField / CheckBox / Window / SelectBox (`UIActor`), deck selector, event, Research filters, keyboard dialog, tooltips | the same skin styles | fixed (same swap; not each shot) |
+| Portrait Statistics' Table `"font"` | `UIActor.readTableProperties` reset the shared LabelStyle | fixed |
+| Console (F9/`) | same LabelStyle / TextFieldStyle | now clean as well (the console was outside the audit; it reads fine) |
+| Key caps on buttons (ESC, Q, Enter) | `getKeysFont`, the keys atlas | left: they are pictures of keys, not text |
+| Pre-duel VS transition names (`TransitionScreen` 245) | LanaPixel scaled to the screen | left: the duel's intro, outside the brief; the clean BitmapFont is pre-scaled for the stage, so it needs its own scale - a follow-up if wanted |
+| Reward card pictures (`RewardActor` 1135) | LanaPixel drawn into the 192x256 picture | left: with the clean font on, the title is already drawn over the card in the clean font (round 723) |
+| Duel screen, card text, deck editor | Forge's FSkin fonts | left, per the brief |
+
+- **Agent test** (cheats, classes ahead of the jar, then the Maven jar): before/after shots in
+  `C:\CLAUDE\PROJECTS\TFR1\notes\r955\` - landscape 1280x720 Settings, New Game, Load, the map HUD (and a 3x zoom of the
+  Speed-Up / Wait boxes), Quest log, Inventory; portrait 540x960 (`after\portrait\`) Settings, New Game, Load, the map
+  HUD. Nothing overflows; the Load page's slot-label column is ~15 px wider (the clean "Quick Save" is wider than
+  LanaPixel's) and the buttons beside it shift right inside the panel.
+- **Not checked:** Android, a controller, each dialog title by hand, the Inn and shops (no plain widgets found in their
+  code beyond the skin styles above), Pixel mode after the change (code path: `cleanBitmap` null -> `restyle` returns).
+
+**Files touched**: `forge-gui-mobile/src/forge/adventure/util/TfrFonts.java`, `util/Controls.java` (one line in
+`getSkin`), `util/UIActor.java` (`readTableProperties`).
+
 ## Round 954 (follow-up): neutral (Waste) towns' Inns borrow the nearest color's sets (2026-11-04)
 
 The user: "Yes, do it" - to "give neutral (Waste) towns' Inns the nearest color's sets too". Round 954's test found that

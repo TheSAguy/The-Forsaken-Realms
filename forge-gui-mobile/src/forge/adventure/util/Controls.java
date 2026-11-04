@@ -605,6 +605,7 @@ public class Controls {
             Forge.getAssets().manager().finishLoadingAsset(skinFile.path());
             skin = Forge.getAssets().manager().get(skinFile.path(), Skin.class, false);
         }
+        TfrFonts.restyle(skin);  // TFR round 955: the clean font in the skin's widget styles (once per skin)
         return skin;
     }
 

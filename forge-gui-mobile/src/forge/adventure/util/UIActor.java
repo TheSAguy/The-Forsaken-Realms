@@ -292,6 +292,9 @@ public class UIActor extends Group {
             switch (property.key.toString()) {
                 case "font":
                     newActor.getSkin().get(Label.LabelStyle.class).font = Controls.getBitmapFont(property.value.toString());
+                    // TFR round 955: that is the shared default style; it keeps the clean font (the "big" scale is the Table's)
+                    if (TfrFonts.bitmapFont() != null)
+                        newActor.getSkin().get(Label.LabelStyle.class).font = TfrFonts.bitmapFont();
                     if (property.value.toString().contains("black"))
                         newActor.getSkin().get(Label.LabelStyle.class).fontColor = Color.BLACK;
                     if (property.value.toString().contains("big"))
