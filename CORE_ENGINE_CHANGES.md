@@ -35,6 +35,26 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 958 - a cast spell's board snapshot is let go when its turn is over (OOM on big boards)
+- **`forge-game/src/main/java/forge/game/zone/MagicStack.java`** (STOCK) - `onNextTurn()`: before
+  `this.thisTurnCast.clear()`, every SA in `thisTurnCast` gets `setLastStateBattlefield(CardCollection.EMPTY)` and
+  `setLastStateGraveyard(CardCollection.EMPTY)`, and one `[TFR-LKI] turn over: N spell(s) cast, M last-state card(s)
+  let go` line (only when M > 0, never in a simulation copy). Plus the `CardCollection` import. Marked `TFR round 958`.
+  - **Why:** `addAndUnfreeze` gives each cast spell's `castSA` copy an LKI copy of the whole battlefield and graveyard
+    (17.6 KB a card) and stock never drops it. It lives as long as the cast permanent, or as long as any token the
+    spell made (`Card.tokenSpawningAbility > hostCard > castSA`). That's casts x board, ~80% of a 160-permanent duel's
+    own heap: the 118-permanent OOM on a 512 MB phone (`C:\CLAUDE\PROJECTS\TFR1\notes\oom-measure.md`).
+  - **Readers checked:** code graph `affected` on `SpellAbility.getLastStateBattlefield` (13 callers) /
+    `getLastStateGraveyard` (11), `setLastStateBattlefield`/`setLastStateGraveyard` (4 each: `addAndUnfreeze`,
+    `AiController.playDecision`, `ReplacementHandler.executeReplacement`, `CardCopyService.getLKICopy`); Grep agrees.
+    The only reads of a `castSA`'s lists are `AbilityUtils.xCount`'s `...WithFallback` (11 instants/sorceries, at
+    their own resolution) and `Count$Presence_` (4 instants, Scaleguard Sentinels, Orator of Ojutai's enter trigger),
+    all in the cast turn. EMPTY, not null: it's what `CardCopyService.getLKICopy` already gives every LKI copy's
+    `castSA`, and three readers would NPE on null.
+  - **Test:** `forge-gui-desktop/src/test/java/forge/ai/CastLastStateClearTest.java` (new).
+  - **Upstream:** `upstream/master` 668115ef33d (2026-11-02) has the same code. Worth reporting upstream later (not
+    posted). If upstream reworks `thisTurnCast` or where `castSA` gets its lists, move the loop with it.
+
 ### Round 960 - the golden Capitol's own Teleporter
 - **`forge-gui-mobile/src/forge/adventure/character/ShopActor.java`** (STOCK) - `draw()`: the TELEPORTER branch (TFR's,
   2026-08-10) calls `EconomyBuildings.getTownTeleporterSprite(teleporterAnimTime)` instead of picking portal4's

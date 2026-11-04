@@ -14264,6 +14264,80 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 958: a cast spell's board snapshot is let go when its turn is over - the big-board OOM (2026-11-04)
+
+Tallennar (Android, 512 MB heap, Hard) ran out of memory on turn 19 against the Nephilim Epochal (Master, 145 life):
+254 cards, 118 on the battlefield, `undo=0 aiEval=0 images=155` (`C:\CLAUDE\PROJECTS\TFR1\notes\logs-1104c.md`
+P2-1). The user approved measuring first ("Yes, measure it"), then the fix ("Yes, build it").
+
+**The cause (measured, `C:\CLAUDE\PROJECTS\TFR1\notes\oom-measure.md`):** stock `MagicStack.addAndUnfreeze` gives each
+cast spell's `castSA` copy an LKI copy of the whole battlefield and graveyard, "as you cast it". Nothing ever dropped
+it.
+- **Size:** each copied card is 17.6 KB, and no two casts share one.
+- **How long:** the snapshot lives as long as the cast permanent, and as long as any token the spell made (each
+  token's `tokenSpawningAbility` reaches the spell's stack card and its `castSA`).
+- **Growth:** casts x board. At 163 permanents, 54 cast permanents held 5,785 copies (99.6 MB), and tokens held
+  ~2,560 more: ~80% of the duel's own heap.
+- **Reproduced:** a headless AI duel at `-Xmx512m` with the phone's 278 MB floor fell into a GC death spiral at 167
+  permanents (11,671 `Card` objects for 223 cards in the game).
+
+**The fix:** in `MagicStack.onNextTurn()`, before `thisTurnCast.clear()`, each spell cast that turn gets empty
+snapshot lists (`CardCollection.EMPTY`, what stock already gives every LKI copy's `castSA`). `thisTurnCast` holds the
+very `castSA` objects, so the token path is covered too. It logs one line per turn, only when something was let go
+and never in an AI simulation copy: `[TFR-LKI] turn over: N spell(s) cast, M last-state card(s) let go`.
+- **Same-turn readers keep working.** The only code that reads a `castSA`'s snapshot is `AbilityUtils.xCount`:
+  - `Count$LastStateBattlefieldWithFallback`/`...GraveyardWithFallback`: 11 instants and sorceries, at their own
+    resolution.
+  - `Count$Presence_`: 4 instants, Scaleguard Sentinels (during the resolution), and Orator of Ojutai's enter trigger,
+    whose intervening "if" is checked again after the spell resolves.
+
+  All of them read in the cast turn. That's why the clear waits for the turn's end and not the spell's resolution:
+  clearing at resolution would cost Orator its draw.
+- **Callers (code graph, Grep agrees):** `SpellAbility.getLastStateBattlefield` 13, `getLastStateGraveyard` 11,
+  `setLastStateBattlefield`/`setLastStateGraveyard` 4 each (`addAndUnfreeze`, `AiController.playDecision`,
+  `ReplacementHandler.executeReplacement`, `CardCopyService.getLKICopy`). The effect classes read their own resolving
+  ability's lists, never a `castSA`'s.
+- **Not done:** a tighter clear when the stack empties (`MagicStack.java:741`, next to `clearChangeZoneLKIInfo`). A
+  20-cast turn on a 150 board still holds ~50 MB until the turn ends. It's a later option if a storm turn ever runs
+  out.
+
+**Test:** `forge-gui-desktop/src/test/java/forge/ai/CastLastStateClearTest.java` (new). Each test casts through the
+AI's real path (`ComputerUtil.handlePlayingSpellAbility`; `playStack`'s plain `add()` takes no snapshot), then removes
+the card the spell depends on before it resolves:
+- `oratorOfOjutaiStillSeesTheDragonItWasCastWith`: the Dragon was controlled, not revealed, and dies before Orator
+  resolves. Orator still draws. The snapshot is there that turn and gone the next.
+- `lifestreamsBlessingCountsTheCreatureItWasCastWith`: Craw Wurm leaves before resolution, and the spell still draws 6.
+- `aTokenNoLongerKeepsItsSpellsSnapshot`: a Raise the Alarm token reaches the spell's snapshot that turn, not the next.
+- Results: with the fix, 3/3 pass, and `MagicStackIllegalTargetTest` still passes (16 run, 0 failed). With the
+  clearing lines disabled, the two next-turn tests fail. Logs: `C:\CLAUDE\PROJECTS\TFR1\notes\r958\mvn-test.log`,
+  `mvn-test-without-fix.log`.
+- Run with `-Dcheckstyle.skip=true`: `forge-gui-desktop`'s checkstyle fails on an unused import in `HelpMenu.java`
+  (round 61's, not this round's).
+
+Checked:
+- Maven: `mvn -o -pl forge-gui-mobile-dev -am package -DskipTests`, exit 0; the tests above, exit 0.
+- The built jar in the measurement harness (`OomProbe`, stock mode, so only the engine clears), AI vs AI creature
+  decks at `-Xmx512m`:
+  | Permanents | Stock, 278 MB floor (`phoneKeep`) | **Built jar, 278 MB floor** (`phone958`) | Built jar, no ballast (`plain958`) |
+  |---|---|---|---|
+  | 30 | 291 MB | 289 MB | 190 MB |
+  | 60 | 307 MB | 296 MB | 194 MB |
+  | 100 | 357 MB | 302 MB | 211 MB |
+  | 120 | 392 MB | 320 MB | 212 MB |
+  | 150 | 453 MB | 319 MB | 226 MB |
+  | peak | GC death spiral at 167 (477 MB at 164) | **324 MB at 175** (turn 45, the harness's cap) | 230 MB at 160 |
+
+  - Heap is after GC, out of 512 MB. The stock no-ballast run was 336 MB at 150 and 366 MB at 163.
+  - `Card` objects at the peak: 2,230 (built, 175 permanents) against 11,671 stock at 167.
+  - G1 "Evacuation Failure" events: 3 in the whole built run, against 4,328 stock.
+  - The snapshot entries were 0 at every turn start. The largest `[TFR-LKI]` line let go of 784 cards (~14 MB) in one
+    turn, and there was one line per turn (43 over the run).
+  - Logs and the harness, outside the repo: `C:\CLAUDE\PROJECTS\TFR1\notes\r958\runs\<run>\probe.log` and
+    `C:\CLAUDE\PROJECTS\TFR1\notes\r958\harness\OomProbe.java`.
+
+Not checked:
+- Android. The fix is in shared engine code; the heap math is the same, but no phone run.
+
 ## Round 960: the golden Capitol's Teleporter (2026-11-04)
 
 The Art thread's Teleporter for the golden Capitol (Orazca), the last building of the round 944 sandstone look. The user

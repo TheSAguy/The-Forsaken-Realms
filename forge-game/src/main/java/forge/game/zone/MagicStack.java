@@ -26,6 +26,7 @@ import forge.game.ability.AbilityUtils;
 import forge.game.ability.ApiType;
 import forge.game.ability.effects.PlayEffect;
 import forge.game.card.Card;
+import forge.game.card.CardCollection;
 import forge.game.card.CardCopyService;
 import forge.game.event.*;
 import forge.game.keyword.Keyword;
@@ -1047,6 +1048,20 @@ public class MagicStack /* extends MyObservable */ implements Iterable<SpellAbil
             player.addSpellCastSinceBegOfYourLastTurn(thisTurnCastCards);
         }
         lastTurnCast = Lists.newArrayList(thisTurnCastCards);
+        // TFR round 958: each cast spell's castSA holds an LKI copy of the whole battlefield and graveyard
+        // (addAndUnfreeze), kept for as long as the card, or a token it made, stays around - casts x board, the
+        // OOM on a 118-permanent board. Only the cast turn reads them, so empty them when that turn is over.
+        int lki = 0;
+        for (SpellAbility sa : thisTurnCast) {
+            lki += sa.getLastStateBattlefield() == null ? 0 : sa.getLastStateBattlefield().size();
+            lki += sa.getLastStateGraveyard() == null ? 0 : sa.getLastStateGraveyard().size();
+            sa.setLastStateBattlefield(CardCollection.EMPTY);
+            sa.setLastStateGraveyard(CardCollection.EMPTY);
+        }
+        if (lki > 0 && !game.isSimulationCopy()) {
+            System.out.println("[TFR-LKI] turn over: " + thisTurnCast.size() + " spell(s) cast, " + lki
+                    + " last-state card(s) let go");
+        }
         this.thisTurnCast.clear();
         game.updateStackForView();
     }
