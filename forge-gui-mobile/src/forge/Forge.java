@@ -426,7 +426,22 @@ public class Forge implements ApplicationListener {
         });
     }
 
+    /** TFR round 945: the plane's own config.json (never a save's custom-difficulty copy) says it is Adventure only. */
+    public static boolean isClassicLocked() {
+        try {
+            forge.adventure.data.ConfigData base = Config.instance().getBaseConfigData();
+            return base != null && base.adventureOnly;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
     public static void openHomeDefault() {
+        if (isClassicLocked()) { // TFR round 945: the splash's Classic button and any other way here
+            System.err.println("[TFR-Classic] the Classic home screen was asked for - refused, opening the adventure");
+            openAdventure();
+            return;
+        }
         //default to English only if CJK is missing
         getLocalizer().setEnglish(forcedEnglishonCJKMissing);
         FSkinTexture.invalidateAdventureTextures();
@@ -527,6 +542,11 @@ public class Forge implements ApplicationListener {
                     if (splash != null && !splash.isBarSettled() && System.currentTimeMillis() < giveUpAt) { Timer.schedule(this, 0.03f); return; }
                     Gdx.graphics.requestRendering();
                     Gdx.app.postRunnable(() -> {
+                        // TFR round 945: an Adventure-only plane starts in the adventure, whatever the stored choice says
+                        if (!selector.equals("Adventure") && isClassicLocked()) {
+                            System.err.println("[TFR-Classic] startup choice '" + selector + "' ignored - this plane is Adventure only, starting the adventure");
+                            selector = "Adventure";
+                        }
                         if (selector.equals("Adventure")) {
                             //preload adventure resources to speedup startup if selector is adventure. Needs in edt when setting up worldstage
                             loadAdventureResources(false);
@@ -909,6 +929,10 @@ public class Forge implements ApplicationListener {
     public static void switchToClassic() {
         if (switchClassic)
             return;
+        if (isClassicLocked()) { // TFR round 945
+            System.err.println("[TFR-Classic] switch to Classic refused - this plane is Adventure only");
+            return;
+        }
         switchClassic = true;
         setTransitionScreen(new TransitionScreen(() -> {
             ImageCache.getInstance().disposeTextures();

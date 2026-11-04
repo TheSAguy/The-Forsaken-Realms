@@ -210,5 +210,9 @@ public class ConfigData {
     // Round 932 (Fable P2-4): the Spellsmith charges a pull before the card shows and the card is kept (no Decline).
     // False = stock: the card shows first, Accept pays, Decline costs 10%.
     public boolean spellsmithPaysFirst = false;
+    // Round 945: the plane is Adventure only - the game always starts in the adventure (a stored "Classic" startup
+    // choice is ignored) and every switch to Classic is refused with a [TFR-Classic] line (Forge.isClassicLocked).
+    // The start menu's Classic button is gone through the plane's own ui/start_menu*.json. False = stock.
+    public boolean adventureOnly = false;
 
 }

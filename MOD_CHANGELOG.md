@@ -14264,6 +14264,42 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 945: no way into Classic mode - TFR is Adventure only (2026-11-03)
+
+Today's log review (`C:\CLAUDE\PROJECTS\TFR1\notes\logs-1103c.md`, P2-2): 2 of 9 new players pressed the start screen's
+"Classic" button, landed in stock Forge's HomeScreen and quit within a minute. The user: "remove that button. Should not
+be able to go to Classic."
+
+- **The flag:** `ConfigData.adventureOnly` (false = stock), `true` only in `The Forsaken Realms/config.json`. Read from
+  `Config.getBaseConfigData()`, so a save's custom-difficulty copy of the config cannot turn it off. Stock planes keep
+  Classic.
+- **The audit (every route into Classic):**
+  - The start screen's "Switch" button (`tr(lblClassic)`) in `ui/start_menu.json` and `start_menu_portrait.json` ->
+    `StartScene.switchToClassic()` -> `Forge.switchToClassic()`: the only caller of `Forge.switchToClassic` (code
+    graph: 1 caller; Grep agrees).
+  - The startup choice `FPref.UI_SELECTOR_MODE` ("Default"/"Classic"/"Adventure"): round 187 already maps "Default" to
+    Adventure, but a stored "Classic" (an older install, or the classic Settings page) opened stock Forge's home screen.
+  - The splash's mode picker (only when the choice is neither Classic nor Adventure): its Classic Mode button ->
+    `Forge.openHomeDefault()`. `openHomeDefault` has 3 callers (code graph and Grep): startup, `switchToClassic`, the
+    splash.
+  - Not routes: the classic Settings page that writes the choice (`screens/settings/SettingsPage`) is only reachable from
+    Classic; the adventure's Settings has no mode choice. No keyboard shortcut or controller binding switches modes
+    (the Back key only exits). An adventure duel's quit goes through `AdventureWinLose.actionOnQuit`, which never calls
+    `openHomeScreen`. Desktop (`forge-gui-mobile-dev`) and Android launchers pass no mode.
+- **Blocked, in TFR only:**
+  - **The button is gone:** plane copies of `ui/start_menu.json` (Exit widened to 160 into the freed slot) and
+    `ui/start_menu_portrait.json` (the button removed, Exit moves up), the plane-override pattern TFR already uses for its
+    other ui files. `StartScene.onButtonPress("Switch", ...)` skips a missing actor.
+  - **The startup choice:** `Forge`'s post-load runnable turns any choice other than Adventure into Adventure when the
+    plane is Adventure only, before the transition screen reads it. The stored preference is left alone.
+  - **Refusals:** `Forge.switchToClassic()` returns at once, and `Forge.openHomeDefault()` opens the adventure instead.
+- **Log:** `[TFR-Classic] startup choice 'Classic' ignored - this plane is Adventure only, starting the adventure`,
+  `[TFR-Classic] switch to Classic refused - this plane is Adventure only`, `[TFR-Classic] the Classic home screen was
+  asked for - refused, opening the adventure`.
+- **Docs:** neither GUIDE.md nor the Discord FAQ mentions Classic mode (their only "classic" is the pre-1.24 research),
+  so neither changed.
+- **Stock files:** `Forge.java` and `ConfigData.java` (`CORE_ENGINE_CHANGES.md`).
+
 ## Round 950: the Xiaomi/MIUI background kill in the FAQ and GUIDE (docs only) (2026-11-03)
 
 The user approved the FAQ line from today's log review ("Yes for 2-4"; `C:\CLAUDE\PROJECTS\TFR1\notes\logs-1103c.md`

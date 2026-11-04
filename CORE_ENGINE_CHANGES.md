@@ -35,6 +35,16 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 945 - TFR is Adventure only (no Classic)
+- `forge-gui-mobile/src/forge/Forge.java` (STOCK): a new `isClassicLocked()` (the plane's base `ConfigData.adventureOnly`);
+  `openHomeDefault()` opens the adventure instead when it is set; `switchToClassic()` returns before its transition; the
+  post-load `postRunnable` in `afterDbLoaded` turns a non-Adventure `selector` into "Adventure" before
+  `if (selector.equals("Adventure"))`. Each logs `[TFR-Classic]` and is marked `round 945`.
+- `forge-gui-mobile/src/forge/adventure/data/ConfigData.java` (STOCK): `adventureOnly` flag, false by default.
+- Plane copies of `adventure/common/ui/start_menu.json` and `start_menu_portrait.json` in `The Forsaken Realms/ui/`
+  (no "Switch" button; landscape Exit 160 wide). When upstream changes the common files, re-copy them and drop the
+  Switch button again.
+
 ### Round 943 - the Bounty
 - `forge-gui-mobile/src/forge/adventure/scene/DuelScene.java` (STOCK): `enter()` calls `StreakBounty.beginDuel()` and sets
   a local `bountyDuel` before the seat loop; each seat calls `StreakBounty.scoreSeat(...)` right before the
