@@ -8,8 +8,8 @@ FAQ_VERSION = "v1.26"
 # build_page.py tags them. Reset both at the next release.
 # 1.27 (round 938 reset them after 1.26; v1.26's own set was {1, 8, 10, 12, 14, 15, 17, 19, 23}, none ADDED): round 939
 # edited 9 (the mid-game Change level); round 950 edited 1 (the Xiaomi/MIUI background kill, a Q under Android rather
-# than a new message, so Support needn't be reposted).
-EDITED = {1, 9}
+# than a new message, so Support needn't be reposted); round 956 edited 13 (Sets: where the full ban list is).
+EDITED = {1, 9, 13}
 ADDED = set()
 
 M = []
@@ -257,7 +257,7 @@ M.append(("Card set distribution", "Sets", r"""**Card set distribution**
 - A card belongs to every set it was printed in. Any source holding one of those sets can give it to you (as that set's printing).
 - At **War** with a color you're barred from its towns (its capital charges 500 gold to enter).
 - A shop's type (say, Goblins) plus its owner's sets can make a short shelf.
-- Never dealt: sets with no booster packs, Un-sets and other novelty or promo sets, and Alpha, Beta and Unlimited (their cards still turn up as later printings). A short ban list (Power 9, Sol Ring, Signets, Commander-only cards...) is kept out of rewards and shops.
+- Never dealt: sets with no booster packs, Un-sets and other novelty or promo sets, and Alpha, Beta and Unlimited (their cards still turn up as later printings). A short ban list (Power 9, Sol Ring, Signets, Commander-only cards...) is kept out of rewards and shops. The full list is in the Game Guide & FAQ, under Card Sets > Banned cards and sets.
 - Advanced: the game folder's content filter tables let you switch sets, items or enemies off yourself (all on by default)."""))
 
 M.append(("Races", "Races", r"""**Races**

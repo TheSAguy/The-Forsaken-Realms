@@ -1760,7 +1760,8 @@ towns sell them and colorless enemies drop them. Never dealt at all: sets with n
 Un-sets and other novelty or promo sets, and Alpha, Beta and Unlimited (their cards still turn up as
 later printings). A short ban list - the Power 9, Sol Ring, Signets, Commander-only cards and the like -
 is kept out of rewards and shops. Enemies may still play those cards, but you never win them: a banned
-card won in ante becomes another card from the same deck.
+card won in ante becomes another card from the same deck. Every card and set on it is listed under
+[Banned cards and sets](#banned-cards-and-sets) below.
 
 Those shares decide **where each card can come from**:
 
@@ -1839,6 +1840,18 @@ towns sell, what enemies drop or what chests hold.
 which sets are unlocked — the restriction governs what shops *sell*, never what your deck may
 *contain*. And loot ignores your unlock list (see the list above), so fighting a color's creatures and
 exploring its ground are real ways to pick up cards you couldn't buy.
+
+#### Banned cards and sets
+
+These cards and sets are kept out of **rewards, booster packs and shops**, so you never win or buy them; a banned card won in ante becomes another card from the same deck. Your deck building is not limited. Enemies can still play the banned cards, but the Commander-only cards are also taken out of enemy decks. The digital-only sets (MTG Arena cards with mechanics paper can't do) join the banned sets unless you tick **Allow digital-only cards** in Settings.
+
+**Banned cards (51):** Anax and Cymede & Kynaios and Tiro, Ancestral Recall, Azorius Signet, Bazaar of Baghdad, Black Lotus, Boros Signet, Call from the Grave, Demonic Tutor, Dimir Signet, Drake Stone, Fastbond, Fetching Garden, Gaea's Cradle, Gobland, Golgari Signet, Gruul Signet, Halving Season, Izzet Signet, Library of Alexandria, Mana Crypt, Mana Vault, Mise, Mishra's Workshop, Mox Emerald, Mox Jet, Mox Pearl, Mox Poison, Mox Ruby, Mox Sapphire, New Master of Arms, Omenpath to Naya, Orzhov Signet, Questing Cosplayer, Rakdos Signet, Selesnya Signet, Simic Signet, Slumbering Waterways, Sol Ring, Teferi, Druid of Argoth, Temur Elevator, The Heron Moon, Time Vault, Time Walk, Timetwister, Tinker, Tolarian Academy, Under-Construction Skyscraper, Vampiric Tutor, Wisedrafter's Will, Wrenn and One, Yawgmoth's Bargain.
+
+**Commander-only cards (76)** - they do nothing, or break, without a commander: Acolyte of Bahamut, Agent of the Iron Throne, Agent of the Shadow Thieves, Anara, Wolvid Familiar, Arcane Signet, Bastion Protector, Campfire, Candlekeep Sage, Champions of Archery, Clan Crafter, Cloakwood Hermit, Cloudkill, Command Beacon, Command Tower, Commander's Insignia, Commander's Plate, Commander's Sphere, Criminal Past, Crimson Honor Guard, Cultist of the Absolute, Disguise Agent, Dragon Cultist, Dungeon Delver, Esior, Wardwing Familiar, Falthis, Shadowcat Familiar, Far Traveler, Feywild Visitor, Flamekin Herald, Flaming Fist, Folk Hero, Font of Magic, Forge of Heroes, Guild Artisan, Hardy Outlander, Haunted One, Hidden Hideout, I Am Never Alone, Imposing Grandeur, Inspiring Leader, Jeska, Thrice Reborn, Jeweled Lotus, Kediss, Emberclaw Familiar, Keleth, Sunmane Familiar, Leadership Vacuum, Majestic Genesis, Master Chef, My Champion Stands Supreme, Myth Unbound, Netherborn Altar, Noble Heritage, Opal Palace, Passionate Archaeologist, Path of Ancestry, Popular Entertainer, Raised by Giants, Sagrada Familiar, Sanctum of Eternity, Scion of Halaster, Search for Dagger, Shameless Charlatan, Stinging Study, Street Urchin, Study Hall, Sword Coast Sailor, Tangleweave Armor, Tavern Brawler, The Dilu Horse, Tome of Legends, Try-My-Deck Elemental, Veteran Soldier, Vexilus Praetor, War Room, Witch's Clinic, Worldknit, You Will Know True Suffering, You're in Command.
+
+**Banned sets (18):** `CMB1` Mystery Booster Playtest Cards; `DA1` (not in this Forge version); `DBL` Innistrad: Double Feature; `HHO` Happy Holidays; `HTR` 2016 Heroes of the Realm; `HTR17` 2017 Heroes of the Realm; `HTR18` 2018 Heroes of the Realm; `HTR19` 2019 Heroes of the Realm; `HTR20` 2020 Heroes of the Realm; `PCEL` Celebration Cards; `PPC1` M15 Prerelease Challenge; `PUST` Unstable Promos; `SUNF` Unfinity Sticker Sheets; `UGL` Unglued; `UND` Unsanctioned; `UNF` Unfinity; `UNH` Unhinged; `UST` Unstable.
+
+**Digital-only sets (21):** `AJMP` Jumpstart Arena Exclusives; `HBG` Alchemy Horizons: Baldur's Gate; `J21` Jumpstart: Historic Horizons; `YBLB` Alchemy: Bloomburrow; `YBRO` Alchemy: The Brothers' War; `YDFT` Alchemy: Aetherdrift; `YDMU` Alchemy: Dominaria; `YDSK` Alchemy: Duskmourn; `YECL` Alchemy: Lorwyn Eclipsed; `YEOE` Alchemy: Edge of Eternities; `YFRA` Alchemy: Reality Fracture; `YLCI` Alchemy: Ixalan; `YMID` Alchemy: Innistrad; `YMKM` Alchemy: Murders at Karlov Manor; `YNEO` Alchemy: Kamigawa; `YONE` Alchemy: Phyrexia; `YOTJ` Alchemy: Outlaws of Thunder Junction; `YSNC` Alchemy: New Capenna; `YSOS` Alchemy: Secrets of Strixhaven; `YTDM` Alchemy: Tarkir; `YWOE` Alchemy: Wilds of Eldraine.
 
 ### Races
 

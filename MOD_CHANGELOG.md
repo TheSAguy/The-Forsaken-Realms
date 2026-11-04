@@ -14264,6 +14264,30 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 956: the full ban list in the Game Guide & FAQ (docs only) (2026-11-04)
+
+The user: "Yes, add it" - a Discord player asked where to see the restricted cards, and the full list lived only in the
+game folder's JSON files.
+
+- **GUIDE.md:** a new `#### Banned cards and sets` subsection at the end of "Card Sets: What You Have, and How to Get
+  the Rest": what the list does (out of rewards, booster packs and shops; a banned card won in ante becomes another card
+  from that deck; deck building not limited; enemies still play the banned cards, but the Commander-only cards are also
+  taken out of enemy decks; the digital-only sets join the banned sets unless Settings' "Allow digital-only cards" is
+  ticked), then the lists: 51 banned cards and 76 Commander-only cards (alphabetical, comma-separated), 18 banned sets
+  and 21 digital-only sets (code + full name, by code). The section's ban-list summary now links to it.
+- **Generated, not hand-typed:** `dev-tools/guide_ban_list.py` (new) reads `restrictedCards` and `commanderOnlyCards`
+  from `config tables/restricted_cards.json` and `restrictedEditions` and `digitalOnlyEditions` from `config.json`
+  (comments stripped outside strings, so "Fire // Ice"-style names survive), takes each set's name from
+  `forge-gui/res/editions/*.txt` (`Code=` or `Alias=`: HTR..HTR20 are the PH16-PH20 aliases), and rewrites everything
+  from the heading to the next heading. Running it twice changes nothing. `DA1` has no edition file in this Forge
+  version, so it reads "(not in this Forge version)". **To regenerate** after a ban-list change:
+  `python -I dev-tools/guide_ban_list.py` then `python -I dev-tools/guide_html.py --check` (`--print` only prints).
+- **Discord FAQ** (`dev-tools/discord_faq/messages.py`): message 13 (Sets) now says the full list is in the Game Guide &
+  FAQ under Card Sets > Banned cards and sets (1,925 characters); EDITED for 1.27 is now {1, 9, 13}.
+- `GUIDE.html` regenerated (`--check` OK: 100 headings, 198 links, 3 pictures; the new heading's anchor and the summary's
+  link both resolve). The desktop guide opens GUIDE.html in the browser (`WorldStage`), so there is no in-game viewer to
+  shoot; checked in the generated HTML.
+
 ## Round 955: menus and HUD check boxes use the clean font too (2026-11-04)
 
 The user, with a shot of the map's Speed-Up / Wait boxes in LanaPixel: "I'd like to update this font also to match the
