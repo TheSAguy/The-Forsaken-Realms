@@ -14380,8 +14380,14 @@ player's 15-permanent board crossed 95%, and so does every save load, which drop
 Checked:
 - Maven: `mvn -pl forge-gui-mobile-dev -am package -DskipTests`, exit 0.
 
-Not checked: Android (same class, no platform code). The agent's `[TFR-Memory]` line with `floor=` is in the round's
-follow-up.
+`floor=` check: the agent game's 4 GB heap never reaches the 60-78% marks, so it wrote no `[TFR-Memory]` line. A
+harness JVM ran `MemoryWatch`'s own sampler from the packaged jar at `-Xmx256m`: 6 s low, then 86% held for 64 s, then
+96.5%. Output: `C:\CLAUDE\PROJECTS\TFR1\notes\r941-942\memory-floor-check.txt`.
+- `[TFR-Memory] high used=203MB of 256MB floor=4MB game=none ...`: the low phase was still in the last minute, so the
+  floor is low.
+- `[TFR-Memory] full used=247MB of 256MB floor=221MB game=none ...`: a minute held high, so the floor is near the max.
+
+Not checked: Android (same class, no platform code).
 
 ## Round 941: a timer race no longer crashes a duel at its first priority (stock Forge) (2026-11-03)
 
@@ -14439,9 +14445,20 @@ Checked:
 - Maven: `mvn -pl forge-gui-mobile-dev -am package -DskipTests`, exit 0 (it compiles the new test too).
 - The test results above: `C:\CLAUDE\PROJECTS\TFR1\notes\r941-942\test-results.txt`.
 
-Not checked: a real race in a duel. It was seen once in 63 duel starts, so a few agent duels can't prove it gone; the
-test and the code reading carry it. The agent duels (mulligans, then the first priority) are in the round's follow-up.
-Android: the same `AbstractGuiGame`, not run there.
+Agent check (the packaged jar; live and agent have the same sha256): five duels with auto-battle off, so the player's
+seat gave real mulligan and priority inputs. Duel log: `C:\CLAUDE\PROJECTS\TFR1\notes\r941-942\agent-duels.txt`.
+- The `[TFR-Duel]` lines read `mulligans=2, 0, 1, 0, 1`. Duels 1, 3 and 5 took a London mulligan (Mulligan, Auto for the
+  bottom card, Keep); duels 2 and 4 kept the 7. Duel 3 was on the draw.
+- Each first priority was answered with End Turn, which runs `chooseSpellAbilityToPlay`'s auto-pass branch, the one in
+  the crash. Then each duel was conceded.
+- The "Waiting for Glowing Wisp (Apprentice)..." prompt showed during the opponent's turn
+  (`C:\CLAUDE\PROJECTS\TFR1\notes\r941-942\wait-keep-3.png`).
+- The log has 0 `[TFR-InputTimer]` lines, 0 `IllegalStateException`, 0 `[TFR-Error]`, `errors=0`.
+- The duels were not at 50x. A player-controlled seat has no speed button, and the bridge's start speed applies only
+  to a watched game (`FControlGamePlayback.setGame`). The AI opponent played at normal speed (32-307 s a duel).
+
+Not checked: a real race in a duel. It was seen once in 63 duel starts, so five duels can't prove it gone; the test and
+the code reading carry it. Android runs the same `AbstractGuiGame` but wasn't tested.
 
 ## Round 940: the golden Capitol's Card Shop and Booster Shop (2026-11-03)
 
