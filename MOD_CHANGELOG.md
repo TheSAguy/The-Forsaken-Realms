@@ -14264,6 +14264,34 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 951: a window that is 0x0 at launch no longer makes the clean font soft (2026-11-04)
+
+The user approved the fix from today's log review ("Yes, build it"; `C:\CLAUDE\PROJECTS\TFR1\notes\logs-1104.md` P3-3).
+Player ee47ebe1 (Windows, 1920x1080) had `window 0x0` on its `[TFR-Font]` line in 2 of 3 launches. `TfrFonts.textraFont`
+sized the clean font's glyph scale `k` from `Gdx.graphics.getBackBufferWidth/Height()`. A window that is minimized or not
+shown yet reads 0x0, so `k` fell to its floor of 2: 18 px glyphs drawn 2x larger on a 1080p screen, soft text for the
+whole session (the font is made once and cached in `Assets`).
+
+- When the back buffer reads 0 in either direction, `k` comes from `Gdx.graphics.getDisplayMode()` (the monitor) and the
+  game logs `[TFR-Font] window was 0x0 at launch: sized from the display WxH, k=N`. A normal launch keeps today's numbers.
+  Android never reads 0x0 here, so it's unchanged.
+- The monitor can be larger than the restored window (a 1280x720 window on a 4K screen gets k=8, not 3). A larger `k` is
+  drawn down through the mipmaps and stays sharp. It costs a second 1024x1024 glyph page, the same as a 4K fullscreen.
+- **Not built: rebuilding the font on the first real resize.** The display-mode size covers the 0x0 case. A rebuild would
+  have to swap the font in every cached label. A window that starts small and is maximized later still keeps its launch
+  `k` (slightly soft), as before this round. Nobody has reported that.
+- A TFR file, so no `CORE_ENGINE_CHANGES.md` entry.
+
+Checked (agent game, the round's classes ahead of the packaged jar, a 1280x720 window on a 3840x2160 monitor; shots in
+`C:\CLAUDE\PROJECTS\TFR1\notes\r951\`):
+- Normal launch: `font1.ttf at 27 px, drawn at 1/3 ... window 1280x720`, with no 0x0 line.
+- Minimized the moment the window appeared, restored after loading:
+  `[TFR-Font] window was 0x0 at launch: sized from the display 3840x2160, k=8`, then `font1.ttf at 72 px, drawn at 1/8 ...
+  glyphs 16 px apart on 2 page(s), window 0x0`. The start menu was sharp after the restore. The labels sit about 3 window px
+  lower than at k=3. That's the k=8 font's own metrics, which a 4K fullscreen launch also gets (cause not traced).
+
+Not checked: macOS, Linux, and a real minimized or fullscreen launch on a player's PC.
+
 ## Round 949: loaded assets by type and folder on the `[TFR-Memory]` lines (diagnostic only) (2026-11-03)
 
 The user approved the third recommendation from today's log review ("Yes for 2-4"; `C:\CLAUDE\PROJECTS\TFR1\notes\logs-1103c.md`

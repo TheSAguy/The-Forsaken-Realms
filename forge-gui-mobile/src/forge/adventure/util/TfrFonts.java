@@ -1,6 +1,7 @@
 package forge.adventure.util;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -109,9 +110,20 @@ public final class TfrFonts {
                 System.err.println("[TFR-Font] no clean font file: the pixel font stays");
                 return null;
             }
-            float kx = Gdx.graphics.getBackBufferWidth() / (float) Scene.getIntendedWidth();
-            float ky = Gdx.graphics.getBackBufferHeight() / (float) Scene.getIntendedHeight();
+            int w = Gdx.graphics.getBackBufferWidth(), h = Gdx.graphics.getBackBufferHeight();
+            // round 951: a window minimized or not shown yet at launch reads 0x0 (k fell to 2: soft text all session);
+            // the monitor's size stands in, and a k above the window's is drawn down through the mipmaps, still sharp
+            boolean zero = w <= 0 || h <= 0;
+            if (zero) {
+                Graphics.DisplayMode dm = Gdx.graphics.getDisplayMode();
+                w = dm.width;
+                h = dm.height;
+            }
+            float kx = w / (float) Scene.getIntendedWidth();
+            float ky = h / (float) Scene.getIntendedHeight();
             int k = Math.max(2, Math.round(Math.min(kx, ky)));
+            if (zero)
+                System.out.println("[TFR-Font] window was 0x0 at launch: sized from the display " + w + "x" + h + ", k=" + k);
             float size = Float.parseFloat(System.getProperty("tfr.fontSize", "9"));
             float down = Float.parseFloat(System.getProperty("tfr.fontY", "-1"));
             // LanaPixel's line (13 + 1): the same line spacing, and the icons, which the font sizes to its line, as big
