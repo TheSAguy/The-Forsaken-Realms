@@ -218,8 +218,9 @@ public class PlayerControllerAi extends PlayerController {
         }
 
         GameOutcome lastOutcome = brains.getGame().getMatch().getLastOutcome();
-        if (lastOutcome.getWinningPlayer().getPlayer().equals(player.getLobbyPlayer())
-            && MyRandom.getRandom().nextInt(100) > sbChanceOnWin) {
+        final boolean weWon = lastOutcome != null && lastOutcome.getWinningPlayer() != null
+            && lastOutcome.getWinningPlayer().getPlayer().equals(player.getLobbyPlayer());
+        if (weWon && MyRandom.getRandom().nextInt(100) > sbChanceOnWin) {
             return null;
         }
 
@@ -1374,7 +1375,7 @@ public class PlayerControllerAi extends PlayerController {
             }
         }
         final PhaseHandler ph = getGame().getPhaseHandler();
-        if (ph.getPlayerTurn() == sa.getActivatingPlayer() && ph.getPhase() == PhaseType.MAIN1 && sa.getTargetCard() != null) {
+        if (ph.is(PhaseType.MAIN1, sa.getActivatingPlayer()) && sa.getTargetCard() != null) {
             AiAttackController aiAtk = new AiAttackController(sa.getActivatingPlayer(), sa.getTargetCard());
             String s = aiAtk.toProtectAttacker(sa);
             if (s != null) {
@@ -1780,6 +1781,8 @@ public class PlayerControllerAi extends PlayerController {
                 name = SpecialCardAi.CursedScroll.chooseCard(player, sa);
             } else if (logic.equals("PithingNeedle") || logic.equals("PhyrexianRevoker") || logic.equals("SorcerousSpyglass")) {
                 name = SpecialCardAi.PithingNeedle.chooseCard(player, sa);
+            } else if (logic.equals(NamedDiscard.LOGIC)) {
+                name = NamedDiscard.chooseName(player, sa, valid);
             }
 
             if (!StringUtils.isBlank(name)) {

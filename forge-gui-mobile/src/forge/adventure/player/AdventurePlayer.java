@@ -1826,6 +1826,10 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public Boolean isFemale() {
         return isFemale;
     }

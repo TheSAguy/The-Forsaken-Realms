@@ -762,7 +762,9 @@ public class MagicStack /* extends MyObservable */ implements Iterable<SpellAbil
         unfreezeStack();
         sa.resetOnceResolved();
 
-        game.getPhaseHandler().onStackResolved();
+        if (sa.getApi() != ApiType.EndTurn) {
+            game.getPhaseHandler().onStackResolved();
+        }
 
         curResolvingCard = null;
     }
