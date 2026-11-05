@@ -19,8 +19,6 @@ import forge.util.Localizer;
 import forge.util.LogExporter;
 import forge.view.KeyboardShortcutsDialog;
 
-import static forge.localinstance.properties.ForgeConstants.GITHUB_FORGE_URL;
-
 public final class HelpMenu {
     private HelpMenu() { }
 

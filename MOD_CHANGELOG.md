@@ -14264,6 +14264,88 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 961: the engine to the 11.04 daily (upstream `a4281f7e58b`), and what upstream's adventure data changed (2026-11-04)
+
+The user installed the 11.04 official daily as BASE_INSTALL: "I've updated the official Forge engine: E:\GAMES\Forge_2.
+Can you update and also look at the Mods and see if any of those changes need to be implemented." 36 commits, 153
+files since round 917's `5a09fa8cc5d`.
+
+- **Matched**: BASE_INSTALL's `build.txt` says 2026-11-04 18:16:19, after `a4281f7e58b` (#12680, 17:58:51 UTC); its
+  `CHANGES.txt` is headed by #12680; the jar manifest says `2.0.16-SNAPSHOT-11.04`. upstream/master was one commit
+  further (`6e226b123a9`, #12681, two card scripts) and is not taken: it is not what BASE_INSTALL holds. It is the next
+  merge's first commit. No pom change: the build stayed offline.
+- **Upstream brought**: Flat MC AI work (Standard-meta ComboPlan, StifleCombo, Dredge & Lands, Sacrifice KeyCard Guard,
+  artifact and free-cast engines, `ai-card-roles.txt`); the Delta Memento for undo (#12603: `UndoManager` budgets by
+  bytes now, not by objects); `PhaseHandler.isPlayerNextTurn` and priority passing past a player who left (#12578);
+  Foretell as a StaticAbility (#12556); card script fixes; boosters and formats for TRK/TRC/SDS; `CardRenderer.drawText`
+  drops characters the font has no glyph for (it used to crash); the lobby remembers its format and variants (#12605)
+  and offers archived formats (#12586); the `rename` console command (#12573); and #12568 "[Adventure] Respect edition
+  restriction in rewards" (`RewardData`, `CardUtil`).
+
+### The conflict
+
+One text conflict, and it is a real one: **`RewardData.generate()`, the `Union` and named-card (`card`/`randomCard`)
+branches (#12568, `8accaa1d31e`)**.
+
+| | |
+|---|---|
+| **Upstream changed** | A new `resolveNamedCard(cardName, editions, ...)`: a named card in a reward with an `editions` list is drawn in a random one of those editions, and the Union pool and the named-card branch both use it. A Union pick keeps its own printing (`getCardByNameAndEdition(name, edition)`, it used to re-roll any printing). |
+| **We had** | The same goal, done more strictly since 2026-08-15 and rounds 373/699: every Union pick goes through `finishUnionCard` (remap into the reward's editions, keep the edition through the variant re-roll, remap again), and every named card goes through `namedCardOrSubstitute` (a printing in the place's sets, else a card of the same rarity, colors and type from them, else gold, with a `[TFR-PrintGate]` line). |
+| **Kept vs took** | **Kept ours, all of `RewardData`.** Took `CardUtil.getCardByNameAndEdition`'s half of #12568. |
+| **Why not upstream's** | Its random edition pick misses whenever the card is not printed in the edition it rolled, and then `getCardByNameAndEdition` falls back to any printing with an "Unexpected behavior" error line. With TFR's long edition lists that is most named cards, so the log fills up, and our remap runs anyway. It would also take an extra `rewardRandom` draw per named card, which changes what a seeded reward rolls. |
+| **Impact** | None that players will see: named and Union rewards behave as in 1.26. The `CardUtil` half makes our remaps more accurate when "use all card variants" is off: `getCardByNameAndEdition` now finds the asked-for printing rather than only the card's one default printing, so fewer remaps fall back. No save change. Test: an edition-restricted shop's named cards and a quest's named card reward. |
+
+**Merged clean beside our edits** (checked by hand): `MagicStack` (upstream's change is in `resolveStack`, where an
+`EndTurn` spell skips `onStackResolved`. Round 958's clear in `onNextTurn()` is untouched, and `isPlayerNextTurn` is
+new in `PhaseHandler` without changing `onNextTurn`'s caller); `PhaseHandler` (round 929's `AttackRetryLimit` in the
+declare-attackers loop sits apart from upstream's priority changes); `UndoManager` (round 898's
+`snapshotObjects()` still compiles against `GameMemento.objectCount()`. Under the delta memento a step's count is its
+delta's, so `undoObjects=` on `[TFR-Memory]` lines now reads smaller); `AiController`, `ComputerUtil`,
+`ComputerUtilCard`, `PlayerControllerAi`, `AttachAi`, `PumpAi`, `AdventurePlayer` (new `setName`),
+`ConsoleCommandInterpreter` (new `rename`), `CardRenderer`, `AbstractPreferences` (upstream removed
+`setGameType`/`getGameType`, which nothing of ours calls), `ForgePreferences`, `en-US.properties`.
+
+**Lobby and formats (#12586, #12605):** `FormatChoices`, `GameLobby.saveSetup/restoreSetup`, `LobbyScreen`,
+`PlayerPanel`, `ListChooser` and desktop's `VLobby`/`VSubmenuConstructed`. Only the Classic constructed lobby and
+network play reach them; Adventure duels build their match in `DuelScene` without a `GameLobby`. Round 945's no-Classic
+paths (`Forge.switchToClassic`/`openHomeDefault` refusing, the start menu without Classic) are not touched, and the
+lobby's restore never runs in TFR. A stale `UI_APPLIED_VARIANTS`-style key in an old `forge.preferences` is ignored.
+
+### What upstream's adventure data changed, and our copies
+
+| Upstream change | Our copy? | Done |
+|---|---|---|
+| #12580 Old Border: the Vodalian Mage and Knight's waypoints at the Temple Deep Spawn moved, so allies can pass without starting their talk (`svyelunite_temple.tmx`) | Yes, round 462's import `maps/map/fallen_empires/svyelunite_temple.tmx` (paths rewritten to `../../../../common/`, round 565's waypoint 52) | **Ported**: upstream's new file with our paths and our waypoint 52, CRLF kept; 14+/12- like upstream's |
+| #12680 Old Border: the Silver Challenge Coin's description ("No current use..." to "Redeem for a free sealed") | Yes, our own `world/items.json` and `config tables/items.csv` | **Already covered**: ours has said "A heavy coin made of silver. Redeem for a free sealed event." for a long time |
+| #12674 RoL 1.090 deck fix: Ozox, the Clattering King drops Into the Pit and Vampiric Tutor for Moseo, Vein's New Dean (SOS) and Tinybones, Pocket Nuisance (FRA) | Yes, `decks/legends/ozox.dck` (the legend enemy "Ozox"; ours swapped Asphodel Wanderer for Carrionette) | **Ported**: the two swaps; our Carrionette stays. Vampiric Tutor is on TFR's `restricted_cards.json`, so the boss no longer carries a restricted card. Both new cards are paper expansions TFR allows |
+| #12674 RoL map fix: a typo ("entrace") in `merfolkpool/Fblthps_Maze.tmx` | No (not imported) | Skipped |
+| #12674 RoL: the SLD Hatsune Miku Commander precon gains cards | No | Skipped: a Commander precon (the cross-plane rule: no Commander) |
+| #12568 `RewardData`/`CardUtil`, edition restriction in rewards | Stock files we edit | See the conflict above: `CardUtil` taken, `RewardData` ours |
+| #12573 the `rename` console command | Stock, merged | Taken by the merge (console only) |
+| Card scripts (#12582 Romulan Bird-of-Prey, #12602, #12601, `the_duras_sisters`, Commander Spock, Green Sun's Twilight, Hollow Marauder, Vivien's Grizzly, Sudden Substitution, ...) | No: TFR reads the stock `cardsfolder` | Taken by the merge |
+| Editions: SLZ (The Zeta Set) filled in with 726 entries, FRA, HOB, 2X2, boosters list; formats TRK/TRC/SDS and the 11.10/11.13 archived formats | No: stock `editions` and `formats` | Taken by the merge. SLZ is a Collector Edition of @MSCHF reprints of existing cards (Land Tax, Path to Exile, ...); it adds printings, not cards. Not added to `restrictedEditions`: a note for the main thread, not a change |
+
+No upstream change touched Shandalar's own plane data, `common/` adventure data or Android in this window.
+
+### Also in this round
+- `forge-gui/res/adventure/The Forsaken Realms/config.json`: `engineBuildVersion` 11.04.
+- `forge-gui-desktop/src/main/java/forge/menus/HelpMenu.java`: the unused `import static ...ForgeConstants.GITHUB_FORGE_URL`
+  removed (the Help menu's TFR edit points at upstream's wiki by its own URL). forge-gui-desktop's checkstyle failed on it.
+
+**Tested:**
+- Maven `-o -pl forge-gui-mobile-dev,forge-gui-desktop -am package` with the tests below: every module through
+  forge-gui-mobile-dev built (exit 1 only at forge-gui-desktop's `package`-phase git-changelog plugin, which is not in the
+  offline repository); then `-o -pl forge-gui-desktop -am test`, exit 0 with checkstyle clean; then
+  `-o -pl forge-gui-mobile-dev -am package -DskipTests`, exit 0 (the shipping jar, 17:59:30).
+- forge-game: `GameMementoTest` (upstream's, 14), `GameEntityViewTest` and `CardViewListsTest` (round 919), 21 in all
+  in that run; forge-gui: `AbstractGuiGameShould` (round 941), 2; forge-gui-desktop: `CastLastStateClearTest` (round
+  958, 3) and upstream's `FlatMonteCarloDredgeLineTest` (8). All pass.
+- In-game: the agent regression is the follow-up below.
+
+**Files:** the merge (153 upstream files), `forge-gui-desktop/src/main/java/forge/menus/HelpMenu.java`, `forge-gui/res/adventure/The Forsaken Realms/maps/map/fallen_empires/svyelunite_temple.tmx`,
+`forge-gui/res/adventure/The Forsaken Realms/decks/legends/ozox.dck`, `forge-gui/res/adventure/The Forsaken Realms/config.json`,
+`MOD_CHANGELOG.md`, `CORE_ENGINE_CHANGES.md`, `CLAUDE.md`.
+
 ## Round 958: a cast spell's board snapshot is let go when its turn is over - the big-board OOM (2026-11-04)
 
 Tallennar (Android, 512 MB heap, Hard) ran out of memory on turn 19 against the Nephilim Epochal (Master, 145 life):

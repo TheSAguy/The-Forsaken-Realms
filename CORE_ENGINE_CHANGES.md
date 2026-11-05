@@ -35,6 +35,23 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 961 - the engine to the 11.04 daily (upstream `a4281f7e58b`)
+- `forge-gui-mobile/src/forge/adventure/data/RewardData.java` (STOCK): the one text conflict. Upstream's #12568
+  (`8accaa1d31e`) added `resolveNamedCard` for the Union pool and the named-card branch; ours kept whole
+  (`finishUnionCard`, `namedCardOrSubstitute`, rounds 373/699 and 2026-08-15), so upstream's helper is not in our file.
+  On the next merge: any upstream edit near those two branches conflicts again; keep the edition gate.
+- `forge-gui-mobile/src/forge/adventure/util/CardUtil.java` (STOCK): took upstream's `getCardByNameAndEdition` (all
+  printings searched, not only the default one when "all card variants" is off). Merged clean.
+- `forge-gui-desktop/src/main/java/forge/menus/HelpMenu.java` (STOCK): the unused static import of
+  `ForgeConstants.GITHUB_FORGE_URL` removed (checkstyle). If upstream starts using it again, take theirs.
+- `forge-gui/res/adventure/The Forsaken Realms/config.json`: `engineBuildVersion` 11.04 (plane file, for the packager's
+  base check).
+- Merged clean beside our edits, for the next conflict pass: `MagicStack` (round 958's `onNextTurn` clear untouched;
+  upstream's edit is in `resolveStack`), `PhaseHandler` (round 929 beside upstream's priority and `isPlayerNextTurn`),
+  `UndoManager` (round 898's `snapshotObjects()` on the delta memento), `AiController`, `ComputerUtil`,
+  `ComputerUtilCard`, `PlayerControllerAi`, `AttachAi`, `PumpAi`, `AdventurePlayer`, `ConsoleCommandInterpreter`,
+  `CardRenderer`, `AbstractPreferences`, `ForgePreferences`, `en-US.properties`.
+
 ### Round 958 - a cast spell's board snapshot is let go when its turn is over (OOM on big boards)
 - **`forge-game/src/main/java/forge/game/zone/MagicStack.java`** (STOCK) - `onNextTurn()`: before
   `this.thisTurnCast.clear()`, every SA in `thisTurnCast` gets `setLastStateBattlefield(CardCollection.EMPTY)` and
@@ -4728,6 +4745,12 @@ from the plane's `config tables/settings.json`).
   0.25 -> 0.12.
 
 ## Upstream merge log
+
+- **2026-11-04 - merged upstream `master` @ `a4281f7e58b` (Forge 2.0.16-SNAPSHOT, 11.04 daily; 36 commits since
+  `5a09fa8cc5d`; round 961).** One conflict (`RewardData.java`, ours kept) - see "Round 961" above. Base install
+  `E:\GAMES\Forge_2`: `build.txt` `2026-11-04 18:16:19`, jars `2.0.16-SNAPSHOT-11.04`, `CHANGES.txt` headed by #12680
+  (`a4281f7e58b`). Upstream's head at the fetch was `6e226b123a9` (#12681), one commit past the install; the next merge
+  starts after `a4281f7e58b`.
 
 - **2026-10-26 - merged upstream `master` @ `0dc8c66996e` (Forge 2.0.16-SNAPSHOT, 10.26 daily; 78 commits since
   `bc67f70ffbc`; round 769).** 17 conflicts, four of them choices (R1-R4 kept ours, R5 took upstream's) - see "Round
