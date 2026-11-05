@@ -1,10 +1,22 @@
 package forge.adventure.util;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Scaling;
 import com.github.tommyettinger.textra.TypingLabel;
 import forge.Forge;
 import forge.adventure.data.SettingData;
+import forge.adventure.player.AdventurePlayer;
 import forge.adventure.scene.GameScene;
 import forge.adventure.scene.SaveLoadScene;
 import forge.adventure.scene.StartScene;
@@ -16,18 +28,30 @@ import forge.sound.SoundSystem;
  * Round 756 (the user: "a little prompt in the game after a certain number of game playing hours ... Would be nice to
  * support the developer"). Real play time - every save, only while the window has focus, menus before a game left out -
  * is counted in the profile's adventure settings.json (SettingData.supportPlaySeconds), so a new game does not restart
- * it. At 5, 15 and 40 hours the player is asked once each, on the world map just after a duel, a load or a town (the
- * scene came back and nothing else is open): Support TFR (Ko-fi), Join the Discord, Maybe later, Don't ask again. The
- * 40-hour ask is the last, and a Support TFR click in an ask stops the later ones (round 756 follow-up). A pure tip - it unlocks and changes nothing. Only on a plane whose config.json names a
- * supportLink. Grep forge.log for [TFR-Support].
+ * it. At 5, 15, 40 and 75 hours the player is asked once each, on the world map just after a duel, a load or a town (the
+ * scene came back and nothing else is open): Support TFR (Ko-fi), Join the Discord, Maybe later, and on the 5 and 15 h
+ * asks Not until 40 hours. Round 963 (the user: "change the 40, to always show, even if they turned it off at 5 or 15.
+ * Also, add a 75h one, Let's make a big splash for it"): "Not until 40 hours" (round 756's "Don't ask again", the same
+ * supportNeverAsk) stops only the 5 and 15 h asks; the 40 h ask and the 75 h splash always come, and for a player who
+ * clicked Support TFR in an ask they are thank-yous. The 75 h splash is the last. A pure tip - it unlocks and changes
+ * nothing. Only on a plane whose config.json names a supportLink. Grep forge.log for [TFR-Support].
  */
 public final class SupportPrompt {
     private SupportPrompt() {
     }
 
     /** The asks, in hours, and their titles and texts. */
-    static final float[] HOURS = {5f, 15f, 40f};
-    private static final String[] TITLES = {"Five hours in the Realms", "Fifteen hours!", "Forty hours, a true Realm-walker"};
+    static final float[] HOURS = {5f, 15f, 40f, 75f};
+    /** Round 963: asks from this index on (40 h, 75 h) ignore "Not until 40 hours" and thank a supporter instead. */
+    static final int ALWAYS_FROM = 2;
+    /** Round 963: the last ask, the splash. */
+    static final int SPLASH = 3;
+    /** Round 963: the splash's art (the plane's ui folder). The final art replaces the placeholder at this path. */
+    static final String SPLASH_ART = "ui/support_75h.png";
+    /** Round 963: the 75 h text names the save's duel wins only from this many on - "3 duels won" undercuts the line. */
+    static final int WINS_PHRASE_MIN = 50;
+    private static final String[] TITLES = {"Five hours in the Realms", "Fifteen hours!", "Forty hours, a true Realm-walker",
+            "Seventy-five hours!"};
     private static final String[] TEXTS = {
             "Five hours! That's a whole evening of \"just one more duel.\" TFR is free and always will be, but its "
                     + "developer runs on coffee. If you're enjoying the Realms, a small tip keeps the coffee, and the "
@@ -35,9 +59,18 @@ public final class SupportPrompt {
             "A movie costs about $15 and lasts two hours. You've had fifteen hours of the Realms: that's seven and a "
                     + "half movies, with no popcorn tax and nobody kicking your seat. If TFR has earned a ticket or "
                     + "two, the developer would love one. Either way, thanks for playing!",
+            // round 963: no longer "This is the last time we'll ask" - the 75 h ask comes after it
             "Forty hours. At movie prices that's about $300 of entertainment, and the Realms never charged you a "
-                    + "single coin. This is the last time we'll ask: if you've enjoyed your time here, a tip goes "
-                    + "straight into the next update. Thank you for sticking with it, Realm-walker."};
+                    + "single coin. If you've enjoyed your time here, a tip goes straight into the next update. Thank "
+                    + "you for sticking with it, Realm-walker.",
+            null}; // the 75 h text names the wins: text75()
+    /** Round 963: a supporter's 40 h and 75 h texts (index 2 and 3; the others are never thank-yous). */
+    private static final String THANKS_40 = "Forty hours! You've already stopped by the developer's Ko-fi page, so "
+            + "there's no ask here, only a thank-you. Every hour you play, and every bug you report on Discord, helps "
+            + "shape the Realms. Onward, Realm-walker!";
+    private static final String THANKS_75 = "You've already stopped by the developer's Ko-fi page, so there's no ask "
+            + "here, only a thank-you. Players like you are why the Realms keep growing. Here's to the next "
+            + "seventy-five, Realm-walker.";
 
     /** Counted time is written to settings.json this often (plus at pause and exit). */
     private static final float FLUSH_SECONDS = 300f;
@@ -52,6 +85,9 @@ public final class SupportPrompt {
     private static boolean wasOnWorldMap;
     private static float armedFor = -1f;
     private static float quietFor;
+    /** Round 963: the splash's dark veil over the HUD (removed with the dialog), and its 1x1 white texture. */
+    private static Image veil;
+    private static Texture white;
 
     /** The plane's Ko-fi page, or null (a stock plane: no counting, no ask, no Settings row). */
     public static String supportLink() {
@@ -107,17 +143,48 @@ public final class SupportPrompt {
         return (float) (Config.instance().getSettingData().supportPlaySeconds / 3600d);
     }
 
-    /** The ask due now (the last threshold passed that was not asked yet), or -1. */
+    /** The ask due now, or -1. */
     static int dueAsk() {
         SettingData s = Config.instance().getSettingData();
-        if (s.supportNeverAsk || s.supportClicked || s.supportAsksShown >= HOURS.length)
-            return -1;
-        float h = hours();
+        return dueAsk(hours(), s.supportAsksShown, s.supportNeverAsk, s.supportClicked);
+    }
+
+    /** The ask due: the last threshold passed that was not asked yet and that this player may get, or -1. A total
+     *  past several marks gets only the latest (show() counts the earlier ones as asked) - one ask, not two in a row.
+     *  Round 963: "Not until 40 hours" and a Support click stop only the asks before ALWAYS_FROM. */
+    static int dueAsk(float hours, int shown, boolean notUntil40, boolean clicked) {
         int due = -1;
-        for (int i = s.supportAsksShown; i < HOURS.length; i++)
-            if (h >= HOURS[i])
+        for (int i = Math.max(0, shown); i < HOURS.length; i++)
+            if (hours >= HOURS[i] && mayAsk(i, notUntil40, clicked))
                 due = i;
         return due;
+    }
+
+    /** The next ask this player can still get, or -1 (the status line and the console). */
+    static int nextAsk(int shown, boolean notUntil40, boolean clicked) {
+        for (int i = Math.max(0, shown); i < HOURS.length; i++)
+            if (mayAsk(i, notUntil40, clicked))
+                return i;
+        return -1;
+    }
+
+    private static boolean mayAsk(int index, boolean notUntil40, boolean clicked) {
+        return index >= ALWAYS_FROM || !notUntil40 && !clicked;
+    }
+
+    /** Round 963: a supporter's 40 h and 75 h asks are thank-yous. */
+    static boolean isThanks(int index, boolean clicked) {
+        return clicked && index >= ALWAYS_FROM;
+    }
+
+    /** Round 963: the 75 h ask's text; the save's duel wins lead it from WINS_PHRASE_MIN on. */
+    static String text75(int wins) {
+        return (wins >= WINS_PHRASE_MIN ? wins + " duels won. " : "")
+                + "You're not visiting the Realms anymore. You live here.\n\n"
+                + "Every hour was free, and it stays free, for you and for every new player. What keeps the updates "
+                + "coming is players who decide it was worth something to them.\n\n"
+                + "If TFR has given you even a slice of what a $60 game does, a coffee-sized tip goes straight into "
+                + "the next update. This is the last time we'll ask. Thank you, Realm-walker.";
     }
 
     /** Arms when the world map comes back (after a duel, a load, a town); asks once the scene has stayed quiet. */
@@ -156,47 +223,159 @@ public final class SupportPrompt {
     /** Shows ask `index` on the world map's dialog. The console's "support show" calls this directly. */
     static void show(int index, String why) {
         SettingData s = Config.instance().getSettingData();
+        boolean thanks = isThanks(index, s.supportClicked);
+        boolean overrode = index >= ALWAYS_FROM && s.supportNeverAsk;
         s.supportAsksShown = index + 1;
         flushNow();
         String link = supportLink(), discord = discordLink();
-        System.out.println("[TFR-Support] ask " + (index + 1) + " of " + HOURS.length + " (" + (int) HOURS[index]
-                + " h) shown at " + hoursText(hours()) + " played (" + why + ")");
+        System.out.println("[TFR-Support] " + (thanks ? "thank-you " : "ask ") + (index + 1) + " of " + HOURS.length
+                + " (" + (int) HOURS[index] + " h" + (index == SPLASH ? ", splash" : "") + ") shown at "
+                + hoursText(hours()) + " played (" + why + ")"
+                + (thanks ? " - Support TFR was clicked in an earlier ask" : "")
+                + (overrode ? " - shown although the player picked Not until 40 hours" : ""));
+        String text = index == SPLASH ? (thanks ? THANKS_75 : text75(wins())) : thanks ? THANKS_40 : TEXTS[index];
         WorldStage stage = WorldStage.getInstance();
         Dialog dialog = stage.getDialog();
         dialog.getContentTable().clear();
         dialog.getButtonTable().clear();
         dialog.clearListeners();
-        TypingLabel title = Controls.newTypingLabel("[%120]" + TITLES[index]);
-        title.skipToTheEnd();
-        dialog.getContentTable().add(title).padBottom(6f).row();
-        TypingLabel label = Controls.newTypingLabel(TEXTS[index]);
-        label.setWrap(true);
-        label.skipToTheEnd();
-        dialog.getContentTable().add(label).width(250f).row();
-        dialog.getButtonTable().add(Controls.newTextButton("Support TFR", () -> {
-            // Round 756 follow-up: a supporter is not asked again. Only here - the Settings row's link stops nothing,
-            // so a player who looks at the page from Settings still gets the asks they have not answered.
-            Config.instance().getSettingData().supportClicked = true;
-            answer("support", stage);
-            open(link);
-        })).width(240f).row();
+        Table buttons = index == SPLASH ? new Table() : dialog.getButtonTable();
+        if (index == SPLASH)
+            buttons.defaults().padBottom(3f);
+        float buttonWidth = index == SPLASH ? (Forge.isLandscapeMode() ? 230f : 240f) : 240f;
+        if (!thanks)
+            buttons.add(Controls.newTextButton(index == SPLASH ? "Support TFR on Ko-fi" : "Support TFR", () -> {
+                // Round 756 follow-up: a supporter is not asked again. Only here - the Settings row's link stops nothing,
+                // so a player who looks at the page from Settings still gets the asks they have not answered.
+                Config.instance().getSettingData().supportClicked = true;
+                answer("support", stage);
+                open(link);
+            })).width(buttonWidth).row();
         if (discord != null)
-            dialog.getButtonTable().add(Controls.newTextButton("Join the Discord", () -> {
+            buttons.add(Controls.newTextButton("Join the Discord", () -> {
                 answer("discord", stage);
                 open(discord);
-            })).width(240f).row();
-        dialog.getButtonTable().add(Controls.newTextButton("Maybe later", () -> answer("maybe later", stage))).width(240f).row();
-        if (index < HOURS.length - 1) // the last ask is the last anyway
-            dialog.getButtonTable().add(Controls.newTextButton("Don't ask again", () -> {
+            })).width(buttonWidth).row();
+        if (index == SPLASH || thanks)
+            buttons.add(Controls.newTextButton("Back to the Realms", () -> answer("back to the realms", stage))).width(buttonWidth).row();
+        else
+            buttons.add(Controls.newTextButton("Maybe later", () -> answer("maybe later", stage))).width(buttonWidth).row();
+        if (index < ALWAYS_FROM) // round 963: "Don't ask again" was not true any more - the 40 h ask comes anyway
+            buttons.add(Controls.newTextButton("Not until 40 hours", () -> {
                 Config.instance().getSettingData().supportNeverAsk = true;
-                answer("don't ask again", stage);
-            })).width(240f).row();
+                answer("not until 40 hours", stage);
+            })).width(buttonWidth).row();
+        if (index == SPLASH)
+            layoutSplash(dialog, text, buttons);
+        else {
+            TypingLabel title = Controls.newTypingLabel("[%120]" + TITLES[index]);
+            title.skipToTheEnd();
+            dialog.getContentTable().add(title).padBottom(6f).row();
+            TypingLabel label = Controls.newTypingLabel(text);
+            label.setWrap(true);
+            label.skipToTheEnd();
+            dialog.getContentTable().add(label).width(250f).row();
+        }
         dialog.setKeepWithinStage(true);
         stage.showDialog();
+        if (index == SPLASH)
+            addVeil(dialog);
+    }
+
+    /** Round 963: the 75 h splash - the art (SPLASH_ART, 170 units square, a gold line round it) beside the gold title,
+     *  the text and the buttons in landscape, above them in portrait. All of it goes in the button table, so
+     *  showDialog's focus list (it walks the button table's nested tables) still finds every button. */
+    private static void layoutSplash(Dialog dialog, String text, Table buttons) {
+        boolean landscape = Forge.isLandscapeMode();
+        float textWidth = landscape ? 250f : 240f;
+        Table column = new Table();
+        TypingLabel title = Controls.newTypingLabel("[%160][#F4CC60]" + TITLES[SPLASH]);
+        title.skipToTheEnd();
+        column.add(title).padBottom(4f).row();
+        TypingLabel label = Controls.newTypingLabel(text);
+        label.setWrap(true);
+        label.skipToTheEnd();
+        column.add(label).width(textWidth).padBottom(6f).row();
+        column.add(buttons).row();
+        Table body = dialog.getButtonTable();
+        Container<Image> art = splashArt();
+        if (art != null) {
+            body.add(art).size(172f).pad(4f);
+            if (!landscape)
+                body.row();
+        }
+        body.add(column).pad(4f);
+    }
+
+    /** The splash's art in a 1-unit gold frame, or null (no file: the splash shows without it). */
+    private static Container<Image> splashArt() {
+        try {
+            Texture tex = Forge.getAssets().getTexture(Config.instance().getFile(SPLASH_ART), false);
+            if (tex == null) {
+                System.out.println("[TFR-Support] no " + SPLASH_ART + " - the splash shows without art");
+                return null;
+            }
+            tex.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+            Image image = new Image(new TextureRegionDrawable(new TextureRegion(tex)));
+            image.setScaling(Scaling.fit);
+            Container<Image> frame = new Container<>(image);
+            frame.fill().pad(1f).setBackground(new TextureRegionDrawable(new TextureRegion(white())).tint(new Color(0xF4CC60FF)));
+            System.out.println("[TFR-Support] splash art " + SPLASH_ART + " " + tex.getWidth() + "x" + tex.getHeight());
+            return frame;
+        } catch (Exception e) {
+            System.err.println("[TFR-Support] could not load " + SPLASH_ART + ": " + e);
+            return null;
+        }
+    }
+
+    /** Darkens everything behind the splash (the world and the HUD); answer() removes it. */
+    private static void addVeil(Dialog dialog) {
+        Stage st = dialog.getStage();
+        if (st == null)
+            return;
+        removeVeil();
+        veil = new Image(new TextureRegionDrawable(new TextureRegion(white())));
+        veil.setColor(0.03f, 0.02f, 0.06f, 0.6f);
+        veil.setTouchable(Touchable.disabled);
+        veil.setSize(st.getWidth(), st.getHeight());
+        st.addActor(veil);
+        dialog.toFront();
+    }
+
+    private static void removeVeil() {
+        if (veil != null) {
+            veil.remove();
+            veil = null;
+        }
+    }
+
+    private static Texture white() {
+        if (white == null) {
+            Pixmap p = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
+            p.setColor(Color.WHITE);
+            p.fill();
+            white = new Texture(p);
+            p.dispose();
+        }
+        return white;
+    }
+
+    /** Round 963: this save's duel wins (0 with no player), logged with whether the 75 h text names them. */
+    private static int wins() {
+        int wins = 0;
+        try {
+            wins = AdventurePlayer.current().getStatistic().totalWins();
+        } catch (Exception e) {
+            System.err.println("[TFR-Support] could not read the duel wins: " + e);
+        }
+        System.out.println("[TFR-Support] 75 h text: wins=" + wins + ", wins phrase " + (wins >= WINS_PHRASE_MIN
+                ? "shown" : "left out (under " + WINS_PHRASE_MIN + ")"));
+        return wins;
     }
 
     private static void answer(String what, WorldStage stage) {
         stage.hideDialog();
+        removeVeil();
         SettingData s = Config.instance().getSettingData();
         s.supportLastAnswer = what; // round 777: for the status line; flushNow saves it
         flushNow();
@@ -210,20 +389,23 @@ public final class SupportPrompt {
         if (supportLink() == null)
             return;
         SettingData s = Config.instance().getSettingData();
-        String next = s.supportNeverAsk || s.supportClicked || s.supportAsksShown >= HOURS.length ? "none"
-                : (int) HOURS[s.supportAsksShown] + "h";
+        int next = nextAsk(s.supportAsksShown, s.supportNeverAsk, s.supportClicked);
         String stopped = stoppedText(s);
         System.out.println("[TFR-Support] status played=" + String.format(java.util.Locale.ROOT, "%.2fh", hours()) + " asks=" + s.supportAsksShown + "/"
-                + HOURS.length + " last=" + (s.supportLastAnswer == null ? "none" : "\"" + s.supportLastAnswer + "\"") + " next=" + next + " stopped=" + (stopped.isEmpty() ? "no" : "\"" + stopped.substring(stopped.indexOf(':') + 2) + "\""));
+                + HOURS.length + " last=" + (s.supportLastAnswer == null ? "none" : "\"" + s.supportLastAnswer + "\"")
+                + " next=" + (next < 0 ? "none" : (int) HOURS[next] + "h" + (isThanks(next, s.supportClicked) ? " (thank-you)" : ""))
+                + " stopped=" + (stopped.isEmpty() ? "no" : "\"" + stopped.substring(stopped.indexOf(':') + 2) + "\""));
     }
 
-    /** Why no ask comes any more, for the log and the console ("" while asks can still come). */
+    /** What holds the asks back, for the log and the console ("" while every ask can still come). */
     private static String stoppedText(SettingData s) {
+        if (s.supportAsksShown >= HOURS.length)
+            return ", asks stopped: all asked";
         if (s.supportClicked)
-            return ", asks stopped: Support TFR clicked";
-        if (s.supportNeverAsk)
-            return ", asks stopped: don't ask again";
-        return s.supportAsksShown >= HOURS.length ? ", asks stopped: all asked" : "";
+            return ", asks held: Support TFR clicked (40 and 75 h are thank-yous)";
+        if (s.supportNeverAsk && s.supportAsksShown < ALWAYS_FROM)
+            return ", asks held: not until 40 hours";
+        return "";
     }
 
     /** Opens a link in the browser (Gdx.net.openURI - desktop and Android). TFR_SUPPORT_NO_BROWSER=1 only logs it. */
@@ -247,7 +429,7 @@ public final class SupportPrompt {
         return String.format(java.util.Locale.ROOT, "%.2f h", h);
     }
 
-    /** Console "support ...": hours N | show [1-3] | reset | info. */
+    /** Console "support ...": hours N | show [1-4] | never | clicked | reset | info. */
     public static String console(String[] s) {
         if (supportLink() == null)
             return "no supportLink on this plane";
@@ -270,10 +452,20 @@ public final class SupportPrompt {
                 try {
                     i = s.length > 1 ? Math.max(1, Math.min(HOURS.length, Integer.parseInt(s[1]))) - 1 : Math.max(0, dueAsk());
                 } catch (NumberFormatException e) {
-                    return "support show 1 | 2 | 3";
+                    return "support show 1 | 2 | 3 | 4";
                 }
                 show(i, "console");
-                return "ask " + (i + 1) + " shown";
+                return (isThanks(i, set.supportClicked) ? "thank-you " : "ask ") + (i + 1) + " shown";
+            case "never": // round 963: as if "Not until 40 hours" was picked (round 756's "Don't ask again")
+                set.supportNeverAsk = true;
+                flushNow();
+                System.out.println("[TFR-Support] console: not until 40 hours set");
+                return info();
+            case "clicked": // round 963: as if Support TFR was clicked in an ask
+                set.supportClicked = true;
+                flushNow();
+                System.out.println("[TFR-Support] console: Support TFR clicked set");
+                return info();
             case "reset":
                 set.supportPlaySeconds = 0d;
                 set.supportAsksShown = 0;
@@ -291,7 +483,7 @@ public final class SupportPrompt {
         SettingData s = Config.instance().getSettingData();
         int due = dueAsk();
         return "played " + hoursText(hours()) + ", asks shown " + s.supportAsksShown + "/" + HOURS.length
-                + stoppedText(s) + (due >= 0 ? ", ask " + (due + 1) + " due" : "")
-                + " (support hours N | show [1-3] | reset)";
+                + stoppedText(s) + (due >= 0 ? ", " + (isThanks(due, s.supportClicked) ? "thank-you " : "ask ") + (due + 1) + " due" : "")
+                + " (support hours N | show [1-4] | never | clicked | reset)";
     }
 }

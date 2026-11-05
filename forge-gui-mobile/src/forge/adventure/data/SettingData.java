@@ -80,9 +80,10 @@ public class SettingData {
     public long logShareOptInAt;
     public String[] logShareSent;
     // Round 756 (the user: "a little prompt in the game after a certain number of game playing hours"): util/SupportPrompt.
-    // supportPlaySeconds - real play time across every save, window in focus; supportAsksShown - how many of the 5/15/40
-    // hour asks were shown; supportNeverAsk - the player's "Don't ask again"; supportClicked - Support TFR was clicked
-    // in an ask (round 756 follow-up, the user: "once a player clicks Support TFR, don't show the later support asks").
+    // supportPlaySeconds - real play time across every save, window in focus; supportAsksShown - how many of the
+    // 5/15/40/75 hour asks were used; supportNeverAsk - the player's "Not until 40 hours" (round 756's "Don't ask again";
+    // since round 963 it stops only the 5 and 15 h asks); supportClicked - Support TFR was clicked in an ask (round 756
+    // follow-up; since round 963 the 40 and 75 h asks become thank-yous for that player).
     public double supportPlaySeconds;
     public int supportAsksShown;
     public boolean supportNeverAsk;
@@ -98,7 +99,7 @@ public class SettingData {
     // played / allowed this turn - to each player's stat column in duels (VPlayerPanel.InfoTabLand).
     public boolean showLandDrops;
     // Round 777: the button picked in the last support ask (SupportPrompt.answer) - "support", "discord", "maybe later",
-    // "don't ask again" - for the once-a-launch [TFR-Support] status line; null before any answer.
+    // "not until 40 hours" (round 963; "don't ask again" before), "back to the realms" - for the once-a-launch [TFR-Support] status line; null before any answer.
     public String supportLastAnswer;
     // Round 849 (the user: "sort the sets by the number of cards found, then alphabetically. (Or if there is space add a
     // sort function. Cards found/Alphabetically/Research time"): the Research Lab's "Sort:" box - "found", "az" or

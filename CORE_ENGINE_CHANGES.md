@@ -35,6 +35,16 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 963 - the 40 h support ask always comes, and a 75 h splash
+- `forge-gui-mobile/pom.xml` (STOCK): `<testSourceDirectory>test</testSourceDirectory>` (the module's `src` holds the
+  main sources, so tests cannot sit in the default `src/test/java`) and a test-scope TestNG 7.10.2 (as `forge-gui`'s,
+  jcommander not excluded - surefire's TestNG provider needs it). Only the new `test/` folder uses it; the jar and the
+  Android build are unchanged. If upstream adds tests to this module, take their layout and move ours.
+- `forge-gui-mobile/src/forge/adventure/data/SettingData.java` (STOCK, TFR fields): comments only - `supportNeverAsk`
+  is now the "Not until 40 hours" button and stops only the 5 and 15 h asks; `supportLastAnswer` gains its new values.
+- TFR files: `util/SupportPrompt.java` (the gating, the 75 h splash, the console), NEW
+  `test/forge/adventure/util/SupportPromptTest.java`, NEW plane art `ui/support_75h.png` (a placeholder).
+
 ### Round 961 - the engine to the 11.04 daily (upstream `a4281f7e58b`)
 - `forge-gui-mobile/src/forge/adventure/data/RewardData.java` (STOCK): the one text conflict. Upstream's #12568
   (`8accaa1d31e`) added `resolveNamedCard` for the Union pool and the named-card branch; ours kept whole

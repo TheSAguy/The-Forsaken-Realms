@@ -13,6 +13,8 @@
 
     <build>
         <sourceDirectory>src</sourceDirectory>
+        <!-- TFR round 963: this module's own tests (src holds the main sources, so not the default src/test/java) -->
+        <testSourceDirectory>test</testSourceDirectory>
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -30,6 +32,12 @@
         </repository>
     </repositories>
     <dependencies>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>7.10.2</version>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>forge</groupId>
             <artifactId>forge-core</artifactId>

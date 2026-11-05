@@ -14264,6 +14264,55 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 963: the 40 h support ask always comes, and a 75 h splash (2026-11-04)
+
+The user: "Let's change the 40, to always show, even if they turned it off at 5 or 15. Also, add a 75h one, Let's make
+a big splash for it. I'll ask art." Why: the players' logs showed 13 asks to 11 players, 10 "Don't ask again" at the
+first ask and no Support click. Design and texts agreed with the TFR 1 main thread (`C:\CLAUDE\PROJECTS\TFR1\notes\r963\design.md`,
+mock-ups in the same folder).
+
+- **The gating** - `SupportPrompt.HOURS` = 5, 15, 40, 75 h. `supportNeverAsk` keeps its name and file field, but its
+  button now says **Not until 40 hours** (was "Don't ask again", which would no longer be true) and it stops only the
+  5 and 15 h asks (`ALWAYS_FROM` = the 40 h index). The 40 h ask and the 75 h splash always come - also for old saves
+  that hold `supportNeverAsk = true`, the user's word. A player who clicked Support TFR in an ask (`supportClicked`)
+  gets a **thank-you** at 40 and 75 h instead of an ask (the main thread's call, not in the user's words). The 40 h
+  ask's Maybe later stops only that ask; the 75 h splash is the last. A total past several marks still shows only the
+  latest due ask and counts the earlier ones (round 756's rule): a save at 90 h gets the splash, not a 40 h ask and a
+  splash minutes apart. `supportAsksShown` keeps its meaning, so an old save that saw the 40 h ask (3) still gets the
+  75 h one. No save or settings conversion.
+- **Texts** - the 40 h ask drops "This is the last time we'll ask" (no longer true; players who saw the old text will
+  still get the 75 h one). The 75 h splash, title "Seventy-five hours!", three paragraphs (the main thread's text):
+  "{wins} duels won. You're not visiting the Realms anymore. You live here." / "Every hour was free, and it stays free,
+  ..." / "If TFR has given you even a slice of what a $60 game does, a coffee-sized tip goes straight into the next
+  update. This is the last time we'll ask. Thank you, Realm-walker." `{wins}` is the save's
+  `PlayerStatistic.totalWins()` and shows only from 50 (`WINS_PHRASE_MIN`; "3 duels won" on a fresh save undercuts the
+  line). Thank-you texts for 40 h and 75 h (`THANKS_40`, `THANKS_75`).
+- **Buttons** - 5 and 15 h: Support TFR / Join the Discord / Maybe later / Not until 40 hours. 40 h: Support TFR /
+  Join the Discord / Maybe later. 75 h: **Support TFR on Ko-fi** / Join the Discord / Back to the Realms. Thank-yous:
+  Join the Discord / Back to the Realms.
+- **The splash** - a dark veil over the world and the HUD (a 1x1 white texture tinted 60% black, untouchable, removed
+  on any answer), and the world map's dialog with the art (170 units square, a 1-unit gold line round it) beside a
+  gold `[%160]` title, the text and the buttons in landscape, above them in portrait. All of it sits in the dialog's
+  button table so `showDialog`'s focus list still finds the buttons.
+- **The art** - `forge-gui/res/adventure/The Forsaken Realms/ui/support_75h.png` (`SupportPrompt.SPLASH_ART`). This
+  round ships a marked PLACEHOLDER there; the user's commissioned art replaces the file with no code change. Spec for
+  the Art thread: 1024 x 1024 PNG, opaque, no lettering, subject inside a 40 px margin (the gold line overlaps the
+  edge); on screen 453 px at 1280x720 (both orientations), 1360 px at 4K, linear filtering. A missing file shows the
+  splash without art (`[TFR-Support] no ui/support_75h.png`).
+- **Logging** - `[TFR-Support]`: "thank-you 3 of 4 (40 h) shown ... - Support TFR was clicked in an earlier ask",
+  "ask 3 of 4 (40 h) shown ... - shown although the player picked Not until 40 hours", "ask 4 of 4 (75 h, splash)",
+  "75 h text: wins=412, wins phrase shown" (or "left out (under 50)"), "splash art ui/support_75h.png 1024x1024";
+  answers "not until 40 hours" and "back to the realms"; the launch status line's `next=` names the next ask the
+  player can still get (with "(thank-you)"), and `stopped=` reads "asks held: not until 40 hours" / "asks held: Support
+  TFR clicked (40 and 75 h are thank-yous)" / "asks stopped: all asked".
+- **Console** - `support show [1-4]` (a thank-you when `supportClicked` is set), and two new: `support never` (as if
+  Not until 40 hours was picked) and `support clicked` (as if Support TFR was clicked).
+- **Tests** - `forge-gui-mobile/test/forge/adventure/util/SupportPromptTest.java` (new; the module's first test, so
+  `forge-gui-mobile/pom.xml` gets `<testSourceDirectory>test</testSourceDirectory>` and a test-scope TestNG): one by
+  one after Maybe later, an old save with `supportNeverAsk` (no 15 h, 40 and 75 h anyway), an old save that saw the
+  40 h ask, a Support click (thank-yous at 40 and 75 h only), a player past both marks (one ask), the 50-win phrase.
+- **Not changed** - the Settings row and the welcome page's Support button still stop nothing; the 5 and 15 h texts.
+
 ## Round 961: the engine to the 11.04 daily (upstream `a4281f7e58b`), and what upstream's adventure data changed (2026-11-04)
 
 The user installed the 11.04 official daily as BASE_INSTALL: "I've updated the official Forge engine: E:\GAMES\Forge_2.
