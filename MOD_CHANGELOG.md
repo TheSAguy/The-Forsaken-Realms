@@ -14340,7 +14340,13 @@ No upstream change touched Shandalar's own plane data, `common/` adventure data 
 - forge-game: `GameMementoTest` (upstream's, 14), `GameEntityViewTest` and `CardViewListsTest` (round 919), 21 in all
   in that run; forge-gui: `AbstractGuiGameShould` (round 941), 2; forge-gui-desktop: `CastLastStateClearTest` (round
   958, 3) and upstream's `FlatMonteCarloDredgeLineTest` (8). All pass.
-- In-game: the agent regression is the follow-up below.
+- In-game, the agent game (packaged with `--full --out` into `C:\CLAUDE\PROJECTS\TFR1gent`, not live; the 10.xx
+  mirror set aside as `agent	fr960_old_mirror`): slot 30 loaded (Day 1); three duels at 50x (`[TFR-Agent] duel speed set
+  to 50x`): won against Ozox (Adept) on the ported deck in 33 turns, won against Woodland Rover (Apprentice), lost to
+  Shrieking Skaab (Apprentice); reward screens taken; `[TFR-LKI] turn over` lines as round 958 logs them; a save to slot
+  41 and load back (gold, shards, life, tile, deck, items the same); quit through the menu. `forge.log`: no exception,
+  no error, no `Missing card`, no `Unexpected behavior`. Not run: a shop (Orazca's were destroyed in that save), the
+  Temple Deep Spawn map, Android, a boss.
 
 **Files:** the merge (153 upstream files), `forge-gui-desktop/src/main/java/forge/menus/HelpMenu.java`, `forge-gui/res/adventure/The Forsaken Realms/maps/map/fallen_empires/svyelunite_temple.tmx`,
 `forge-gui/res/adventure/The Forsaken Realms/decks/legends/ozox.dck`, `forge-gui/res/adventure/The Forsaken Realms/config.json`,
