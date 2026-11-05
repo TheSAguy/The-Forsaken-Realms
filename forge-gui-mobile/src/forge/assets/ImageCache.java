@@ -428,6 +428,14 @@ public class ImageCache {
                 if (!Forge.getAssets().manager().contains(fileName)) {
                     Forge.getAssets().manager().load(fileName, Texture.class, cardTextureParameter(fileName));
                     counter += 1;
+                    // TFR round 965: register the card when it is queued, as before #12054. Once loaded, getImage's
+                    // getAsset() fast path returns it and the branch above never sees it, so neither the cacheSize cap
+                    // nor a loot screen's unloadCardTextures(true) could free duel art (notes/r965-asset-climb.md).
+                    if (!others) {
+                        getSyncQ().add(fileName);
+                        getCardsLoaded().add(fileName);
+                        unloadCardTextures(false);
+                    }
                 }
 
                 // Every card still waiting for its texture reaches this point on EVERY frame. AssetManager.update(int)

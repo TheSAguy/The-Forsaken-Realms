@@ -14264,6 +14264,33 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 965 (follow-up): duel card art is freed again (2026-11-05)
+
+- **Why** - log review `notes/logs-1105.md` P2-1: aeab35b5 (Pixel 8 Pro) ended a 12-hour launch at rss 7,839 MB, its
+  `assets=` climbing 361 to 1,773 and never falling. Round 965 measured it in the agent game
+  (`C:\CLAUDE\PROJECTS\TFR1\notes\r965-asset-climb.md`: a local probe logging every asset load and unload, a 56-minute
+  soak of towns, shops, dungeons, 53 duels at 50x, loot screens, inventory and deck editor). Two groups climb and never
+  unload: duel card art (624 textures loaded, 478 never released, 605 MB - 60% of the climb) and enemy sprite atlases
+  (36%). Shop and loot art (`RewardActor`) was NOT the cause - it registers its loads and every `Done` frees them.
+- **The cause** - stock `ImageCache`, since upstream #12054 (`459d8436e5d`, 2026-09-27, async card loading): a card is
+  added to `syncQ`/`cardsLoaded` only in `loadAsset`'s `check != null` branch, and a loaded card never gets there
+  (`getImage` returns it from `getAsset()` first). Unregistered textures escape both the `Forge.cacheSize` cap (300) and
+  `RewardScene.quitScene`'s `unloadCardTextures(true)`. That call also resets `ImageCache.counter`, so `[TFR-Memory]`'s
+  `images=` read small and earlier reviews took the art as capped.
+- **The change** (`forge-gui-mobile/src/forge/assets/ImageCache.java`, STOCK, 5 lines) - when `loadAsset` queues a
+  card texture for the first time and `!others`, it adds it to `syncQ` and `cardsLoaded` and calls
+  `unloadCardTextures(false)`: the registration the code did before #12054. `RewardActor` (`others=true`) keeps
+  registering its own loads through `updateSynqCount`.
+- **Effect** - the 300 cap applies again (a duel with more than 300 distinct cards reloads the oldest on their next
+  draw, as before #12054), and every loot screen frees all duel art. Measured with the change compiled in (the same save
+  and loop, 25 min, 29 duels): 404 card textures loaded, 404 released, 0 left at the end; at HEAD the same play held 9
+  never-released cards (11 MB) per duel. Estimated 1.1-1.4 GB freed over a 12-hour phone launch.
+- **Not in this round** - enemy sprite atlases (`Config.getAtlas`, from `CharacterSprite.load`; about 2.4 MB per enemy
+  kind, never unloaded): fix B in the notes, a separate decision.
+- **Checks** - `mvn -pl forge-gui-mobile -am compile` exit 0. Agent screenshots of the built fix (a duel, the deck
+  editor after a loot screen) were taken after the commit, outside the repo, in `C:\CLAUDE\PROJECTS\TFR1\notes\r965\`;
+  the round report says whether they were taken. Not packaged.
+
 ## Round 968: the chest's traveling artificer never offers a banned card (2026-11-05)
 
 - **Why** - the player Tallennar on Discord: "I have 2 sol rings. Idk how I got them tho. One I got as a reward for

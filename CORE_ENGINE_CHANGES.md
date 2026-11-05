@@ -35,6 +35,15 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 965 (follow-up) - duel card art is registered when it is queued, so it can be freed
+- `forge-gui-mobile/src/forge/assets/ImageCache.java` (STOCK): `loadAsset()`, the branch that queues a card texture
+  (`manager().load(...)`, `counter += 1`) - for `!others` it also adds the file to `syncQ` and `cardsLoaded` and calls
+  `unloadCardTextures(false)`. Upstream #12054 (`459d8436e5d`, 2026-09-27, async card loading) moved that registration
+  into the `check != null` branch, which a loaded card never reaches (`getImage`'s `getAsset()` fast path returns it
+  first), so the `cacheSize` cap and `unloadCardTextures(true)` never freed duel art. If upstream reworks `loadAsset` or
+  fixes this its own way, take theirs and drop ours; the check is that a loot screen frees the duel's card textures
+  (`notes/r965-asset-climb.md`). Worth reporting upstream.
+
 ### Round 963 - the 40 h support ask always comes, and a 75 h splash
 - `forge-gui-mobile/pom.xml` (STOCK): `<testSourceDirectory>test</testSourceDirectory>` (the module's `src` holds the
   main sources, so tests cannot sit in the default `src/test/java`) and a test-scope TestNG 7.10.2 (as `forge-gui`'s,
