@@ -35,6 +35,15 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 970 - quest-gated places keep their gate after a load
+- `forge-gui-mobile/src/forge/adventure/pointofintrest/PointOfInterest.java` (STOCK): `load()` rebuilds
+  `questFlagsToActivate` from the template (new `static gatesOf(PointOfInterestData)`), which stock never read back;
+  `getActive()` checks the gates through new `static closedBy(...)`, keeps a gated place open while an active quest stage
+  targets it (new private `questTargeting()`), and logs state changes (`[TFR-QuestGate]`, new transient `gateState`,
+  `static describe(...)`). `save()` still stores the list, unread. If upstream fixes its load hole, keep the template
+  rebuild (not the saved list) or old saves keep the seven relic-trail gates round 970 dropped from the plane.
+- New test `forge-gui-mobile/test/forge/adventure/pointofintrest/PointOfInterestGateTest.java`.
+
 ### Round 974 - Android's GL and UI threads end the app on an uncaught error, with a message
 - `forge-gui/src/main/java/forge/error/ExceptionHandler.java` (STOCK): the static block keeps the default handler it
   replaces (`replacedHandler`); new `setFatalThreads(Predicate<Thread>, BiConsumer<Thread, Throwable>)`;

@@ -4,6 +4,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import forge.adventure.data.AdventureQuestData;
+import forge.adventure.data.AdventureQuestStage;
 import forge.adventure.data.DialogData;
 import forge.adventure.data.PointOfInterestData;
 import forge.adventure.util.*;
@@ -11,7 +13,9 @@ import forge.adventure.util.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
+import java.util.function.ToIntFunction;
 
 /**
  * Point of interest stored in the world
@@ -54,6 +58,16 @@ public class PointOfInterest implements Serializable, SaveFileContent {
             displayName = data==null?"":data.getDisplayName();
         }
 
+        // Round 970 (Fable P2-16): the quest-flag gates come back from the template. Stock never read them back (saved
+        // below since 2023), so after any load every gated place was open. Not read from the save: a gate a later
+        // version drops (round 970 dropped the seven Quest_* gates) is gone from old saves too.
+        questFlagsToActivate.clear();
+        questFlagsToActivate.addAll(gatesOf(data));
+        gateState = 0;
+        if (!questFlagsToActivate.isEmpty())
+            System.out.println("[TFR-QuestGate] " + getEnglishDisplayName() + ": gate " + describe(questFlagsToActivate)
+                    + " restored from the template");
+
         oldMapId="";
         Array<Sprite> textureAtlas = Config.instance().getPOISprites(this.data);
         spriteIndex = spreadZeroSpriteIndex(spriteIndex, textureAtlas.size, this.data, position);
@@ -87,6 +101,8 @@ public class PointOfInterest implements Serializable, SaveFileContent {
     boolean active = true;
     private String displayName;
     public ArrayList<DialogData.ActionData.QuestFlag> questFlagsToActivate=new ArrayList<>();
+    /** Round 970: the gate's last state, for the [TFR-QuestGate] line (0 not yet seen, 1 closed, 2 open, 3 held open). */
+    private transient int gateState;
     public PointOfInterest() {
     }
     public PointOfInterest(PointOfInterestData d, Vector2 pos, Random rand) {
@@ -203,12 +219,58 @@ public class PointOfInterest implements Serializable, SaveFileContent {
         // behavior is unchanged until something calls setActive(false) at runtime.
         if (!active)
             return false;
-        for (DialogData.ActionData.QuestFlag flag : questFlagsToActivate) {
-            if (Current.player().getQuestFlag(flag.key) < flag.val){
-                return false;
+        if (questFlagsToActivate.isEmpty())
+            return true;
+        String closed = closedBy(questFlagsToActivate, Current.player()::getQuestFlag);
+        String quest = closed == null ? null : questTargeting();
+        // Round 970: a place an active quest stage is sending the player to stays open - a save made after a load,
+        // when every gate was open, can hold such a quest ("(Almost) Open for Business" bound to Emrakul's Castle).
+        int state = closed == null ? 2 : quest == null ? 1 : 3;
+        if (state != gateState) {
+            gateState = state;
+            System.out.println("[TFR-QuestGate] " + getEnglishDisplayName() + (state == 2 ? ": open (" + describe(questFlagsToActivate) + " reached)"
+                    : state == 1 ? ": hidden (" + closed + ")" : ": held open (" + closed + ") - the quest \"" + quest + "\" sends the player there"));
+        }
+        return state != 1;
+    }
+
+    /** Round 970: the template's gates, as the constructor takes them. */
+    static List<DialogData.ActionData.QuestFlag> gatesOf(PointOfInterestData d) {
+        if (d == null || d.questFlagsToActivate == null)
+            return new ArrayList<>();
+        return new ArrayList<>(Arrays.asList(d.questFlagsToActivate));
+    }
+
+    /** Round 970: the first gate not reached, as "mainQuest 1 < 2", or null when every gate is open. */
+    static String closedBy(List<DialogData.ActionData.QuestFlag> gates, ToIntFunction<String> questFlag) {
+        for (DialogData.ActionData.QuestFlag flag : gates) {
+            int now = questFlag.applyAsInt(flag.key);
+            if (now < flag.val)
+                return flag.key + " " + now + " < " + flag.val;
+        }
+        return null;
+    }
+
+    static String describe(List<DialogData.ActionData.QuestFlag> gates) {
+        StringBuilder sb = new StringBuilder();
+        for (DialogData.ActionData.QuestFlag flag : gates)
+            sb.append(sb.length() == 0 ? "" : ", ").append(flag.key).append(" >= ").append(flag.val);
+        return sb.toString();
+    }
+
+    /** Round 970: the name of an active quest whose active stage targets this place, or null. */
+    private String questTargeting() {
+        for (AdventureQuestData quest : Current.player().getQuests()) {
+            for (AdventureQuestStage stage : quest.stages) {
+                if (stage == null || stage.getStatus() != AdventureQuestController.QuestStatus.ACTIVE)
+                    continue;
+                PointOfInterest target = stage.getTargetPOI();
+                if (target == this || target != null && target.data != null && target.data.name.equals(data.name)
+                        && target.position.equals(position))
+                    return quest.getName();
             }
         }
-        return true;
+        return null;
     }
 
     public void setActive(boolean active) {

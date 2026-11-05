@@ -14264,6 +14264,60 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 970: Emrakul's Castle and the Temples of Chandra and Liliana stay hidden until the story opens them, after a load too (2026-11-05)
+
+- **Why** - Fable review `C:\CLAUDE\PROJECTS\TFR1\notes\fable-review-2026-11-02.md` P2-16. Stock
+  `PointOfInterest.load()` never read `questFlagsToActivate` back (it is saved since 2023; upstream's load has the same
+  hole), so after any load the list was empty and `getActive()` checked `active` only: all ten gated places were drawn
+  and enterable from the first Continue on. The plain fix (read the gates back) would have soft-locked the relic trail:
+  quest 50 ("Welcome To The Jungle") sends the player to Primal Jungle at `exploreShand1` 6-7 while its gate was 8, quest
+  51 ("Flower Fetching") to Frostbitten Cavern while its gate was 9, and nothing in the plane ever sets 9. In a game played
+  without a reload that soft-lock was already live.
+- **The change**
+  - `PointOfInterest.load()` (STOCK) rebuilds the gates from the template (`gatesOf(data)`), not from the save: a gate a
+    later version drops is gone from old saves too, and a gate it keeps comes back.
+  - Plane `world/points_of_interest.json`: the seven relic-trail places (`Quest_APortalToNowhere` "Ghost Town",
+    `Quest_BanditCave`, `Quest_DigSite`, `Quest_FrostbittenCavern`, `Quest_LibraryOfVarsil`, `Quest_PrimalJungle`,
+    `Quest_ShardMines`) lose their `exploreShand1` gates. They are open from day 1, as they have been for everyone after
+    the first load since 1.0. Only Emrakul's Castle and the Temples of Chandra and Liliana keep a gate, `mainQuest` 2.
+  - `getActive()`: a gated place an ACTIVE quest stage targets stays open ("held open"). A save made after a load could
+    have bound "(Almost) Open for Business" stage 3 (Travel, `BiomeColorless`) to Emrakul's Castle while the gate was
+    missing; hiding the castle would strand that quest.
+  - `[TFR-QuestGate]`: `<place>: gate mainQuest >= 2 restored from the template` at each load, and one line each time a
+    gated place's state changes: `hidden (mainQuest 1 < 2)`, `open (mainQuest >= 2 reached)`,
+    `held open (mainQuest 1 < 2) - the quest "..." sends the player there`.
+- **The quest trace** (`world/quests.json` and every plane `.tmx`/`.json` that sets `mainQuest`):
+  - `mainQuest` 1 is set by quest 28's prologue (game start) and the spawn map's intro; 2 by quest 43 "Raise the Banner"'s
+    epilogue and quest 52 "The Enemy of My Enemy..."'s prologue; 3 by Orazca / the player capital after the five
+    Chapter 1 castles. It only goes up, so a save past 2 sees all three places.
+  - No story quest, map dialog or Java code targets Emrakul's Castle or either Temple. The only stage whose tags they
+    match is quest 3 stage 3 (`BiomeColorless`, Emrakul; not `allowInactivePOI`, so a new binding skips the hidden castle
+    while any other colorless place is open) - and the held-open rule covers a binding an old save already has. The
+    Temples' tags (`Temple`, `Boss`, `Hostile`, `BiomeRed`/`BiomeBlack`, ...) match no quest stage.
+  - New game: the constructor always applied the gates, so the first session already hid the three places until
+    `mainQuest` 2; now a load keeps that.
+  - Existing save before `mainQuest` 2: the three places hide again until the story opens them (a temple a player entered
+    early keeps its state and comes back with it). No quest the save has passed sends it there; a bound quest holds the
+    place open. Existing save at 2 or more: no change.
+  - Relic trail: with no gates, quests 44-51 reach every place whatever `exploreShand1` reads, on a new game and mid-chain.
+- **Release note (1.27)**: "Emrakul's Castle and the Temples of Chandra and Liliana now stay hidden until the main story
+  opens them, also after loading a save. Since 1.0 a bug showed them, and seven relic-trail places, from the first load
+  on; the relic-trail places stay open from the start."
+- **Not changed** - the world minimap bakes place icons when it is built, so a gated place that opens mid-session gets
+  its minimap icon at the next rebake (as in a first session before this round). The relic quests' `allowInactivePOI`
+  flags stay (harmless).
+- **Checks** - test `PointOfInterestGateTest` (template rebuild, the gate test, the plane gates only the three
+  `mainQuest` 2 places, and every kept gate's flag is set somewhere in the plane). Maven exit 0 (`-pl forge-gui-mobile -am test -Dtest=PointOfInterestGateTest`), 4/4.
+  Agent game (cheats, the round 970 class ahead of the jar, the plane's new `points_of_interest.json` swapped in and
+  restored after): a new game logs the three places `hidden (mainQuest 0 < 2)` (before the intro sets 1); after a
+  save to slot 38 and a load, each logs `gate mainQuest >= 2 restored from the template` and `hidden (mainQuest 1 < 2)`,
+  the bridge's `goto` (it finds only active places) cannot find Emrakul's Castle or either Temple, and finds all seven
+  relic-trail places; `set questflag mainQuest 2` logs `open (mainQuest >= 2 reached)` for all three and `goto` finds
+  them. Seven older agent saves (slots 1, 6, 20, 30, 50, 77, 98; made before this round, all before "Raise the Banner")
+  load with the gates restored and the three places hidden (`mainQuest 1 < 2`); `goto` finds Ghost Town in slots 1, 6
+  and 20. Duels during the test ran at 50x
+  (`[TFR-Agent] duel speed set to 50x`); no exceptions in forge.log.
+
 ## Round 974: an Android crash outside a duel closes the game with a message instead of freezing it (2026-11-05)
 
 - **Why** - Fable review `notes/fable-review-2026-11-02.md` P2-20 and the Android proof's P2-a

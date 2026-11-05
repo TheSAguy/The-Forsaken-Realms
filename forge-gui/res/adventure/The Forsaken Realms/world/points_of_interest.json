@@ -3762,12 +3762,6 @@
 		"radiusFactor": 0.8,
 		"questTags": [
 			"Quest_APortalToNowhere"
-		],
-		"questFlagsToActivate": [
-			{
-				"key": "exploreShand1",
-				"val": 5
-			}
 		]
 	},
 	{
@@ -3781,12 +3775,6 @@
 		"radiusFactor": 0.8,
 		"questTags": [
 			"Quest_BanditCave"
-		],
-		"questFlagsToActivate": [
-			{
-				"key": "exploreShand1",
-				"val": 2
-			}
 		]
 	},
 	{
@@ -3800,12 +3788,6 @@
 		"radiusFactor": 0.8,
 		"questTags": [
 			"Quest_DigSite"
-		],
-		"questFlagsToActivate": [
-			{
-				"key": "exploreShand1",
-				"val": 5
-			}
 		]
 	},
 	{
@@ -3819,12 +3801,6 @@
 		"radiusFactor": 0.8,
 		"questTags": [
 			"Quest_FrostbittenCavern"
-		],
-		"questFlagsToActivate": [
-			{
-				"key": "exploreShand1",
-				"val": 9
-			}
 		]
 	},
 	{
@@ -3838,12 +3814,6 @@
 		"radiusFactor": 0.8,
 		"questTags": [
 			"Quest_LibraryOfVarsil"
-		],
-		"questFlagsToActivate": [
-			{
-				"key": "exploreShand1",
-				"val": 4
-			}
 		]
 	},
 	{
@@ -3857,12 +3827,6 @@
 		"radiusFactor": 0.8,
 		"questTags": [
 			"Quest_PrimalJungle"
-		],
-		"questFlagsToActivate": [
-			{
-				"key": "exploreShand1",
-				"val": 8
-			}
 		]
 	},
 	{
@@ -3876,12 +3840,6 @@
 		"radiusFactor": 0.8,
 		"questTags": [
 			"Quest_ShardMines"
-		],
-		"questFlagsToActivate": [
-			{
-				"key": "exploreShand1",
-				"val": 3
-			}
 		]
 	},
 	{
