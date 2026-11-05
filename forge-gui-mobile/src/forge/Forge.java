@@ -1046,6 +1046,7 @@ public class Forge implements ApplicationListener {
         FContainer screen = getHierachyScreen();
         if (screen == null) {
             if (isMobileAdventureMode) {
+                Adventure.crashTestAt("frame"); // TFR round 974: the console's "crash frame", outside every catch
                 // render adventure
                 Adventure.getInstance().render(delta);
             }

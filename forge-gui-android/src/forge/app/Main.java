@@ -90,6 +90,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 public class Main extends AndroidApplication {
     private static final TaggedLogger netLog = Logger.tag("NETWORK");
@@ -429,6 +431,7 @@ public class Main extends AndroidApplication {
             }
             Gdx.app.postRunnable(this::logRelaunch);
             Gdx.app.postRunnable(this::logLaunch);
+            Gdx.app.postRunnable(this::installFatalThreads); // round 974: on the GL thread, after create()
 
             getAnimator(ObjectAnimator.ofFloat(forgeLogo, "alpha", 1f, 1f).setDuration(800), ObjectAnimator.ofObject(activeView, "backgroundColor", new ArgbEvaluator(), Color.WHITE, Color.BLACK).setDuration(1600), new AnimatorListenerAdapter() {
                 @Override
@@ -1042,6 +1045,54 @@ public class Main extends AndroidApplication {
                 .putString(RELAUNCHED_FROM, launchText).commit();
         triggerRebirth();
         Runtime.getRuntime().exit(0);
+    }
+
+    /**
+     * Round 974 (Fable P2-20, the Android proof's P2-a): an error that kills the GL thread (an out-of-memory error on the
+     * map, a throw in input handling or a save load) left the process alive with nothing drawing: a frozen screen, no
+     * dialog, until a force-stop. Forge's ExceptionHandler now hands these two threads to the handler set in onCreate, so
+     * Android ends the process and the next tap is a clean launch; first the player is told why, natively, as no Forge
+     * dialog can draw. Runs on the GL thread, once create() has loaded ExceptionHandler.
+     */
+    private void installFatalThreads() {
+        final Thread glThread = Thread.currentThread();
+        final Thread uiThread = Looper.getMainLooper().getThread();
+        ExceptionHandler.setFatalThreads(t -> t == glThread || t == uiThread, this::onFatalThreadError);
+        netLog.info("[TFR-Error] fatal threads set: {} and {} - an error that kills one ends the app, with a message", glThread.getName(), uiThread.getName());
+    }
+
+    /** Round 974: on the dying thread, before the onCreate handler lets Android end the process. */
+    private void onFatalThreadError(Thread t, Throwable ex) {
+        try {
+            forge.error.BugReportDialog.onFatalThreadError(t, ex);
+        } catch (Throwable ignore) {} // an OOM may strike again; the message and the exit still have to happen
+        if (t == Looper.getMainLooper().getThread() || isFinishing()) {
+            netLog.info("[TFR-Error] closing message not shown ({}): Android ends the app now", isFinishing() ? "the activity is finishing" : "the UI thread itself died");
+            return;
+        }
+        final boolean oom = ex instanceof OutOfMemoryError;
+        final CountDownLatch closed = new CountDownLatch(1);
+        final long shownAt = System.currentTimeMillis();
+        runOnUiThread(() -> {
+            try {
+                new android.app.AlertDialog.Builder(this)
+                        .setTitle("The Forsaken Realms has to close")
+                        .setMessage((oom ? "The game ran out of memory." : "The game hit an error it can't recover from.")
+                                + " Anything since your last save is lost; your saves are safe. Open the game again to go on."
+                                + "\n\nIf this keeps happening, please send your log (Settings > Export Logs) on Discord.")
+                        .setCancelable(false)
+                        .setPositiveButton("Close", (dialog, which) -> closed.countDown())
+                        .show();
+            } catch (Throwable e) {
+                closed.countDown(); // no window to show it in: close without it
+            }
+        });
+        boolean tapped = false;
+        try {
+            // Long enough to read; leaving the app ends it sooner (libGDX's pause waits 4 s for this thread, then kills).
+            tapped = closed.await(120, TimeUnit.SECONDS);
+        } catch (InterruptedException ignore) {}
+        netLog.info("[TFR-Error] closing message {} after {} s: Android ends the app now", tapped ? "closed" : "timed out", (System.currentTimeMillis() - shownAt) / 1000);
     }
 
     /** Round 901: the new process's half of {@link #startFreshProcess}. Seconds here mean the player had to tap again. */

@@ -35,6 +35,21 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 974 - Android's GL and UI threads end the app on an uncaught error, with a message
+- `forge-gui/src/main/java/forge/error/ExceptionHandler.java` (STOCK): the static block keeps the default handler it
+  replaces (`replacedHandler`); new `setFatalThreads(Predicate<Thread>, BiConsumer<Thread, Throwable>)`;
+  `uncaughtException` hands a fatal thread's error (after the last-words callback) to `replacedHandler` instead of
+  `BugReporter`. Only the Android launcher sets fatal threads. If upstream reworks Android crash handling, compare.
+- `forge-gui-android/src/forge/app/Main.java` (STOCK): `installFatalThreads` (posted after `create()`) and
+  `onFatalThreadError` (the native closing message); imports `CountDownLatch`, `TimeUnit`.
+- `forge-gui-mobile/src/forge/error/BugReportDialog.java` (STOCK): `show` runs on the GL thread (`showHere`), logs
+  "shown" only when the dialog is the current screen; new `onFatalThreadError`.
+- `forge-gui-mobile/src/forge/Adventure.java` (STOCK): `render`'s catch takes `RuntimeException`; the console test hook
+  (`armCrashTest`, `crashTestAt`).
+- `forge-gui-mobile/src/forge/Forge.java` (STOCK): one `Adventure.crashTestAt("frame")` line in `render`.
+- `forge-gui-mobile/src/forge/adventure/stage/ConsoleCommandInterpreter.java`: one `registerCommand` line, `crash`.
+- TFR file: `util/SessionLog.java` (`onCrashReport(String, String notShownWhy)`).
+
 ### Round 972 - quest rewards, cave champions, Inn openings, the Temple and boons roll from seeds
 - `forge-gui-mobile/src/forge/adventure/util/MapDialog.java` (STOCK): `setEffects`' `grantRewards` and
   `grantRewardsChoice` call `SeededRolls.generateRewards(rewards, site, rewardPlace(), parentID)` instead of the loop of

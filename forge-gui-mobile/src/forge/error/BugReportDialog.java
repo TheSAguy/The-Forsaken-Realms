@@ -1,5 +1,6 @@
 package forge.error;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Align;
 
 import forge.Forge;
@@ -7,6 +8,7 @@ import forge.Graphics;
 import forge.assets.FSkinColor;
 import forge.assets.FSkinColor.Colors;
 import forge.assets.FSkinFont;
+import forge.gui.GuiBase;
 import forge.gui.error.BugReporter;
 import forge.screens.FScreen;
 import forge.toolbox.FButton;
@@ -25,18 +27,53 @@ public class BugReportDialog extends FScreen { //use screen rather than dialog s
     private static int unshownLogged; // TFR round 934: at most 5 lines for reports no dialog could show
 
     public static void show(String title, String text, boolean showExitAppBtn) {
-        if (isOpen) { return; }
-        boolean canShow = Forge.getCurrentScreen() != null;
-        // TFR round 934 (Fable P3-59): logged above the screen check, so a crash outside a duel (every adventure scene
-        // has no Forge screen; a world-load OOM) still gets its [TFR-Error] line, errors= count and oom reading.
-        if (showExitAppBtn && (canShow || unshownLogged++ < 5)) { // TFR round 815: a crash report counts in errors=
-            forge.adventure.util.SessionLog.onCrashReport(text, canShow);
-            forge.adventure.util.DuelHeartbeat.onError("a crash report: " + text); // TFR round 816: a quit from here never counts
-        }
-        if (!canShow) { return; } //don't allow showing if Forge not finished initializing yet
+        // TFR round 974: a report from another thread (a duel's game thread) opens on the GL thread. Opened where it was
+        // raised, the screen switch raced the frame being drawn; Gdx.app is null only before the app exists.
+        if (Gdx.app != null && GuiBase.getInterface() != null && !GuiBase.getInterface().isGuiThread())
+            Gdx.app.postRunnable(() -> showHere(title, text, showExitAppBtn));
+        else
+            showHere(title, text, showExitAppBtn);
+    }
 
-        isOpen = true;
-        Forge.openScreen(new BugReportDialog(title, text, showExitAppBtn));
+    private static void showHere(String title, String text, boolean showExitAppBtn) {
+        if (isOpen) { return; }
+        if (showExitAppBtn) // TFR round 816: a quit from here never counts; marked first, as opening may fail
+            forge.adventure.util.DuelHeartbeat.onError("a crash report: " + text);
+        String notShownWhy = null;
+        if (Forge.getCurrentScreen() == null) {
+            notShownWhy = "no dialog outside a duel"; //don't allow showing if Forge not finished initializing yet
+        } else {
+            isOpen = true;
+            try {
+                BugReportDialog dialog = new BugReportDialog(title, text, showExitAppBtn);
+                Forge.openScreen(dialog);
+                if (Forge.getCurrentScreen() != dialog)
+                    notShownWhy = "the screen didn't switch to it, " + Forge.getCurrentScreen();
+            } catch (RuntimeException e) {
+                notShownWhy = "it failed to open: " + e;
+            }
+            if (notShownWhy != null)
+                isOpen = false;
+        }
+        // TFR round 934 (Fable P3-59): a crash outside a duel (every adventure scene has no Forge screen; a world-load OOM)
+        // still gets its [TFR-Error] line, errors= count and oom reading. Round 974: "shown" only once it is on screen.
+        if (showExitAppBtn && (notShownWhy == null || unshownLogged++ < 5)) // TFR round 815: counts in errors=
+            forge.adventure.util.SessionLog.onCrashReport(text, notShownWhy);
+    }
+
+    /**
+     * TFR round 974 (Fable P2-20), Android's GL or UI thread died (ExceptionHandler.setFatalThreads, from the launcher):
+     * the last lines before Android ends the process. No dialog of ours can draw without the GL thread, so the error is
+     * counted, the duel marked (a quit from here never counts), the session footer written, and the trace printed here,
+     * as the launcher's own handler logs it only to logcat.
+     */
+    public static void onFatalThreadError(Thread t, Throwable ex) {
+        System.err.print(t.getName() + " > ");
+        ex.printStackTrace();
+        forge.adventure.util.DuelHeartbeat.onError("a crash: " + ex);
+        forge.adventure.util.SessionLog.onCrashReport(String.valueOf(ex), "the app closes: " + t.getName()
+                + " died, and no dialog draws without it; the next launch starts clean");
+        forge.adventure.util.SessionLog.end("crash");
     }
 
     private final FTextArea lblHeader = add(new FTextArea(false, "Report Bug"));

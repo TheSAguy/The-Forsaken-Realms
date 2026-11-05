@@ -20,8 +20,45 @@ public class Adventure {
         return instance == null ? instance = new Adventure() : instance;
     }
 
+    /** Round 974: the console's "crash render|frame|oom" (a test, cheats only): where the next world frame throws. */
+    static volatile String crashTest;
+    private static final java.util.List<long[]> crashTestHeld = new java.util.ArrayList<>();
+
+    /** Round 974, the console's "crash": render throws inside the scene's catch (the game goes on), frame throws in
+     *  Forge.render outside every catch, oom fills the heap inside the catch (an Error, which no catch takes), input
+     *  fills it at once, in the console's key handling, and keeps it full (the 11-02 Android proof's frozen screen). */
+    public static String armCrashTest(String where) {
+        if ("input".equals(where)) {
+            System.out.println("[TFR-Error] console: filling the heap now and keeping it full (input, a test)");
+            while (true)
+                crashTestHeld.add(new long[1 << 17]); // 1 MB a step, held: the heap stays full after the error
+        }
+        if (!"render".equals(where) && !"frame".equals(where) && !"oom".equals(where))
+            return "crash render|frame|oom|input - render: a RuntimeException the scene's catch logs, the game goes on; "
+                    + "frame: one outside every catch; oom: fill the heap; input: fill it now and hold it. "
+                    + "frame, oom and input close the app on Android.";
+        crashTest = where;
+        System.out.println("[TFR-Error] console: the next world frame throws (" + where + ", a test)");
+        return "The next world frame throws (" + where + ") - grep forge.log for [TFR-Error].";
+    }
+
+    /** Round 974: throws the armed test once, at its place in the frame. */
+    static void crashTestAt(String where) {
+        if (!where.equals(crashTest))
+            return;
+        crashTest = null;
+        if ("oom".equals(where)) {
+            java.util.List<long[]> heap = new java.util.ArrayList<>();
+            while (true)
+                heap.add(new long[1 << 17]); // 1 MB a step, until the heap runs out; freed when the error unwinds
+        }
+        throw new IllegalArgumentException("forced by the console's \"crash " + where + "\" (a test)");
+    }
+
     void render(float delta) {
         try {
+            crashTestAt("render");
+            crashTestAt("oom");
             // TODO: Use better transistion. Fixes Android slow screen updates on switching scenes.
             /*if (renderTransitionScreen) {
                 Forge.getGraphics().getBatch().setProjectionMatrix(Forge.camera.combined);
@@ -69,7 +106,10 @@ public class Adventure {
             Forge.currentScene.act(delta);
             if (Forge.currentScene instanceof HudScene hudScene)
                 FrameRate.getInstance().sampleAdventure(hudScene.getBatch(), Forge.showFPS);
-        } catch (IllegalStateException | NullPointerException ie) {
+        } catch (RuntimeException ie) {
+            // Round 974 (Fable P2-20): any RuntimeException, not only these two. Another one left the catch and killed
+            // the GL thread with the process alive, a frozen screen on Android. Errors (an OOM) still pass: the app ends.
+            // (Was: IllegalStateException | NullPointerException.)
             // Round 143 (code review S4-6). This was "//silence this.. //TODO: Don't silence
             // this." - and it is the RENDER loop, so a real drawing bug threw here sixty times a
             // second and left nothing behind at all. The reason it was silenced is sound: logging

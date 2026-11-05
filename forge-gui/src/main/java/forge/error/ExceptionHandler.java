@@ -34,6 +34,8 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.function.BiConsumer;
+import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
 /**
@@ -44,7 +46,14 @@ import java.util.regex.Pattern;
  * @version $Id$
  */
 public class ExceptionHandler implements UncaughtExceptionHandler {
+    // TFR round 974 (Fable P2-20): the default handler this one replaces. On Android it is the launcher's, which logs and
+    // then lets Android end the process; null or the JVM's printer on desktop.
+    private static final UncaughtExceptionHandler replacedHandler;
+    private static volatile Predicate<Thread> fatalThreads;
+    private static volatile BiConsumer<Thread, Throwable> fatalLastWords;
+
     static {
+        replacedHandler = Thread.getDefaultUncaughtExceptionHandler();
         // Tells Java to let this class handle any uncaught exception
         Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler());
         // Tells AWT to let this class handle any uncaught exception
@@ -290,7 +299,30 @@ public class ExceptionHandler implements UncaughtExceptionHandler {
     /** {@inheritDoc} */
     @Override
     public final void uncaughtException(final Thread t, final Throwable ex) {
+        // TFR round 974: a thread the app can't live without (Android's GL and UI threads) goes to the handler this one
+        // replaced, so the process ends cleanly. Reported here, the thread died with the process left alive: a frozen
+        // screen with no dialog, as no dialog can draw without the GL thread, until the player force-stopped the game.
+        final Predicate<Thread> fatal = fatalThreads;
+        if (fatal != null && replacedHandler != null && fatal.test(t)) {
+            try {
+                final BiConsumer<Thread, Throwable> lastWords = fatalLastWords;
+                if (lastWords != null)
+                    lastWords.accept(t, ex);
+            } catch (Throwable ignored) {} // an OOM may strike again here; the process still has to end
+            replacedHandler.uncaughtException(t, ex);
+            return;
+        }
         BugReporter.reportException(ex);
+    }
+
+    /**
+     * TFR round 974: threads whose death must end the process (through the default handler that was in place before this
+     * class loaded) instead of opening a crash report; lastWords runs first, on the dying thread. Android only; desktop
+     * never calls this, so nothing changes there.
+     */
+    public static void setFatalThreads(final Predicate<Thread> threads, final BiConsumer<Thread, Throwable> lastWords) {
+        fatalLastWords = lastWords;
+        fatalThreads = threads;
     }
 
     /**

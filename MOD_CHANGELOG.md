@@ -14264,6 +14264,63 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 974: an Android crash outside a duel closes the game with a message instead of freezing it (2026-11-05)
+
+- **Why** - Fable review `notes/fable-review-2026-11-02.md` P2-20 and the Android proof's P2-a
+  (`notes/android-proof-1102/report.md`): Forge's `ExceptionHandler` replaces Android's default uncaught handler, the
+  one that ends the process, and only opens a crash report. Outside a duel no report can open (`BugReportDialog.show`
+  returned when `Forge.getCurrentScreen()` was null, every adventure scene), and when the dying thread is the GL thread
+  nothing can draw anyway. So any throw that left the GL thread - an out-of-memory error on the map, a throw in input
+  handling (`Stage.keyTyped`), in the Load screen's `snapshotForRollback`, or any RuntimeException but the two
+  `Adventure.render` caught - killed it while the process lived on: a frozen screen with no dialog until a force-stop.
+  In a duel the same GL-thread death logged `[TFR-Error] crash report shown` though its dialog never drew.
+- **The design (recommended over catching `Throwable` in `Forge.render` and recovering)** - the proof's three
+  out-of-memory errors struck in input dispatch (which Android runs before `render`, so no render catch sees it), in
+  a save load, and in a duel's reward payout: state-changing code, with the heap still at its limit (`[heap]` flat at
+  508-511 MB for minutes). Carrying on there risks a second OOM within frames, or an autosave of a half-changed game.
+  A clean process end after a message, with the next tap a clean launch from the last save, is predictable.
+  - **Android's GL and UI threads end the app** - `ExceptionHandler` (stock) keeps the default handler it replaces and
+    hands a thread the app can't live without back to it (`setFatalThreads(threads, lastWords)`). The Android launcher
+    (`Main.installFatalThreads`, posted to the GL thread after `create()`) names the GL thread and the UI thread; the
+    handler it set in `onCreate` logs and lets Android end the process. Before that, on the dying thread:
+    `BugReportDialog.onFatalThreadError` prints the trace, marks the duel (`DuelHeartbeat.onError`, so a quit from here
+    never counts), logs `[TFR-Error] crash report not shown (the app closes: <thread> died, ...)` with the trail and a
+    `[TFR-Memory] oom` reading, and writes the session footer (`SessionLog.end("crash")`); then a native Android dialog
+    ("The Forsaken Realms has to close" - out of memory or an error, anything since the last save is lost, the saves are
+    safe, open the game again; send the log from Settings > Export Logs if it keeps happening) waits for Close, up to
+    120 s (`[TFR-Error] closing message closed|timed out after N s`; not shown when the UI thread itself died or the
+    activity is finishing, `[TFR-Error] closing message not shown (...)`). Desktop never sets fatal threads: no change.
+  - **A RuntimeException in a world frame is caught** - `Adventure.render` catches every RuntimeException, not only
+    IllegalStateException and NullPointerException (logged once per distinct site, counted, the open frame closed, the
+    game goes on, as before). Errors still pass, to the path above.
+  - **"shown" is true** - `BugReportDialog.show` opens a report from another thread (a duel's game thread) on the GL
+    thread (`Gdx.app.postRunnable`), marks the duel first, and logs `shown` only once the dialog is the current screen;
+    otherwise `not shown (no dialog outside a duel | the screen didn't switch to it, ... | it failed to open: ...)`.
+    `SessionLog.onCrashReport(report, notShownWhy)` replaces the boolean form.
+- **Test hook** - console `crash render|frame|oom|input` (cheats only, like every console command): the next world
+  frame throws an IllegalArgumentException inside `Adventure.render`'s catch (the game goes on), one in `Forge.render`
+  outside every catch, or fills the heap in 1 MB steps (`[TFR-Error] console: the next world frame throws (...)`);
+  `input` fills the heap at once, in the console's own key handling (Android's input dispatch, before `render`), and
+  keeps it full - the proof's frozen screen.
+- **Device (LDPlayer 14 instance 1, Android 14, 512 MB heap; test APK from the `C:\TFR-build` clone at `15f2221c9f2` plus
+  this round, Maven exit 0, no `log_share.txt`)** - shots and pulled logs in `C:\CLAUDE\PROJECTS\TFR1\notes\r974\`:
+  - `crash render` on the map: `[TFR-Render] swallowed exception (first occurrence) in scene GameScene:
+    IllegalArgumentException ...`, same pid, the map went on (the test walk even ran into a fight, `03`).
+  - `crash frame`: the closing message ("hit an error", `05`); all the lines above; Close -> the process gone, `[TFR-Error]
+    closing message closed after 9 s`, Android's `[uncaught] thread=GLThread 35`; the next launch clean, with
+    `[TFR-ExitReason] reason=CRASH` (`06`, `07`).
+  - `crash oom`: the "ran out of memory" message (`09`), `[TFR-Memory] oom used=511MB of 512MB`; Home instead of Close ->
+    gone in 4 s (`[TFR-WorldGenPause] killed by libGDX's pause wait`).
+  - `crash input` (heap held full, the error thrown in `Stage.keyTyped`): the message still showed (`11`); left alone, it
+    timed out (`closing message timed out after 120 s`), the process ended, the next launch clean (`reason=CRASH`).
+  - The signed 1.26 RC was put back on the instance afterwards, LDPlayer stopped, its config restored byte for byte.
+- **Desktop (a copy of the agent game with this round's jar, Maven exit 0)** - `crash render`: the same swallowed line,
+  the map went on. `crash frame`: as before this round, the window closed and the process ended (desktop sets no fatal
+  threads), now logged truthfully as `crash report not shown (no dialog outside a duel)`.
+- **Not done** - an out-of-memory error on another thread (world generation, card loading) outside a duel still only
+  logs `not shown (no dialog outside a duel)`; the GL thread lives, so the game draws, but whatever that thread was
+  doing does not finish. No recovery from an OOM: the app closes.
+
 ## Round 972: quest rewards, cave champions, Inn packs, the Temple and realm boons roll the same after a reload (2026-11-05)
 
 - **Why** - the Fable review's P2-12 (`C:\CLAUDE\PROJECTS\TFR1\notes\fable-review-2026-11-02.md`): rounds 870, 925 and
