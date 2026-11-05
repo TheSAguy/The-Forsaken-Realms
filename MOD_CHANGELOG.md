@@ -14293,8 +14293,14 @@ week roll skips it: only a family enemy re-rolls (`EnemyTiers.isFamily`/`rollPla
 - **Not touched:** `enemies.json`'s `Clay Golem` (still a catalog Archmage elsewhere) and `factory_4_large.tmx` (none).
   No code, no build, no save change: a placed enemy is read from the map when it loads, so a save that has visited a
   factory meets the rolled golem on its next load.
-- **Check:** in the agent game, a factory visit logs `[TFR-EnemyTiers] Autonomous Factory #NN: Golem placed as
-  Apprentice -> ...` for the changed objects.
+- **Checked in the agent game** (a new Normal game, day 1, week 1, cheats on, teleported into each map; no duel). The
+  roll logs the family by its shown name, `[TFR-EnemyTiers] Autonomous Factory #NN: Rusted Golem placed as Apprentice
+  -> ...`, and every changed object rolled while each kept Clay Golem did not:
+  - `factory_2_ooze`: #50 Apprentice, #67 Adept, #74 Apprentice (and the old Golems #68 Adept, #94 Adept); the map
+    shows 5 Rusted Golems (13 or 22 life) and 1 `Clay Golem (Archmage) (Mythic, 45 life)`.
+  - `factory_1_golems`: #50 and #67 Apprentice (with #68, #69, #99 and the Rustic Constructs #75, #89); one Clay Golem.
+  - `factory_3_wizard`: #67 Apprentice; one Clay Golem beside the two Apprentice Wizards.
+  All rolls read `week 1, waste row 90/10/0`.
 
 ## Round 963: the 40 h support ask always comes, and a 75 h splash (2026-11-04)
 
