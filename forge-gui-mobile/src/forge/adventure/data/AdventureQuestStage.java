@@ -73,6 +73,10 @@ public class AdventureQuestStage implements Serializable {
     private transient List<PointOfInterest> validPOIs;
     /** Round 702: this stage's place is where an Arena stage is fought - set by AdventureQuestData.initializeStage(). */
     transient boolean needsPlayableArena;
+    /** Round 973: setTargetPOI() picked this stage's place itself (not a token or "here"), so
+     *  DungeonRotation.onQuestTargetBound() is owed - AdventureQuestData.applyTargetEffects() pays it when the quest is
+     *  issued, on accept for a job board's offer. Not saved. */
+    transient boolean bindOwed;
     public boolean allowInactivePOI = false;
     // Navigation-only town filter for the world-map quest arrow ("ruinedTown"/"survivingTown",
     // 2026-08-27 user request) - see getNavPOIs() for why this exists separately from validPOIs.
@@ -201,8 +205,10 @@ public class AdventureQuestStage implements Serializable {
             // if it was picked from the inactive reserve, and either way push a rotatable
             // target's despawn day out 30 days so a freshly-given quest can't have its dungeon
             // rotate away mid-quest. No-op for towns/story dungeons/non-rotation planes.
+            // Round 973 (Fable review P3-40): owed here, paid by AdventureQuestData.applyTargetEffects() - on accept for
+            // a job board's offer, so a declined offer spawns and extends nothing.
             if (targetPOI != null)
-                DungeonRotation.onQuestTargetBound(targetPOI);
+                bindOwed = true;
         }
         //"else" any POI matching all the POITags is valid, evaluate as needed
     }

@@ -1081,7 +1081,7 @@ public class AdventureQuestController implements Serializable {
         final int keepDays = Math.max(cooldown, 1);
         offeredOn.values().removeIf(day -> today - day >= keepDays);
         offeredOn.put(ret.getID(), today);
-        ret.initialize();
+        ret.initializeAsOffer(); // round 973 (P3-40): the places are bound, their spawn and dungeon reset wait for accept
         return ret;
     }
 

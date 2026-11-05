@@ -14264,6 +14264,61 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 973: a declined Job Board offer leaves its dungeon alone (2026-11-05)
+
+- **Why** - Fable review P3-40 (`C:\CLAUDE\PROJECTS\TFR1\notes\fable-review-2026-11-02.md`, two reviewers):
+  `AdventureQuestController.getQuestNPCResponse` called `initialize()` when a board OFFERED a quest, and
+  `AdventureQuestData.initializeStage` ran the world side of each bind before the player chose: `PointOfInterestChanges.
+  resetDeletedObjectsRecursive` (beaten enemies and looted chests back), round 844's `DungeonRotation.
+  resetMapFlagsForQuest` (gates shut) and, from `AdventureQuestStage.setTargetPOI`'s own pick, `DungeonRotation.
+  onQuestTargetBound` (a reserve dungeon force-spawned, or +30 days on its despawn timer; a cleared lair returned).
+  Clear half a dungeon, decline an Eviction Notice that names it: the dungeon was full again with its gates shut, and
+  (P3-48) its chests rolled new contents. The `questboard` console command did the same to every place it offered.
+- **Traces** - offer -> decline: the offer is `QuestActor.questData` only, the dialog closes, the quest object is
+  dropped; nothing else holds it. Offer -> accept: `MapDialog`'s accept listener -> `AdventurePlayer.addQuest(quest)`
+  -> `QuestExpiry.onAccepted` (reads no place) -> `trackQuest` -> `quest.activateNextStages()` (the first thing to
+  look at the dungeon: round 694's `retroCompleteIfTargetAlreadyCleared`). An accept naming another quest id goes
+  through `addQuest(id)` -> `generateQuest` -> `initialize()`, a fresh quest that pays at once. Save and reload: an
+  offer is never saved (no field holds it; it lives in the open dialog), so no save carries an open offer and none needs
+  a repair; a quest taken before this round had its reset at offer and owes nothing. Without a board: a dialog's
+  `addQuest(id)`, the main quest (`addQuest("28")`) and the console's `give quest` all go through `generateQuest` ->
+  `initialize()`, unchanged.
+- **The change** - the bind and its world side are split. `initializeStage` still binds every stage's place (the offer
+  text names it) and then calls `oweOrApplyTargetEffects(stage)`: a quest issued any other way pays at once, in stage
+  order as before; a board's offer (`initializeAsOffer()`, called from `getQuestNPCResponse`) keeps the stages with a
+  place. `AdventureQuestStage.setTargetPOI` no longer calls `onQuestTargetBound` itself: it sets a transient
+  `bindOwed`. `applyTargetEffects` pays it - `onQuestTargetBound` for a stage whose own pick bound its place, then a
+  dungeon's reset and gate close (code moved, unchanged). `AdventureQuestData.activateNextStages()` calls
+  `applyDeferredWorldEffects()` first, so a taken offer pays once, before any stage activates - an accepted quest still
+  finds a full dungeon with its gates shut, and round 694's "already cleared" and round 322's beaten-target checks see
+  that fresh dungeon. Both new fields are transient: no save change.
+- **Logs** - `[TFR-QuestOffer] <quest>: offered by <board> - bound to [<places>]; the spawn, timer and dungeon reset
+  wait for accept` at an offer with a place; `[TFR-QuestOffer] <quest>: accepted - stage N's <place> target bound at
+  accept, reset deferred from offer` (either half alone when only one applies) on accept. A declined offer logs nothing
+  more. The `[DungeonRotation] quest target ... timer extended` / `force-spawned` / `quest "..." bound ...` (gates) lines
+  now come at accept, not at the offer.
+- **Unchanged** - which place an offer names (the pick, `[TFR-QuestTarget]`, `lastQuestTarget`), the offer cooldown,
+  invasions' sizing, every quest issued without a board. One difference: an offer whose two stages pick the same kind of
+  place no longer force-spawns the first pick before the second picks. No board quest does that today - the four quests
+  that pick one kind twice (45, 50, 51, 52) are chain and main-quest quests issued through `generateQuest`, unchanged.
+- **Files** - `data/AdventureQuestData.java`, `data/AdventureQuestStage.java`, `util/AdventureQuestController.java`
+  (one line), all three stock files (`CORE_ENGINE_CHANGES.md`).
+- **Tests** - `forge-gui-mobile/test/forge/adventure/data/QuestOfferEffectsTest.java` (new, 5/5): an offer applies
+  nothing; taking it applies each stage once, in order, at `activateNextStages()`, and never again; a stage with no
+  place owes nothing; a quest issued without a board applies at once; a loaded quest owes nothing. The world side is
+  swapped for a recorder (`AdventureQuestData.worldEffects`, package-private). `SupportPromptTest` and
+  `ChestDuplicateOfferTest` still pass.
+- **Maven** - `mvn -o -pl forge-gui-mobile -am test -Dtest=QuestOfferEffectsTest,SupportPromptTest,ChestDuplicateOfferTest
+  -Dsurefire.failIfNoSpecifiedTests=false`, exit 0, 19/19.
+- **Agent game** (a new game, cheats, the three classes put ahead of the agent jar; no package) - decline: in the Hunting
+  Lodge two Wolfkin Outcasts (map ids 95, 109) removed, then outside it `questboard waste_town_generic 100` three times:
+  244 offers bound the Lodge (22 Eviction Notices), forge.log has no `[DungeonRotation] quest target`/`force-spawned`
+  line and no gate reset, and back inside the Lodge both enemies are still gone. A real board offer in Tolaria (Remote
+  Instruction) declined: its decline reputation only. Accept: Tolaria's board offered Teferi's Fall (`[TFR-QuestOffer]
+  ... bound to [Teferi's Hideout, Tolaria]; ... wait for accept`), accepted -> `[QuestExpiry] Teferi's Fall accepted on
+  day 1` then `[TFR-QuestOffer] Teferi's Fall: accepted - stage 1's Teferi's Hideout target bound at accept, reset
+  deferred from offer`; the quest is in the log ("Find and defeat Teferi."). Teferi was not fought.
+
 ## Round 975: Settings' Restart saves the game first, or says what will be lost (2026-11-05)
 
 - **Why** - the 1.26 release-candidate test (`C:\CLAUDE\PROJECTS\TFR1\notes\android-proof-1102\report.md`, P2-c): after a

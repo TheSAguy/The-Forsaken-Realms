@@ -35,6 +35,20 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 973 - a Job Board offer binds its places but resets nothing until it is taken
+- `forge-gui-mobile/src/forge/adventure/data/AdventureQuestData.java` (STOCK): `initializeStage()`'s dungeon reset
+  (upstream's `resetDeletedObjectsRecursive` plus round 844's `resetMapFlagsForQuest`) moved into new private
+  `applyTargetEffects(stage, deferred)`, reached through new `oweOrApplyTargetEffects(stage)` (at once, or kept for a
+  pending offer); new `initializeAsOffer()`, `applyDeferredWorldEffects()` (first line of `activateNextStages()`),
+  package-private `beginOffer()`, `WorldEffects`/`worldEffects` (a test seam), transient `offerPending`/
+  `deferredEffects`. On a conflict in `initializeStage()`, keep upstream's binding and route any new world side effect
+  through `applyTargetEffects`. No save change.
+- `forge-gui-mobile/src/forge/adventure/data/AdventureQuestStage.java` (STOCK): `setTargetPOI(poiTokens, questName)` sets
+  new transient `bindOwed` where it called `DungeonRotation.onQuestTargetBound` (a TFR call).
+- `forge-gui-mobile/src/forge/adventure/util/AdventureQuestController.java` (STOCK): `getQuestNPCResponse()` ends with
+  `ret.initializeAsOffer()` instead of `ret.initialize()`.
+- TFR test: NEW `forge-gui-mobile/test/forge/adventure/data/QuestOfferEffectsTest.java`.
+
 ### Round 971 - a duel result is booked on its own map and enemy; shop slots roll from their own seed
 - `forge-gui-mobile/src/forge/adventure/stage/GameStage.java` (STOCK): `act()`'s input gate also zeroes input while
   `hasPendingResultTask()` (TFR's, round 302).

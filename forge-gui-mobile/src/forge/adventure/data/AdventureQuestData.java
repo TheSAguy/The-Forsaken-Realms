@@ -252,6 +252,91 @@ public class AdventureQuestData implements Serializable {
         replaceTokens();
     }
 
+    // Round 973 (Fable review P3-40): a job board's offer binds its places - the offer text names them - but the world
+    // side of the bind (DungeonRotation.onQuestTargetBound's force-spawn or +30 days, a dungeon's reset of its beaten
+    // enemies, looted chests and gates) waited for nothing: a declined Eviction Notice refilled a half-cleared dungeon
+    // and shut its gates. Both transient: an offer lives only in the board's open dialog and is never saved, and a
+    // quest taken before round 973 had its reset at offer, so a loaded quest owes nothing.
+    private transient boolean offerPending;
+    private transient List<AdventureQuestStage> deferredEffects;
+
+    /** Round 973: the world side of binding a stage's place; a test swaps in a recorder. */
+    interface WorldEffects {
+        void apply(AdventureQuestData quest, AdventureQuestStage stage, boolean deferred);
+    }
+    static WorldEffects worldEffects = AdventureQuestData::applyTargetEffects;
+
+    /** Round 973: initialize() for a job board's offer (AdventureQuestController.getQuestNPCResponse) - the places are
+     *  bound and named, and their world side waits for {@link #applyDeferredWorldEffects()}. */
+    public void initializeAsOffer() {
+        beginOffer();
+        initialize();
+        if (deferredEffects != null) {
+            List<String> places = new ArrayList<>();
+            for (AdventureQuestStage stage : deferredEffects)
+                places.add(stage.getTargetPOI().getDisplayName());
+            System.out.println("[TFR-QuestOffer] " + name + ": offered by " + sourceID + " - bound to " + places
+                    + "; the spawn, timer and dungeon reset wait for accept");
+        }
+    }
+
+    void beginOffer() {
+        offerPending = true;
+    }
+
+    /** Round 973: {@code stage}'s place is bound - pay its world side now, or keep it for accept on a pending offer. */
+    void oweOrApplyTargetEffects(AdventureQuestStage stage) {
+        if (!offerPending) {
+            worldEffects.apply(this, stage, false);
+            return;
+        }
+        if (stage.getTargetPOI() == null)
+            return;
+        if (deferredEffects == null)
+            deferredEffects = new ArrayList<>();
+        deferredEffects.add(stage);
+    }
+
+    /** Round 973: this offer was taken. AdventurePlayer.addQuest() reaches it through activateNextStages(), before any
+     *  stage activates - round 694's "already cleared" check and round 322's beaten-target credit must see the fresh
+     *  dungeon. Once; a no-op for any quest that is not a pending offer. */
+    public void applyDeferredWorldEffects() {
+        if (!offerPending)
+            return;
+        offerPending = false;
+        List<AdventureQuestStage> owed = deferredEffects;
+        deferredEffects = null;
+        if (owed == null)
+            return;
+        for (AdventureQuestStage stage : owed)
+            worldEffects.apply(this, stage, true);
+    }
+
+    /** The world side of binding {@code stage}'s place: the force-spawn or +30 days its own pick owes
+     *  (AdventureQuestStage.bindOwed), and a dungeon's reset so the quest finds it full. */
+    private void applyTargetEffects(AdventureQuestStage stage, boolean deferred) {
+        PointOfInterest target = stage.getTargetPOI();
+        boolean bind = stage.bindOwed;
+        stage.bindOwed = false;
+        if (target == null)
+            return;
+        if (bind)
+            forge.adventure.util.DungeonRotation.onQuestTargetBound(target);
+        boolean dungeon = target.getData().isDungeon();
+        if (dungeon) {
+            //todo: decide how to handle this in "anyPOI" scenarios
+            // Reset root and all connected floors so previously cleared dungeons respawn for the quest
+            PointOfInterestChanges.resetDeletedObjectsRecursive(target.getID(), target.getData().map);
+            // Round 844: and its gates closed, or the map flags they open on (gauntlet ranks, the Fort's ward) let the
+            // player walk past the enemies that just came back.
+            forge.adventure.util.DungeonRotation.resetMapFlagsForQuest(target, this.name);
+        }
+        if (deferred && (bind || dungeon))
+            System.out.println("[TFR-QuestOffer] " + name + ": accepted - stage " + stage.id + "'s "
+                    + target.getDisplayName() + (bind ? " target bound at accept" : "")
+                    + (bind && dungeon ? "," : "") + (dungeon ? " reset deferred from offer" : ""));
+    }
+
     /** Round 461 (InvasionQuests): replace a stage's $(enemy_N) target before the tokens are filled. */
     public void putEnemyToken(String key, EnemyData target) {
         if (key != null && target != null)
@@ -342,15 +427,9 @@ public class AdventureQuestData implements Serializable {
         if (stage.here && !stage.anyPOI && !stage.worldMapOK && stage.getTargetPOI() == null)
             bindHereFallback(stage);
 
-        if (stage.getTargetPOI() != null && stage.getTargetPOI().getData().isDungeon()) {
-            //todo: decide how to handle this in "anyPOI" scenarios
-            // Reset root and all connected floors so previously cleared dungeons respawn for the quest
-            PointOfInterest target = stage.getTargetPOI();
-            PointOfInterestChanges.resetDeletedObjectsRecursive(target.getID(), target.getData().map);
-            // Round 844: and its gates closed, or the map flags they open on (gauntlet ranks, the Fort's ward) let the
-            // player walk past the enemies that just came back.
-            forge.adventure.util.DungeonRotation.resetMapFlagsForQuest(target, this.name);
-        }
+        // Round 973 (Fable review P3-40): the world side of the bind waits for accept on a job board's offer; a quest
+        // issued any other way (a dialog, the main quest, the console) pays it here, in stage order as before.
+        oweOrApplyTargetEffects(stage);
 
         PointOfInterest temp = stage.getTargetPOI();
         if (temp != null) {
@@ -742,6 +821,7 @@ public class AdventureQuestData implements Serializable {
     }
 
     public void activateNextStages() {
+        applyDeferredWorldEffects(); // round 973: AdventurePlayer.addQuest() calls this as it takes a board's offer
         boolean showNotification = false;
         // Stabilization loop (2026-08-26 user request: "add safeguards if the player does
         // something before a quest. Like builds a capitol, before the quest fires"): a
