@@ -592,12 +592,40 @@ public class MapStage extends GameStage {
         return chaser;
     }
 
+    // Round 971 (Fable P2-9): the enemy whose duel result is still being played out - set by setWinner, cleared when its
+    // follow-up runs (or on a load). From the result to the loot screen (the win's attack animation behind a Timer task,
+    // then the death animation's pause) the player cannot leave the map, take an entry or start another duel: the result
+    // used to land on the next map (changes.deleteObject on the wrong place, the clear booked against it) or, with a
+    // second enemy touched, pay that enemy's death with no duel and leave the first as a ghost.
+    private EnemySprite resultMob;
+    private String lastPendingRefusal;
+
+    /** Round 971: is a duel result still waiting to be booked on this map? resultMob counts only while a pause or its
+     *  callback is still armed, so a callback something else overwrote can never lock the player in. */
+    public boolean isResultPending() {
+        return hasPendingResultTask() || (resultMob != null && (isPaused() || onEndAction != null));
+    }
+
+    /** Round 971: true (and one [TFR-ResultWindow] line per thing refused) while a duel result is pending. */
+    public boolean refusedForPendingResult(String what) {
+        if (!isResultPending())
+            return false;
+        if (!what.equals(lastPendingRefusal)) {
+            lastPendingRefusal = what;
+            System.out.println("[TFR-ResultWindow] " + what + " refused - the duel result for "
+                    + (resultMob != null ? resultMob.getName() + " #" + resultMob.getId() : "an enemy")
+                    + " is still pending in " + loadedMapName);
+        }
+        return true;
+    }
+
     /** Round 126: see GameStage.cancelPendingActions() - a load must also forget the mob the
      *  pending result was about, or the stale reference outlives the map it belonged to. */
     @Override
     public void cancelPendingActions() {
         super.cancelPendingActions();
         currentMob = null;
+        resultMob = null;
         freezeAllEnemyBehaviors = false;
         isLoadingMatch = false;
     }
@@ -1412,6 +1440,7 @@ public class MapStage extends GameStage {
         int reactionThreat = 0; // round 252 - no reaction at all
         int reactionPursue = 0; // round 279 - reacted, but could not sustain a chase
         Array<String> shopsAlreadyPresent = new Array<>();
+        StringBuilder shopSlotLog = new StringBuilder(); // round 971: one [TFR-ShopSlot] line per map
         for (MapObject obj : layer.getObjects()) {
             MapProperties prop = obj.getProperties();
             String type = prop.get("type", String.class);
@@ -1956,12 +1985,20 @@ public class MapStage extends GameStage {
                         String shopList = "";
 
                         boolean isRotatingShop = !rotatingShop.isEmpty();
+                        // Round 971 (Fable P2-11): the slot's tier and type rolls come from its own seed (util/ShopSlotRoll),
+                        // not from the world Random the previous slot's stock generation left behind - so a town's shop
+                        // types no longer move with the week (a noRestock shop's weekly seed) or an earlier slot's restock.
+                        PointOfInterest slotPlace = TileMapScene.instance().rootPoint;
+                        Random slotRandom = ShopSlotRoll.slotRandom(WorldSave.getCurrentSave().getWorld().getSeed(),
+                                slotPlace == null ? null : slotPlace.getID(), id);
+                        int slotRarityRoll = -1;
 
                         if (isRotatingShop) {
                             shopList = rotatingShop;
                             restockPrice = 7;
                         } else {
-                            int rarity = WorldSave.getCurrentSave().getWorld().getRandom().nextInt(100);
+                            int rarity = slotRandom.nextInt(100);
+                            slotRarityRoll = rarity;
                             // Item economy (2026-08-10): per-shop rarity-mix override - every other
                             // shop keeps the original global split (thresholds 95/85/55, roughly
                             // common/uncommon/rare/mythic 56/30/10/4) unless THIS shop object sets
@@ -2084,18 +2121,17 @@ public class MapStage extends GameStage {
                         }
                         if (shops.size == 0) continue;
 
-                        ShopData data = shops.get(WorldSave.getCurrentSave().getWorld().getRandom().nextInt(shops.size));
+                        ShopData data = shops.get(slotRandom.nextInt(shops.size));
                         // Round 693: a town that is not the player's never shows a shop its sets cannot stock (a red
                         // Wolf shop on 16 sets with no red wolves) - another from this slot's candidates instead. Own
-                        // Random per town and slot: the world RNG above and every other slot roll as before.
+                        // Random per town and slot (older than round 971's slotRandom, kept so the picks stay).
                         PointOfInterest shopTown = TileMapScene.instance().rootPoint;
                         if (!isRotatingShop && !shopList.isEmpty() && shopTown != null && changes.getPinnedShopName(id) == null
                                 && !TownRestoration.isCurrentTownCapitol() && !TownRestoration.isTownRestored(changes)) {
                             data = EconomyBuildings.stockableShopFor(data, shops, shopsAlreadyPresent, changes,
                                     new Random(((long) shopTown.getID().hashCode() << 32) ^ id), shopTown.getData().name, id);
                         }
-                        // A pinned slot ignores the roll above (still executed so the shared world
-                        // RNG advances identically either way) and becomes exactly the recorded
+                        // A pinned slot ignores the roll above and becomes exactly the recorded
                         // shop - how the Capitol migration keeps the source town's actual shops
                         // (see PointOfInterestChanges.pinnedShopNames).
                         String pinnedName = changes.getPinnedShopName(id);
@@ -2115,6 +2151,8 @@ public class MapStage extends GameStage {
                         // Apply this slot's own computed price unconditionally so it's never stale.
                         data.restockPrice = restockPrice;
                         shopsAlreadyPresent.add(data.name);
+                        shopSlotLog.append(" #").append(id).append(' ').append(data.name).append(pinnedName != null ? " (pinned)"
+                                : isRotatingShop ? " (rotating)" : " (roll " + slotRarityRoll + ")");
                         Array<Reward> ret = new Array<>();
                         // noRestock shops (Armory, land shops) reseed automatically once a week
                         // instead of being frozen on their first-ever roll - see
@@ -2201,6 +2239,8 @@ public class MapStage extends GameStage {
                 }
             }
         }
+        if (shopSlotLog.length() > 0) // round 971 (Fable P2-11): each slot's type, from its own seed
+            System.out.println("[TFR-ShopSlot] " + currentMap + " (seeded per slot):" + shopSlotLog);
         if (reactionThreat > 0 || reactionPursue > 0) { // rounds 252 / 279
             StringBuilder sb = new StringBuilder("[TFR-Threat] ").append(currentMap).append(": ");
             if (reactionThreat > 0)
@@ -2401,51 +2441,60 @@ public class MapStage extends GameStage {
                     + ") - set aside instead of crashing");
             return;
         }
+        // Round 971 (Fable P2-9): the task and the pause below read THIS enemy and THIS map's changes, not the fields - a
+        // field can move on in the second before they run. resultMob holds the map until they have (isResultPending()).
+        final EnemySprite mob = currentMob;
+        final PointOfInterestChanges where = changes;
+        resultMob = mob;
+        lastPendingRefusal = null;
         freezeAllEnemyBehaviors = true;
         if (playerWins) {
-            currentMob.clearCollisionHeight();
+            mob.clearCollisionHeight();
             Current.player().win();
             player.setAnimation(CharacterSprite.AnimationTypes.Attack);
             float attackDuration = Math.max(1f,
                     player.getActionAnimationDuration(CharacterSprite.AnimationTypes.Attack, 1f));
-            currentMob.playEffect(Paths.EFFECT_BLOOD, 0.5f);
+            mob.playEffect(Paths.EFFECT_BLOOD, 0.5f);
             scheduleResultTask(new Timer.Task() {
                 @Override
                 public void run() {
-                    currentMob.setAnimation(CharacterSprite.AnimationTypes.Death);
-                    currentMob.resetCollisionHeight();
-                    float deathDuration = currentMob.getActionAnimationDuration(CharacterSprite.AnimationTypes.Death, 0.3f);
+                    mob.setAnimation(CharacterSprite.AnimationTypes.Death);
+                    mob.resetCollisionHeight();
+                    float deathDuration = mob.getActionAnimationDuration(CharacterSprite.AnimationTypes.Death, 0.3f);
                     startPause(deathDuration, () -> {
+                        resultMob = null;
                         // Round 345: a placement's winQuestFlag (the Demon's Bargain: its POI retires on it - the
                         // user: "if you accept the deal or defeat the guy, this dungeon should never re-appear").
-                        if (currentMob.winQuestFlag != null && !currentMob.winQuestFlag.isEmpty()) {
-                            Current.player().setQuestFlag(currentMob.winQuestFlag, 1);
-                            System.out.println("[TFR-Placement] " + currentMob.getName() + " beaten - quest flag "
-                                    + currentMob.winQuestFlag + " set");
+                        if (mob.winQuestFlag != null && !mob.winQuestFlag.isEmpty()) {
+                            Current.player().setQuestFlag(mob.winQuestFlag, 1);
+                            System.out.println("[TFR-Placement] " + mob.getName() + " beaten - quest flag "
+                                    + mob.winQuestFlag + " set");
                         }
-                        MapStage.this.getReward();
-                        AdventureQuestController.instance().updateQuestsWin(currentMob,enemies);
+                        MapStage.this.getReward(mob, where);
+                        AdventureQuestController.instance().updateQuestsWin(mob,enemies);
                         AdventureQuestController.instance().showQuestDialogs(MapStage.this);
-                        currentMob = null;
+                        if (currentMob == mob)
+                            currentMob = null;
                     });
                     player.setAnimation(CharacterSprite.AnimationTypes.Idle);
                 }
             }, attackDuration);
         } else {
-            currentMob.clearCollisionHeight();
+            mob.clearCollisionHeight();
             player.setAnimation(CharacterSprite.AnimationTypes.Hit);
-            currentMob.setAnimation(CharacterSprite.AnimationTypes.Attack);
+            mob.setAnimation(CharacterSprite.AnimationTypes.Attack);
             float resultAnimationDuration = Math.max(
                     player.getActionAnimationDuration(CharacterSprite.AnimationTypes.Hit, 0.3f),
-                    currentMob.getActionAnimationDuration(CharacterSprite.AnimationTypes.Attack, 0.3f));
+                    mob.getActionAnimationDuration(CharacterSprite.AnimationTypes.Attack, 0.3f));
             startPause(resultAnimationDuration, () -> {
+                resultMob = null; // before exitDungeon below, which this result itself may call
                 player.setAnimation(CharacterSprite.AnimationTypes.Idle);
-                currentMob.setAnimation(CharacterSprite.AnimationTypes.Idle);
-                currentMob.resetCollisionHeight();
+                mob.setAnimation(CharacterSprite.AnimationTypes.Idle);
+                mob.resetCollisionHeight();
                 if (positions.peek() != null) {
                     player.setPosition(positions.peek());
                 }
-                currentMob.freezeMovement();
+                mob.freezeMovement();
                 // Dungeon rotation (MOD_SCOPE.md #15): THE match-loss moment - every way to lose
                 // inside a dungeon funnels here (life hitting zero, losing with life remaining,
                 // conceding), unlike exitDungeon()'s `defeated` parameter, which is only true when
@@ -2455,16 +2504,17 @@ public class MapStage extends GameStage {
                 // sees the protecting quest active. No-op for towns/story dungeons/bosses and any
                 // non-rotatable POI.
                 DungeonRotation.onDungeonDefeat(TileMapScene.instance().rootPoint);
-                AdventureQuestController.instance().updateQuestsLose(currentMob);
+                AdventureQuestController.instance().updateQuestsLose(mob);
                 AdventureQuestController.instance().showQuestDialogs(MapStage.this);
                 boolean defeated = Current.player().defeated();
                 //If hardcore mode is added, check and redirect to game over screen here
                 if (canFailDungeon && !defeated)
-                    dungeonFailedDialog(true, currentMob.getData().boss && !isArena);
+                    dungeonFailedDialog(true, mob.getData().boss && !isArena);
                 else
-                    exitDungeon(defeated, currentMob.getData().boss && !isArena);
+                    exitDungeon(defeated, mob.getData().boss && !isArena);
                 MapStage.this.stop();
-                currentMob = null;
+                if (currentMob == mob)
+                    currentMob = null;
             });
         }
     }
@@ -2755,26 +2805,27 @@ public class MapStage extends GameStage {
         return null;
     }
 
-    protected void getReward() {
+    /** Round 971 (Fable P2-9): the beaten enemy and its map's changes come from setWinner, never the fields. */
+    protected void getReward(EnemySprite mob, PointOfInterestChanges where) {
         isLoadingMatch = false;
-        Array<Reward> loot = currentMob.getRewards();
+        Array<Reward> loot = mob.getRewards();
         // Round 299: +Life once per place (round 302: and once per game), a lair boss's signature item once per lair,
         // half on a lair's return visits - and a boss down in a lair is what lets the walk-out count as a clear
         // (DungeonRotation.onLairExit()).
-        PlaceRewards.filterDuelPayout(loot, currentMob);
-        forge.adventure.util.WrathHunt.applyBounty(loot, currentMob); // round 813: the hunted color's bounty
-        forge.adventure.util.StreakBounty.applyBounty(loot, currentMob); // round 943: the Bounty
-        if (currentMob.getData() != null && currentMob.getData().boss)
-            DungeonRotation.onLairBossDefeated(TileMapScene.instance().rootPoint, currentMob.getData().getName(), false);
+        PlaceRewards.filterDuelPayout(loot, mob);
+        forge.adventure.util.WrathHunt.applyBounty(loot, mob); // round 813: the hunted color's bounty
+        forge.adventure.util.StreakBounty.applyBounty(loot, mob); // round 943: the Bounty
+        if (mob.getData() != null && mob.getData().boss)
+            DungeonRotation.onLairBossDefeated(TileMapScene.instance().rootPoint, mob.getData().getName(), false);
         // Bronze Coin ransom reclaim as a visible loot tile (user request 2026-09-01) - the
         // dungeon/town twin of WorldStage.setWinner's call. See
         // AdventurePlayer.appendCoinRansomReward.
-        Current.player().appendCoinRansomReward(loot, currentMob.getName());
+        Current.player().appendCoinRansomReward(loot, mob.getName());
         forge.adventure.util.Ascendance.appendDuelPower(loot); // round 517: the duel's Power, paid when collected
         // VeggieShark report (v1.13 thread): an empty payout opened a bare loot screen - the chest and its OK button,
         // nothing else. It now logs one [TFR-Payout] line and only opens the screen when there is something on it;
         // everything below (champion bookkeeping, removal, the defeat dialog) runs either way.
-        if (RewardScene.announceDuelPayout(loot, currentMob.getName())) {
+        if (RewardScene.announceDuelPayout(loot, mob.getName())) {
             RewardScene.instance().loadRewards(loot, RewardScene.Type.Loot, null);
             Forge.switchScene(RewardScene.instance());
         }
@@ -2782,18 +2833,18 @@ public class MapStage extends GameStage {
         // be farmed): once it falls, this cave's roll is spent. The killed placement used to drop out of
         // prepareCaveChampion()'s candidate list on the next visit, which moved the hash onto a
         // different placement and promoted the same champion again.
-        if (currentMob.getId() == caveChampionObjectId && caveChampionData != null)
+        if (mob.getId() == caveChampionObjectId && caveChampionData != null)
             CaveChampions.onChampionDefeated(AdventureQuestController.instance().mostRecentPOI, caveChampionData.getName());
-        if (currentMob.defeatDialog == null) {
-            currentMob.remove();
-            actors.removeValue(currentMob, true);
-            if (!respawnEnemies || currentMob.getData().boss)
-                changes.deleteObject(currentMob.getId());
-                enemies.remove(currentMob);
+        if (mob.defeatDialog == null) {
+            mob.remove();
+            actors.removeValue(mob, true);
+            if (!respawnEnemies || mob.getData().boss)
+                where.deleteObject(mob.getId());
+                enemies.remove(mob);
         } else {
-            currentMob.defeatDialog.activate();
+            mob.defeatDialog.activate();
             player.setAnimation(CharacterSprite.AnimationTypes.Idle);
-            currentMob.setAnimation(CharacterSprite.AnimationTypes.Idle);
+            mob.setAnimation(CharacterSprite.AnimationTypes.Idle);
         }
     }
 
@@ -2937,6 +2988,20 @@ public class MapStage extends GameStage {
 
         talkTouching.removeIf(m -> m.getStage() == null || steppedAway(m)); // round 818
 
+        // Round 971 (Fable P2-9): while a duel result is pending nothing the player touches fires - an entry, an exit, a
+        // shop, a pickup, an enemy. GameStage.act() already holds the player still then; this is the backstop. The
+        // actor's own collision state is left alone, so standing on stairs takes them once the result is booked.
+        if (isResultPending()) {
+            for (int i = actors.size - 1; i >= 0; i--) {
+                MapActor actor = actors.get(i);
+                if (actor != null && actor.collideWith(player)) {
+                    refusedForPendingResult(actor.getClass().getSimpleName() + " #" + actor.getId());
+                    break;
+                }
+            }
+            return;
+        }
+
         for (int i = actors.size - 1; i >= 0; i--) {
             MapActor actor = actors.get(i);
             if (actor == null) continue;
@@ -3026,6 +3091,8 @@ public class MapStage extends GameStage {
     
     public void beginDuel(EnemySprite mob) {
         if (mob == null) return;
+        if (refusedForPendingResult("a duel with " + mob.getName() + " #" + mob.getId())) // round 971 (Fable P2-9)
+            return;
         mob.clearCollisionHeight();
         currentMob = mob;
         player.setAnimation(CharacterSprite.AnimationTypes.Attack);

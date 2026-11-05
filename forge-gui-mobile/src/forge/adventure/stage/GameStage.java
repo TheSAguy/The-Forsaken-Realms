@@ -576,7 +576,11 @@ public abstract class GameStage extends Stage {
         // Upstream 08.26 input rewrite: this central every-frame gate zeroes all input sources
         // while a dialog is up, which subsumes the mod's 2026-08-09 dialogOnlyInput gates that
         // used to sit on the touch-steering block here and on keyDown's movement keys.
-        if (isPaused() || isDialogOnlyInput() || Forge.advFreezePlayerControls) {
+        // Round 971 (Fable P2-9): and while a duel result waits behind its Timer task (a win's attack animation, at least
+        // 1 s). The player could walk in that second, into stairs, an exit or a second enemy, and the result then landed on
+        // the next map or on the wrong enemy. The defeat follow-ups already freeze controls; this covers the win, on the
+        // world map as well.
+        if (isPaused() || isDialogOnlyInput() || Forge.advFreezePlayerControls || hasPendingResultTask()) {
             keyboardInput.setZero();
             controllerInput.setZero();
             touchInput.setZero();

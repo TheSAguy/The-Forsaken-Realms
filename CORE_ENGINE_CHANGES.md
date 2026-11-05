@@ -35,6 +35,20 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 971 - a duel result is booked on its own map and enemy; shop slots roll from their own seed
+- `forge-gui-mobile/src/forge/adventure/stage/GameStage.java` (STOCK): `act()`'s input gate also zeroes input while
+  `hasPendingResultTask()` (TFR's, round 302).
+- `forge-gui-mobile/src/forge/adventure/stage/MapStage.java` (STOCK): `setWinner` captures `mob`/`where` (the task and
+  lambdas use them, `currentMob = null` only if it is still that enemy) and sets `resultMob`; `getReward(mob, where)`
+  takes them as parameters; `isResultPending()`/`refusedForPendingResult(what)` (new); `onActing` skips actor collisions
+  and `beginDuel` refuses while a result is pending; `cancelPendingActions` clears `resultMob`. `loadObjects`' shop case
+  rolls the rarity and the shop type from `ShopSlotRoll.slotRandom(worldSeed, place id, object id)`, not the world
+  Random, and logs one `[TFR-ShopSlot]` line per map. If upstream changes `setWinner`/`getReward` or the shop rolls,
+  keep the captured enemy/changes and the per-slot Random.
+- `forge-gui-mobile/src/forge/adventure/stage/GameHUD.java` (STOCK): `exitToWorldMap` returns while
+  `MapStage.refusedForPendingResult(...)`.
+- TFR files: NEW `util/ShopSlotRoll.java`; NEW test `test/forge/adventure/util/ShopSlotRollTest.java`.
+
 ### Round 969 - enemy sprite atlases are unloaded on the world map when nothing draws from them
 - `forge-gui-mobile/src/forge/adventure/util/Config.java` (STOCK): `getAtlas` calls `SpriteSweep.used(path, fileName)`
   before it returns; `getAtlasSprite` (on a cache miss), `getPOISprites` (on a miss) and `getAnimatedSprites` (at the

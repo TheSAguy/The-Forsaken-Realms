@@ -1199,6 +1199,8 @@ public class GameHUD extends Stage {
             return;
         if (Forge.advFreezePlayerControls)
             return;
+        if (MapStage.getInstance().refusedForPendingResult("the exit to the world map")) // round 971 (Fable P2-9)
+            return;
         if (escapeBlocked("exit")) // round 724
             return;
         dialog.getButtonTable().clear();

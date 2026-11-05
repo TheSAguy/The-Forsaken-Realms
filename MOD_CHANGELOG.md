@@ -14264,6 +14264,66 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 971: a duel result can no longer land on another map or enemy, and a town keeps its shop types (2026-11-05)
+
+- **Why** - the Fable review `C:\CLAUDE\PROJECTS\TFR1\notes\fable-review-2026-11-02.md`, P2-9 and P2-11 ("results that a
+  reload can roll again"; P2-12 is round 972). The user: "Let's do all of these".
+- **P2-9, the second after a win** - `MapStage.setWinner`'s win path parks its follow-up behind a Timer task of
+  `max(1 s, attack animation)`, then the death pause; both read the fields `currentMob` and `changes`, and `DuelScene`
+  hands controls back before `setWinner`. In that second the player could walk: onto stairs or an exit (the result then
+  ran on the next map - `changes.deleteObject(id)` deleted whatever carried that id THERE, the clear was booked against the
+  new place, and the beaten enemy stayed in its own), into a second enemy (`beginDuel` set `currentMob = mob2`, the Timer's
+  `startPause` overwrote the duel's lambda: mob2 died without a duel and paid from mob1's deck, mob1 stayed a
+  non-colliding ghost, an empty payout left `advFreezePlayerControls` true - a stuck player), into a multi-reward pickup
+  (its loot-screen lambda overwritten, the pickup already deleted), or press F4/the HUD exit. `WorldStage.setWinner` has
+  the same Timer: a POI or a second roamer could be touched in it (`startPause`'s duel lambda overwritten by the death
+  pause, controls frozen for good).
+  - `GameStage.act()` holds the player still while `hasPendingResultTask()` (the same input gate as `isPaused()`), on
+    the world map and in a map. That closes the window for walking; the defeat follow-ups already froze controls.
+  - `MapStage.setWinner` captures `final EnemySprite mob` and `final PointOfInterestChanges where` and the task and both
+    lambdas use them; `getReward(mob, where)` takes them as parameters. A lambda clears `currentMob` only if it is still
+    that enemy. `resultMob` (new) holds the map from the result until the follow-up runs (cleared first in each lambda,
+    so the loss path's own `exitDungeon` still runs; cleared on a load by `cancelPendingActions`).
+  - `MapStage.isResultPending()` / `refusedForPendingResult(what)` (new): `GameHUD.exitToWorldMap` (the HUD button and
+    F4/L2) and `beginDuel` refuse while a result is pending, and `onActing` skips every actor collision then (entries,
+    exits, portals, shops, pickups, enemies) - a backstop, as the player cannot move. An actor's collision state is left
+    alone, so a player standing on stairs takes them once the result is booked.
+  - No `WorldStage` or `DuelScene` edit: the input gate covers the world map (its POI and enemy collisions run only while
+    the player moves).
+- **P2-11, AI-town shop types** - `MapStage.loadObjects`' rarity roll (`nextInt(100)`) and type pick
+  (`shops.get(nextInt(n))`) drew from the world Random in whatever state the previous slot's stock generation left it
+  (each slot reseeds that Random for its stock; a `noRestock` shop - every generic town's land shop, object 48 - takes a
+  weekly seed). So slots 49-53 changed type, and stock, every week, and a paid restock or Armory re-roll of slot 41
+  re-rolled the types of every later slot on the next visit. Each slot now rolls both from its own Random:
+  `util/ShopSlotRoll` (new) seeds it from the world seed, the place's id and the object id, mixed through
+  `ResourceSpawns.mixSeed`. Pinned slots (the player's towns, the Capitol migration, `rerollShopType`) are unchanged;
+  Rotating shops still pick by the date; round 693's `stockableShopFor` keeps its own Random; the stock seeds
+  (`getShopSeed`, `getWeeklyShopSeed`) are unchanged. The world Random's stream after each slot is unchanged too: the two
+  removed draws came before the slot's own `setSeed`.
+  - **Existing saves:** the unpinned shop types in towns the player has already seen change once, on the first visit
+    after this round, and then stay.
+- **Logs** - `[TFR-ResultWindow] <what> refused - the duel result for <enemy> #<id> is still pending in <map>` (one line
+  per thing refused per window); `[TFR-ShopSlot] <map> (seeded per slot): #41 <shop> (roll 37) #48 <shop> (roll 12) ...`
+  once per map load (`(pinned)` / `(rotating)` where the roll is not used).
+- **Tests** - `forge-gui-mobile/test/forge/adventure/util/ShopSlotRollTest.java` (new, 4): a simulated 12-slot town
+  keeps its types across weeks and after slot 41's restock; the old shared-Random loop does move the slots after the land
+  shop (the mechanism, kept as a check); each slot, place and world has its own seed; 200 neighboring slots spread their
+  rarity rolls (mythic share near 4%). P2-9's stage code needs libGDX and has no unit test; it was checked in the agent
+  game. `mvn -o -pl forge-gui-mobile -am test` exit 0: 18/18 (`ShopSlotRollTest` 4,
+  `SupportPromptTest` 8 - round 967 reads the same `hasPendingResultTask()`/`isPaused()`, unchanged -, `ChestDuplicateOfferTest` 6).
+- **Agent game** (round 971's classes ahead of the agent jar, duels at 50x) - P2-11: Kraag Shrine (`wasteland_town.tmx`, an
+  AI town with live shops) logged the same `[TFR-ShopSlot]` line on day 9, after a paid restock of slot 41 (Land4Blue,
+  2 shards) and on day 16 after a week change - nine slots, all the same; Nevermoor Tower kept its nine (destroyed) slot
+  types from day 1 to day 9. P2-9: a won duel in Salt Cave (Katipunero Scout #7); the script tapped the ante OK and, the
+  moment the map was back, pressed F4 and walked to the exit. F4 logged `[TFR-ResultWindow] the exit to the world map
+  refused - the duel result for Katipunero Scout #7 is still pending in .../cave_colorless_05.tmx` and opened no dialog;
+  the walk stood still for the whole window (player at 387,171 throughout), the death pause and then the loot screen came
+  at +2.5 s in Salt Cave, #7 was gone from the cave's actors, and the exit then worked. Not tried: a second enemy inside
+  the window (the player cannot move to reach one; the collision backstop logged nothing, as expected).
+- **Release note** - "Shops in AI towns keep their types: a Dragon shop is a Dragon shop next week too, and buying a
+  restock no longer changes the other shops. Towns you have already visited change their shop line-up once."; "After you
+  win a fight, you stand still until the loot appears, so the win can no longer be lost by walking through a door."
+
 ## Round 976: `match/Dangerous.ogg` plays again - its embedded Theora stream is gone (2026-11-05)
 
 - **Why** - found in a sister project's test build: a duel that drew `music/match/Dangerous.ogg` (one of round 957's 8
