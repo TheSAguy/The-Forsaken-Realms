@@ -4010,6 +4010,8 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
 
         if(earned > 0)
             giveGold(earned);
+        if (amountToSell > 0) // round 966: one line per sale, so a jump in gold can be read from forge.log
+            System.out.println("[TFR-Shop] sold " + amountToSell + "x " + card.getName() + " for " + earned + " gold (gold now " + gold + ")");
         return amountToSell;
     }
 
@@ -4030,6 +4032,8 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
             forge.adventure.util.ResearchMeter.endBatch(this, "a sale of " + sold + " card(s)");
         }
         giveGold(profit); //do this as one transaction so as not to get multiple copies of sound effect
+        if (sold > 0) // round 966: one line for the whole bulk sale
+            System.out.println("[TFR-Shop] sold " + sold + " card(s) for " + profit + " gold (gold now " + gold + ")");
     }
 
     /**

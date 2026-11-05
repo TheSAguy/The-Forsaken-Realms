@@ -14264,6 +14264,30 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 966: console commands and shop sales are logged, so a gold jump can be explained (2026-11-05)
+
+Log review `C:\CLAUDE\PROJECTS\TFR1\notes\logs-1105.md` P3-2: player ebb52f38's gold rose by exactly 100,000,000
+mid-duel (almost certainly `give gold` in the console) and aeab35b5's by about 61,500 (probably card sales), and
+neither left a line: a console command that worked printed nothing (only a failure logged `[TFR-Console]`), and no
+sale logged at all. Diagnostic only - no behavior or save change.
+
+- **Console** - `ConsoleCommandInterpreter.command()` prints `[TFR-Console] ran "<text>" -> <first line of the
+  result>` after every command that runs (sample: `[TFR-Console] ran "give gold 100" -> Added 100 gold`). Round 906's
+  failure line stays; "Command not found" is not logged. It covers what round 717 counts as typed (`itemInUse == null`):
+  the console, the agent bridge's `console` action and a dialog's `runCommand`. The agent bridge stays in: its console
+  action is manual and needs `TFR_AGENT_CHEATS=1`, so it is a handful of lines, and a dialog's `runCommand` can move
+  gold too. A rune's own `commandOnUse` is play and is not logged.
+- **Card sales** - `AdventurePlayer.sellCard` logs `[TFR-Shop] sold 3x Lightning Bolt for 150 gold (gold now 12345)`
+  (the deck editor's sells and the Lab's Found Cards sales); `doBulkSell` logs one line for the whole sale,
+  `[TFR-Shop] sold 40 card(s) for 900 gold (gold now X)` (the auto-sell pile at a shop or the reward screen, the deck
+  editor's bulk sell); an empty bulk sale (a shop entry with nothing to auto-sell) logs nothing.
+- **Item sales** - `InventoryScene.sell()` and the Armory's sell confirm log `[TFR-Shop] sold item <name> for G gold
+  (gold now X)`.
+- **Known gap** - the Lab's "sell over 4" (`ResearchMeter.sellOverFour`) calls `sellCard` once per card name, so it
+  writes one `[TFR-Shop]` line per name, followed by its own `[TFR-Research]` total.
+- **Checked** - the desktop jar builds (Maven exit 0, checkstyle included). Not run in the agent game: round 965's
+  measurement held the agent window.
+
 ## Round 964: the 75 h support splash gets its art (2026-11-04)
 
 The user picked `Sunset Adventurer with Mana-Backed Cards.png` (ChatGPT, 1254x1254, from the inbox folder

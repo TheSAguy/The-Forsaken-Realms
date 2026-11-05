@@ -123,7 +123,14 @@ public class ConsoleCommandInterpreter {
         if (typed)
             forge.adventure.util.TfrAchievements.consoleBegin();
         try {
-            return currentCommand.function.apply(parameters);
+            String result = currentCommand.function.apply(parameters);
+            // Round 966: a command that works logs too, so a jump in gold ("give gold") shows in forge.log. Typed,
+            // agent-bridge and dialog runCommand lines all come through here; a rune's own command does not.
+            if (typed) {
+                String first = result == null ? "" : result.split("\n", 2)[0];
+                System.out.println("[TFR-Console] ran \"" + text + "\" -> " + first);
+            }
+            return result;
         } catch (RuntimeException e) {
             // Round 906: "days skip abc" opened the crash dialog. A rune's command is play, so the dialog still reports it.
             if (!typed)

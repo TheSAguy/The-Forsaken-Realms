@@ -404,6 +404,7 @@ public class InventoryScene extends UIScene {
             }
             Current.player().giveGold(sellPrice(data));
             Current.player().removeItem(data);
+            System.out.println("[TFR-Shop] sold item " + data.name + " for " + sellPrice(data) + " gold (gold now " + Current.player().getGold() + ")"); // round 966
         }
         updateInventory();
         setSelected(null); // round 141: see delete()

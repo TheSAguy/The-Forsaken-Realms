@@ -535,6 +535,7 @@ public class ArmoryScene extends UIScene {
                     if (Current.player().getItems().contains(data)) {
                         Current.player().giveGold(price);
                         Current.player().removeItem(data);
+                        System.out.println("[TFR-Shop] sold item " + data.name + " for " + price + " gold (gold now " + Current.player().getGold() + ")"); // round 966
                     }
                     removeDialog();
                     refresh();
