@@ -14264,6 +14264,23 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 964: the 75 h support splash gets its art (2026-11-04)
+
+The user picked `Sunset Adventurer with Mana-Backed Cards.png` (ChatGPT, 1254x1254, from the inbox folder
+`75 Hour Splash`) for round 963's splash, through the Art main thread: "Let's use: Sunset Adventurer with Mana-Backed
+Cards.png". The hooded Realm-walker raises a card on a hilltop camp at sunset, a castle and a dragon beyond.
+
+- **The file** - `The Forsaken Realms/ui/support_75h.png` replaces round 963's placeholder: 1024x1024, opaque RGB (no
+  alpha), fitted with LANCZOS, losslessly compressed (1.95 MB). No lettering. No code change: `SupportPrompt.SPLASH_ART`
+  already loads it, with the Linear filter.
+- **Size on screen** - 164 units square inside a 1-unit gold line: 437 px at 1280x720, 1311 px at 4K. The figure, the
+  raised card, the fire, the map, the deck, the castle and the dragon sit inside a 40 px margin at 1024; only grass,
+  rocks, clouds and the pack's edge reach the border.
+- **Checked** - previews at 720p and 4K, landscape on round 963's agent shot with the placeholder swapped out, portrait
+  on `notes\r963\mockup.py`'s layout (170 units, about 4% larger than the game): `C:\CLAUDE\PROJECTS\ART\notes\support_75h\previews\`
+  (`*_final.png`). Not yet seen in the game: TFR 1 - Manager packages and checks it in the agent game.
+- **Art Library** - `Projects/The Forsaken Realms/Key Art/75-Hour Splash` (the game file and the source).
+
 ## Round 962: the Autonomous Factory keeps one Clay Golem; the rest roll their rank by the week (2026-11-04)
 
 The log review `C:\CLAUDE\PROJECTS\TFR1\notes\logs-1104d.md` P2-1 found a second player walled by the factory's fixed
