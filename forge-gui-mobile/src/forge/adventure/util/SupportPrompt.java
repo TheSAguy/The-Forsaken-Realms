@@ -87,6 +87,8 @@ public final class SupportPrompt {
     private static float quietFor;
     /** Round 963: the splash's dark veil over the HUD (removed with the dialog), and its 1x1 white texture. */
     private static Image veil;
+    /** Round 963: the console's "support show 4 N" - the 75 h text as if the save had N wins (one show), or -1. */
+    private static int winsOverride = -1;
     private static Texture white;
 
     /** The plane's Ko-fi page, or null (a stock plane: no counting, no ask, no Settings row). */
@@ -240,8 +242,6 @@ public final class SupportPrompt {
         dialog.getButtonTable().clear();
         dialog.clearListeners();
         Table buttons = index == SPLASH ? new Table() : dialog.getButtonTable();
-        if (index == SPLASH)
-            buttons.defaults().padBottom(3f);
         float buttonWidth = index == SPLASH ? (Forge.isLandscapeMode() ? 230f : 240f) : 240f;
         if (!thanks)
             buttons.add(Controls.newTextButton(index == SPLASH ? "Support TFR on Ko-fi" : "Support TFR", () -> {
@@ -282,29 +282,33 @@ public final class SupportPrompt {
             addVeil(dialog);
     }
 
-    /** Round 963: the 75 h splash - the art (SPLASH_ART, 170 units square, a gold line round it) beside the gold title,
+    /** Round 963: the 75 h splash - the art (SPLASH_ART, 164 units square, a gold line round it) beside the gold title,
      *  the text and the buttons in landscape, above them in portrait. All of it goes in the button table, so
-     *  showDialog's focus list (it walks the button table's nested tables) still finds every button. */
+     *  showDialog's focus list (it walks the button table's nested tables) still finds every button. Sized to fit
+     *  the 270-unit-high landscape stage: a paragraph is its own label with a small gap, not a blank line (a whole
+     *  line high), and the buttons sit with no gap of their own (the first agent shot ran off the top of the screen). */
     private static void layoutSplash(Dialog dialog, String text, Table buttons) {
         boolean landscape = Forge.isLandscapeMode();
-        float textWidth = landscape ? 250f : 240f;
+        float textWidth = landscape ? 262f : 240f;
         Table column = new Table();
-        TypingLabel title = Controls.newTypingLabel("[%160][#F4CC60]" + TITLES[SPLASH]);
+        TypingLabel title = Controls.newTypingLabel("[%140][#F4CC60]" + TITLES[SPLASH]);
         title.skipToTheEnd();
-        column.add(title).padBottom(4f).row();
-        TypingLabel label = Controls.newTypingLabel(text);
-        label.setWrap(true);
-        label.skipToTheEnd();
-        column.add(label).width(textWidth).padBottom(6f).row();
+        column.add(title).padBottom(1f).row();
+        for (String paragraph : text.split("\n\n")) {
+            TypingLabel label = Controls.newTypingLabel(paragraph);
+            label.setWrap(true);
+            label.skipToTheEnd();
+            column.add(label).width(textWidth).padBottom(3f).row();
+        }
         column.add(buttons).row();
         Table body = dialog.getButtonTable();
         Container<Image> art = splashArt();
         if (art != null) {
-            body.add(art).size(172f).pad(4f);
+            body.add(art).size(166f).pad(2f);
             if (!landscape)
                 body.row();
         }
-        body.add(column).pad(4f);
+        body.add(column).pad(2f);
     }
 
     /** The splash's art in a 1-unit gold frame, or null (no file: the splash shows without it). */
@@ -319,7 +323,9 @@ public final class SupportPrompt {
             Image image = new Image(new TextureRegionDrawable(new TextureRegion(tex)));
             image.setScaling(Scaling.fit);
             Container<Image> frame = new Container<>(image);
-            frame.fill().pad(1f).setBackground(new TextureRegionDrawable(new TextureRegion(white())).tint(new Color(0xF4CC60FF)));
+            // the background first: setBackground resets the padding to the drawable's (none), which hid the gold line
+            frame.setBackground(new TextureRegionDrawable(new TextureRegion(white())).tint(new Color(0xF4CC60FF)));
+            frame.fill().pad(1f);
             System.out.println("[TFR-Support] splash art " + SPLASH_ART + " " + tex.getWidth() + "x" + tex.getHeight());
             return frame;
         } catch (Exception e) {
@@ -364,10 +370,11 @@ public final class SupportPrompt {
     private static int wins() {
         int wins = 0;
         try {
-            wins = AdventurePlayer.current().getStatistic().totalWins();
+            wins = winsOverride >= 0 ? winsOverride : AdventurePlayer.current().getStatistic().totalWins();
         } catch (Exception e) {
             System.err.println("[TFR-Support] could not read the duel wins: " + e);
         }
+        winsOverride = -1;
         System.out.println("[TFR-Support] 75 h text: wins=" + wins + ", wins phrase " + (wins >= WINS_PHRASE_MIN
                 ? "shown" : "left out (under " + WINS_PHRASE_MIN + ")"));
         return wins;
@@ -429,7 +436,7 @@ public final class SupportPrompt {
         return String.format(java.util.Locale.ROOT, "%.2f h", h);
     }
 
-    /** Console "support ...": hours N | show [1-4] | never | clicked | reset | info. */
+    /** Console "support ...": hours N | show [1-4] [wins, for the 75 h text] | never | clicked | reset | info. */
     public static String console(String[] s) {
         if (supportLink() == null)
             return "no supportLink on this plane";
@@ -451,8 +458,9 @@ public final class SupportPrompt {
                 int i;
                 try {
                     i = s.length > 1 ? Math.max(1, Math.min(HOURS.length, Integer.parseInt(s[1]))) - 1 : Math.max(0, dueAsk());
+                    winsOverride = s.length > 2 ? Integer.parseInt(s[2]) : -1;
                 } catch (NumberFormatException e) {
-                    return "support show 1 | 2 | 3 | 4";
+                    return "support show 1 | 2 | 3 | 4 [wins]";
                 }
                 show(i, "console");
                 return (isThanks(i, set.supportClicked) ? "thank-you " : "ask ") + (i + 1) + " shown";

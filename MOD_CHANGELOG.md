@@ -14351,6 +14351,27 @@ mock-ups in the same folder).
   40 h ask, a Support click (thank-yous at 40 and 75 h only), a player past both marks (one ask), the 50-win phrase.
 - **Not changed** - the Settings row and the welcome page's Support button still stop nothing; the 5 and 15 h texts.
 
+### Round 963 (follow-up): the splash fits 1280x720, its gold line shows, and the agent check
+
+- **The fit** - the first agent shot (the packaged 961-963 build) ran the 75 h window off the top of a 1280x720
+  screen: the title was cut. Each paragraph is now its own label with a 3-unit gap (a blank line was a whole line
+  high), the title is `[%140]` with a 1-unit gap, the buttons have no gap of their own, the text column is 262 units
+  wide (was 250) and the art 166 (was 172 with its line). With the 412-wins line it fills about 670 of 720 px.
+- **The gold line** - `Container.setBackground` resets the padding to the drawable's (none), so the 1-unit pad set
+  before it was lost and the art covered its own frame. The background is set first now.
+- **Console** - `support show 4 N` shows the 75 h text as if the save had N wins (one show), for shots of the wins line.
+- **Checked** - the agent game at 1280x720 (javac of `SupportPrompt.java` ahead of the agent jar for the fit; then
+  `mvn -pl forge-gui-mobile-dev -am package`, exit 0, `SupportPromptTest` 6/6). The 5 h ask came on a real load with
+  Not until 40 hours; after picking it, no ask at 20 h (back from the inventory); the 40 h ask came anyway ("shown
+  although the player picked Not until 40 hours"); Maybe later there, then the 75 h splash at 75 h; a reset at 90 h
+  showed only the splash (ask 4 of 4) on a load; `support clicked` made the 40 h and 75 h thank-yous. Shots in
+  `C:\CLAUDE\PROJECTS\TFR1\notes\r963\`: `r963-agent-5h-ask.png`, `r963-agent-40h-after-never.png`,
+  `r963-agent-75h-splash.png` (the first build, cut off), `r963-agent-past-both-90h.png`, `r963-agent-75h-412wins.png`,
+  `r963-agent-40h-thanks.png`, `r963-agent-75h-thanks.png`. Not checked: portrait in the game (the mock-up only), a
+  real browser opening, Android.
+- **Note for checks** - the ask arms when the world map comes BACK (a scene change); a load from the world map does
+  not change the scene, so it does not arm it. The inventory and back does.
+
 ## Round 961: the engine to the 11.04 daily (upstream `a4281f7e58b`), and what upstream's adventure data changed (2026-11-04)
 
 The user installed the 11.04 official daily as BASE_INSTALL: "I've updated the official Forge engine: E:\GAMES\Forge_2.
