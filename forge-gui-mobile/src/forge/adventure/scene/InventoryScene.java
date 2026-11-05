@@ -5,7 +5,12 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.TemporalAction;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
@@ -31,6 +36,7 @@ public class InventoryScene extends UIScene {
     Button equipButton;
     TextraButton useButton;
     TextraLabel itemDescription;
+    private final ScrollPane itemDescriptionPane;
     private final Table inventory;
     private final Array<Button> inventoryButtons = new Array<>();
     private final HashMap<String, Button> equipmentSlots = new HashMap<>();
@@ -99,10 +105,9 @@ public class InventoryScene extends UIScene {
      */
     private void setDescription(String text) {
         itemDescription.setText(text);
-        float wrapWidth = descriptionPane != null ? descriptionPane.getWidth() : itemDescription.getWidth();
-        itemDescription.layout.setTargetWidth(wrapWidth);
-        itemDescription.getFont().regenerateLayout(itemDescription.layout);
-        itemDescription.invalidateHierarchy();
+        // Round 978: upstream #12687 does the same re-wrap to the pane's width, with padding and a bounce when the text
+        // scrolls; our callers (round 383's empty slots, rounds 493/502's item limits) keep this one way in.
+        refreshItemDescriptionLayout();
     }
 
     /**
@@ -126,9 +131,6 @@ public class InventoryScene extends UIScene {
         }
         return what + "\n[%98]Empty. The items that fit are listed on the right.";
     }
-
-    /** Round 292: the box the description scrolls in - its width is what the text wraps to. */
-    private ScrollPane descriptionPane;
 
     public InventoryScene() {
         super(Forge.isLandscapeMode() ? "ui/inventory.json" : "ui/inventory_portrait.json");
@@ -161,12 +163,34 @@ public class InventoryScene extends UIScene {
         itemDescription = ui.findActor("item_description");
         itemDescription.setAlignment(Align.topLeft);
         itemDescription.setWrap(true);
-        ScrollPane pane = new ScrollPane(itemDescription);
-        pane.setBounds(itemDescription.getX(), itemDescription.getY(), itemDescription.getWidth() - 5, itemDescription.getHeight() - 8);
-        // Round 292: never lay the description out wider than the box - see setDescription().
-        pane.setScrollingDisabled(true, false);
-        descriptionPane = pane;
-        ui.addActor(pane);
+
+        float topPad = 4f;
+        float bottomPad = 8f;
+        float sidePad = 5f;
+        float descX = itemDescription.getX();
+        float descY = itemDescription.getY() + bottomPad;
+        float descW = itemDescription.getWidth() - sidePad;
+        float descH = itemDescription.getHeight() - topPad - bottomPad;
+        itemDescription.setPosition(0, 0);
+        itemDescriptionPane = new ScrollPane(itemDescription);
+        itemDescriptionPane.setBounds(descX, descY, descW, descH);
+        itemDescriptionPane.setScrollingDisabled(true, false);
+        itemDescriptionPane.setFadeScrollBars(false);
+
+        itemDescriptionPane.addCaptureListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                stopScrollAvailableHint();
+                return false;
+            }
+
+            @Override
+            public boolean scrolled(InputEvent event, float x, float y, float amountX, float amountY) {
+                stopScrollAvailableHint();
+                return false;
+            }
+        });
+        ui.addActor(itemDescriptionPane);
 
         Array<Actor> children = ui.getChildren();
         for (int i = 0, n = children.size; i < n; i++) {
@@ -316,7 +340,7 @@ public class InventoryScene extends UIScene {
             return;
         int initialCost;
         try {
-            //TODO apply modifiers from reputation..
+            // TODO: Apply modifiers from reputation..
             initialCost = repairCost(data);
         } catch (Exception e) {
             initialCost = 500;
@@ -356,7 +380,6 @@ public class InventoryScene extends UIScene {
             object = new InventoryScene();
         return object;
     }
-
 
     public void done() {
         selectedSlot = null;
@@ -519,6 +542,70 @@ public class InventoryScene extends UIScene {
     public void clearItemDescription() {
         setDescription("");
     }
+
+    private void refreshItemDescriptionLayout() {
+        float width = itemDescriptionPane.getWidth();
+        String text = itemDescription.storedText == null ? "" : itemDescription.storedText.stripTrailing();
+        itemDescription.setWidth(width);
+        itemDescription.layout.setTargetWidth(width);
+        itemDescription.getFont().markup(text, itemDescription.layout.clear());
+        itemDescription.layout();
+        // Extra pad so icon glyphs on the last line aren't clipped by the pane edge.
+        // ScrollPane sizes Layout actors from getPrefHeight(), so keep that in sync.
+        float prefHeight = itemDescription.getPrefHeight();
+        float paneHeight = itemDescriptionPane.getHeight();
+        float contentHeight = prefHeight > paneHeight ? prefHeight + 4f : prefHeight;
+        itemDescription.setHeight(contentHeight);
+        stopScrollAvailableHint();
+        itemDescriptionPane.cancel();
+        itemDescriptionPane.setScrollY(0);
+        itemDescriptionPane.updateVisualScroll();
+        itemDescriptionPane.invalidate();
+        itemDescriptionPane.layout();
+        playScrollAvailableHint();
+    }
+
+    private void stopScrollAvailableHint() {
+        itemDescriptionPane.clearActions();
+    }
+
+    private void playScrollAvailableHint() {
+        float maxY = itemDescriptionPane.getMaxY();
+        // Ignore sub-pixel / rounding overflow; stripTrailing already removes blank-line fakes.
+        if (maxY <= 2f) {
+            return;
+        }
+        float bounce = Math.min(6f, maxY);
+        itemDescriptionPane.addAction(Actions.sequence(
+                Actions.delay(0.04f),
+                new TemporalAction(0.28f, Interpolation.sineOut) {
+                    @Override
+                    protected void update(float percent) {
+                        if (itemDescriptionPane.isPanning() || itemDescriptionPane.isDragging()) {
+                            stopScrollAvailableHint();
+                            return;
+                        }
+                        itemDescriptionPane.setScrollY(bounce * percent);
+                        itemDescriptionPane.updateVisualScroll();
+                    }
+                },
+                new TemporalAction(0.36f, Interpolation.sineIn) {
+                    @Override
+                    protected void update(float percent) {
+                        if (itemDescriptionPane.isPanning() || itemDescriptionPane.isDragging()) {
+                            stopScrollAvailableHint();
+                            return;
+                        }
+                        itemDescriptionPane.setScrollY(bounce * (1f - percent));
+                        itemDescriptionPane.updateVisualScroll();
+                    }
+                },
+                Actions.run(() -> {
+                    itemDescriptionPane.setScrollY(0);
+                    itemDescriptionPane.updateVisualScroll();
+                })
+        ));
+    }
     private void setSelected(Button actor) {
         selected = actor;
         if (actor == null) {
@@ -602,14 +689,15 @@ public class InventoryScene extends UIScene {
             setDescription(data.getName() + "\n[%98]" + (data.getComment() == null?"":data.getComment()+" - ") + data.getAllCardsInASinglePool(true, true).countAll() + " cards");
         }
 
-
         for (Button button : inventoryButtons) {
             if (actor != button && button.isChecked()) {
                 button.setChecked(false);
             }
         }
 
-        performTouch(scrollPaneOfActor(itemDescription)); //can use mouse wheel if available to scroll after selection
+        if (stage != null) {
+            stage.setScrollFocus(itemDescriptionPane);
+        }
     }
 
     private void updateInventory() {
@@ -642,7 +730,7 @@ public class InventoryScene extends UIScene {
             }
             items.add(item);
         }
-        // sort these by slot type and name
+        // Sort these by slot type and name
         items.sort((o1, o2) -> {
             if (o1.equipmentSlot == null && o2.equipmentSlot == null) {
                 return o1.name.compareTo(o2.name);
@@ -716,7 +804,7 @@ public class InventoryScene extends UIScene {
                 });
                 inventoryButtons.add(newActor);
                 Deck deck = Current.player().getBoostersOwned().get(i);
-                if (deck == null | deck.isEmpty()) {
+                if (deck == null || deck.isEmpty()) {
                     System.err.print("Can not add null / empty booster " + Current.player().getBoostersOwned().get(i) + "\n");
                     continue;
                 }
@@ -771,7 +859,7 @@ public class InventoryScene extends UIScene {
                 addSlotBorder(slotButton);
             }
         }
-        // make sure repair is clickable
+        // Make sure repair is clickable
         repairButton.setZIndex(ui.getChildren().size);
         refreshSetsButton(); // round 637: an equip or unequip can show or hide it
     }
@@ -794,7 +882,6 @@ public class InventoryScene extends UIScene {
         if (treasureMapsButton != null) // round 478
             treasureMapsButton.setVisible(TreasureHunt.anyPieces(Current.world()));
         refreshSetsButton();
-        //inventory.add().expand();
         super.enter();
     }
 
