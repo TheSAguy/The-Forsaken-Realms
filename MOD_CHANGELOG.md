@@ -14421,7 +14421,7 @@ No upstream change touched Shandalar's own plane data, `common/` adventure data 
 - forge-game: `GameMementoTest` (upstream's, 14), `GameEntityViewTest` and `CardViewListsTest` (round 919), 21 in all
   in that run; forge-gui: `AbstractGuiGameShould` (round 941), 2; forge-gui-desktop: `CastLastStateClearTest` (round
   958, 3) and upstream's `FlatMonteCarloDredgeLineTest` (8). All pass.
-- In-game, the agent game (packaged with `--full --out` into `C:\CLAUDE\PROJECTS\TFR1gent`, not live; the 11.04-merge
+- In-game, the agent game (packaged with `--full --out` into `C:\CLAUDE\PROJECTS\TFR1\agent`, not live; the 11.04-merge
   build replaced the old agent mirror, which went to the Recycle Bin): slot 30 loaded (Day 1); three duels at 50x (`[TFR-Agent] duel speed set
   to 50x`): won against Ozox (Adept) on the ported deck in 33 turns, won against Woodland Rover (Apprentice), lost to
   Shrieking Skaab (Apprentice); reward screens taken; `[TFR-LKI] turn over` lines as round 958 logs them; a save to slot
