@@ -14264,6 +14264,70 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 978: the engine to the 11.05 daily (upstream `1e8c35fca3e`), step 1 of the 1.27 release (2026-11-05)
+
+The user: "Let's move forward with the 1.27 release." Then: "E:\GAMES\Forge_2 is updated". The release takes the engine
+first (the standing rule). 12 commits, 194 files since round 961's `a4281f7e58b` (#12681 to #12676).
+
+- **Matched**: BASE_INSTALL's `CHANGES.txt` is headed by #12676 "The AI can now pay for optional copy costs"
+  (`1e8c35fca3e`, 16:41:12 UTC); `.installationinformation` says `APP_VER 11.05` and the jar manifest
+  `2.0.16-SNAPSHOT-11.05`; `build.txt`'s 18:17:08 is before the next upstream commit `f62f804806c` (#12695, 18:17:58 UTC,
+  five AI files and `MagicStack`), which is not taken: it is the next merge's first commit. Two card scripts changed in
+  the range (`stick_together.txt`, `70_000_light_years_from_home.txt`) match BASE_INSTALL's `cardsfolder.zip`. No pom
+  change: the build stayed offline.
+- **Upstream brought**: triggers build their triggering objects once per event and conditions can read them (#12604,
+  163 files across `forge-game/.../trigger`); the AI pays optional copy costs (#12676, `MagicStack.getResolvingAbility()`)
+  and reads a Paralyzed creature's state (#12694); `Player`'s `LandsPlayedMyLastTurn` rename and `isSkippingCombat`
+  removed; `PhaseHandler` no longer `Serializable` and `is()` no longer `synchronized`; mobile lobby fixes (#12691,
+  #12688, #12683: `ItemManager`, `LobbyScreen`, `OnlineLobbyScreen`); the adventure inventory's description box
+  (#12687) and the notice banner over the minimap (#12678); 27 card script fixes.
+
+### The conflicts
+
+Two text conflicts, both in adventure UI files we edit. The user's answer, after the table: "Yes, both". Merge commit `424cb52b6aa`.
+
+| File / feature | Upstream changed | Kept vs took | Impact |
+|---|---|---|---|
+| `InventoryScene`: the item description box (#12687, `1f8a571cabc`) | Its own fix for descriptions overflowing the box: a padded scroll pane (4 px top, 8 bottom, 5 side), a re-wrap to the pane's width on every selection, trailing blank lines trimmed, a short bounce (up to 6 px) when the text is taller than the box | **Took upstream's pane, re-wrap and bounce; kept our text.** Round 292 fixed the same overflow our way; its `setDescription()` now sets the text and calls upstream's `refreshItemDescriptionLayout()`, and its own `descriptionPane` is gone. Every caller stays (round 383's empty slots, rounds 493/502's item limits, round 460's display name, decks). Kept `repairCost(data)` and `enter()`'s Treasure Maps and Sets lines | Inventory only: descriptions sit a few px further from the box edges, and a long one (the Rally rune's) bounces once when picked to show it scrolls. No save change |
+| `GameHUD`: the notice banner (#12678, `5d892f0559e`) | The banner is added after the map group, and in portrait it stops 20 px short of the HUD panel (`gamehud.getX() - 20`) instead of the screen edge minus 25 | **Took upstream's width; kept our text and white tint** (rounds 549/594). The reorder merged clean and changes nothing for us: round 329's `keepBannerOnTop()` already fronts the banner | Portrait only (landscape unchanged): banners wrap at about 175 px instead of 245 px of the 270 px layout, so a long one takes an extra line and no longer covers the life/gold panel and the portrait |
+
+**Merged clean beside our edits** (checked by hand): `MagicStack` (upstream's `curResolvingSA` set and cleared around a
+resolve; round 958's `onNextTurn` clear untouched), `PhaseHandler` (round 929's declare-attackers hunk apart; nothing of
+ours serializes a `PhaseHandler` or relies on `is()` locking), `Player` (nothing of ours calls the renamed or removed
+methods), `ComputerUtil` (our three hunks apart from upstream's copy check). The stock files rounds 965-977 changed
+(`ImageCache`, `PointOfInterest`, `ExceptionHandler`, `ImageUtil`, `ImageFetcher`, `AdventureQuestData`, `MapStage`,
+`MapDialog`, `MenuScene`, `AdventureEventData`) are not in upstream's range.
+
+### What upstream's adventure data changed, and our copies
+
+Nothing to port: no file under `forge-gui/res/adventure/` (Old Border, Realm of Legends, Shandalar, common), and no
+edition, deck, quest, format or booster file changed in the 12 commits; the only `res` changes are the 27 card scripts,
+taken by the merge (TFR's own three edited scripts, `spark_mage`, `thoughtsteal_sprites`, `valakut_the_molten_pinnacle`,
+are not among them). Upstream's image code has no Alchemy (A-) or Scryfall fix that would overlap round 977, and
+`ImageCache` no fix that overlaps round 965 (also not in `f62f804806c` past the target), so ours stay.
+
+### Also in this round
+- `forge-gui/res/adventure/The Forsaken Realms/config.json`: `engineBuildVersion` 11.05.
+
+**Tested:**
+- Maven `-o -pl forge-gui-mobile,forge-gui-desktop -am test`, exit 0, checkstyle clean in every module: forge-game 27,
+  forge-gui 23 (`ScryfallCollectorNumberTest` 4, `AbstractGuiGameShould` 2), forge-gui-mobile 36 (`SupportPromptTest` 8,
+  `ChestDuplicateOfferTest` 6, `ShopSlotRollTest` 4, `SeededRollsTest` 9, `QuestOfferEffectsTest` 5,
+  `PointOfInterestGateTest` 4), forge-gui-desktop 1751 run, 0 failed, 6 skipped (`CastLastStateClearTest` 3). Then
+  `-o -pl forge-gui-mobile-dev -am package -DskipTests`, exit 0 (the shipping jar, 12:58).
+- In-game, the agent game (a test package, `build_standalone.py --full --out C:\CLAUDE\PROJECTS\TFR1\agent`, not live;
+  `forge.log` says `Forge v.2.0.16-SNAPSHOT-11.05`): slot 30 loaded (Day 1); two duels at 50x (`[TFR-Agent] duel speed
+  set to 50x` twice), both won (Woodland Rover, Apprentice; Rotgut Orc, Apprentice, turn 6, 7 s), `[TFR-LKI] turn over`
+  lines as round 958 logs them; the reward screen (six cards, Done collected them: gold 292 -> 338, shards 16 -> 17);
+  the inventory (Leather Boots' description with its item-limit line, the empty Blessing slot's text, both wrapped in
+  upstream's padded box); Tolaria's Inner Sanctum shop opened with its cards and art; a save to slot 41 and a load back
+  (gold, shards, life, tile, deck the same); quit through the menu. `forge.log`: no exception, no error, `errors=0` on the
+  session line. Shots: `C:\CLAUDE\PROJECTS\TFR1\notes\r978\`. Not run: portrait mode (the banner width), Android, a
+  long description's bounce (no item in that save overflows the box), a buy (the bridge's `buy index=7` was refused).
+
+**Files:** the merge (194 upstream files, `InventoryScene.java` and `GameHUD.java` resolved),
+`forge-gui/res/adventure/The Forsaken Realms/config.json`, `MOD_CHANGELOG.md`, `CORE_ENGINE_CHANGES.md`, `CLAUDE.md`.
+
 ## Round 977: Alchemy (A-) cards show their picture again (2026-11-05)
 
 - **Why** - research `C:\CLAUDE\PROJECTS\TFR1\notes\alchemy-art-404.md`: Scryfall no longer lists any Alchemy

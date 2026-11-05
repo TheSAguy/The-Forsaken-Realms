@@ -333,7 +333,7 @@
     "bossAiFollowsSetting": true,
     "modVersion": "1.26",
     "modVersionDate": "11.03",
-    "engineBuildVersion": "2.0.16-SNAPSHOT-11.04",
+    "engineBuildVersion": "2.0.16-SNAPSHOT-11.05",
     "disableGeneticDeckOverrides": true,
     "caveChampionChance": 0.25,
     "welcomePopupText": "Thanks for playing The Forsaken Realms!\n\nFound a bug, or have thoughts on balance? Tell us on Discord - every report helps shape the next update. Settings > Export Logs saves your logs as one zip to attach.\n\nNew here? The Game Guide & FAQ explains how the Realms work - reputation, territory, dungeons, your Capitol and more - and answers the common questions. On a computer it is also in your game folder as GAME_GUIDE.html.\n\nWant it easier or harder? Settings > Difficulty > Edit... changes your game's difficulty mid-game.\n\nRecommended settings (already on): Fog of War, Play for Ante and Match Ante Rarity - change them under Settings.\n\nEnjoying the Realms? TFR is free, and the Support TFR button above opens the developer's Ko-fi page.\n\nHave fun out there, planeswalker!",

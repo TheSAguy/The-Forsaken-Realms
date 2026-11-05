@@ -35,6 +35,26 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 978 - the engine to the 11.05 daily (upstream `1e8c35fca3e`)
+- `forge-gui-mobile/src/forge/adventure/scene/InventoryScene.java` (STOCK): a text conflict with #12687 (`1f8a571cabc`,
+  upstream's own fix for descriptions overflowing the box). Took upstream's padded `itemDescriptionPane`,
+  `refreshItemDescriptionLayout()` and scroll bounce; round 292's `setDescription()` now sets the text and calls
+  `refreshItemDescriptionLayout()`, and round 292's `descriptionPane` field is gone. Every TFR caller still goes through
+  `setDescription()` (empty slots, item limits, decks). Kept ours: `repairCost(data)`, the Treasure Maps and Sets lines
+  in `enter()`. On the next merge: upstream's `itemDescription.setText(...); refreshItemDescriptionLayout();` pairs are
+  our `setDescription(...)` calls.
+- `forge-gui-mobile/src/forge/adventure/stage/GameHUD.java` (STOCK): a one-line conflict with #12678 (`5d892f0559e`) in
+  the banner's `preconfigureNotification`: took upstream's portrait width (`gamehud.getX() - 20`), kept our `shown`
+  text and white tint. Upstream's reorder (banner added after the map group) merged clean; round 329's
+  `keepBannerOnTop()` still fronts it.
+- `forge-gui/res/adventure/The Forsaken Realms/config.json`: `engineBuildVersion` 11.05 (plane file, for the packager's
+  base check).
+- Merged clean beside our edits, for the next conflict pass: `MagicStack` (upstream's `curResolvingSA` /
+  `getResolvingAbility()`; round 958's `onNextTurn` clear untouched), `PhaseHandler` (no longer `Serializable`, `is()`
+  no longer `synchronized`; round 929 apart), `Player` (`LandsPlayedMyLastTurn`, `isSkippingCombat` removed; nothing of
+  ours calls either), `ComputerUtil`. Round 977's `ImageUtil`/`ImageFetcher` and round 965's `ImageCache`: upstream has
+  no A- or cache fix of its own in this range, so ours stay.
+
 ### Round 977 - Alchemy (A-) cards fetch their base print from Scryfall
 - `forge-core/src/main/java/forge/util/ImageUtil.java` (STOCK): new `scryfallCollectorNumber(String)` (`^A-(\d+)[a-z]*$`
   -> the digits, anything else unchanged); `getScryfallDownloadUrl` starts from it instead of `cp.getCollectorNumber()`.
