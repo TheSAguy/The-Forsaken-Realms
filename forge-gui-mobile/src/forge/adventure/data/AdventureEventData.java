@@ -13,6 +13,7 @@ import forge.adventure.util.CardUtil;
 import forge.adventure.util.Config;
 import forge.adventure.util.Current;
 import forge.adventure.util.Reward;
+import forge.adventure.util.SeededRolls;
 import forge.card.CardEdition;
 import forge.deck.CardPool;
 import forge.deck.Deck;
@@ -175,7 +176,26 @@ public class AdventureEventData implements Serializable {
     }
 
     public void setEventSeed(long seed) {
+        eventSeed = seed; // round 972: stock only seeded the Random, so every save stored 0 and a reload drew unseeded
         getEventRandom().setSeed(seed);
+    }
+
+    /** Round 972 (Fable P2-12): the seed a reload of this event reaches again - the stored event seed, or for an event
+     *  saved before round 972 (seed 0) one built from what that save does hold: its Inn, its block, its week, its format. */
+    long stableSeed() {
+        long world = eventSeed != 0 || Current.world() == null ? 0L : Current.world().getSeed();
+        return SeededRolls.eventSeed(eventSeed, world, sourceID, cardBlockName, createdWeek, format);
+    }
+
+    /** Round 972: a Random for one of this event's openings (the draft's packs, the Sealed pool), at its own seed, so
+     *  it does not depend on how far the event's stream ran before the save. The event seed is the real-world date plus
+     *  the Inn (stock's getEventSeed), so the block and the in-game week are mixed in: two weeks' events at one Inn on
+     *  one real day must not open the same packs. */
+    private Random openingRandom(String what) {
+        long seed = SeededRolls.openingSeed(stableSeed(), what, cardBlockName, createdWeek);
+        System.out.println("[TFR-Seed] Inn " + format + " " + what + " (" + cardBlockName + ", " + sourceID + ", event seed "
+                + (eventSeed != 0 ? eventSeed : "0 - built from the event") + "): seed " + seed);
+        return new Random(seed);
     }
 
     public CardBlock getCardBlock() {
@@ -192,6 +212,8 @@ public class AdventureEventData implements Serializable {
         Random placeholder = MyRandom.getRandom();
         MyRandom.setRandom(getEventRandom());
         if (draft == null && (eventStatus == AdventureEventController.EventStatus.Available || eventStatus == AdventureEventController.EventStatus.Entered)) {
+            // Round 972: the draft is transient, so a reload deals it again - from the same packs now
+            MyRandom.setRandom(openingRandom("draft"));
             CardBlock block = getCardBlock();
             CardUtil.withRestrictedAwareBoosterResolver(block, () -> {
                 draft = BoosterDraft.createDraft(LimitedPoolType.Block, block, packConfiguration, participants.length);
@@ -635,8 +657,12 @@ public class AdventureEventData implements Serializable {
     }
 
     public void generateSealedPool() {
-        if (cardBlock == null) return;
+        if (getCardBlock() == null) return; // round 972: the block is transient - read it back after a reload
 
+        // Round 972 (Fable P2-12): the pool opened at "Create Deck", after the fee was saved, came from MyRandom - a reload
+        // opened a new one. Now from the event's own seed: the same pool, and the same opponents' pools.
+        Random placeholder = MyRandom.getRandom();
+        MyRandom.setRandom(openingRandom("sealed pool"));
         try {
             // Open all boosters; restricted cards are excluded from non-meta packs.
             CardPool humanPool = new CardPool();
@@ -686,6 +712,8 @@ public class AdventureEventData implements Serializable {
 
         } catch (Exception e) {
             System.err.println("Error generating Sealed pool: " + e.getMessage());
+        } finally {
+            MyRandom.setRandom(placeholder);
         }
     }
 

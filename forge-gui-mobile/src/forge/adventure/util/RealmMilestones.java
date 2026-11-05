@@ -361,7 +361,13 @@ public final class RealmMilestones {
             s.offer.add(lead);
             pool.remove(lead);
         }
-        Random random = new Random();
+        // Round 972 (Fable P2-12): the offer is rolled lazily on town entry, so an unseeded Random let a reload from before
+        // the roll draw two other non-lead boons. Now from the world seed, the milestone and the boons already taken.
+        World world = Current.world();
+        long seed = SeededRolls.boonSeed(world == null ? 0L : world.getSeed(), s.waiting.get(0), s.boons.size());
+        System.out.println("[TFR-Seed] realm boon offer for " + s.waiting.get(0) + " towns (" + s.boons.size()
+                + " boon(s) taken): seed " + seed);
+        Random random = new Random(seed);
         while (s.offer.size() < 3 && !pool.isEmpty())
             s.offer.add(pool.remove(random.nextInt(pool.size())));
         if (!s.offer.isEmpty())

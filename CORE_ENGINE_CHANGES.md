@@ -35,6 +35,23 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 972 - quest rewards, cave champions, Inn openings, the Temple and boons roll from seeds
+- `forge-gui-mobile/src/forge/adventure/util/MapDialog.java` (STOCK): `setEffects`' `grantRewards` and
+  `grantRewardsChoice` call `SeededRolls.generateRewards(rewards, site, rewardPlace(), parentID)` instead of the loop of
+  `generate(false, true)`; new private `rewardPlace()`; the `RewardData` import is gone. If upstream changes these
+  branches, keep the seeded call.
+- `forge-gui-mobile/src/forge/adventure/scene/MenuScene.java` (STOCK): the same for its `grantRewards` branch; the
+  `RewardData` import is gone.
+- `forge-gui-mobile/src/forge/adventure/data/AdventureEventData.java` (STOCK): `setEventSeed` also stores `eventSeed`
+  (stock never did, so saves held 0); new `stableSeed()` and `openingRandom(what)`; `getDraft` deals from
+  `openingRandom("draft")`, and `generateSealedPool` reads the block through `getCardBlock()` and opens from
+  `openingRandom("sealed pool")` as MyRandom, restored in a `finally`. No field added, no `serialVersionUID` change.
+- `forge-gui-mobile/src/forge/adventure/data/BiomeData.java` (STOCK): `getEnemy(float, boolean, Boolean)` delegates to a
+  new `getEnemy(float, boolean, Boolean, Random)` with its own `rand`; the roll, `uniformSpawner` and the no-match
+  fallback draw from the passed Random (the two `Aggregates.random` calls became `list.get(random.nextInt(size))`).
+- TFR files: NEW `util/SeededRolls.java`; `util/CaveChampions.java`, `util/TerritoryControl.java`,
+  `util/TempleOfferings.java`, `util/RealmMilestones.java`; test `test/forge/adventure/util/SeededRollsTest.java`.
+
 ### Round 973 - a Job Board offer binds its places but resets nothing until it is taken
 - `forge-gui-mobile/src/forge/adventure/data/AdventureQuestData.java` (STOCK): `initializeStage()`'s dungeon reset
   (upstream's `resetDeletedObjectsRecursive` plus round 844's `resetMapFlagsForQuest`) moved into new private

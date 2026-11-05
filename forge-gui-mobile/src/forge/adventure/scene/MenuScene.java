@@ -12,7 +12,6 @@ import com.github.tommyettinger.textra.TypingAdapter;
 import com.github.tommyettinger.textra.TypingLabel;
 import forge.Forge;
 import forge.adventure.data.DialogData;
-import forge.adventure.data.RewardData;
 import forge.adventure.player.AdventurePlayer;
 import forge.adventure.util.Controls;
 import forge.adventure.util.Current;
@@ -97,10 +96,9 @@ public class MenuScene extends UIScene {
                 Current.player().advanceQuestFlag(E.advanceQuestFlag);
             }
             if (E.grantRewards != null && E.grantRewards.length > 0) {
-                Array<Reward> ret = new Array<Reward>();
-                for (RewardData rdata : E.grantRewards) {
-                    ret.addAll(rdata.generate(false, true));
-                }
+                // Round 972 (Fable P2-12): seeded from saved state, like MapDialog's
+                Array<Reward> ret = forge.adventure.util.SeededRolls.generateRewards(E.grantRewards, "menu",
+                        getClass().getSimpleName(), 0);
                 RewardScene.instance().loadRewards(ret, RewardScene.Type.QuestReward, null);
                 Forge.switchScene(RewardScene.instance());
             }

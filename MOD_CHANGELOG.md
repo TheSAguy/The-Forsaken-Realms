@@ -14264,6 +14264,69 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 972: quest rewards, cave champions, Inn packs, the Temple and realm boons roll the same after a reload (2026-11-05)
+
+- **Why** - the Fable review's P2-12 (`C:\CLAUDE\PROJECTS\TFR1\notes\fable-review-2026-11-02.md`): rounds 870, 925 and
+  932 seeded chests, diamonds, dungeon pickups and the level-up payout, and these rolls were left unseeded, so a reload
+  from the save before them rolled again. Ordered by what a re-roll was worth.
+- **The pattern** - new `util/SeededRolls`: a seed from saved state only (round 870's SplitMix64 over the world seed, a
+  site salt and the parts that tell two legitimate rolls apart), `withSeed` (round 925's resume-after trick for any
+  Random), and the reward helper below. **No save field and no save-format change**: every part is state the save
+  already holds. Each site logs `[TFR-Seed] <site> ...: seed N`.
+- **Quest and dialog rewards** (stock `util/MapDialog.setEffects` `grantRewards`/`grantRewardsChoice`, stock
+  `scene/MenuScene.setEffects` `grantRewards`): were `generate(false, true)`, a fresh unseeded Random per entry - about
+  60 random card grants in `quests.json`, and the world map autosaves before a door, so reload, re-enter, talk again.
+  Now `SeededRolls.generateRewards` rolls them on the world's Random (`ResourceSpawns.rollSeeded`) at
+  `rewardSeed(world seed, place, speaker, what, day, duels, quests)`: the place is the level key when a place's map is
+  the current scene (`TileMapScene.currentLevelKey`, else `world` - the place a session last left is not saved), the
+  speaker is the dialog's object id, what is the grant's authored fields (`rewardKey`), then the world day, the duels
+  fought (wins + losses) and the player's quest ids. A reload reaches the same seed; the same dialog on a later day,
+  after a duel or with a quest done rolls anew. A booster pack in a grant still opens from MyRandom when first shown
+  (`RewardData`, as round 932 left the level-up's packs). Log: `[TFR-Seed] dialog reward at <place> #<id> (N entries,
+  day D, duels K): seed S -> 192 Gold, Crosstown Courier` (what it granted).
+- **The cave champion** (`util/CaveChampions.championFor`): the 25% roll and the pick came from MyRandom, and the entry
+  autosave is written before the roll. Now from round 835's `DungeonUpgrades.visitRandom(poi, null, 0, 101)` - this
+  appearance of the cave (its despawn day), so a reload draws the same champion or none and a new appearance rolls
+  afresh. Log: `[TFR-Seed] cave champion <cave> (<id>, despawn day N): seed S`.
+- **Inn Draft packs and the Sealed pool** (stock `data/AdventureEventData`): stock's `setEventSeed` seeded only the
+  transient Random and never stored `eventSeed`, so every save held 0 and a reload drew unseeded; the draft is
+  transient (dealt again after a reload) and the Sealed pool is opened at "Create Deck", after the fee was saved. Now
+  `setEventSeed` stores the seed; `getDraft` (when it deals) and `generateSealedPool` open from
+  `openingRandom(what)` = `seedOf(stableSeed(), what, block, createdWeek)` set as MyRandom for the opening (the
+  opponents' Sealed pools too). The event seed is stock's real-world date plus the Inn, so the block and the in-game
+  week are mixed in. An event saved before this round (seed 0) gets `stableSeed()` from the world seed, its Inn, block,
+  week and format. `generateSealedPool` reads the block through `getCardBlock()` (the field is transient and was null
+  after a reload). Log: `[TFR-Seed] Inn Draft draft (<block>, <inn>, event seed N): seed S`. The AI's draft picks
+  still draw from MyRandom as they happen, so the packs passed on after the first pick can differ.
+- **The Temple's weekly offering** (`util/TempleOfferings.pay`): a static `new Random()`; now
+  `new Random(templeSeed(world seed, week))`. Log: `[TFR-Seed] Temple offering week N: seed S`.
+- **A realm boon offer** (`util/RealmMilestones.rollOffer`, rolled lazily on town entry): `new Random()`; now
+  `boonSeed(world seed, milestone, boons taken)`. Log: `[TFR-Seed] realm boon offer for N towns (K boon(s) taken): seed S`.
+- **The territory re-theme** (`util/TerritoryControl.reThemedEnemyFor`): drew from `BiomeData`'s MyRandom field. Stock
+  `data/BiomeData.getEnemy` gains a `(float, boolean, Boolean, Random)` overload (the old three-argument one passes its
+  own field; its two `Aggregates.random` fallbacks draw from the passed Random too). The re-theme passes
+  `reThemeRandom(poi)`: one stream per map load (a fresh `TiledMap` each load, held weakly), seeded by
+  `DungeonUpgrades.visitSeed(poi, the map being loaded, 0, 102)`; `MapStage.loadObjects` visits placements in the map's
+  order, so a reload re-themes them alike. Log: `[TFR-Seed] re-theme <place> (<map>, despawn day N): seed S`.
+- **Left, and why** - the territory rolls (`TerritoryControl` capture, guard fight, sack, Capitol repel, dispatch and
+  delay; P2-12's highest value): they draw from the world's Random, which `World.load()` never reseeds, so the fix is a
+  reseed in `World` (not in this round's files; proposed to the main thread). Castle chests' `cardPackShop` contents
+  (`RewardData`, not in this round's files). The Ring gifts (`AdventurePlayer`, a new game's start, low value). An Inn
+  event's prizes are fixed gold and packs dealt when the event was made (no roll to seed).
+- **Tests** - `test/forge/adventure/util/SeededRollsTest`, 9/9: seeds equal for equal parts and changed by each part
+  (place, speaker, grant, day, duels, quests; week; milestone, boons taken), salted apart; a seeded roll draws alike
+  wherever the stream stood and the stream resumes after; an Inn event's stored seed is its seed, an old save's (0)
+  builds the same one on every load, openings differ by what, block and week; neighboring weeks' first picks unlike.
+  `AdventureEventData` itself cannot load in a unit test (its static init reads `FModel`), so the event seed math
+  lives in `SeededRolls.eventSeed`/`openingSeed`.
+- **Checked in the agent game** (a new game with cheats, no duel played; this round's classes ahead of the agent jar): Wanderlust
+  (quest 2) given by console, saved beside its target (Nevermoor Coven), entered and turned in, reloaded and turned in
+  again - both times `seed -6310725548573071617 -> 192 Gold, Crosstown Courier` (gold 250 -> 442). Saved beside Grove
+  of the Dark Titan, entered, reloaded, entered - both times `cave champion EvilGrove2 (..., despawn day 34): seed
+  8848199947569494521`, drew Firesong and Sunspeaker for placement 53, the same four-enemy roster. Not checked in a
+  game: the Inn openings, the Temple, the boon and the re-theme (no land had changed hands on day 1) - unit-tested
+  seeds only. Shots `C:\CLAUDE\PROJECTS\TFR1\notes\r972\`.
+
 ## Round 973: a declined Job Board offer leaves its dungeon alone (2026-11-05)
 
 - **Why** - Fable review P3-40 (`C:\CLAUDE\PROJECTS\TFR1\notes\fable-review-2026-11-02.md`, two reviewers):

@@ -2437,7 +2437,8 @@ public class TerritoryControl {
             if (currentColor.equals(biome.name)) {
                 // Round 173 (review S8): the ordinary roster only - war champions and frontier spawns
                 // are roaming encounters, never a dungeon's placements.
-                EnemyData result = biome.getEnemy(originalDifficultyCeiling, false);
+                // Round 972 (Fable P2-12): from a stream seeded per map load, see reThemeRandom()
+                EnemyData result = biome.getEnemy(originalDifficultyCeiling, false, null, reThemeRandom(poi));
                 if (result != null) {
                     // Diagnostic-only logging (user request 2026-08-10, "hard to test in-game") -
                     // greppable in forge.log as "[TFR-ReTheme]".
@@ -2448,6 +2449,35 @@ public class TerritoryControl {
             }
         }
         return null;
+    }
+
+    /** Round 972: the re-theme's salt for DungeonUpgrades.visitSeed - well clear of that class's own (1-3). */
+    static final int SALT_RETHEME = 102;
+    private static java.lang.ref.WeakReference<Object> reThemeMap = new java.lang.ref.WeakReference<>(null);
+    private static String reThemeKey;
+    private static Random reThemeRandom;
+
+    /**
+     * Round 972 (Fable P2-12): the re-theme drew from BiomeData's unseeded Random, and the entry autosave is written
+     * before the map loads, so a reload re-themed the roster anew. Now each map load draws from one stream seeded by
+     * round 835's seed of this appearance of the place and the map being loaded: MapStage.loadObjects visits the
+     * placements in the map's own order, so a reload re-themes them alike. Every load reads a fresh TiledMap, so a new
+     * one starts the stream again (held weakly: the map is freed with its stage).
+     */
+    static Random reThemeRandom(PointOfInterest poi) {
+        forge.adventure.stage.MapStage stage = forge.adventure.stage.MapStage.getInstance();
+        String level = stage == null ? null : stage.getCurrentMap(); // the map being loaded, set before its objects
+        Object map = stage == null ? null : stage.tiledMap;
+        String key = poi.getID() + "|" + level;
+        if (reThemeRandom == null || map == null || reThemeMap.get() != map || !key.equals(reThemeKey)) {
+            long seed = DungeonUpgrades.visitSeed(poi, level, 0, SALT_RETHEME);
+            reThemeRandom = new Random(seed);
+            reThemeMap = new java.lang.ref.WeakReference<>(map);
+            reThemeKey = key;
+            System.out.println("[TFR-Seed] re-theme " + poi.getData().name + " (" + level + ", "
+                    + DungeonUpgrades.appearance(poi) + "): seed " + seed);
+        }
+        return reThemeRandom;
     }
 
     // "Plains Town X"/"Plains Capital"/"Plains Castle" -> white, etc. Castle names are an exact

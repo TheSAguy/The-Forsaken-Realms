@@ -5,11 +5,11 @@ import forge.adventure.data.WorldData;
 import forge.adventure.pointofintrest.PointOfInterest;
 import forge.adventure.world.World;
 import forge.adventure.world.WorldSave;
-import forge.util.MyRandom;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 /**
  * Cave champions (round 139, user spec 2026-09-07: "let's go and add all these spawnRate &lt;= 0
@@ -27,6 +27,9 @@ import java.util.Map;
  * to survive a map reload, and an EnemyData reference would not.
  */
 public class CaveChampions {
+    /** Round 972: the champion roll's salt for DungeonUpgrades.visitRandom - well clear of that class's own (1-3). */
+    static final int SALT_CHAMPION = 101;
+
     private CaveChampions() {}
 
     public static float chance() {
@@ -61,7 +64,12 @@ public class CaveChampions {
             String name = rolled.get(key);
             return name == null || name.isEmpty() ? null : WorldData.getEnemy(name);
         }
-        if (MyRandom.getRandom().nextFloat() >= chance()) {
+        // Round 972 (Fable P2-12): the roll comes from round 835's Random for this appearance of the cave, so a reload of
+        // the entry autosave (written before the roll) draws the same champion or none; a new appearance rolls afresh.
+        Random random = DungeonUpgrades.visitRandom(poi, null, 0, SALT_CHAMPION);
+        System.out.println("[TFR-Seed] cave champion " + poi.getData().name + " (" + key + ", "
+                + DungeonUpgrades.appearance(poi) + "): seed " + DungeonUpgrades.visitSeed(poi, null, 0, SALT_CHAMPION));
+        if (random.nextFloat() >= chance()) {
             rolled.put(key, "");
             System.out.println("[TFR-CaveChampion] " + poi.getData().name + " (" + key + ") rolled no champion");
             return null;
@@ -73,7 +81,7 @@ public class CaveChampions {
                     + ") won its roll but no champion is eligible at rank " + difficultyFactor);
             return null;
         }
-        EnemyData pick = pool.get(MyRandom.getRandom().nextInt(pool.size()));
+        EnemyData pick = pool.get(random.nextInt(pool.size()));
         rolled.put(key, pick.getName());
         System.out.println("[TFR-CaveChampion] " + poi.getData().name + " (" + key + ") drew "
                 + pick.getName() + " (" + EnemyData.tierDisplayName(pick.tier) + ", life " + pick.life

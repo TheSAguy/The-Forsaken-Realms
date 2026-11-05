@@ -22,7 +22,6 @@ import forge.adventure.character.CharacterSprite;
 import forge.adventure.character.EnemySprite;
 import forge.adventure.data.AdventureQuestData;
 import forge.adventure.data.DialogData;
-import forge.adventure.data.RewardData;
 import forge.adventure.player.AdventurePlayer;
 import forge.adventure.scene.TileMapScene;
 import forge.adventure.stage.GameHUD;
@@ -714,6 +713,13 @@ public class MapDialog {
             GameHUD.getInstance().logReputation(poiId, delta, changes.getMapReputation(), "");
     }
 
+    /** Round 972: where a reward is granted, for its seed - the place's level, or "world" off any place's map (the
+     *  place a session last left is not saved, so it must not reach the seed). */
+    private static String rewardPlace() {
+        String level = Forge.getCurrentScene() instanceof TileMapScene scene ? scene.currentLevelKey() : null;
+        return level == null ? "world" : level;
+    }
+
     void setEffects(DialogData.ActionData[] data) {
         if (data == null) return;
         for (DialogData.ActionData E : data) {
@@ -843,18 +849,13 @@ public class MapDialog {
                 EN.setEffect(E.setEffect);
             }
             if (E.grantRewards != null && E.grantRewards.length > 0) {
-                Array<Reward> ret = new Array<Reward>();
-                for(RewardData rdata:E.grantRewards) {
-                    ret.addAll(rdata.generate(false, true));
-                }
+                // Round 972 (Fable P2-12): seeded from saved state, so a reload and a second talk grant the same cards
+                Array<Reward> ret = SeededRolls.generateRewards(E.grantRewards, "dialog", rewardPlace(), parentID);
                 RewardScene.instance().loadRewards(ret, RewardScene.Type.QuestReward, null);
                 Forge.switchScene(RewardScene.instance());
             }
             if (E.grantRewardsChoice != null && E.grantRewardsChoice.length > 0) {
-               Array<Reward> ret = new Array<Reward>();
-               for(RewardData rdata:E.grantRewardsChoice) {
-                   ret.addAll(rdata.generate(false, true));
-               }
+               Array<Reward> ret = SeededRolls.generateRewards(E.grantRewardsChoice, "dialog choice", rewardPlace(), parentID); // round 972
                RewardScene.instance().loadSelectableRewards(ret, RewardScene.Type.RewardChoice, 1, 0f);
                Forge.switchScene(RewardScene.instance());
             }

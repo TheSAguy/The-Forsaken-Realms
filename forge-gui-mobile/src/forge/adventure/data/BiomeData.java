@@ -138,6 +138,12 @@ public class BiomeData implements Serializable {
     /** fogLit (round 338): the fog zone at the spawn spot - true tilts the tier row to the easy end, false to the hard
      *  end (SpawnTierWeighting.fogZoneScale); null leaves the row as the week and territory set it. */
     public EnemyData getEnemy(float difficultyFactor, boolean withInjectedSpawns, Boolean fogLit) {
+        return getEnemy(difficultyFactor, withInjectedSpawns, fogLit, rand);
+    }
+
+    /** TFR round 972: the same roll from {@code random} - TerritoryControl.reThemedEnemyFor passes a seeded one so a
+     *  reload re-themes a dungeon's placements alike (Fable P2-12). */
+    public EnemyData getEnemy(float difficultyFactor, boolean withInjectedSpawns, Boolean fogLit, Random random) {
         // Round 184 (user crash report: "I went into a cave and the game got stuck. It said Autosaving and I
         // could not move from the entrance"). enemyList is built LAZILY by getEnemyList(); this method read the
         // field directly, which was safe only because every roaming-spawn caller happens to call the builder
@@ -164,7 +170,8 @@ public class BiomeData implements Serializable {
             }
             if (spawnable.isEmpty() && pool.isEmpty())
                 return null; // a biome with no roster at all - the caller decides what to do, rather than crash here
-            return Aggregates.random(spawnable.isEmpty() ? pool : spawnable);
+            List<EnemyData> from = spawnable.isEmpty() ? pool : spawnable;
+            return from.get(random.nextInt(from.size())); // round 972: was Aggregates.random (MyRandom)
         }
 
         // Weighted-spawn tier system (2026-08-23, opt-in via SpawnTierWeighting.isEnabled();
@@ -283,11 +290,11 @@ public class BiomeData implements Serializable {
         // would degenerate to always index 0 - f starts at 0 and "f <= 0.0f" is true immediately.
         // Pick uniformly at random among them instead of always the same one.
         if (totalDistribution <= 0.0f) {
-            return uniformSpawner(filteredEnemies);
+            return uniformSpawner(filteredEnemies, random);
         }
 
         // Perform weighted random selection
-        float f = totalDistribution * rand.nextFloat();
+        float f = totalDistribution * random.nextFloat();
         int i = 0;
         for (; i < filteredEnemies.size(); i++) {
             f -= effectiveWeights[i];
@@ -297,17 +304,18 @@ public class BiomeData implements Serializable {
         }
 
         // Fallback, should not normally reach here
-        return uniformSpawner(filteredEnemies);
+        return uniformSpawner(filteredEnemies, random);
     }
 
     /** A uniform pick that prefers real spawners (spawnRate > 0): the list also carries a weightless copy of every
      *  catalog enemy, legends included, and round 375 keeps legends to their own table (LegendSpawns). */
-    private static EnemyData uniformSpawner(List<EnemyData> candidates) {
+    private static EnemyData uniformSpawner(List<EnemyData> candidates, Random random) {
         List<EnemyData> spawners = new ArrayList<>();
         for (EnemyData e : candidates)
             if (e != null && e.spawnRate > 0f)
                 spawners.add(e);
-        return Aggregates.random(spawners.isEmpty() ? candidates : spawners);
+        List<EnemyData> from = spawners.isEmpty() ? candidates : spawners;
+        return from.get(random.nextInt(from.size())); // round 972: was Aggregates.random (MyRandom)
     }
 
     private ArrayList<String> unusedTownNames;

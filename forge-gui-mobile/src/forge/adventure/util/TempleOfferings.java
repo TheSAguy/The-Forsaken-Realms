@@ -51,7 +51,6 @@ public final class TempleOfferings {
     private static final CardRarity[] PLACE_RARITY = {CardRarity.Rare, CardRarity.Uncommon, CardRarity.Common};
     private static final String[] PLACE_NAMES = {"1st", "2nd", "3rd"};
     private static final float BAR_MAX = 120f;
-    private static final Random RAND = new Random();
     private static Texture white;
 
     private TempleOfferings() {}
@@ -147,12 +146,17 @@ public final class TempleOfferings {
         StringBuilder log = new StringBuilder();
         StringBuilder notice = new StringBuilder();
         int times = Ascendance.templeCardMultiplier(); // round 566: Temple Priest
+        // Round 972 (Fable P2-12): from the world seed and the week, where a static unseeded Random let a reload from
+        // before the week turned draw another offering
+        long seed = SeededRolls.templeSeed(WorldSave.getCurrentSave().getWorld().getSeed(), week);
+        Random random = new Random(seed);
+        System.out.println("[TFR-Seed] Temple offering week " + (week + 1) + ": seed " + seed);
         for (int place = 0; place < PLACE_COUNT.length && place < ranked.size(); place++) {
             int c = ranked.get(place);
             List<PaperCard> pool = pool(inSets, BITS[c], PLACE_RARITY[place]);
             int got = 0;
             for (int i = 0; i < PLACE_COUNT[place] * times && !pool.isEmpty(); i++) {
-                PaperCard card = pool.remove(RAND.nextInt(pool.size()));
+                PaperCard card = pool.remove(random.nextInt(pool.size()));
                 offering.add(card);
                 log.append(log.length() == 0 ? "" : ", ").append(card.getName());
                 got++;
