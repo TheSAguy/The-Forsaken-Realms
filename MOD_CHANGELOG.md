@@ -14264,6 +14264,21 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 976: `match/Dangerous.ogg` plays again - its embedded Theora stream is gone (2026-11-05)
+
+- **Why** - found in a sister project's test build: a duel that drew `music/match/Dangerous.ogg` (one of round 957's 8
+  Kevin MacLeod tracks from Classic) played silent. The file was a multiplexed Ogg: a Theora video stream (serial
+  `0xb469a79d`, 3 pages, 7,298 bytes - cover art carried over from the Classic MP3) ahead of the Vorbis audio (serial
+  `0x8731a8c9`, 60 pages). libGDX's `OggInputStream` (jorbis) reads only the first logical stream and throws "Ogg
+  bitstream does not contain Vorbis audio data". It was the only one of the 21 round 957 tracks with a second stream.
+- **The fix** - the Theora pages are dropped and the Vorbis pages kept byte for byte (a stream copy, no re-encode: still
+  q2 at -14 LUFS, 2 ch, 44.1 kHz, 58.2 s). 610,113 -> 602,815 bytes. The result is identical (MD5 `411af54c...`) to the
+  sister project's own fix of the same track.
+- **Checked** - an Ogg page scan of all 21 `.ogg` files under `The Forsaken Realms/music/`: one Vorbis stream each, no
+  Theora, Kate, Skeleton or other stream. A small Java check decoding every file through libGDX 1.14.2's own
+  `com.badlogic.gdx.backends.lwjgl3.audio.OggInputStream`: the old file fails with the exception above, all 21 now decode
+  to PCM (2 ch, 44,100 Hz) for their full length. No code change, no agent duel (data only).
+
 ## Round 969: enemy sprite atlases are unloaded on the world map when nothing draws from them (2026-11-05)
 
 - **Why** - log review `notes/logs-1105.md` P2-1 (a 12-hour phone launch ended at rss 7.8 GB) and round 965's measurement
@@ -14824,7 +14839,8 @@ for every candidate is `pieces.json` there).
   pieces came in at -21.8 to -38.4 LUFS (the quietest, `pc_Match10_07`, was raised by ~24 dB). Cuts got a 0.5 s fade-in
   and a 1.5 s fade-out.
 - **Sizes:** 50.8 MB for all 21 files (the user's cap was +150 MB). PC gains 50.8 MB. Android's `assets.zip` gains 11.9 MB
-  (the 8 Classic tracks only).
+  (the 8 Classic tracks only). Round 976 took 7,298 bytes of Theora cover art out of `match/Dangerous.ogg`, which
+  made it play silent; the totals round the same.
 - **Placement:** `adventure/common/music` is stock Forge (no change since upstream; no stock plane has a music folder).
   So the tracks go in the plane, per the ground rules. A plane's `music/<playlist>/` used to REPLACE common's
   (`SoundSystem.findMusicDirectory` takes the first non-empty folder). Copying common's tracks into the 10 touched plane
