@@ -331,8 +331,8 @@
     "functioningNeutralTownsEnabled": true,
     // round 856: bosses keep the player's AI setting (upstream gives them Hardest)
     "bossAiFollowsSetting": true,
-    "modVersion": "1.26",
-    "modVersionDate": "11.03",
+    "modVersion": "1.27",
+    "modVersionDate": "11.05",
     "engineBuildVersion": "2.0.16-SNAPSHOT-11.05",
     "disableGeneticDeckOverrides": true,
     "caveChampionChance": 0.25,

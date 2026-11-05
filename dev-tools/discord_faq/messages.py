@@ -1,15 +1,16 @@
 """The Discord FAQ: (topic, short label, message). Each message must stay under Discord's 2,000 characters."""
 
 # The released version the FAQ describes; build_page.py shows it in the page header. One line to change per release.
-FAQ_VERSION = "v1.26"
+FAQ_VERSION = "v1.27"
 
 # What this version changed, by message number: EDITED are edited in place in Discord, ADDED are new topics. Support
 # is always the last message: new topics go before it, and the user reposts Support at the end of the channel.
 # build_page.py tags them. Reset both at the next release.
 # 1.27 (round 938 reset them after 1.26; v1.26's own set was {1, 8, 10, 12, 14, 15, 17, 19, 23}, none ADDED): round 939
 # edited 9 (the mid-game Change level); round 950 edited 1 (the Xiaomi/MIUI background kill, a Q under Android rather
-# than a new message, so Support needn't be reposted); round 956 edited 13 (Sets: where the full ban list is).
-EDITED = {1, 9, 13}
+# than a new message, so Support needn't be reposted); round 956 edited 13 (Sets: where the full ban list is); round 979
+# edited 1 (the v1.27 header) and 7 (the Bounty, round 943).
+EDITED = {1, 7, 9, 13}
 ADDED = set()
 
 M = []
@@ -131,6 +132,7 @@ M.append(("Enemies that adapt to you", "Adapting enemies", r"""**Q: Why are the 
 - **Win ratio:** your last 50 duels. Once 25 are on record, a strong ratio (80%+ won) shifts the roaming ranks tougher and a weak one (20% or less) easier - up to 5 points, or 10 once 50 are on record. One loss doesn't wipe it.
 - **Help tokens:** once 50 duels are on record, the enemy starts with a Clue if you've won 75-89%, a Treasure at 90-94%, and both at 95%+. Win 50% or fewer and **you** get a Treasure (plus a Clue at 25% or less). Each card says why it's there.
 - **Enemies learn your tricks:** beat the same enemy 5 times in a row (4 on Hard, 3 on Insane) and it starts with a Wastes in play - up to three - until it beats you once. Easy is spared.
+- **The Bounty:** an enemy that started with any of these extra cards pays up to +30% more gold and resources when you beat it. Hold Alt to see it on its plate.
 Arena duels, Inn tournaments, the Deck Tester and your guards' fights don't count toward your notoriety or your ratio."""))
 
 M.append(("Legends and places that come with your level", "Legends & places", r"""**Legends, and places that come with your level**

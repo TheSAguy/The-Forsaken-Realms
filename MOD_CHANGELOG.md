@@ -14264,6 +14264,35 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 979: the version is 1.27, with its release notes, guide, FAQ and posts (2026-11-05)
+
+Step 3's docs half of the 1.27 release the user called ("Let's move forward with the 1.27 release"; "Yes, start now"),
+written while the whole-build test runs. Source of the content: the user-approved change list
+(`C:\CLAUDE\PROJECTS\TFR1\notes\release-1.27-changes.md`): music is only "added some more music tracks", and the
+Adventure-only, support-ask and text rounds (945, 946, 950, 952, 953, 956, 963, 964, 967) ship but aren't listed.
+Nothing is built, packaged, tagged or pushed.
+
+- **Version** (`ANDROID_RELEASE.md` steps 1-2, as round 936 did): the plane's `config.json` `modVersion` 1.27 and
+  `modVersionDate` 11.05; `forge-gui-android/pom.xml` `<tfr.version>` 1.27 and `<manifestVersionCode>` 12700. A grep for
+  `1.26`/`12600` found no other live spot (the rest is history text).
+- **`RELEASE_NOTES_v1.27.md`** in 1.26's form: New things to do, Fixes you'll notice, Under the hood, the new-game answer
+  (none needed: the Bounty, the Capitol art, Inns, the level change and the fixes all work on a current save; rounds 954,
+  970, 971, 972 and 973 change no save format) and 1.26's Android section with the 1.27 APK name. The title
+  "Bounties & Gold" is a proposal for the user.
+- **GUIDE:** "What's New in 1.27" above 1.26's list (now "Coming from 1.25?"), linked to the Bounty, the Capitol, Inn
+  Tournaments and Custom Difficulty; it carries the notes the rounds asked for: the quest-gated places had been open
+  since 1.0 (round 970), some AI-town shops change type once (round 971), and an Alchemy card's picture shows the
+  original printed text (round 977). Also the 11.05 build line, 1.26's AI line in the past tense and the footer v1.27 as
+  of 2026-11-05. `GUIDE.html` regenerated (`guide_html.py --check` OK).
+- **Discord FAQ** (`dev-tools/discord_faq/messages.py`): `FAQ_VERSION` "v1.27"; message 7 (Adapting enemies) gains the
+  Bounty line (1,958 characters). `EDITED` = {1, 7, 9, 13}, checked against `tfr-v1.26`; nothing ADDED, so Support
+  stays last. Paste list `notes/faq-1.27-edits.md`, copy page `notes/faq-1.27.html`; the artifact is republished at
+  release (v15).
+- **Outside the repo:** `notes/release-1.27-posts.md` (the Discord announcement, 1,427 characters, with the release
+  link and the Export Logs ask; the replies to Brotman and to Tallennar, with the Sol Rings answer: pre-1.24 deck loot
+  plus the chest artificer, which round 968 stops) and `notes/release-1.27-checklist.md` (the RC checklist, from 1.26's
+  morning checklist).
+
 ## Round 978: the engine to the 11.05 daily (upstream `1e8c35fca3e`), step 1 of the 1.27 release (2026-11-05)
 
 The user: "Let's move forward with the 1.27 release." Then: "E:\GAMES\Forge_2 is updated". The release takes the engine

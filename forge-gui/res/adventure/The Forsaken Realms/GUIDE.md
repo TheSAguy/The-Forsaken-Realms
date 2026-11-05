@@ -11,7 +11,7 @@ are in the [FAQ](#faq) at the end.
 ## Table of Contents
 
 1. [Introduction](#introduction)
-2. [What's New in 1.26](#whats-new-in-126)
+2. [What's New in 1.27](#whats-new-in-127)
 3. [Starting Out](#starting-out)
 4. [Changes from the Base Game](#changes-from-the-base-game)
 5. [Early Game Advice](#early-game-advice)
@@ -41,10 +41,38 @@ the early game is meant to be a fight.
 *Windows, macOS and Linux launchers all ship (Windows is the tested one), and every release includes an Android
 version - playable, but it gets far less testing than the desktop builds.*
 
-## What's New in 1.26
+## What's New in 1.27
 
-The short version for returning players. Each item links to where the guide covers it in full. The Doppelganger and the
-starting-set choice need a new game; everything else works on your current save.
+The short version for returning players. Each item links to where the guide covers it in full. Everything in 1.27 works
+on your current save.
+
+- **The Bounty:** beat an enemy that started with Notoriety Walls, its own Notoriety card, streak Wastes or help
+  tokens and the win pays up to 30% more gold and resources. Hold Alt to see it on the enemy's plate. See
+  [Enemies That Adapt to You](#enemies-that-adapt-to-you).
+- **The golden Capitol** gets its own Card Shop, Booster Shop, Outlook tower and an animated Teleporter, and its
+  buildings are recolored to match the Orazca icon. See [The Capitol](#the-capitol).
+- **Inns deal smarter events:** an AI town's Draft and Sealed draw from its color's sets, every legal set is equally
+  likely, and nearby Inns don't repeat each other's sets. See [Inn Tournaments](#inn-tournaments).
+- **Change your difficulty level mid-game:** Settings > Difficulty > Edit... > Change level. See
+  [Custom Difficulty](#custom-difficulty).
+- **Added some more music tracks.**
+- **Story places stay hidden until the story opens them:** Emrakul's Castle and the Temples of Chandra and Liliana
+  appear once the main quest reaches them. Since 1.0 they, and seven places on the relic trail, had opened for
+  everyone after the first load; the relic-trail places now stay open from the start, which also ends a soft-lock in
+  that chain.
+- **Fair play:** a reload no longer re-rolls quest rewards, cave champions, Inn packs, the Temple's offering, realm
+  boons or a dungeon's re-theme.
+- **Shops:** an AI town keeps its shop types from week to week. Some AI-town shops you have already seen change type
+  once on your current save, then stay fixed.
+- **Alchemy cards** (the "A-" rebalanced versions) show their picture again. The picture is the original printed card,
+  so its text can differ from the rebalanced rules the game plays.
+- **Also:** big token boards no longer run phones out of memory, long sessions stop piling up memory, an Android crash
+  outside a duel closes with a message instead of freezing, Settings' Restart saves first, a declined Job Board offer
+  no longer resets its dungeon, the chest's traveling artificer never copies a banned card such as Sol Ring, the clean
+  font reaches checkboxes, lists and dialog titles, and the engine moves to Forge's 11.05 build.
+
+Coming from 1.25? This is what 1.26 added. The Doppelganger and the starting-set choice need a new game; everything
+else works on your current save.
 
 - **The Realm Journal:** a Journal button on your character sheet lists every creature and legend you have met this
   run, what you know of each, the decks you have fought, and which enemies will start with extra Wastes from your win
@@ -55,7 +83,7 @@ starting-set choice need a new game; everything else works on your current save.
   for how many. See [Card Sets](#card-sets-what-you-have-and-how-to-get-the-rest).
 - **The golden Capitol:** new art for its buildings, 3D mines in every town, and the last five look-alike caves get
   their own entrances. See [The Capitol](#the-capitol).
-- **A stronger AI:** the engine moves to Forge's 11.01 build, whose AI plans around your next turn, so expect tougher
+- **A stronger AI:** the engine moved to Forge's 11.01 build, whose AI plans around your next turn, so expect tougher
   duels on every difficulty.
 - **Quests and raids:** a raid's Details page has a mini-map of the town, Alt plates mark raiders and quest targets,
   quest cards keep their where-to-look hint, and a quest's reputation goes to its own town. See
@@ -2363,7 +2391,7 @@ game built on the Forge rules engine.
 ### How do I update the game to the latest version of Forge?
 
 You can't, and you don't need to. Each release is pinned to one tested Forge build, named in its release
-notes - this version runs on Forge 2.0.16 (the 11.01 build). Forge's own updater is switched off on purpose,
+notes - this version runs on Forge 2.0.16 (the 11.05 build). Forge's own updater is switched off on purpose,
 because a different engine underneath can break your world. Engine updates come to you with new Forsaken
 Realms releases.
 
@@ -2391,7 +2419,7 @@ session (grab it before restarting, or pick the matching dated file). Screenshot
 
 ---
 
-*This guide covers The Forsaken Realms v1.26, as of 2026-11-03. See `MOD_CHANGELOG.md` in the
+*This guide covers The Forsaken Realms v1.27, as of 2026-11-05. See `MOD_CHANGELOG.md` in the
 repository for the full history of how the game got here, if you're curious.*
 
 ## Support & Community
