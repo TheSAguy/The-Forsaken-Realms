@@ -14264,6 +14264,40 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 968: the chest's traveling artificer never offers a banned card (2026-11-05)
+
+- **Why** - the player Tallennar on Discord: "I have 2 sol rings. Idk how I got them tho. One I got as a reward for
+  something and then an event duplicated it." Round 775 made the rule that the player never wins a banned card
+  (`restrictedCards` in `config tables/restricted_cards.json`: the Power 9, Sol Ring, Signets...), but the chest's
+  Duplicate event (the traveling artificer) still put the active deck's banned cards into its 200-shard slot on purpose
+  - a 2026-08-25/26 design older than round 775. The user approved: "the 200-shard slot offers your rarest card that
+  isn't banned. Banned cards are never offered for copying. Copies players already own stay, as with round 775."
+- **The change** (`util/ChestEvents`) - `triggerDuplicate` asks a new package-private static
+  `duplicateOffer(deck, name, rarity, restrictedNames, random)` (generic over the card type, so a test needs no card
+  database) for the two offers. Banned cards (case-insensitive, as before) are left out of both slots. The 200-shard
+  slot takes the rarest allowed card (`pickByRarityPriority`: random within the highest tier present, Rare/Mythic >
+  Uncommon > the rest). The 25-shard slot takes the rarest allowed card of a LOWER tier, so a deck of rares, uncommons
+  and commons offers an uncommon at 25 and a rare at 200; with only one tier it takes an allowed card of another name;
+  with only copies of one card that card is the single 25-shard offer (no 200-shard button). Every card banned: gold,
+  as an empty deck already got (`triggerGoldChest`); the old fallback to the whole deck is gone. `pickByRarityPriority`
+  now takes a rarity function and a `Random` (the world's seeded one, as before, so a reload still finds the same offer).
+- **Logs** - `[ChestEvents] Duplicate: offered <cheap> / <expensive>` as before (`(no second card to offer)` for a single
+  offer), `[ChestEvents] Duplicate: every card in the active deck is banned, awarding gold instead`, and, when banned
+  cards were passed over, `[TFR-RestrictedCards] Duplicate: skipped N banned card(s) in the active deck (<names>)`.
+- **Balance** - a deck with no banned card used to get its rarest card for 25 shards and no second offer; it now gets a
+  lower-tier card for 25 and its rarest for 200. A deck holding only rares (and basics) gets a rare at both prices.
+- **Unchanged** - copies already owned stay (no load-time removal); the copy still goes to the collection, never the
+  deck; `WorldStage.showChestDuplicateDialog` only has its comment updated (its expensive button already hid on null).
+- **Docs** - GUIDE's Card Sets paragraph and the generated ban-list paragraph (`dev-tools/guide_ban_list.py`) say a
+  chest's traveling artificer never copies a banned card; GUIDE.html regenerated. The Discord FAQ never mentioned the
+  artificer, so it is unchanged.
+- **Tests** - `forge-gui-mobile/test/forge/adventure/util/ChestDuplicateOfferTest.java` (new, 6/6): a deck with Sol Ring
+  and Black Lotus never offers either over 200 seeds (Shivan Dragon at 200, a common at 25); the cheap slot takes the
+  next tier down; one tier gives two different cards; copies of one card give one cheap offer; an all-banned deck
+  offers nothing; no ban list allows every card. `SupportPromptTest` 8/8 still.
+- **Not checked in the agent game** - round 965 held the agent window. To check: `chest open 4` on the world map
+  with a deck holding Sol Ring; the dialog offers no Sol Ring and forge.log has the `[TFR-RestrictedCards]` line.
+
 ## Round 967: a support ask waits for the duel result, so the loot screen cannot cover it (2026-11-05)
 
 - **Why** - log review `C:\CLAUDE\PROJECTS\TFR1\notes\logs-1105.md` P3-3: player 15a4f7a3 won a duel, the world map came

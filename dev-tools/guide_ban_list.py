@@ -86,7 +86,8 @@ def block():
         HEADING,
         "",
         "These cards and sets are kept out of **rewards, booster packs and shops**, so you never win or buy them; a "
-        "banned card won in ante becomes another card from the same deck. Your deck building is not limited. Enemies "
+        "banned card won in ante becomes another card from the same deck, and a chest's traveling artificer never "
+        "copies one. Your deck building is not limited. Enemies "
         "can still play the banned cards, but the Commander-only cards are also taken out of enemy decks. The "
         "digital-only sets (MTG Arena cards with mechanics paper can't do) join the banned sets unless you tick "
         "**Allow digital-only cards** in Settings.",

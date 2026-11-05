@@ -12,13 +12,16 @@ import forge.adventure.scene.RewardScene;
 import forge.adventure.stage.GameHUD;
 import forge.adventure.stage.WorldStage;
 import forge.adventure.world.World;
+import forge.card.CardRarity;
 import forge.deck.Deck;
 import forge.item.PaperCard;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
+import java.util.function.Function;
 
 /**
  * Chest loot spawn (2026-08-25 user spec): the 6th resource-spawn type, ResourceSpawns.TYPE_CHEST.
@@ -35,6 +38,7 @@ import java.util.Set;
  * this codebase - unsafe to fake for a one-off overworld encounter); Duplicate hands the player a
  * RANDOM card from their active deck rather than letting them choose one (no free-form
  * card-picker dialog exists anywhere in this codebase's plain Dialog+TypingLabel+buttons pattern).
+ * Round 968: Duplicate never offers a banned card (restrictedCards), like every other reward since round 775.
  */
 public class ChestEvents {
     private static final int EVENT_GOLD = 0;
@@ -227,6 +231,10 @@ public class ChestEvents {
     // ONLY, never into the deck (user revision 2026-08-26: a deck already at its 4-copy limit
     // would become an illegal decklist - an earlier deck-insertion version of this was
     // deliberately reverted; do NOT reintroduce it). See WorldStage.showChestDuplicateDialog().
+    // Round 968 (Tallennar: two Sol Rings, one "duplicated" by an event; the user: "Yes, build 968"): neither slot
+    // offers a banned card (restrictedCards) any more - round 775's "you never win a banned card" holds here too.
+    // Until now the 200-shard slot offered the deck's banned cards on purpose (the 2026-08-26 design, older than 775).
+    // Copies players already own stay. The pools are split in duplicateOffer() below.
     private static void triggerDuplicate(World world) {
         Deck deck = Current.player().getSelectedDeck();
         List<PaperCard> owned = deck != null ? deck.getMain().toFlatList() : java.util.Collections.emptyList();
@@ -235,56 +243,112 @@ public class ChestEvents {
             triggerGoldChest(world);
             return;
         }
-        String[] restrictedNames = Config.instance().getConfigData().restrictedCards;
-        List<PaperCard> restrictedOwned = new ArrayList<>();
-        List<PaperCard> unrestrictedOwned = new ArrayList<>();
-        for (PaperCard card : owned) {
+        DuplicateOffer<PaperCard> offer = duplicateOffer(owned, PaperCard::getName, PaperCard::getRarity,
+                Config.instance().getConfigData().restrictedCards, world.getRandom());
+        if (offer.skipped > 0)
+            System.out.println("[TFR-RestrictedCards] Duplicate: skipped " + offer.skipped
+                    + " banned card(s) in the active deck (" + String.join(", ", offer.skippedNames) + ")");
+        if (offer.cheap == null) {
+            System.out.println("[ChestEvents] Duplicate: every card in the active deck is banned, awarding gold instead");
+            triggerGoldChest(world);
+            return;
+        }
+        System.out.println("[ChestEvents] Duplicate: offered " + offer.cheap.getName()
+                + (offer.expensive != null ? " / " + offer.expensive.getName() : " (no second card to offer)"));
+        WorldStage.getInstance().showChestDuplicateDialog(offer.cheap, offer.expensive);
+    }
+
+    /** Round 968: the Duplicate event's two offers. cheap is null when every card was banned; expensive is null when
+     *  the allowed cards are all copies of one card. Generic so the test needs no card database. */
+    static final class DuplicateOffer<T> {
+        final T cheap;
+        final T expensive;
+        final int skipped;
+        final List<String> skippedNames;
+
+        DuplicateOffer(T cheap, T expensive, int skipped, List<String> skippedNames) {
+            this.cheap = cheap;
+            this.expensive = expensive;
+            this.skipped = skipped;
+            this.skippedNames = skippedNames;
+        }
+    }
+
+    /** Round 968: banned cards (restrictedNames, case-insensitive) are left out of both slots. The 200-shard slot takes
+     *  the rarest allowed card (pickByRarityPriority). The 25-shard slot takes the rarest allowed card of a LOWER tier
+     *  (Rare/Mythic > Uncommon > the rest), so a deck with rares and uncommons offers an uncommon at 25 and a rare at
+     *  200, never one rare at two prices; with no lower tier it takes any allowed card of another name, and with only
+     *  copies of one card that card is the single 25-shard offer. No allowed card: cheap is null (the caller pays gold). */
+    static <T> DuplicateOffer<T> duplicateOffer(List<T> deck, Function<T, String> name, Function<T, CardRarity> rarity,
+                                                String[] restrictedNames, Random random) {
+        List<T> allowed = new ArrayList<>();
+        Set<String> skippedNames = new java.util.TreeSet<>();
+        int skipped = 0;
+        for (T card : deck) {
             boolean restricted = false;
             if (restrictedNames != null) {
                 for (String restrictedName : restrictedNames) {
-                    if (restrictedName.equalsIgnoreCase(card.getName())) {
+                    if (restrictedName.equalsIgnoreCase(name.apply(card))) {
                         restricted = true;
                         break;
                     }
                 }
             }
-            (restricted ? restrictedOwned : unrestrictedOwned).add(card);
+            if (restricted) {
+                skipped++;
+                skippedNames.add(name.apply(card));
+            } else {
+                allowed.add(card);
+            }
         }
-        // The cheap 25-shard slot draws only from NON-restricted deck cards (2026-08-26 review
-        // finding: it used to draw from the whole deck, so a restricted card could roll into the
-        // cheap slot and bypass its own 200-shard price - and both buttons could even offer the
-        // identical card at two different prices). An all-restricted deck falls back to the full
-        // pool rather than offering nothing.
-        List<PaperCard> cheapPool = unrestrictedOwned.isEmpty() ? owned : unrestrictedOwned;
-        PaperCard cheap = pickByRarityPriority(cheapPool, world);
-        PaperCard expensive = restrictedOwned.isEmpty() ? null : pickByRarityPriority(restrictedOwned, world);
-        System.out.println("[ChestEvents] Duplicate: offered " + cheap.getName()
-                + (expensive != null ? " / " + expensive.getName() : " (no restricted card in active deck)"));
-        WorldStage.getInstance().showChestDuplicateDialog(cheap, expensive);
+        if (allowed.isEmpty())
+            return new DuplicateOffer<>(null, null, skipped, new ArrayList<>(skippedNames));
+        T expensive = pickByRarityPriority(allowed, rarity, random);
+        int top = rarityTier(rarity.apply(expensive));
+        List<T> lower = new ArrayList<>();
+        List<T> otherName = new ArrayList<>();
+        for (T card : allowed) {
+            if (rarityTier(rarity.apply(card)) < top)
+                lower.add(card);
+            if (!name.apply(card).equals(name.apply(expensive)))
+                otherName.add(card);
+        }
+        T cheap;
+        if (!lower.isEmpty()) {
+            cheap = pickByRarityPriority(lower, rarity, random);
+        } else if (!otherName.isEmpty()) {
+            cheap = pickByRarityPriority(otherName, rarity, random);
+        } else {
+            cheap = expensive;
+            expensive = null;
+        }
+        return new DuplicateOffer<>(cheap, expensive, skipped, new ArrayList<>(skippedNames));
+    }
+
+    /** Round 968: 2 Rare/Mythic, 1 Uncommon, 0 everything else - the tiers pickByRarityPriority ranks by. */
+    private static int rarityTier(CardRarity rarity) {
+        if (rarity == CardRarity.Rare || rarity == CardRarity.MythicRare)
+            return 2;
+        return rarity == CardRarity.Uncommon ? 1 : 0;
     }
 
     // Rarity-priority pick (user revision 2026-08-25: "Must be from current deck and Rare or
     // Mythical if possible, else Uncommon next, if still not than Common"). Random WITHIN the
-    // highest available tier present, not a flat random across the whole pool - a deck with any
-    // Rare/Mythic never offers a Common instead. Falls through to the whole pool as a last resort
-    // (a deck that's genuinely all basic lands, say) rather than ever returning null.
-    private static PaperCard pickByRarityPriority(List<PaperCard> pool, World world) {
-        List<PaperCard> rareOrMythic = new ArrayList<>();
-        List<PaperCard> uncommon = new ArrayList<>();
-        List<PaperCard> common = new ArrayList<>();
-        for (PaperCard card : pool) {
-            forge.card.CardRarity rarity = card.getRarity();
-            if (rarity == forge.card.CardRarity.Rare || rarity == forge.card.CardRarity.MythicRare)
-                rareOrMythic.add(card);
-            else if (rarity == forge.card.CardRarity.Uncommon)
-                uncommon.add(card);
-            else
-                common.add(card);
+    // highest available tier present, not a flat random across the whole pool - a pool with any
+    // Rare/Mythic never offers a Common instead. The caller never passes an empty pool.
+    private static <T> T pickByRarityPriority(List<T> pool, Function<T, CardRarity> rarity, Random random) {
+        int best = -1;
+        List<T> tier = new ArrayList<>();
+        for (T card : pool) {
+            int t = rarityTier(rarity.apply(card));
+            if (t > best) {
+                best = t;
+                tier.clear();
+            }
+            if (t == best)
+                tier.add(card);
         }
-        List<PaperCard> tier = !rareOrMythic.isEmpty() ? rareOrMythic
-                : !uncommon.isEmpty() ? uncommon
-                : !common.isEmpty() ? common : pool;
-        return tier.get(world.getRandom().nextInt(tier.size()));
+        return tier.get(random.nextInt(tier.size()));
     }
 
     // Illegal Arena Match (user revision 2026-08-25: "a real arena match interface, where you

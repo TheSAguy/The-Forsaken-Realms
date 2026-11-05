@@ -1760,7 +1760,8 @@ towns sell them and colorless enemies drop them. Never dealt at all: sets with n
 Un-sets and other novelty or promo sets, and Alpha, Beta and Unlimited (their cards still turn up as
 later printings). A short ban list - the Power 9, Sol Ring, Signets, Commander-only cards and the like -
 is kept out of rewards and shops. Enemies may still play those cards, but you never win them: a banned
-card won in ante becomes another card from the same deck. Every card and set on it is listed under
+card won in ante becomes another card from the same deck, and a chest's traveling artificer never copies
+one. Every card and set on it is listed under
 [Banned cards and sets](#banned-cards-and-sets) below.
 
 Those shares decide **where each card can come from**:
@@ -1843,7 +1844,7 @@ exploring its ground are real ways to pick up cards you couldn't buy.
 
 #### Banned cards and sets
 
-These cards and sets are kept out of **rewards, booster packs and shops**, so you never win or buy them; a banned card won in ante becomes another card from the same deck. Your deck building is not limited. Enemies can still play the banned cards, but the Commander-only cards are also taken out of enemy decks. The digital-only sets (MTG Arena cards with mechanics paper can't do) join the banned sets unless you tick **Allow digital-only cards** in Settings.
+These cards and sets are kept out of **rewards, booster packs and shops**, so you never win or buy them; a banned card won in ante becomes another card from the same deck, and a chest's traveling artificer never copies one. Your deck building is not limited. Enemies can still play the banned cards, but the Commander-only cards are also taken out of enemy decks. The digital-only sets (MTG Arena cards with mechanics paper can't do) join the banned sets unless you tick **Allow digital-only cards** in Settings.
 
 **Banned cards (51):** Anax and Cymede & Kynaios and Tiro, Ancestral Recall, Azorius Signet, Bazaar of Baghdad, Black Lotus, Boros Signet, Call from the Grave, Demonic Tutor, Dimir Signet, Drake Stone, Fastbond, Fetching Garden, Gaea's Cradle, Gobland, Golgari Signet, Gruul Signet, Halving Season, Izzet Signet, Library of Alexandria, Mana Crypt, Mana Vault, Mise, Mishra's Workshop, Mox Emerald, Mox Jet, Mox Pearl, Mox Poison, Mox Ruby, Mox Sapphire, New Master of Arms, Omenpath to Naya, Orzhov Signet, Questing Cosplayer, Rakdos Signet, Selesnya Signet, Simic Signet, Slumbering Waterways, Sol Ring, Teferi, Druid of Argoth, Temur Elevator, The Heron Moon, Time Vault, Time Walk, Timetwister, Tinker, Tolarian Academy, Under-Construction Skyscraper, Vampiric Tutor, Wisedrafter's Will, Wrenn and One, Yawgmoth's Bargain.
 

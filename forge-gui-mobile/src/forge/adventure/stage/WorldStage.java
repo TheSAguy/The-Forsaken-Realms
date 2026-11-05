@@ -1972,8 +1972,9 @@ public class WorldStage extends GameStage implements SaveFileContent {
     // codebase's simple Dialog+TypingLabel+buttons pattern, so - same documented simplification
     // as the Thief Merchant event below - the traveling artificer duplicates a RANDOM owned card
     // instead of letting the player choose one. cheapCard/expensiveCard are pre-picked by
-    // ChestEvents (expensiveCard null when the player owns no restricted card at all, in which
-    // case only the cheap button is offered).
+    // ChestEvents.duplicateOffer() and are never banned cards (round 968): expensiveCard is the
+    // deck's rarest allowed card, cheapCard one of a lower tier; expensiveCard is null when the
+    // deck's allowed cards are all one card, and then only the cheap button is offered.
     public void showChestDuplicateDialog(forge.item.PaperCard cheapCard, forge.item.PaperCard expensiveCard) {
         Dialog dialog = getDialog();
         dialog.getContentTable().clear();
