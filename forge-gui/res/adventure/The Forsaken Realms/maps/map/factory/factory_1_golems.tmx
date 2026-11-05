@@ -42,7 +42,7 @@
   </object>
   <object id="50" template="../../../../common/maps/obj/enemy.tx" x="159.735" y="80.2253">
    <properties>
-    <property name="enemy" value="Clay Golem"/>
+    <property name="enemy" value="Golem"/>
     <property name="threatRange" type="int" value="30"/>
     <property name="waypoints" value="78,81,78,77"/>
    </properties>
@@ -53,7 +53,7 @@
   <object id="66" template="../../../../common/maps/obj/gold.tx" x="20.6667" y="81.3333"/>
   <object id="67" template="../../../../common/maps/obj/enemy.tx" x="108.667" y="200">
    <properties>
-    <property name="enemy" value="Clay Golem"/>
+    <property name="enemy" value="Golem"/>
     <property name="threatRange" type="int" value="30"/>
     <property name="waypoints" value="88,79,80,79"/>
    </properties>

@@ -14264,6 +14264,38 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 962: the Autonomous Factory keeps one Clay Golem; the rest roll their rank by the week (2026-11-04)
+
+The log review `C:\CLAUDE\PROJECTS\TFR1\notes\logs-1104d.md` P2-1 found a second player walled by the factory's fixed
+golems. 0d03f3c7 took the day-1 "Eviction Notice" quest ("Clear all enemies from a dungeon"). It drew
+`factory_2_ooze.tmx`, which held four catalog `Clay Golem`s, and lost twice to one of them. 27ad7bf8 hit the same wall
+in `factory_1_golems.tmx`. `Clay Golem` is a named catalog enemy (45 life, Mythic, shown as Archmage), so round 647's
+week roll skips it: only a family enemy re-rolls (`EnemyTiers.isFamily`/`rollPlacement`). The user: "Yes, build A".
+
+- **The change (data only, 6 values):** all but one `Clay Golem` on each factory map becomes the family `Golem`
+  (`world/enemy_tiers.json`: Apprentice/Adept/Master, 13/22/27 life, the `golem` and `rustic_golem` tier decks). A
+  placed family enemy rolls the week's tier row on the first visit, so week 1 brings Apprentice or Adept.
+  - `factory_1_golems.tmx`: objects 50 and 67 change; **90 stays**.
+  - `factory_2_ooze.tmx`: objects 50, 67 and 74 change; **69 stays**.
+  - `factory_3_wizard.tmx`: object 67 changes; **68 stays**.
+- **Why these picks (not the review's):** on each map the kept Clay Golem is the one guarding the booster in a far
+  corner, so the one Archmage left guards a reward. The ones changed stand on, or patrol into, the entry or the main
+  corridor: factory_1's 67 patrols across the only entry corridor and 50's waypoint 81 sits in the single corridor north
+  to the treasure; factory_2's 67 is at the entrance junction, 74 on the main corridor, 50 on the col-7 corridor;
+  factory_3's 67 stands at the mouth of the only entry corridor. The review would have kept factory_1's 50 and
+  factory_2's 50 (both corridor patrols) and factory_3's 67 (the entry one).
+- **The look:** the family `Golem` shows as **"Rusted Golem"** (`nameOverride`) with `golem.atlas`, so the swapped
+  golems look and are named like the factory's existing Rusted Golems. Their objects keep their own `threatRange` and
+  `waypoints`.
+- **Quests:** Eviction Notice's `Clear` objective counts the map's enemies, not names, so a clear still takes the same
+  number of wins. No TFR quest names `Clay Golem`; the `Golem` quest tag appears only in an `enemyExcludeTags` list, and
+  both enemies carry it (and `Construct`). Slobad's quest uses `minibosses/slobad_factory.tmx`, not these maps.
+- **Not touched:** `enemies.json`'s `Clay Golem` (still a catalog Archmage elsewhere) and `factory_4_large.tmx` (none).
+  No code, no build, no save change: a placed enemy is read from the map when it loads, so a save that has visited a
+  factory meets the rolled golem on its next load.
+- **Check:** in the agent game, a factory visit logs `[TFR-EnemyTiers] Autonomous Factory #NN: Golem placed as
+  Apprentice -> ...` for the changed objects.
+
 ## Round 963: the 40 h support ask always comes, and a 75 h splash (2026-11-04)
 
 The user: "Let's change the 40, to always show, even if they turned it off at 5 or 15. Also, add a 75h one, Let's make
