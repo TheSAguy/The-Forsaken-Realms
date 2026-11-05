@@ -338,6 +338,8 @@ public final class SessionLog {
             duelStartedAt = System.currentTimeMillis();
             MemoryWatch.onDuel(); // round 898
         }
+        if (scene instanceof forge.adventure.scene.GameScene)
+            SpriteSweep.onWorldMap(); // round 969: unload enemy atlases nothing draws from any more
         String label = scene == null ? "none" : scene.getClass().getSimpleName();
         if (scene instanceof TileMapScene && ((TileMapScene) scene).rootPoint != null)
             label += ":" + ((TileMapScene) scene).rootPoint.getDisplayName();

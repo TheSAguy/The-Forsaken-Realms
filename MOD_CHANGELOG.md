@@ -14264,6 +14264,61 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 969: enemy sprite atlases are unloaded on the world map when nothing draws from them (2026-11-05)
+
+- **Why** - log review `notes/logs-1105.md` P2-1 (a 12-hour phone launch ended at rss 7.8 GB) and round 965's measurement
+  (`C:\CLAUDE\PROJECTS\TFR1\notes\r965-asset-climb.md`, fix B): an enemy sprite atlas (`sprites/enemy/**`, about 2.4 MB
+  a kind) loads through `Config.getAtlas` the first time a kind is shown and nothing ever unloaded it - 36% of a long
+  session's `assets=` climb, +287 MB per agent hour, 5.97 GB if a player met every kind. Round 965 (follow-up) fixed
+  the other 60% (duel card art).
+- **The change** - new `util/SpriteSweep`. On each switch to the world map (`SessionLog.onScene`, `GameScene`), when
+  more than 64 enemy atlases are loaded, it unloads the least recently used ones nothing alive draws from, drops their
+  `Config.animatedSprites`/`atlasSprites` entries, and logs `[TFR-SpriteSweep] world map: unloaded N atlas(es) (~MB:
+  names), M kept (L held by a live sprite or image, P pinned, R recent), cap C, assets A -> B` (only when it unloads
+  something). A swept kind loads again the next time it is shown.
+  - **Held** - a weak reference per holder, under the atlas's file. `CharacterSprite.load` registers the sprite (a
+    load bracket, `beginLoad`/`endLoad`), and `getAvatar()`/`getAvatar(int)` now hand out a fresh registered copy of
+    the Avatar frame, so the `Image` a holder wraps round it keeps the atlas for as long as the `Image` is kept, even
+    after the sprite is gone. A holder the collector has not reached yet still counts: the sweep errs toward keeping.
+  - **Pinned for the launch** - an enemy atlas whose sprites `Config` handed to code that does not register:
+    `getAtlasSprite`, `getPOISprites`, or `getAnimatedSprites` outside a CharacterSprite load (a map `PortalActor`).
+    Also kept: an enemy atlas no CharacterSprite ever loaded. None was pinned in the test.
+  - **Cap** - 64 (about 150 MB of enemy pages). Console `spritesweep` (status), `spritesweep now [gc]`,
+    `spritesweep cap N [gc]` (the cap for this launch, sweeps at once; `gc` runs the collector first - test only).
+- **The holder audit** (every place an enemy sprite region is copied out or kept):
+  - `MapDialog` (dialog portrait, `new Image(actor.getAvatar())`), `ArenaScene` (bracket `ArenaRecord` images; the
+    bracket's `enemies` array also holds the sprites), `AdventureEventData.AdventureEventParticipant.getAvatar` (Inn
+    event images; the participant also holds its sprite), `PlayerStatisticScene` line 400 (the fallback face from a
+    throwaway `EnemySprite`; never built on this plane since round 899, the Journal replaces it) - all wrap the
+    registered Avatar copy, so the `Image` itself holds the atlas. No change in those files.
+  - `DuelScene` (the duel's player-panel avatar, `new TextureRegion(enemy.getAvatar(i))` into `FSkin.getAvatars()`) -
+    the region is a copy the registry cannot see, but `DuelScene.enemy` keeps the `EnemySprite` (registered) until the
+    next duel replaces it and overwrites the key; a seat key left from a bigger duel is drawn only by a duel with that
+    many seats, which writes it again.
+  - `TransitionScreen` (the VS screen) - makes its Avatar from `Config.getAtlas(path)` every frame, so a swept atlas
+    simply loads again; the sweep never runs during a transition into a duel.
+  - `JournalScene` and `PlayerStatisticScene`'s faces - the baked `sprites/enemy_avatars/` sheet (round 897), not an
+    enemy atlas; `JournalScene.altClick` and `TfrPlates` (`drawnFrame`) read a live sprite; `AdventureQuestData`/
+    `AdventureQuestStage` target sprites, `WrathHunt.hunter()`, roaming guards, rewards and dialog actors are
+    `CharacterSprite`s (registered). `HeroListData` and the player's sheets are `sprites/heroes/` (not swept).
+    `CharacterSprite.readFootprint` reads the atlas inside the load bracket and keeps no region.
+  - The design chosen: register every holder (the Avatar copy covers all the Image holders without touching their
+    files) rather than exclude every atlas that reached `getAvatar()` - that exclusion would have pinned every kind
+    ever dueled or talked to and kept the climb, only slower.
+- **Checks** - `CharacterSprite.getAvatar` now returns a copy: 5 callers in the code graph (`affected
+  CharacterSprite.getAvatar`), the same 5 by Grep (the holders above); none compares or changes the sprite it gets.
+  `mvn -pl forge-gui-mobile -am compile` exit 0 (twice; the second after the "only when it unloads" log change). Agent game (round 963 jar + this round's classes ahead of it, cheats, slot 42, every duel at 50x), cap
+  lowered to 6 (then 0) by console, 25 minutes: 10 sweeps, 34 atlases unloaded (~1-25 MB a sweep), none pinned, no
+  exception or GL error in `forge.log`. `assets=` 287 at the load, at most 364 while spawning 14 extra kinds and
+  dueling, 329 at the end with 2 enemy atlases left loaded. The 5 world-map sweeps that freed anything unloaded 9, 1, 5, 1 and 2 atlases
+  without forcing the collector; enemies just removed by console stayed "held" until a collection (`gc`) cleared their
+  weak references. Ancient Demon was swept, shown again (it reloaded and drew), dueled, swept again. Screenshots in
+  `C:\CLAUDE\PROJECTS\TFR1\notes\r969\`: the world map after a sweep (01), swept kinds spawned again (03, Akroma), an
+  interception's VS screen with the reloaded Ancient Demon (04), PlayerStatisticScene (05), the Journal (06), a dungeon
+  (07, Ancient Opal Cavern), a dialog portrait (08, the Warden in Orazca) and the same dialog after a cap-0 sweep (09).
+  Nothing drew black or garbage. Not reached: the Arena bracket and an Inn event's images (the same Image-holder path
+  as the dialog). Not packaged (the main thread packages).
+
 ## Round 965 (follow-up): duel card art is freed again (2026-11-05)
 
 - **Why** - log review `notes/logs-1105.md` P2-1: aeab35b5 (Pixel 8 Pro) ended a 12-hour launch at rss 7,839 MB, its

@@ -1299,6 +1299,7 @@ public class ConsoleCommandInterpreter {
         // Round 756: the play-time support asks (SupportPrompt) - "support hours 4.99", "support show 2", "support reset".
         registerCommand(new String[]{"support"}, forge.adventure.util.SupportPrompt::console);
         registerCommand(new String[]{"session"}, forge.adventure.util.SessionLog::console); // round 777
+        registerCommand(new String[]{"spritesweep"}, forge.adventure.util.SpriteSweep::console); // round 969
         registerCommand(new String[]{"custom"}, forge.adventure.util.CustomDifficulty::console); // round 822: custom difficulty
         // Round 849 (testing aid): "research sort found|az|days" picks the Lab's Sort box (the bridge cannot open a SelectBox).
         registerCommand(new String[]{"research", "sort"}, forge.adventure.scene.ResearchScene::consoleSort);

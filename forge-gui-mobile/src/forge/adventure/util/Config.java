@@ -941,7 +941,14 @@ public class Config {
             Forge.getAssets().manager().finishLoadingAsset(fileName);
             atlas = Forge.getAssets().manager().get(fileName, TextureAtlas.class, false);
         }
+        SpriteSweep.used(spriteAtlas, fileName); // TFR round 969: an enemy atlas's last use, for the world-map sweep
         return atlas;
+    }
+
+    /** TFR round 969: SpriteSweep unloaded the atlas at {@code path}; drop the sprites cached from it. */
+    void forgetSprites(String path) {
+        animatedSprites.remove(path);
+        atlasSprites.remove(path);
     }
 
     public Sprite getItemSprite(String itemName) {
@@ -969,6 +976,7 @@ public class Config {
         sprite = sprites.get(itemName);
         if (sprite == null) {
             sprite = getAtlas(atlasName).createSprite(itemName);
+            SpriteSweep.pin(atlasName); // TFR round 969: an unregistered holder keeps this sprite
             if (sprite != null) {
                 sprites.put(itemName, sprite);
                 atlasSprites.put(atlasName, sprites);
@@ -981,6 +989,7 @@ public class Config {
         Array<Sprite> sprites = poiSprites.get(d);
         if (sprites == null) {
             sprites = getAtlas(d.spriteAtlas).createSprites(d.sprite);
+            SpriteSweep.pin(d.spriteAtlas); // TFR round 969
             poiSprites.put(d, sprites);
         }
         return sprites;
@@ -1004,6 +1013,7 @@ public class Config {
     }
 
     public Array<Sprite> getAnimatedSprites(String path, String animationName) {
+        SpriteSweep.handedOut(path); // TFR round 969: outside a CharacterSprite's load, the atlas is pinned
         Array<Sprite> sprites;
         ObjectMap<String, Array<Sprite>> mapSprites = animatedSprites.get(path);
         if (mapSprites == null) {

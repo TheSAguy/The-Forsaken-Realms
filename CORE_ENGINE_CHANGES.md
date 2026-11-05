@@ -35,6 +35,16 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 969 - enemy sprite atlases are unloaded on the world map when nothing draws from them
+- `forge-gui-mobile/src/forge/adventure/util/Config.java` (STOCK): `getAtlas` calls `SpriteSweep.used(path, fileName)`
+  before it returns; `getAtlasSprite` (on a cache miss), `getPOISprites` (on a miss) and `getAnimatedSprites` (at the
+  top) call `SpriteSweep.pin`/`handedOut`; a new package-private `forgetSprites(path)` drops a path's
+  `animatedSprites`/`atlasSprites` entries. Upstream never unloads an atlas, so if it adds its own unloading, compare it
+  with `util/SpriteSweep` and keep one of the two.
+- `forge-gui-mobile/src/forge/adventure/stage/ConsoleCommandInterpreter.java`: one `registerCommand` line, `spritesweep`.
+- TFR files: NEW `util/SpriteSweep.java`; `character/CharacterSprite.java` (`load` registers the sprite, and
+  `getAvatar()`/`getAvatar(int)` hand out a registered copy); `util/SessionLog.java` (`onScene` sweeps on `GameScene`).
+
 ### Round 965 (follow-up) - duel card art is registered when it is queued, so it can be freed
 - `forge-gui-mobile/src/forge/assets/ImageCache.java` (STOCK): `loadAsset()`, the branch that queues a card texture
   (`manager().load(...)`, `counter += 1`) - for `!others` it also adds the file to `syncQ` and `cardsLoaded` and calls

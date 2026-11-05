@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.Array;
 import forge.adventure.data.DialogData;
 import forge.adventure.stage.SpriteGroup;
 import forge.adventure.util.Config;
+import forge.adventure.util.SpriteSweep;
 
 import java.util.HashMap;
 
@@ -100,6 +101,16 @@ public class CharacterSprite extends MapActor {
 
     protected void load(String path) {
         if (path == null || path.isEmpty()) return;
+        // Round 969: this sprite holds its atlas while it lives, so SpriteSweep never unloads it from under it
+        SpriteSweep.beginLoad(this, path);
+        try {
+            loadAnimations(path);
+        } finally {
+            SpriteSweep.endLoad();
+        }
+    }
+
+    private void loadAnimations(String path) {
         animations.clear();
         for (AnimationTypes stand : AnimationTypes.values()) {
             if (stand == AnimationTypes.Avatar) {
@@ -469,7 +480,16 @@ public class CharacterSprite extends MapActor {
     public Sprite getAvatar() {
         if (avatar == null || avatar.isEmpty())
             return null;
-        return avatar.first();
+        return heldCopy(avatar.first());
+    }
+
+    /** Round 969: an Avatar handed out is a copy registered with SpriteSweep, so the Image a dialog, the Arena, an event
+     *  or PlayerStatisticScene wraps round it keeps the atlas loaded for as long as that Image is kept - even after this
+     *  sprite is gone. */
+    private Sprite heldCopy(Sprite frame) {
+        Sprite copy = new Sprite(frame);
+        SpriteSweep.hold(atlasPath, copy);
+        return copy;
     }
 
     public String getAtlasPath() {
@@ -501,7 +521,7 @@ public class CharacterSprite extends MapActor {
     public Sprite getAvatar(int index) {
         if (avatar == null || avatar.isEmpty())
             return null;
-        return avatar.get(Math.min(index, avatar.size - 1));
+        return heldCopy(avatar.get(Math.min(index, avatar.size - 1)));
     }
 
     public enum AnimationTypes {
