@@ -206,6 +206,19 @@ public class ImageUtil {
         return getImageRelativePath(cp, face, true, true);
     }
 
+    // TFR round 977: Scryfall no longer lists Alchemy rebalanced ("A-") printings, so <set>/A-150e is a 404 for all of
+    // them. The base paper print is still there under the same set and number with "A-" and the letter dropped.
+    private static final Pattern REBALANCED_COLLECTOR_NUMBER = Pattern.compile("^A-(\\d+)[a-z]*$");
+
+    /** The collector number Scryfall knows a card by: an A- number maps to its base print's (A-150e -> 150). */
+    public static String scryfallCollectorNumber(String collectorNumber) {
+        if (collectorNumber == null) {
+            return null;
+        }
+        java.util.regex.Matcher m = REBALANCED_COLLECTOR_NUMBER.matcher(collectorNumber);
+        return m.matches() ? m.group(1) : collectorNumber;
+    }
+
     public static String getScryfallDownloadUrl(PaperCard cp, String face, String setCode, String langCode, boolean useArtCrop) {
         final Pattern funnyCardCollectorNumberPattern = Pattern.compile("^F\\d+[a-z]?");
         String editionCode;
@@ -213,7 +226,7 @@ public class ImageUtil {
             editionCode = setCode;
         else
             editionCode = cp.getEdition().toLowerCase();
-        String cardCollectorNumber = cp.getCollectorNumber();
+        String cardCollectorNumber = scryfallCollectorNumber(cp.getCollectorNumber());
         // override old planechase sets from their modified id since scryfall move the planechase cards outside their original setcode
         if (cardCollectorNumber.startsWith("OHOP")) {
             editionCode = "ohop";

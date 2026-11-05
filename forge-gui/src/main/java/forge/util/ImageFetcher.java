@@ -24,6 +24,8 @@ public abstract class ImageFetcher {
     private static final HashMap<String, String> langCodeMap = new HashMap<>();
     protected static final boolean disableHostedDownload = true;
     private static final HashSet<String> fetching = new HashSet<>();
+    // TFR round 977: Alchemy (A-) cards already logged as fetched by their base number, one line per card per launch.
+    private static final Set<String> rebalancedLogged = Collections.synchronizedSet(new HashSet<>());
 
     static {
         langCodeMap.put("en-US", "en");
@@ -77,7 +79,14 @@ public abstract class ImageFetcher {
 
         String setCode = edition.getScryfallCode();
         String preferredLang = FModel.getPreferences().getPref(ForgePreferences.FPref.UI_CARD_DOWNLOAD_LANG);
-        String langCode = CdnUuidCache.resolvePreferredLangCode(preferredLang, setCode, card.getCollectorNumber(), edition.getCardsLangCode());
+        // TFR round 977: an Alchemy rebalanced card (A-150e) is fetched as its base print (150), the only one Scryfall still has.
+        String collectorNumber = ImageUtil.scryfallCollectorNumber(card.getCollectorNumber());
+        if (!collectorNumber.equals(card.getCollectorNumber()) && rebalancedLogged.add(card.getEdition() + "/" + card.getName())) {
+            System.out.println("[TFR-Images] " + card.getName() + " (" + card.getEdition() + " " + card.getCollectorNumber()
+                    + ") fetched as its base print " + setCode + " " + collectorNumber + " (" + rebalancedLogged.size()
+                    + " Alchemy card(s) this launch)");
+        }
+        String langCode = CdnUuidCache.resolvePreferredLangCode(preferredLang, setCode, collectorNumber, edition.getCardsLangCode());
 
         // Specialize variants are separate Scryfall cards (16w, 16u, ...). The CDN cache is
         // keyed by the base collector number, so it would return the base card's image.
@@ -86,7 +95,7 @@ public abstract class ImageFetcher {
 
         if (!specVariant && !StringUtils.isBlank(setCode)) {
             String size = useArtCrop ? "art_crop" : "normal";
-            String cdnUrl = CdnUuidCache.getCdnUrlIfCached(setCode, card.getCollectorNumber(), langCode, face, size);
+            String cdnUrl = CdnUuidCache.getCdnUrlIfCached(setCode, collectorNumber, langCode, face, size);
             if (cdnUrl != null && !downloadUrls.contains(cdnUrl)) downloadUrls.add(cdnUrl);
         }
 

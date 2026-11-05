@@ -14264,6 +14264,36 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 977: Alchemy (A-) cards show their picture again (2026-11-05)
+
+- **Why** - research `C:\CLAUDE\PROJECTS\TFR1\notes\alchemy-art-404.md`: Scryfall no longer lists any Alchemy
+  rebalanced ("A-") printing, so every URL Forge built for one (`api.scryfall.com/cards/LCI/A-150e/...`) was a 404, and
+  each of the 221 `[rebalanced]` printings in 26 edition files drew with no art, every launch (`All N URLs failed`).
+  A stock Forge bug, desktop and Android alike. The user keeps Alchemy cards in by default ("Exclude Alchemy variants"
+  stays off), so they appear in rewards, starters, shops and enemy decks.
+- **The fix (replace, not fall back)** - every base paper print is still on Scryfall under the same set and number with
+  "A-" and the letter suffix dropped (221 of 221 checked, no name mismatch). Stock `ImageUtil.scryfallCollectorNumber`
+  maps `^A-(\d+)[a-z]*$` to the base number (`A-150e` -> `150`, `A-85` -> `85`; anything else unchanged), used by
+  `getScryfallDownloadUrl`; stock `ImageFetcher.addScryfallUrl` keys the `CdnUuidCache` language and CDN lookups by the
+  same base number. No fallback to the A- URL: it never answers today, and each extra 404 spends a rate-limited
+  Scryfall call. The picture still saves to the A- cache path (`LCI/A-Geological Appraiser.fullborder.jpg`), so no
+  cache or save change.
+- **Log** - `[TFR-Images] <card> (<set> A-<n>) fetched as its base print <set> <n> (N Alchemy card(s) this launch)`,
+  once per card per launch (`ImageFetcher.rebalancedLogged`).
+- **Known caveat** - the picture is the paper card, so its printed text is the pre-rebalance version while the game
+  plays the rebalanced rules (the art itself is the same). The bigger alternative, Forge's own frame with the
+  rebalanced text over the base art crop, stays a later option if players get confused.
+- **Upstream** - worth an issue or PR to Card-Forge/forge (none filed; the main thread and the user decide).
+- **Test** - `ScryfallCollectorNumberTest` (forge-gui) 4/4: `A-150e`, `A-85`, ordinary numbers (`150`, `407s`) and
+  funny/planechase numbers (`F12`, `OHOP7`) unchanged.
+- **Agent check** - agent game with the round's two classes ahead of the jar: `A-Geological Appraiser` (not cached)
+  given and put in the deck; the deck editor drew its art, `LCI/A-Geological Appraiser.fullborder.jpg` (105,863 bytes)
+  was saved, forge.log has `[TFR-Images] A-Geological Appraiser (LCI A-150e) fetched as its base print lci 150 (1
+  Alchemy card(s) this launch)` and no `URLs failed` line. Shot
+  `C:\CLAUDE\PROJECTS\TFR1\notes\r977\r977-alchemy-card-art.png`.
+- **Release note** - "Alchemy cards (the rebalanced "A-" versions) show their picture again. The picture is the
+  original paper card, so its printed text may differ from the rebalanced rules the game uses."
+
 ## Round 970: Emrakul's Castle and the Temples of Chandra and Liliana stay hidden until the story opens them, after a load too (2026-11-05)
 
 - **Why** - Fable review `C:\CLAUDE\PROJECTS\TFR1\notes\fable-review-2026-11-02.md` P2-16. Stock

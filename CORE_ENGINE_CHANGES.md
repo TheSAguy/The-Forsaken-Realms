@@ -35,6 +35,17 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 977 - Alchemy (A-) cards fetch their base print from Scryfall
+- `forge-core/src/main/java/forge/util/ImageUtil.java` (STOCK): new `scryfallCollectorNumber(String)` (`^A-(\d+)[a-z]*$`
+  -> the digits, anything else unchanged); `getScryfallDownloadUrl` starts from it instead of `cp.getCollectorNumber()`.
+- `forge-gui/src/main/java/forge/util/ImageFetcher.java` (STOCK): `addScryfallUrl` keys `CdnUuidCache.resolvePreferredLangCode`
+  and `getCdnUrlIfCached` by the same base number, and logs `[TFR-Images] ... fetched as its base print ...` once per card
+  per launch (`rebalancedLogged`).
+- New test `forge-gui/src/test/java/forge/util/ScryfallCollectorNumberTest.java`.
+- **Upstream:** a stock bug (Scryfall no longer lists rebalanced printings, so all 221 `[rebalanced]` entries 404 on every
+  platform) - worth an issue or PR to Card-Forge/forge; none filed. At the next engine merge, check upstream's
+  `ImageUtil.getScryfallDownloadUrl` for its own A- handling and drop ours if it has one.
+
 ### Round 970 - quest-gated places keep their gate after a load
 - `forge-gui-mobile/src/forge/adventure/pointofintrest/PointOfInterest.java` (STOCK): `load()` rebuilds
   `questFlagsToActivate` from the template (new `static gatesOf(PointOfInterestData)`), which stock never read back;
