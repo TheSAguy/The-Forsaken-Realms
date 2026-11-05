@@ -85,6 +85,8 @@ public final class SupportPrompt {
     private static boolean wasOnWorldMap;
     private static float armedFor = -1f;
     private static float quietFor;
+    /** Round 967: the "waiting for the duel result" line, once per arming. */
+    private static boolean loggedWait;
     /** Round 963: the splash's dark veil over the HUD (removed with the dialog), and its 1x1 white texture. */
     private static Image veil;
     /** Round 963: the console's "support show 4 N" - the 75 h text as if the save had N wins (one show), or -1. */
@@ -195,6 +197,7 @@ public final class SupportPrompt {
         if (onWorldMap && !wasOnWorldMap) {
             armedFor = 0f;
             quietFor = 0f;
+            loggedWait = false;
         }
         wasOnWorldMap = onWorldMap;
         if (armedFor < 0f)
@@ -206,20 +209,39 @@ public final class SupportPrompt {
         armedFor += delta;
         if (dueAsk() < 0)
             return;
-        quietFor = isCalm() ? quietFor + delta : 0f;
+        WorldStage world = WorldStage.getInstance();
+        boolean resultPending = world.hasPendingResultTask() || world.isPaused();
+        if (resultPending && !loggedWait) {
+            loggedWait = true;
+            System.out.println("[TFR-Support] ask " + (dueAsk() + 1) + " due - waiting for the duel result (the loot"
+                    + " screen, a defeat) first");
+        }
+        quietFor = quietTime(quietFor, delta, isCalm(world, resultPending));
         if (quietFor >= QUIET_SECONDS) {
             armedFor = -1f;
             show(dueAsk(), "world map");
         }
     }
 
-    /** Nothing else on screen (no dialog on the map or the HUD, no cutscene or end screen, no transition) and the
-     *  player standing still - an ask never cuts into a walk. */
-    private static boolean isCalm() {
-        WorldStage world = WorldStage.getInstance();
-        return !Forge.advFreezePlayerControls && Forge.getTransitionScreen() == null
-                && !world.isDialogOnlyInput() && !MapStage.getInstance().isDialogOnlyInput()
-                && (world.getPlayerSprite() == null || !world.getPlayerSprite().isMoving());
+    /** Round 967: the quiet time so far - any frame that is not calm starts it over. */
+    static float quietTime(float quietFor, float delta, boolean calm) {
+        return calm ? quietFor + delta : 0f;
+    }
+
+    private static boolean isCalm(WorldStage world, boolean resultPending) {
+        return isCalm(Forge.advFreezePlayerControls, Forge.getTransitionScreen() != null,
+                world.isDialogOnlyInput() || MapStage.getInstance().isDialogOnlyInput(),
+                world.getPlayerSprite() != null && world.getPlayerSprite().isMoving(), resultPending);
+    }
+
+    /** Nothing else on screen (no dialog on the map or the HUD, no cutscene or end screen, no transition), the player
+     *  standing still - an ask never cuts into a walk - and round 967: no duel result still to come. A win plays the
+     *  attack and death animations (a Timer task, then a pause) before the loot screen opens, a loss its hit pause, and
+     *  a defeat's teleport or boss dialog sits behind another result task; the 5 h ask fired inside that window and the
+     *  loot screen opened over it (logs-1105 P3-3). The loot screen takes the world map away, so the ask re-arms when
+     *  it closes and waits its full quiet time again. */
+    static boolean isCalm(boolean frozen, boolean transition, boolean dialog, boolean moving, boolean resultPending) {
+        return !frozen && !transition && !dialog && !moving && !resultPending;
     }
 
     /** Shows ask `index` on the world map's dialog. The console's "support show" calls this directly. */

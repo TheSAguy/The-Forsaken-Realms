@@ -14264,6 +14264,29 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 967: a support ask waits for the duel result, so the loot screen cannot cover it (2026-11-05)
+
+- **Why** - log review `C:\CLAUDE\PROJECTS\TFR1\notes\logs-1105.md` P3-3: player 15a4f7a3 won a duel, the world map came
+  back and the 5 h ask fired (L4752) before the loot screen; the loot was then built, the loot screen opened over the
+  ask, and the player only answered it after coming back. A win plays the attack animation (a Timer task, at least
+  1 s) and then the death pause before `WorldStage.setWinner` switches to the loot screen, and round 756's calm test
+  did not see that window. It mattered most for round 963's 75 h splash.
+- **The change** (`util/SupportPrompt`) - `isCalm` also needs no duel result still to come: `GameStage`'s existing
+  `hasPendingResultTask()` (a win's Timer task; a defeat's teleport and a boss loss's dialog, which go through
+  `scheduleResultTask` too) or `isPaused()` (the win's death pause, a loss's hit pause). No `WorldStage` change: those
+  getters were already there, and unlike a `currentMob != null` test they cannot stay stuck if a result never lands.
+  The loot screen takes the world map away, so the ask disarms; when it closes the map comes back, the ask re-arms and
+  waits its full 1.5 s of quiet again. A flee (the Intimidating perk) has no pending result: its loot screen opens the
+  next frame, long before 1.5 s. `setWinner` runs in the same runnable as DuelScene's `switchToLast`, so there is no
+  frame between the map coming back and the result going pending. New line, once per arming:
+  `[TFR-Support] ask N due - waiting for the duel result (the loot screen, a defeat) first`.
+- **Tests** - `SupportPromptTest` (8/8): a pending result is never calm (and each other condition alone breaks calm);
+  1.4 s of quiet followed by one pending-result frame starts the quiet time over. The calm test and the quiet-time step
+  are package-private statics (`isCalm(frozen, transition, dialog, moving, resultPending)`, `quietTime`) for this.
+- **Not checked in the agent game** - round 965 held the agent window for its measurement; a duel win with an ask due
+  (`support hours 5`, then win a duel at 50x) should log the waiting line and show the ask only after the loot screen
+  closes.
+
 ## Round 966: console commands and shop sales are logged, so a gold jump can be explained (2026-11-05)
 
 Log review `C:\CLAUDE\PROJECTS\TFR1\notes\logs-1105.md` P3-2: player ebb52f38's gold rose by exactly 100,000,000

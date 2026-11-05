@@ -58,6 +58,28 @@ public class SupportPromptTest {
     }
 
     @Test
+    public void aPendingDuelResultIsNeverCalm() {
+        AssertJUnit.assertTrue(SupportPrompt.isCalm(false, false, false, false, false));
+        AssertJUnit.assertFalse("a win's animations or a loss's pause still to play",
+                SupportPrompt.isCalm(false, false, false, false, true));
+        AssertJUnit.assertFalse(SupportPrompt.isCalm(true, false, false, false, false));
+        AssertJUnit.assertFalse(SupportPrompt.isCalm(false, true, false, false, false));
+        AssertJUnit.assertFalse(SupportPrompt.isCalm(false, false, true, false, false));
+        AssertJUnit.assertFalse(SupportPrompt.isCalm(false, false, false, true, false));
+    }
+
+    @Test
+    public void theQuietTimeStartsOverAfterThePendingResult() {
+        // round 967 (logs-1105 P3-3): back on the map after a win, 1.4 s of quiet, then the result lands - no ask yet
+        float quiet = 0f;
+        for (int frame = 0; frame < 14; frame++)
+            quiet = SupportPrompt.quietTime(quiet, 0.1f, SupportPrompt.isCalm(false, false, false, false, false));
+        AssertJUnit.assertTrue(quiet > 1.3f);
+        quiet = SupportPrompt.quietTime(quiet, 0.1f, SupportPrompt.isCalm(false, false, false, false, true));
+        AssertJUnit.assertEquals(0f, quiet, 0f);
+    }
+
+    @Test
     public void the75hTextNamesTheWinsFrom50On() {
         String few = SupportPrompt.text75(49), many = SupportPrompt.text75(412);
         AssertJUnit.assertTrue(few.startsWith("You're not visiting the Realms anymore. You live here."));
