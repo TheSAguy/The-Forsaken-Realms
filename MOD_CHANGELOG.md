@@ -14264,6 +14264,34 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 975: Settings' Restart saves the game first, or says what will be lost (2026-11-05)
+
+- **Why** - the 1.26 release-candidate test (`C:\CLAUDE\PROJECTS\TFR1\notes\android-proof-1102\report.md`, P2-c): after a
+  won duel, turning on a "Restart Required" setting and pressing Restart threw the payout away. `restartForge()` called
+  `Forge.restart(true)` with no save, and Continue loaded the auto save from before the duel (1,597 gold, 18 shards,
+  12 cards, the Faerie Crown and a level gone). The dialog only asked "Are you sure you want to restart".
+- **The change** (`SettingsScene` only) - every restart Settings offers (the shared `restartForge()`: Landscape Mode,
+  digital-only cards, Font, unknown and non-legal cards; and the plane picker's own dialog) goes through
+  `restartAfterSave`:
+  - **A game on the world map** is saved to the auto save first (`WorldSave.autoSave()`, the slot Continue then loads),
+    and the dialog says "Your game will be saved to the auto save first." The player's spot is already stored: the
+    world map's `leave()` calls `storePos()` when the menu opens. The plane picker saves before it writes the new plane
+    into the settings, so the save lands in the game's own plane.
+  - **A game that cannot be saved** - inside a town or dungeon map (the main menu's own Save rule, `StartScene.enter`),
+    or saving off after a failed load (`WorldSave.isSaveBlocked`) - gets the warning "Unsaved progress since your last
+    save will be lost." in the dialog.
+  - **No game loaded** (Settings from the start menu before Continue) - the plain question, nothing to lose.
+  - **A save that fails** stops the restart and asks again: "The game could not be saved. Restart anyway? Unsaved
+    progress since your last save will be lost."
+  - `restartDialog` is built each time now (its text depends on the game's state), not cached.
+- **Log** - `[TFR-Restart] saved before restart (auto save)`, `[TFR-Restart] no save possible: <no game loaded | inside
+  a map (<place>) | saving is off after a failed load | the auto save failed - asking again>`, `[TFR-Restart] restarting
+  without a save (the player chose to)`.
+- **Not changed** - `Forge.restart` itself (round 974's file); Classic's `SettingsPage` and `FSkin` restarts (Classic
+  is off since round 945). A duel cannot reach Settings: the adventure Settings opens from the main menu only, and the
+  menu opens from the world map or a map.
+- **Tested** - in the agent game (Maven compile of `forge-gui-mobile` exit 0; the class run ahead of the agent jar): a won duel (gold 494 -> 533, shards 17 -> 18) plus a 1,000-gold marker, then Settings > Allow digital-only cards > the dialog said "Your game will be saved to the auto save first." > Restart > Continue: 1,533 gold, 18 shards, the spot of the duel (309,348); log `[TFR-Restart] saved before restart (auto save)`. Inside Orazca (entered at 1,693 gold) plus a 500-gold marker: the dialog said "Unsaved progress since your last save will be lost." > Restart > Continue: 1,693 gold, as warned; log `[TFR-Restart] no save possible: inside a map (Orazca)`. Duels at 50x (`settle`). Not run: the failed-save branch and the plane picker (same path, not exercised).
+
 ## Round 971: a duel result can no longer land on another map or enemy, and a town keeps its shop types (2026-11-05)
 
 - **Why** - the Fable review `C:\CLAUDE\PROJECTS\TFR1\notes\fable-review-2026-11-02.md`, P2-9 and P2-11 ("results that a

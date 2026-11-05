@@ -9,9 +9,11 @@ import com.github.tommyettinger.textra.TextraLabel;
 import forge.Forge;
 import forge.Graphics;
 import forge.adventure.data.RewardData;
+import forge.adventure.pointofintrest.PointOfInterest;
 import forge.adventure.util.AdventureBackgroundDownloader;
 import forge.adventure.util.Config;
 import forge.adventure.util.Controls;
+import forge.adventure.world.WorldSave;
 import forge.assets.FSkinTexture;
 import forge.assets.ImageCache;
 import forge.gui.GuiBase;
@@ -133,18 +135,20 @@ public class SettingsScene extends UIScene {
                 Localizer localizer = Forge.getLocalizer();
                 // Round 755: Restart / Cancel, not OK / Abort (the exit dialog's style, round 754).
                 showDialog(createGenericDialog("",
-                        localizer.getMessage("lblAreYouSureYouWishRestartForge"),
+                        restartQuestion(), // round 975: says whether the game is saved first
                         localizer.getMessage("lblRestart"),
                         localizer.getMessage("lblCancel"), () -> {
-                            Config.instance().getSettingData().plane = selected;
-                            Config.instance().saveSettings();
-                            // Round 222 (upstream da6148f71eb, adventure localization): the plane's
-                            // language bundle follows the plane. Upstream reloads it from the
-                            // combobox callback; ours is a no-op there (2026-08-29 fix) and persists
-                            // only here, so the reload lives here too - the restart reloads it anyway.
-                            Forge.getLocalizer().loadAdventureBundle(Config.instance().getPlanePath(selected) + "languages/");
-                            Forge.restart(true);
                             removeDialog();
+                            // Round 975: the save goes first, while the settings still name the game's own plane.
+                            restartAfterSave(() -> {
+                                Config.instance().getSettingData().plane = selected;
+                                Config.instance().saveSettings();
+                                // Round 222 (upstream da6148f71eb, adventure localization): the plane's
+                                // language bundle follows the plane. Upstream reloads it from the
+                                // combobox callback; ours is a no-op there (2026-08-29 fix) and persists
+                                // only here, so the reload lives here too - the restart reloads it anyway.
+                                Forge.getLocalizer().loadAdventureBundle(Config.instance().getPlanePath(selected) + "languages/");
+                            });
                         }, () -> {
                             plane.setSelected(originalPlane);
                             removeDialog();
@@ -901,16 +905,78 @@ public class SettingsScene extends UIScene {
 
     private void restartForge() {
         Localizer localizer = Forge.getLocalizer();
-        if (restartDialog == null) {
-            restartDialog = createGenericDialog("",
-                    localizer.getMessage("lblAreYouSureYouWishRestartForge"),
-                    localizer.getMessage("lblRestart"), // round 755: Restart / Cancel
-                    localizer.getMessage("lblCancel"), () -> {
-                        Forge.restart(true);
-                        removeDialog();
-                    }, this::removeDialog);
-        }
+        // Round 975: built each time - its text says whether the game is saved first (see restartSaveBlocker).
+        restartDialog = createGenericDialog("", restartQuestion(),
+                localizer.getMessage("lblRestart"), // round 755: Restart / Cancel
+                localizer.getMessage("lblCancel"), () -> {
+                    removeDialog();
+                    restartAfterSave(null);
+                }, this::removeDialog);
         showDialog(restartDialog);
+    }
+
+    /**
+     * Round 975 (the 1.26 RC's P2-c): Restart used to throw away everything since the last save - a won duel's payout
+     * among it, since Continue loads that save. Settings is opened from the main menu only, so a loaded game is on the
+     * world map or inside a map (town, dungeon); this answers like the main menu's Save button (StartScene.enter):
+     * null when the game can be saved now, the reason when it cannot, "" when no game is loaded (nothing to lose).
+     */
+    private static String restartSaveBlocker() {
+        WorldSave save = WorldSave.getCurrentSave();
+        if (save == null || save.getWorld() == null || save.getWorld().getData() == null)
+            return "";
+        if (WorldSave.isSaveBlocked())
+            return "saving is off after a failed load";
+        if (TileMapScene.instance().currentMap().isInMap()) {
+            PointOfInterest place = TileMapScene.instance().rootPoint;
+            return "inside a map (" + (place == null ? "?" : place.getDisplayName()) + ")";
+        }
+        return null;
+    }
+
+    /** Round 975: the restart question, with what happens to the game in progress. */
+    private static String restartQuestion() {
+        String question = Forge.getLocalizer().getMessage("lblAreYouSureYouWishRestartForge");
+        String blocker = restartSaveBlocker();
+        if (blocker == null)
+            return question + "\n\nYour game will be saved to the auto save first.";
+        if (blocker.isEmpty())
+            return question;
+        return question + "\n\nUnsaved progress since your last save will be lost.";
+    }
+
+    /**
+     * Round 975: saves the game in progress to the auto save (Continue's slot from then on) when it can be saved, then
+     * runs beforeRestart (the plane picker's settings write) and restarts. A save that fails stops the restart and asks
+     * again, with the loss spelled out.
+     */
+    private void restartAfterSave(Runnable beforeRestart) {
+        String blocker = restartSaveBlocker();
+        if (blocker == null) {
+            if (WorldSave.getCurrentSave().autoSave()) {
+                System.out.println("[TFR-Restart] saved before restart (auto save)");
+            } else {
+                System.err.println("[TFR-Restart] no save possible: the auto save failed - asking again");
+                Localizer localizer = Forge.getLocalizer();
+                showDialog(createGenericDialog("",
+                        "The game could not be saved.\n\nRestart anyway? Unsaved progress since your last save will be lost.",
+                        localizer.getMessage("lblRestart"), localizer.getMessage("lblCancel"), () -> {
+                            removeDialog();
+                            System.out.println("[TFR-Restart] restarting without a save (the player chose to)");
+                            restartNow(beforeRestart);
+                        }, this::removeDialog));
+                return;
+            }
+        } else {
+            System.out.println("[TFR-Restart] no save possible: " + (blocker.isEmpty() ? "no game loaded" : blocker));
+        }
+        restartNow(beforeRestart);
+    }
+
+    private static void restartNow(Runnable beforeRestart) {
+        if (beforeRestart != null)
+            beforeRestart.run();
+        Forge.restart(true);
     }
 
     private static SettingsScene object;
