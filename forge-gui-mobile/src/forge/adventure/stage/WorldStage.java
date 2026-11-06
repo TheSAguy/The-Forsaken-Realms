@@ -2627,10 +2627,13 @@ public class WorldStage extends GameStage implements SaveFileContent {
      * position into the save's data only on a scene leave (or F5, which calls storePos() first) - so the autosave before
      * a duel or a door recorded wherever the player last LEFT the world map, and loading it put them back there, far
      * from where they were. Found while tracing the agent bridge's load-from-the-world-map ocean bug.
+     * Round 981: and its picture is this spot too. The auto save never asked for one, so it carried the last menu or
+     * inventory capture, from wherever that was. Every caller runs before the next scene is drawn.
      */
     private void autoSaveHere() {
         if (player != null)
             player.storePos();
+        WorldSave.requestPreview();
         WorldSave.getCurrentSave().autoSave();
     }
 

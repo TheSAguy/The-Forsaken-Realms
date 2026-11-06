@@ -16,6 +16,7 @@ import forge.adventure.util.*;
 import forge.card.CardEdition;
 import forge.card.ColorSet;
 import forge.deck.Deck;
+import forge.gui.GuiBase;
 import forge.localinstance.properties.ForgeConstants;
 import forge.player.GamePlayerUtil;
 
@@ -1081,6 +1082,7 @@ public class WorldSave {
             firstCapture = false;
             // init once
             currentSave.header.createPreview();
+            System.out.println("[TFR-Preview] first capture (" + sceneName() + ")"); // TFR round 981
             return;
         }
 
@@ -1091,12 +1093,30 @@ public class WorldSave {
 
         // Update the timestamp immediately to lock out parallel thread spam on the spot
         lastPreviewTimestamp = currentTimestamp;
+        // TFR round 981 (Discord, Nova: "the preview image of each save file is the save menu"): every caller asks for
+        // the picture and then switches scene in the same frame (openMenu, openInventory, F5, Forge.switchScene). A
+        // posted capture runs after that frame has drawn the new scene and swapped (LWJGL3 runs app runnables after
+        // Lwjgl3Window.update), and a back buffer after a swap is undefined: a flip driver hands back an older frame
+        // (the world - the user's AMD), a copy-on-swap driver the frame just drawn (the menu). F5 also saved before
+        // the posted capture ran, so a quick save carried the previous picture. On the GL thread the capture is taken
+        // now, before the new scene is drawn anywhere - as the session's first capture always was. Posted only off it.
+        if (GuiBase.getInterface() != null && GuiBase.getInterface().isGuiThread()) {
+            currentSave.header.createPreview();
+            System.out.println("[TFR-Preview] captured now (" + sceneName() + ")");
+            return;
+        }
+        System.out.println("[TFR-Preview] posted - off the GL thread (" + sceneName() + ")");
         Gdx.app.postRunnable(new Runnable() {
             @Override
             public void run() {
                 currentSave.header.createPreview();
             }
         });
+    }
+
+    /** TFR round 981: the scene on screen when a preview was asked for, for the [TFR-Preview] line. */
+    private static String sceneName() {
+        return Forge.getCurrentScene() == null ? "no scene" : Forge.getCurrentScene().getClass().getSimpleName();
     }
 
     public static void dispose() {

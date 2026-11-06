@@ -14264,6 +14264,39 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 981: a save's picture is the game again, not the menu (2026-11-06)
+
+- **Why** - Nova on Discord (1.27): "Whenever you save, since I think 1.25 the preview image of each save file is the
+  save menu so you can't differentiate the saves by image alone." Diagnosis: `C:\CLAUDE\PROJECTS\TFR1\notes\nova-1106.md`.
+  - Every caller of `WorldSave.requestPreview()` (`openMenu`, `openInventory`, F5, `Forge.switchScene`) asks for the
+    picture and then switches scene in the same frame.
+  - Upstream's "fix preview spam" (`647b5eac951`, in TFR since 1.16) posted every capture after a session's first one
+    through `Gdx.app.postRunnable`.
+  - LWJGL3 runs app runnables after `Lwjgl3Window.update()` has rendered the new scene and swapped (checked with
+    `javap` on gdx-backend-lwjgl3 1.14.2). A back buffer after a swap is undefined: a flip driver hands back an older
+    frame (the world), a copy-on-swap driver the frame just drawn (the menu).
+  - The user's nine saves (read only, PNG lifted from each header) all show the world. Their AMD RX 7900 XTX flips,
+    which is why the user never saw it.
+  - F5 saved before its posted capture ran, so a quick save carried the previous picture. The auto save never asked
+    for one.
+- **The fix** - `requestPreview()` captures at once on the GL thread (`GuiBase.getInterface().isGuiThread()`), before
+  the next scene is drawn anywhere. That was always the case for the session's first capture.
+  - A call off the GL thread still posts. The 800 ms cooldown stays.
+  - `Adventure.render()` draws the scene and then acts it, so a capture asked from `act()` (a reward screen opened by
+    a map pause) reads the frame just drawn, not a cleared one.
+  - `WorldStage.autoSaveHere()` asks for a picture first, so the auto save shows where it was made.
+- **Log** - `[TFR-Preview] first capture (<scene>)` / `captured now (<scene>)` / `posted - off the GL thread (<scene>)`.
+- **Agent check** (same GPU as the user, so no menu picture to begin with; checks there's no regression):
+  - Esc then Save to slot 5: the world, not the menu.
+  - Walked about 5 tiles, then F5: the quick save shows the new spot and matches the live shot. Before, it would have
+    carried the slot 5 picture.
+  - Every capture logged `captured now (GameScene)` or `(TileMapScene)`, none posted.
+  - The loot screen's blurred backdrop (`Forge.lastPreview`, the same capture) is the cave.
+- **Not verified** - a copy-on-swap driver (NVIDIA or Intel windowed, likely Nova's). The fix doesn't depend on the
+  driver, but only Nova can confirm it. Android runs posted runnables at the start of the next frame; the immediate
+  capture is the same as its first capture always was.
+- **Upstream** - a stock bug, worth reporting to Card-Forge/forge (none filed).
+
 ## Round 980: 1.27 released (2026-11-05)
 
 - **Published** 2026-11-06 00:50:32 UTC (11.05 Pacific) on the user's call ("You have approval to post the release to

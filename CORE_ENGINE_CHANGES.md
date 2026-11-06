@@ -35,6 +35,16 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 981 - the save preview is captured before the next scene is drawn
+- `forge-gui-mobile/src/forge/adventure/world/WorldSave.java` (STOCK): `requestPreview()` (upstream `647b5eac951`, "fix
+  preview spam") captures at once when `GuiBase.getInterface().isGuiThread()`. It posts the capture only from another
+  thread. The cooldown and `firstCapture` are kept, and each capture logs `[TFR-Preview]` (new private `sceneName()`).
+  Upstream's posted capture ran after the frame that drew the next scene had swapped, and read an undefined back buffer
+  (the menu on a copy-on-swap driver). **Upstream:** a stock bug worth reporting. At a merge, keep the immediate capture
+  unless upstream moved the capture before the scene switch itself.
+- `forge-gui-mobile/src/forge/adventure/stage/WorldStage.java` (STOCK): `autoSaveHere()` (TFR's, round 383) calls
+  `WorldSave.requestPreview()` before `autoSave()`.
+
 ### Round 978 - the engine to the 11.05 daily (upstream `1e8c35fca3e`)
 - `forge-gui-mobile/src/forge/adventure/scene/InventoryScene.java` (STOCK): a text conflict with #12687 (`1f8a571cabc`,
   upstream's own fix for descriptions overflowing the box). Took upstream's padded `itemDescriptionPane`,
