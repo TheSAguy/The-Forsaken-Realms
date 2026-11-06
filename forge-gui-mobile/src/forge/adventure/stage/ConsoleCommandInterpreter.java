@@ -628,6 +628,10 @@ public class ConsoleCommandInterpreter {
             // this guard since round 383b.
             if (Forge.getCurrentScene() instanceof forge.adventure.scene.DuelScene)
                 return "Not during a duel.";
+            // Round 982 (r127-test P3-1): nor while a duel result is still being booked (round 971's window) - leaving
+            // then exited the map with the win counted and the loot screen never shown. A cheat, so no chase check.
+            if (MapStage.getInstance().refusedForPendingResult("the console's leave"))
+                return "Not until the duel result is booked.";
             MapStage.getInstance().exitDungeon(false, false);
             return "Got out";
         });

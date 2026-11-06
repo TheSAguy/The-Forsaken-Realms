@@ -199,6 +199,13 @@ final class AgentActions {
         if (!MapStage.getInstance().isInMap()) return now(false, "not inside a map");
         // Round 448: the console's leave closed the game mid-duel; the bridge's own leave takes the same guard.
         if (Forge.getCurrentScene() instanceof DuelScene) return now(false, "not during a duel");
+        // Round 982 (r127-test P3-1): the player's exit rules, so an agent test sees what a player gets - not while a
+        // duel result is being booked (round 971), not while an enemy chases (round 724, held through a freeze).
+        if (MapStage.getInstance().refusedForPendingResult("the bridge's leave"))
+            return now(false, "not until the duel result is booked");
+        forge.adventure.character.EnemySprite chasing = MapStage.getInstance().getChasingEnemy();
+        if (chasing != null)
+            return now(false, "not while " + chasing.getName() + " #" + chasing.getId() + " is chasing");
         walker.cancel("leaving");
         MapStage.getInstance().exitDungeon(false, false);
         return now(true, "leaving the map");

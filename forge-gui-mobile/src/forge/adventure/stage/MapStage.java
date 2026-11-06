@@ -582,14 +582,75 @@ public class MapStage extends GameStage {
 
     /** Round 724: the enemy of this map chasing the player now, or null. */
     public EnemySprite getChasingEnemy() {
-        if (chaser == null || !isInMap)
+        if (!isInMap)
             return null;
-        if (com.badlogic.gdx.utils.TimeUtils.timeSinceMillis(chaserSeenAt) > CHASE_GRACE_MS || !chaser.aggro
-                || chaser.inactive || chaser.isFrozen() || !enemies.contains(chaser)) {
+        boolean held = noteHold();
+        if (chaser != null && !stillChasing(chaser))
+            chaser = null;
+        // Round 982 (Discord, Nova: "Whenever you open a card pack or a chest with cards in them everything stops and
+        // you f4 to disengage"): a pickup, a map dialog and a won duel freeze every enemy until the player moves
+        // (freezeAllEnemyBehaviors), and onActing() returns before the enemy loop that stamps chaserSeenAt - so the
+        // 500 ms grace ran out while the chaser stood frozen with its aggro, and F4 opened for as long as the player
+        // stood still. The grace clock now counts only while the enemies can act: a chase held through a freeze, a
+        // pause, a dialog or a scene away ends when it would have ended live. Losing the duel to the chaser still frees
+        // the player (isFrozen() in stillChasing), and nobody chasing still means F4 is free (round 724).
+        // The field holds one chaser: when two chase and the duel takes the one on record, the other - frozen by the
+        // win - never steers again to be recorded (agent test: F4 opened beside a frozen Chainbound Skeleton after
+        // beating Mark Le Pine). So in a hold, any enemy that was chasing when the hold began counts.
+        if (chaser == null && held)
+            chaser = chaserAtHold();
+        if (chaser == null)
+            return null;
+        if (held) {
+            chaserSeenAt = com.badlogic.gdx.utils.TimeUtils.millis();
+            if (chaseHeldLogged != chaser) {
+                chaseHeldLogged = chaser;
+                System.out.println("[TFR-Escape] chase held through the freeze: " + chaser.getName() + " #"
+                        + chaser.getId() + " in " + loadedMapName);
+            }
+            return chaser;
+        }
+        chaseHeldLogged = null;
+        if (com.badlogic.gdx.utils.TimeUtils.timeSinceMillis(chaserSeenAt) > CHASE_GRACE_MS) {
             chaser = null;
             return null;
         }
         return chaser;
+    }
+
+    private EnemySprite chaseHeldLogged; // round 982: one [TFR-Escape] "held" line per freeze
+    private final java.util.Map<EnemySprite, Long> chaseSeen = new java.util.HashMap<>(); // round 982: when each enemy last chased
+    private long heldSince = -1L; // round 982: when the current hold began, -1 while the enemies can act
+
+    /** Round 982: the map's enemies cannot move right now - the same holds onActing() returns early for. */
+    private boolean enemiesHeld() {
+        return freezeAllEnemyBehaviors || isPaused() || isDialogOnlyInput() || Forge.advFreezePlayerControls
+                || Forge.getCurrentScene() != forge.adventure.scene.TileMapScene.instance();
+    }
+
+    /** Round 982: enemiesHeld(), and stamps the moment a hold begins (onActing and getChasingEnemy both call it). */
+    private boolean noteHold() {
+        boolean held = enemiesHeld();
+        if (!held)
+            heldSince = -1L;
+        else if (heldSince < 0)
+            heldSince = com.badlogic.gdx.utils.TimeUtils.millis();
+        return held;
+    }
+
+    private boolean stillChasing(EnemySprite mob) {
+        return mob.aggro && !mob.inactive && !mob.isFrozen() && enemies.contains(mob);
+    }
+
+    /** Round 982: an enemy that was chasing (steered at the player) within the grace before the hold began, or null. */
+    private EnemySprite chaserAtHold() {
+        if (heldSince < 0)
+            return null;
+        for (java.util.Map.Entry<EnemySprite, Long> e : chaseSeen.entrySet()) {
+            if (heldSince - e.getValue() <= CHASE_GRACE_MS && stillChasing(e.getKey()))
+                return e.getKey();
+        }
+        return null;
     }
 
     // Round 971 (Fable P2-9): the enemy whose duel result is still being played out - set by setWinner, cleared when its
@@ -637,6 +698,7 @@ public class MapStage extends GameStage {
         currentMap = null;
         preventEscape = false;
         chaser = null; // round 724
+        chaseSeen.clear(); // round 982
         GameHUD.getInstance().showHideMap(true);
     }
 
@@ -905,6 +967,7 @@ public class MapStage extends GameStage {
         // Round 725: no TFR map sets preventEscape any more (stock planes' maps still do); see GameHUD.escapeLocked().
         loadedMapName = targetMap;
         chaser = null;
+        chaseSeen.clear(); // round 982
         GameHUD.getInstance().refreshEscapeButtons();
 
         if (MP.get("music") != null && !MP.get("music").toString().isEmpty()) {
@@ -1370,6 +1433,12 @@ public class MapStage extends GameStage {
             if (mob.guardedRewardId != rewardId)
                 continue;
             mob.enrageOverStolenLoot(huntRange, targetSpeed);
+            // Round 982: the hunt is a chase from this moment. The pickup's own freeze stops the guard before it can
+            // steer, and round 724 counted only an enemy that had steered - so F4 was open the moment the loot was
+            // taken, the exact escape Nova described ("open a card pack or a chest ... and you f4").
+            chaser = mob;
+            chaserSeenAt = com.badlogic.gdx.utils.TimeUtils.millis();
+            chaseSeen.put(mob, chaserSeenAt);
             System.out.println("[TFR-BoosterGuard] " + mob.getName() + " saw its loot (object " + rewardId
                     + ") taken - abandoning its post and hunting the player across the map at speed "
                     + mob.speed());
@@ -2890,6 +2959,7 @@ public class MapStage extends GameStage {
 
     @Override
     protected void onActing(float delta) {
+        noteHold(); // round 982: the moment a hold begins, for getChasingEnemy()
         if (isPaused() || isDialogOnlyInput() || Forge.advFreezePlayerControls || isPlayerLeavingDungeon)
             return;
 
@@ -2975,6 +3045,7 @@ public class MapStage extends GameStage {
                 if (mob.aggro) { // round 724: see getChasingEnemy()
                     chaser = mob;
                     chaserSeenAt = com.badlogic.gdx.utils.TimeUtils.millis();
+                    chaseSeen.put(mob, chaserSeenAt); // round 982
                 }
             }
         }

@@ -14264,6 +14264,50 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 982: F4 stays locked after taking loot while chased, or robbing a guard (2026-11-06)
+
+- **Why** - Nova on Discord (1.27): "You also can still use the run f4 method to cheat around having to fight enemies
+  in a dungeon. Whenever you open a card pack or a chest with cards in them everything stops and you f4 to disengage
+  from the dungeon again." Diagnosis: `C:\CLAUDE\PROJECTS\TFR1\notes\nova-1106.md`.
+  - The rule (round 724/725, the user's) is unchanged: F4 is free when nobody chases you and locked while an enemy
+    does.
+  - The lock read `MapStage.getChasingEnemy()`, which forgot the chaser 500 ms after it last steered.
+  - A pickup, a map dialog or a won duel freezes every enemy until the player moves (`freezeAllEnemyBehaviors`), and
+    `onActing()` returns before the enemy loop that refreshes the chase. So the lock lapsed half a second into
+    "everything stops" and stayed open for as long as the player stood still.
+  - Two more holes turned up in the agent test:
+    - **A second chaser after a win.** The field holds one chaser. When two chased and the duel took the one on
+      record, the other, frozen by the win, was never recorded. F4 opened beside a frozen Chainbound Skeleton after
+      beating Mark Le Pine.
+    - **A robbed guard.** Taking guarded loot enrages its guard (round 280: aggro, a map-wide hunt), but the pickup's
+      own freeze stops it before it ever steers. On the round's first build, F4 opened at 0, 3 and 10 s beside the
+      enraged Grave-Tattered Bride (`[TFR-BoosterGuard] ... saw its loot (object 9) taken`). This is most likely
+      Nova's exact case: "a card pack or a chest".
+- **The user's idea** ("add a tiny pause after picking up a card/any loot, to let the creatures register it was taken")
+  and a loot-scene guard were both weighed in the note. Neither closes it: the window isn't a race after the pickup,
+  it lasts until the player steps. The fix is state, not time.
+- **The fix** (`MapStage`):
+  - While the enemies can't act (`enemiesHeld()`: the freeze, a pause, a dialog, frozen controls, another scene), the
+    chase grace doesn't run.
+  - In a hold, any enemy that chased within the grace before the hold began counts (`chaseSeen`, `chaserAtHold()`).
+  - `onRewardTaken()` makes an enraged guard the chaser at once.
+  - Losing the duel to the chaser still frees the player (`isFrozen()`), and the first step ends the freeze; the
+    live rule applies after that.
+- **P3-1 (r127-test)** - the console's `leave` refuses inside round 971's result window. The agent bridge's `leave`
+  also refuses then, and while an enemy chases, so agent tests see the player's rule.
+- **Log** - `[TFR-Escape] chase held through the freeze: <enemy> #<id> in <map>`, once per freeze. The existing
+  `[TFR-Escape] blocked: ... (exit)` and `[TFR-ResultWindow] the console's leave refused ...`.
+- **Agent check** (Gallows Cave, `cave_black_03.tmx`, duels at 50x):
+  - Took the Bride's guarded chest from 87 px away and closed the loot screen. F4 at 0, 3 and 10 s standing still:
+    refused each time (`blocked: Grave-Tattered Bride #14 chasing ... (exit)`). The HUD's F4 and bookmark icons show
+    the cross.
+  - Stepped off: she hunted me, and F4 mid-chase was refused.
+  - She caught me; the duel was won at 50x. Then F4 opened "Exit to the World Map?" with no enemy left on the map.
+  - P3-1, same setup: the bridge's `leave` answered "not while Grave-Tattered Bride #14 is chasing". The console's
+    `leave` fired the instant her duel returned to the map answered "Not until the duel result is booked." 4 s later
+    it answered "Got out".
+  - Unchanged and checked: F4 with nobody chasing (Mark walking back to his post) opens the exit dialog.
+
 ## Round 981: a save's picture is the game again, not the menu (2026-11-06)
 
 - **Why** - Nova on Discord (1.27): "Whenever you save, since I think 1.25 the preview image of each save file is the

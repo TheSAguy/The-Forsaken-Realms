@@ -35,6 +35,22 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 982 - a chase holds through a freeze; a robbed guard counts at once; the console's leave waits for a result
+- `forge-gui-mobile/src/forge/adventure/stage/MapStage.java` (STOCK; round 724's chase code and round 280's
+  `onRewardTaken` are TFR's):
+  - `getChasingEnemy()` drops a chaser that is no longer chasing (new private `stillChasing`: aggro, not inactive, not
+    `isFrozen()`, still on the map). While new private `enemiesHeld()` holds (`freezeAllEnemyBehaviors`, `isPaused()`,
+    `isDialogOnlyInput()`, `Forge.advFreezePlayerControls`, or another scene current), it re-stamps `chaserSeenAt`
+    instead of letting the 500 ms grace expire. It adopts any enemy that chased within the grace before the hold began
+    (new `chaseSeen` map, `heldSince`, `noteHold()`, `chaserAtHold()`), and logs `[TFR-Escape] chase held through the
+    freeze` once per freeze (`chaseHeldLogged`).
+  - `onActing()` calls `noteHold()` first and stamps `chaseSeen` beside `chaserSeenAt`.
+  - `onRewardTaken()` makes each enraged guard the chaser at once.
+  - `loadMap()` and `clearIsInMap()` clear `chaseSeen`.
+- `forge-gui-mobile/src/forge/adventure/stage/ConsoleCommandInterpreter.java` (STOCK): `leave` returns "Not until the
+  duel result is booked." while `refusedForPendingResult` (round 971) holds. It is a cheat, so there is no chase check.
+- TFR file: `agent/AgentActions.java` (`leave` also refuses while a result is pending or an enemy chases).
+
 ### Round 981 - the save preview is captured before the next scene is drawn
 - `forge-gui-mobile/src/forge/adventure/world/WorldSave.java` (STOCK): `requestPreview()` (upstream `647b5eac951`, "fix
   preview spam") captures at once when `GuiBase.getInterface().isGuiThread()`. It posts the capture only from another

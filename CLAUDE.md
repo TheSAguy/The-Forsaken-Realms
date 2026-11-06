@@ -11,10 +11,12 @@ every round built. If you find something missing, fix the docs rather than going
 the round detail in `MOD_CHANGELOG.md`). `modVersion` 1.27 / `modVersionDate` 11.05, Android `tfr.version` 1.27 /
 versionCode 12700, `RELEASE_NOTES_v1.27.md`, GUIDE's What's New in 1.27, the Discord FAQ at v1.27 (artifact v15;
 `EDITED`/`ADDED` reset by round 980). **Unreleased (for 1.28):** round 981 (a save's picture is captured before the
-next scene is drawn - Nova's "the preview image of each save file is the save menu"). Engine = the 11.05 daily (round 978, upstream `1e8c35fca3e`; round 769's R1-R4 still
+next scene is drawn - Nova's "the preview image of each save file is the save menu") and round 982 (F4 stays locked
+through a pickup's or a win's freeze and after robbing a guard; the console's and bridge's `leave` keep round 971's
+window - r127-test P3-1). Engine = the 11.05 daily (round 978, upstream `1e8c35fca3e`; round 769's R1-R4 still
 keep TFR's synchronous auto save, eager shops, Inn events and place entry; bosses keep the player's AI setting through
 `bossAiFollowsSetting`); next merge from upstream after `1e8c35fca3e` (its first commit is `f62f804806c`, #12695, five AI files and `MagicStack`); BASE_INSTALL is that daily, so packages need no
-`--allow-base-mismatch`. Next version: 1.28 / 12800. Next free round: 982. The agent profile's window is
+`--allow-base-mismatch`. Next version: 1.28 / 12800. Next free round: 983. The agent profile's window is
 1280x720 - at 3840x2160 it covered the screen, got minimized, and a minimized game stops (the bridge times out, shots
 come back 1x1). Agent games keep their own LOCALAPPDATA cache (round 860). Log sharing (round 698) posts to Discord
 through a webhook kept OUT of git in `C:\TFR\secrets\discord_log_webhook.txt` - never commit it; the packager and
