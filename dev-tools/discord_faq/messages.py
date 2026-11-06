@@ -6,11 +6,8 @@ FAQ_VERSION = "v1.27"
 # What this version changed, by message number: EDITED are edited in place in Discord, ADDED are new topics. Support
 # is always the last message: new topics go before it, and the user reposts Support at the end of the channel.
 # build_page.py tags them. Reset both at the next release.
-# 1.27 (round 938 reset them after 1.26; v1.26's own set was {1, 8, 10, 12, 14, 15, 17, 19, 23}, none ADDED): round 939
-# edited 9 (the mid-game Change level); round 950 edited 1 (the Xiaomi/MIUI background kill, a Q under Android rather
-# than a new message, so Support needn't be reposted); round 956 edited 13 (Sets: where the full ban list is); round 979
-# edited 1 (the v1.27 header) and 7 (the Bounty, round 943).
-EDITED = {1, 7, 9, 13}
+# 1.28: nothing changed yet (round 980 reset them after 1.27; v1.27's own set was {1, 7, 9, 13}, none ADDED).
+EDITED = set()
 ADDED = set()
 
 M = []

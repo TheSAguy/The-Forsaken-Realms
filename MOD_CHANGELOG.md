@@ -14264,6 +14264,20 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 980: 1.27 released (2026-11-05)
+
+- **Published** 2026-11-06 00:50:32 UTC (11.05 Pacific) on the user's call ("You have approval to post the release to
+  Github once done"): tag `tfr-v1.27` @ `bd22a89e6f8`, Latest, `main` pushed to `origin master` at `bd22a89e6f8`, with
+  the Windows zip (518.1 MB), the APK (15.9 MB, versionCode 12700, signer EE:60:39:25) and `assets.zip` (429.0 MB,
+  build.txt pair 2026-11-06 00:35:15); every size matches on GitHub, and the APK's `assets.zip` URL answers with the
+  full size. Before the push the unpushed history and the tree were checked for the log-sharing webhook (token and
+  `api/webhooks` URL) and the added lines for the private project names: none. Round 792's download prompts still fit.
+  Ledger: `docs/tfr/releases.md`.
+- **FAQ**: the copy-helper artifact is at v15 (the v1.27 page); `EDITED` and `ADDED` in
+  `dev-tools/discord_faq/messages.py` are empty sets again, v1.27's set kept in the comment.
+- **Docs**: the v1.27 block in `docs/tfr/releases.md`; the NOW block is rewritten short (rounds 939-979 now released;
+  their detail stays in this file). Next version 1.28 / 12800. No code change, no build.
+
 ## Round 979: the version is 1.27, with its release notes, guide, FAQ and posts (2026-11-05)
 
 Step 3's docs half of the 1.27 release the user called ("Let's move forward with the 1.27 release"; "Yes, start now"),

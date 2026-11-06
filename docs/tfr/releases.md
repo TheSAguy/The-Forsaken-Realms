@@ -115,3 +115,22 @@ What's New 1.26 above "Coming from 1.24?". The Discord FAQ says v1.26 (round 936
 checked absent from git before the push. Live was packaged from the tag commit (`PACKAGE_OK.txt` verified). The user
 dropped the itch.io step for this release. NOTHING is unreleased. Next version: 1.27 / 12700. Next merge from upstream
 after `5a09fa8cc5d`.
+
+## STATE 2026-11-06 (00:50 UTC): **v1.27 "Bounties & Gold" RELEASED** - tag `tfr-v1.27` @ `bd22a89e6f8`,
+published 00:50:32 UTC (2026-11-05 16:50 Pacific), Latest. Rounds 939-979 on top of v1.26; `main` was pushed at
+`bd22a89e6f8` (the tag commit; round 980's ledger follow-up after it). Engine = the 11.05 daily (upstream `1e8c35fca3e`,
+round 978) on the matching BASE_INSTALL. Assets in `C:\CLAUDE\PROJECTS\TFR1\release\v1.27`, each checked on GitHub at
+its exact byte size:
+- `The-Forsaken-Realms-v1.27.zip` 518.1 MB (518,073,767 bytes; +51 MB of music from round 957, -29 MB of Classic-only
+  files from round 946);
+- `forsaken-realms-1.27-signed-aligned.apk` 15.9 MB (15,880,044 bytes; com.thesaguy.forsakenrealms, versionCode 12700,
+  signer EE:60:39:25);
+- `assets.zip` 429.0 MB (428,979,497 bytes; build.txt pair 2026-11-06 00:35:15, one `mvn` run in `C:\TFR-build` via R:;
+  carries `log_share.txt`, no `pc_*.ogg`, no Classic-only files). Round 792's prompts ("430MB" / "16MB") still fit, so
+  unchanged; the APK's download URL `releases/download/tfr-v1.27/assets.zip` answers with the full size.
+
+Notes = `RELEASE_NOTES_v1.27.md` (title "The Forsaken Realms v1.27 — Bounties & Gold", 1.26's form). GUIDE What's New
+1.27. The Discord FAQ says v1.27 (round 979; `EDITED` {1, 7, 9, 13}, nothing new; artifact v15). The webhook token
+and the private project names were checked absent from the unpushed history and the tree before the push. Live was
+packaged from the tag commit (`PACKAGE_OK.txt` verified). No itch.io upload by the session; the user posts the zip and
+APK. NOTHING is unreleased. Next version: 1.28 / 12800. Next merge from upstream after `1e8c35fca3e`.
