@@ -14264,6 +14264,58 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 983: an incomplete deck sits out its duels, and an ante card you never owned costs nothing (2026-11-06)
+
+- **Why** - log review `C:\CLAUDE\PROJECTS\TFR1\notes\logs-1106b.md` P2-1 (4fb442f9, 1.27, Android). The player left
+  the deck list with an empty slot selected and met a Phyrexian Wanderer 15 s later. Stock code padded the deck with
+  40 placeholder Wastes, and the player conceded at turn 0. The ante then took a Wastes the player never owned:
+  `[TFR-AnteLoss] Wastes left the collection (-1 left) and ...` against all 10 decks. With 0 copies owned,
+  `leftInPool` was -1, so every deck got a removal on record. Round 580's restore would have added a Wastes to each
+  of those decks (the empty slots too) and to the collection on a Buy Back or a Bronze Coin. The user approved
+  fixing both causes in one round ("Yes, build it").
+- **Part 1, the ante** (`AdventurePlayer.removeLostCardFromPools`):
+  - With 0 copies in the collection, the method touches no deck and no collection count. It returns a no-op removal
+    (new `LostCardRemoval.notOwned`), so a restore adds nothing.
+  - The per-deck count moved into `anteDeckRemovals(owned, inDeck)`. It is never negative, and it is all zeros when
+    nothing is owned. A unit test covers it: `forge-gui-mobile/test/forge/adventure/player/AnteDeckRemovalsTest.java`.
+  - `DuelScene` drops a not-owned card from the ante's lost list. So there is no "Card Lost" popup for it, no Buy Back
+    charge and no Bronze Coin offer: nothing left the collection, so nothing can be bought back. If it was the only
+    lost card, the duel ends like a no-ante loss. The defeat itself (Notoriety, the gold penalty) still counts.
+  - Owned cards work as before.
+- **Part 2, the cause**:
+  - **A warning on leaving the deck list** (`DeckSelectScene.back()`): when the selected deck is under the duel
+    minimum, an "Incomplete Deck" dialog names the deck the duels will use, or says the duels will fill the rest with
+    Wastes when no deck is complete. Its buttons are Leave and Stay. The non-event deck editor is reached only
+    through this list, so this is the one gate back to the map. The stock editor still skips its own warning for an
+    empty deck.
+  - **A fallback at duel start** (`DuelScene.initDuels`): a selected deck under the minimum sits out. The duel uses
+    the last deck that started a duel at full size (`AdventurePlayer.duelFallbackDeck()`, held by reference and not
+    saved), else the first legal deck in slot order. The selection is not changed. A HUD notice says
+    "<deck> has N of 40 cards, so you fought with <other>". A Doppelganger copies the deck that plays.
+  - **Not changed:** Inn tournament decks (`eventData`), the Deck Tester's chosen decks (`fixedDeck`) and AI-seat fights
+    (a guard's own deck replaces this one). Stock padding stays as the last resort when no deck is legal.
+  - The minimum is `duelMinDeckSize()`: config `minDeckSize`, or Commander's range in Commander mode. It is 0 in dev
+    mode without "enforce deck legality", the same switch `applyAdventureDeckRules` honors.
+- **Log** - `[TFR-AnteLoss] <card> is not in the collection ... nothing to buy back`, `[TFR-DeckFallback]` (on leaving
+  the list, and at duel start with the deck used or "it gets padded"), and
+  `[TFR-DeckPad] N placeholder Wastes added to "<deck>" (size of min)` wherever padding still happens.
+- **Agent check** (fresh New Game, Blue Starter 50 cards plus 9 empty slots; every duel at 50x, `duel speed set to 50x`):
+  - Selected the empty slot 4 and pressed Back on the deck list. "Incomplete Deck": `"Empty Deck" has 0 of the 40
+    cards a duel needs. Until it has 40, you will fight with "Blue Starter".` Chose Leave.
+  - A spawned Demon of Tibalt (Archmage): `[TFR-DeckFallback] "Empty Deck" (slot 4) has 0 of 40 cards - fighting with
+    "Blue Starter" instead`. It was lost (16 turns).
+  - That loss also checked the normal ante. `Wingspan Mentor left the collection (0 left) and Blue Starter Main x1`,
+    and the collection and the deck went from 50 to 49. Buy Back for 113 gold, then
+    `[TFR-AnteRestore] Wingspan Mentor back in the collection and Blue Starter Main x1`, and both were back at 50. The
+    selected empty deck stayed at 0.
+  - Cleared Blue Starter, so no deck was legal, and pressed Back: "No deck is complete, so duels fill the rest with
+    Wastes."
+  - The next Demon: `[TFR-DeckPad] 40 placeholder Wastes added to "Empty Deck" (0 of 40)`, then a loss, then
+    `[TFR-AnteLoss] Wastes is not in the collection ... no deck or collection change` and `lost=0`. There was no ante
+    popup, the collection stayed at 50, and every deck stayed empty.
+- **Not done** - the stock editor's own close warning (`AdventureDeckEditor.onClose` skips an empty deck) is left
+  alone: the deck list's warning covers that exit.
+
 ## Round 982: F4 stays locked after taking loot while chased, or robbing a guard (2026-11-06)
 
 - **Why** - Nova on Discord (1.27): "You also can still use the run f4 method to cheat around having to fight enemies

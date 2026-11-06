@@ -35,6 +35,24 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 983 - an incomplete deck sits out its duels; a not-owned ante card changes nothing
+- `forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java` (STOCK; `LostCardRemoval` and `restoreLostCard`
+  are TFR's, round 580): `removeLostCardFromPools` returns `new LostCardRemoval(card, false, true)` (new field
+  `notOwned`) when the collection holds 0 copies, and takes its per-deck counts from the new static
+  `anteDeckRemovals` (never negative). Upstream's loop is otherwise the same. New: `duelMinDeckSize()`,
+  `duelDeckSize(Deck)`, `isDuelLegal(Deck)`, `noteLegalDuelDeck(Deck)`, `duelFallbackDeck()` and a transient
+  `lastLegalDuelDeck`, which is not saved and does not change the serialized form.
+- `forge-gui-mobile/src/forge/adventure/scene/DuelScene.java` (STOCK):
+  - `initDuels`: for the player's own duel (not `aiControlsPlayerSide`, no `fixedDeck`), a selected deck under
+    `duelMinDeckSize()` is swapped for `duelFallbackDeck()`. It shows a HUD notice and logs `[TFR-DeckFallback]`.
+  - New field `playerDeckName`, also set in `useGuardLoadout`.
+  - `applyAdventureDeckRules`: the stock `PLACEHOLDER_MAIN` padding logs `[TFR-DeckPad]`.
+  - `GameEnd`'s ante loop drops a `notOwned` card from `anteResult.lostCards` instead of queuing it in `anteRemovals`.
+  - **At a merge:** keep the fallback ahead of `applyAdventureDeckRules`, even if upstream reworks the padding.
+- `forge-gui-mobile/src/forge/adventure/scene/DeckSelectScene.java` (STOCK): new `back()` override that shows an
+  "Incomplete Deck" Leave/Stay dialog when the selected deck is under the duel minimum (`[TFR-DeckFallback]`).
+- New test file: `forge-gui-mobile/test/forge/adventure/player/AnteDeckRemovalsTest.java`.
+
 ### Round 982 - a chase holds through a freeze; a robbed guard counts at once; the console's leave waits for a result
 - `forge-gui-mobile/src/forge/adventure/stage/MapStage.java` (STOCK; round 724's chase code and round 280's
   `onRewardTaken` are TFR's):

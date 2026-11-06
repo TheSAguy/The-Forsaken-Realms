@@ -240,6 +240,33 @@ public class DeckSelectScene extends UIScene {
     }
 
 
+    /**
+     * Round 983 (logs-1106b P2-1): a player left this list with an empty slot selected, met an enemy 15 seconds later
+     * and found a hand of placeholder Wastes. Leaving with a deck under the duel minimum now says what the next duel
+     * will do (DuelScene.initDuels fights with the last legal deck, or pads when there is none) and offers to stay.
+     */
+    @Override
+    public boolean back() {
+        AdventurePlayer player = Current.player();
+        forge.deck.Deck selected = player.getSelectedDeck();
+        if (selected == null || player.isDuelLegal(selected))
+            return super.back();
+        int size = player.duelDeckSize(selected), min = player.duelMinDeckSize();
+        forge.deck.Deck fallback = player.duelFallbackDeck();
+        System.out.println("[TFR-DeckFallback] leaving the deck list with \"" + selected.getName() + "\" (slot "
+                + (player.getSelectedDeckIndex() + 1) + ", " + size + " of " + min + " cards) selected - warned, "
+                + (fallback == null ? "no legal deck" : "duels use \"" + fallback.getName() + "\""));
+        String text = "\"" + selected.getName() + "\" has " + size + " of the " + min + " cards a duel needs. "
+                + (fallback == null
+                ? "No deck is complete, so duels fill the rest with Wastes."
+                : "Until it has " + min + ", you will fight with \"" + fallback.getName() + "\".");
+        showDialog(createGenericDialog("Incomplete Deck", text, "Leave", "Stay", () -> {
+            removeDialog();
+            super.back();
+        }, this::removeDialog));
+        return true;
+    }
+
     private void rename() {
         String text = textInput.getText();
         Current.player().renameDeck(text);

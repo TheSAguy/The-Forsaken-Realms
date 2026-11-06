@@ -4772,13 +4772,20 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         public final PaperCard card;
         /** False for a plain basic land: the loss leaves the collection and the decks alone. */
         final boolean fromCollection;
+        /** Round 983: the collection held no copy (a placeholder Wastes from a padded deck) - nothing was lost. */
+        public final boolean notOwned;
         final List<Deck> decks = new ArrayList<>();
         final List<DeckSection> sections = new ArrayList<>();
         final List<Integer> counts = new ArrayList<>();
 
         LostCardRemoval(PaperCard card, boolean fromCollection) {
+            this(card, fromCollection, false);
+        }
+
+        LostCardRemoval(PaperCard card, boolean fromCollection, boolean notOwned) {
             this.card = card;
             this.fromCollection = fromCollection;
+            this.notOwned = notOwned;
         }
 
         void took(Deck deck, DeckSection section, int count) {
@@ -4802,13 +4809,26 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         if (card.isVeryBasicLand() && !card.isFoil()) {
             return new LostCardRemoval(card, false);
         }
+        int owned = Current.player().getCards().count(card);
+        // Round 983 (logs-1106b P2-1): an empty deck was padded with placeholder Wastes, and the ante took one. With
+        // no copy owned, leftInPool was -1 and the loss was recorded against every deck - a Buy Back or a Bronze
+        // Coin would then have added a Wastes to each of them and to the collection.
+        if (owned <= 0) {
+            System.out.println("[TFR-AnteLoss] " + card.getName() + " is not in the collection (a placeholder from a"
+                    + " padded deck?) - no deck or collection change, nothing to buy back");
+            return new LostCardRemoval(card, false, true);
+        }
         LostCardRemoval removal = new LostCardRemoval(card, true);
 
-        int leftInPool = Current.player().getCards().count(card) - 1;
+        int leftInPool = owned - 1;
+        int[] inDeck = new int[decks.size()];
+        for (int d = 0; d < inDeck.length; d++)
+            inDeck[d] = decks.get(d).count(card);
+        int[] plan = anteDeckRemovals(owned, inDeck);
 
-        for (final Deck deck : decks) {
-            int cntInDeck = deck.count(card);
-            int nToRemoveFromThisDeck = cntInDeck - leftInPool;
+        for (int d = 0; d < inDeck.length; d++) {
+            final Deck deck = decks.get(d);
+            int nToRemoveFromThisDeck = plan[d];
             if (nToRemoveFromThisDeck <= 0) {
                 continue;
             }
@@ -4840,6 +4860,72 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         System.out.println("[TFR-AnteLoss] " + card.getName() + " left the collection (" + leftInPool
                 + " left) and " + removal);
         return removal;
+    }
+
+    /**
+     * Round 983: how many copies of one lost ante copy leave each deck - every deck that would hold more copies than
+     * the collection keeps ({@code owned - 1}). Nothing when the collection held none: the card never was the player's.
+     */
+    static int[] anteDeckRemovals(int owned, int[] inDeck) {
+        int[] out = new int[inDeck.length];
+        if (owned <= 0)
+            return out;
+        int leftInPool = owned - 1;
+        for (int i = 0; i < inDeck.length; i++)
+            out[i] = Math.max(0, inDeck[i] - leftInPool);
+        return out;
+    }
+
+    /**
+     * Round 983 (logs-1106b P2-1): the smallest main deck a duel accepts in this save's format - the number
+     * DuelScene.applyAdventureDeckRules pads up to (Commander's range in Commander mode). 0 when deck rules are off
+     * (dev mode without "enforce deck legality"), where any deck goes.
+     */
+    public int duelMinDeckSize() {
+        if (forge.model.FModel.getPreferences().getPrefBoolean(forge.localinstance.properties.ForgePreferences.FPref.DEV_MODE_ENABLED)
+                && !forge.model.FModel.getPreferences().getPrefBoolean(forge.localinstance.properties.ForgePreferences.FPref.ENFORCE_DECK_LEGALITY))
+            return 0;
+        return isCommanderMode() ? forge.deck.DeckFormat.Commander.getMainRange().getMinimum()
+                : Config.instance().getConfigData().minDeckSize;
+    }
+
+    /** Round 983: the main deck size applyAdventureDeckRules counts - a partner commander counts toward the 99. */
+    public int duelDeckSize(Deck deck) {
+        if (deck == null)
+            return 0;
+        int size = deck.getMain().countAll();
+        if (isCommanderMode() && deck.has(DeckSection.Commander))
+            size += Math.max(0, deck.get(DeckSection.Commander).countAll() - 1);
+        return size;
+    }
+
+    public boolean isDuelLegal(Deck deck) {
+        return deck != null && duelDeckSize(deck) >= duelMinDeckSize();
+    }
+
+    /** Round 983: the last of the player's decks that started a duel at full size. Not saved - a reload falls back to
+     *  slot order. Held by reference, so it follows the deck when slots are copied or deleted. */
+    private transient Deck lastLegalDuelDeck;
+
+    public void noteLegalDuelDeck(Deck deck) {
+        lastLegalDuelDeck = deck;
+    }
+
+    /**
+     * Round 983: the deck a duel uses when the selected one is under {@link #duelMinDeckSize}: the last deck that
+     * started a duel, if it is still one of this save's decks and still legal, else the first legal deck in slot order.
+     * Null when no deck is legal - then the stock padding with placeholder Wastes stays the last resort.
+     */
+    public Deck duelFallbackDeck() {
+        if (lastLegalDuelDeck != null && lastLegalDuelDeck != deck && isDuelLegal(lastLegalDuelDeck)) {
+            for (Deck d : decks)
+                if (d == lastLegalDuelDeck)
+                    return d;
+        }
+        for (Deck d : decks)
+            if (d != deck && isDuelLegal(d))
+                return d;
+        return null;
     }
 
     /** Round 580: a recovered ante copy (Buy Back or Bronze Coin) goes back to the collection and to every deck section

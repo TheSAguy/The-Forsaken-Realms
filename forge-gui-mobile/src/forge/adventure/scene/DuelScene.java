@@ -88,6 +88,8 @@ public class DuelScene extends ForgeScene {
     RegisteredPlayer humanPlayer;
     private EffectData dungeonEffect;
     Deck playerDeck;
+    /** Round 983: the name of the deck playerDeck was copied from (the copy is named "PlayerDeckCopy"). */
+    private String playerDeckName = "";
     // Roaming guards (MOD_SCOPE #116, round 145). When set, the "player" seat fights with THIS deck
     // and THIS starting life instead of the player's own - the guard carries a deck that is not in
     // any deck slot (its cards were taken out of the collection when it was hired), so the ordinary
@@ -285,9 +287,15 @@ public class DuelScene extends ForgeScene {
                     for (PaperCard card : anteResult.wonCards) {
                         Current.player().addCard(card);
                     }
-                    for (PaperCard card : anteResult.lostCards) {
+                    for (java.util.Iterator<PaperCard> it = anteResult.lostCards.iterator(); it.hasNext(); ) {
                         // We could clean this up by trying to combine all the lostCards into a mapping, but good enough for now
-                        anteRemovals.add(Current.player().removeLostCardFromPools(card));
+                        AdventurePlayer.LostCardRemoval removal = Current.player().removeLostCardFromPools(it.next());
+                        // Round 983: a card the collection never held (a padded deck's Wastes) was not lost - no
+                        // "Card Lost" popup, so no Buy Back or Bronze Coin for it.
+                        if (removal.notOwned)
+                            it.remove();
+                        else
+                            anteRemovals.add(removal);
                     }
                 }
                 anteWonCards = new ArrayList<>(anteResult.wonCards);
@@ -1536,8 +1544,13 @@ public class DuelScene extends ForgeScene {
         }
 
         int missingCards = minDeckSize - mainSize;
-        if (missingCards > 0) //Replace unknown cards for a Wastes.
+        if (missingCards > 0) { //Replace unknown cards for a Wastes.
             mainSection.add(PLACEHOLDER_MAIN, missingCards);
+            // Round 983: initDuels swaps in a legal deck first, so this is the last resort (no deck is legal), an
+            // event deck or the Deck Tester's pick.
+            System.out.println("[TFR-DeckPad] " + missingCards + " placeholder " + PLACEHOLDER_MAIN + " added to \""
+                    + playerDeckName + "\" (" + mainSize + " of " + minDeckSize + ")");
+        }
 
         if(attractions != null && !attractions.isEmpty()) {
             int missingAttractions = 10 - attractions.countAll(); //TODO: These shouldn't be hard coded but DeckFormat's gonna need some reorganizing to fetch this dynamically
@@ -1844,10 +1857,35 @@ public class DuelScene extends ForgeScene {
         this.guardEffects = null;    // round 163
         if (eventData != null && eventData.eventRules == null)
             eventData.eventRules = new AdventureEventData.AdventureEventRules(AdventureEventController.EventFormat.Constructed);
-        if (eventData != null && eventData.registeredDeck != null)
+        if (eventData != null && eventData.registeredDeck != null) {
             this.playerDeck = (Deck) eventData.registeredDeck.copyTo("EventDeckCopy");
-        else
-            this.playerDeck = (Deck) Current.player().getSelectedDeck().copyTo("PlayerDeckCopy");
+            this.playerDeckName = eventData.registeredDeck.getName();
+        } else {
+            Deck source = Current.player().getSelectedDeck();
+            // Round 983 (logs-1106b P2-1): a player left the deck list on an empty slot, walked into a duel with 40
+            // placeholder Wastes and conceded - and the ante took a Wastes. A deck under the minimum now sits out:
+            // the last legal deck plays instead. Not the Deck Tester (its pick is deliberate) and not a watched
+            // fight (the AI's seat; a guard's own deck replaces this in useGuardLoadout).
+            boolean ownDuel = !aiControlsPlayerSide && (enemySprite == null || enemySprite.getData() == null
+                    || enemySprite.getData().fixedDeck == null);
+            if (ownDuel && !Current.player().isDuelLegal(source)) {
+                Deck fallback = Current.player().duelFallbackDeck();
+                int size = Current.player().duelDeckSize(source), min = Current.player().duelMinDeckSize();
+                System.out.println("[TFR-DeckFallback] \"" + source.getName() + "\" (slot "
+                        + (Current.player().getSelectedDeckIndex() + 1) + ") has " + size + " of " + min + " cards - "
+                        + (fallback == null ? "no legal deck to use instead, it gets padded"
+                        : "fighting with \"" + fallback.getName() + "\" instead"));
+                if (fallback != null) {
+                    GameHUD.getInstance().addNotification("\"" + source.getName() + "\" has " + size + " of " + min
+                            + " cards, so you fought with \"" + fallback.getName() + "\".");
+                    source = fallback;
+                }
+            } else if (ownDuel) {
+                Current.player().noteLegalDuelDeck(source);
+            }
+            this.playerDeck = (Deck) source.copyTo("PlayerDeckCopy");
+            this.playerDeckName = source.getName();
+        }
         // Round 160 (code review): round 145 moved these three lines into useGuardLoadout(), which
         // only a guard duel calls - so ordinary duels stopped recomputing chaosBattle and the flag
         // stuck at whatever the previous fight left it. Back where v1.08 had them.
@@ -1870,8 +1908,10 @@ public class DuelScene extends ForgeScene {
         this.guardDeck = deck == null ? null : (Deck) deck.copyTo("GuardDeckCopy");
         this.guardStartingLife = Math.max(1, startingLife);
         this.guardEffects = effects; // round 163: the guard's equipment (MOD_SCOPE #118)
-        if (this.guardDeck != null)
+        if (this.guardDeck != null) {
             this.playerDeck = this.guardDeck;
+            this.playerDeckName = deck.getName();
+        }
         this.chaosBattle = this.enemy.getData().copyPlayerDeck && Current.player().isFantasyMode();
         this.AIExtras.clear();
         this.playerExtras.clear();
