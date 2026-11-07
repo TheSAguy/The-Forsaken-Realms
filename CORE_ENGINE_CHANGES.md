@@ -35,6 +35,19 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 984 - AI for Incubate and Empower (an upstream gap, meant to go upstream)
+- `forge-ai/src/main/java/forge/ai/SpellApiToAi.java` (STOCK): two map lines,
+  `.put(ApiType.Empower, EmpowerAi.class)` (after `Effect`) and `.put(ApiType.Incubate, IncubateAi.class)` (after
+  `ImmediateTrigger`). Before them both APIs fell back to `CannotPlayAi`.
+- New files (stock-style, no TFR code or log lines, so they can be sent upstream as they are):
+  `forge-ai/src/main/java/forge/ai/ability/IncubateAi.java`, `forge-ai/src/main/java/forge/ai/ability/EmpowerAi.java`,
+  and the test `forge-gui-desktop/src/test/java/forge/ai/ability/IncubateEmpowerAiTest.java` (it switches off TFR's
+  Monte Carlo layer with `AiController.setFlatMonteCarloOverride(false)`, a TFR method, so that one line would need
+  dropping upstream).
+- **At a merge:** if upstream adds its own `IncubateAi`/`EmpowerAi` or map entries (the user reported the gap on
+  2026-11-07), take upstream's, delete ours and keep the test only if it still passes. A textual conflict in the
+  `SpellApiToAi` map is just two lines.
+
 ### Round 983 - an incomplete deck sits out its duels; a not-owned ante card changes nothing
 - `forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java` (STOCK; `LostCardRemoval` and `restoreLostCard`
   are TFR's, round 580): `removeLostCardFromPools` returns `new LostCardRemoval(card, false, true)` (new field

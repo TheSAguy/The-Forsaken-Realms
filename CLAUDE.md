@@ -13,12 +13,13 @@ versionCode 12700, `RELEASE_NOTES_v1.27.md`, GUIDE's What's New in 1.27, the Dis
 `EDITED`/`ADDED` reset by round 980). **Unreleased (for 1.28):** round 981 (a save's picture is captured before the
 next scene is drawn - Nova's "the preview image of each save file is the save menu"), round 982 (F4 stays locked
 through a pickup's or a win's freeze and after robbing a guard; the console's and bridge's `leave` keep round 971's
-window - r127-test P3-1) and round 983 (a selected deck under the duel minimum gets an "Incomplete Deck" warning on
+window - r127-test P3-1), round 983 (a selected deck under the duel minimum gets an "Incomplete Deck" warning on
 leaving the deck list and sits out its duels for the last legal deck; a lost ante card the collection never held, a
-padded Wastes, changes no deck and offers no Buy Back - logs-1106b P2-1). Engine = the 11.05 daily (round 978, upstream `1e8c35fca3e`; round 769's R1-R4 still
+padded Wastes, changes no deck and offers no Buy Back - logs-1106b P2-1) and round 984 (the AI casts its Incubate
+and Empower cards: new `IncubateAi`/`EmpowerAi` in `SpellApiToAi`, an upstream gap the user is reporting - logs-1107 P3-5). Engine = the 11.05 daily (round 978, upstream `1e8c35fca3e`; round 769's R1-R4 still
 keep TFR's synchronous auto save, eager shops, Inn events and place entry; bosses keep the player's AI setting through
 `bossAiFollowsSetting`); next merge from upstream after `1e8c35fca3e` (its first commit is `f62f804806c`, #12695, five AI files and `MagicStack`); BASE_INSTALL is that daily, so packages need no
-`--allow-base-mismatch`. Next version: 1.28 / 12800. Next free round: 984. The agent profile's window is
+`--allow-base-mismatch`. Next version: 1.28 / 12800. Next free round: 985. The agent profile's window is
 1280x720 - at 3840x2160 it covered the screen, got minimized, and a minimized game stops (the bridge times out, shots
 come back 1x1). Agent games keep their own LOCALAPPDATA cache (round 860). Log sharing (round 698) posts to Discord
 through a webhook kept OUT of git in `C:\TFR\secrets\discord_log_webhook.txt` - never commit it; the packager and

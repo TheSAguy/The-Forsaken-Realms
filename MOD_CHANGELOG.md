@@ -14264,6 +14264,63 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 984: the AI casts its Incubate and Empower cards (2026-11-07)
+
+- **Why** - log review `C:\CLAUDE\PROJECTS\TFR1\notes\logs-1107.md` P3-5. `SpellApiToAi` had no entry for
+  `ApiType.Incubate` (stock since 2023) or `ApiType.Empower` (2026-09), so both fell back to `CannotPlayAi`
+  (`No AI assigned for API: Incubate|Empower` in six shared logs). The AI never used an ability that is itself one of
+  them, and never cast a spell that carries one as a `DB$` sub-ability, because `chkDrawbackWithSubs` refused the
+  whole chain. Only mandatory triggers still resolved. That is 33 Incubate and about 35 Empower card scripts, dead in
+  enemy decks: the Copper Host Brutalizer miniboss (about 20 of its 60 cards) and legends with Sunfall, Excise the
+  Imperfect, Compleated Huntmaster, Ichor Drinker and more. Upstream master (`c3d29388be8`, 2026-11-07) still has
+  neither entry; the user is reporting both to official Forge. The user approved one round ("Yes, build it").
+- **New `forge-ai/src/main/java/forge/ai/ability/IncubateAi.java`:**
+  - As a sub-ability (Sunfall, Excise the Imperfect, Blight Titan ...) it uses the inherited `chkDrawback`, which
+    plays it, so the main effect decides. Excise's `Defined$ TargetedController` makes the opponent incubate; that no
+    longer blocks the removal.
+  - As a main ability: refuses an Incubate of 0 or less. A sorcery-speed one (Glistening Dawn, Ichor Drinker from the
+    graveyard) plays whenever it can be played. An instant-speed one (Eyes of Gitaxias, Compleated Huntmaster) waits
+    for the AI's main 2 or the opponent's end step, unless `ComputerUtil.playImmediately` says now.
+  - A "sacrifice another" cost (Compleated Huntmaster): the AI picks the same fodder the payment would
+    (`ComputerUtil.chooseSacrificeType`) and pays only if it is worth less than the N/N it makes
+    (`80 + 25N`, what `CreatureEvaluator` gives a plain N/N token). A noncreature, nontoken artifact counts only when it
+    costs 1 or less. The stock sacrifice check is skipped for that one part, because with the default profile it
+    accepts only `SacMe` cards, which would leave Huntmaster unused.
+  - Triggers, mandatory or not: always yes. `confirmAction`: yes.
+- **New `forge-ai/src/main/java/forge/ai/ability/EmpowerAi.java`:**
+  - As a sub-ability (Countersculpt, No Admittance, Academic Ascent ...): the inherited `chkDrawback` plays it.
+  - As a main ability: a loyalty ability (Jace, Reality Sculptor's +1) and a sorcery-speed one always play. An
+    instant-speed one (Campus Crier from the graveyard, Inspired Tethermage) waits for main 2 or the opponent's end
+    step, unless `playImmediately`.
+  - Triggers: always yes. With several Jace tokens it puts the counters on the best one (`chooseSingleCard`).
+- `SpellApiToAi`: `Empower -> EmpowerAi`, `Incubate -> IncubateAi`. `AlwaysPlayAi` was not enough: it ignores
+  timing (instant-speed abilities would fire in main 1 with the mana combat needs) and the Huntmaster sacrifice.
+- **No `[TFR-*]` log line**, on purpose: the patch is meant to go upstream as it is, and the stock line
+  `No AI assigned for API` simply stops appearing, which is the check.
+- **Test** - new `forge-gui-desktop/src/test/java/forge/ai/ability/IncubateEmpowerAiTest.java`, 7 tests, the stock
+  heuristic AI (TFR's Monte Carlo layer switched off for the test). Both APIs map to their AI; the sub-abilities of
+  Sunfall, Excise and Countersculpt are willing; the AI casts Sunfall into three Hill Giants in main 2 and Excise on
+  an attacking Serra Angel; Campus Crier waits in main 1 and is used at the opponent's end step; Huntmaster refuses
+  to sacrifice a Serra Angel and sacrifices a 1/1 Soldier token; Jace's +1 is `WillPlay`. All 7 fail without the two
+  `SpellApiToAi` lines (`CantPlayAi`). The 49 tests in `forge.ai.ability` pass.
+- **Agent check** (fresh New Game, both duels at 50x, `[TFR-Agent] duel speed set to 50x`):
+  - The agent game ran the jar with this round's `forge-ai` classes ahead of it. The player's seat, which Forge's AI
+    plays in the agent game, had a 40-card U/W deck: 4 Eyes of Gitaxias, 4 Campus Crier, 4 Countersculpt, 4 Excise the
+    Imperfect, 2 Jace, Reality Sculptor, 2 Sunfall, 4 Theorist's Sanctum, 8 Island and 8 Plains. The opponent was a
+    spawned Copper Host Brutalizer (Adept), whose deck holds about 20 Incubate cards.
+  - Duel 1 was lost on turn 7. A Jace token sat on the player's side and Incubator and Phyrexian tokens on the
+    Brutalizer's (screenshot). Neither duel's `forge.log` has a `No AI assigned` line.
+  - For duel 2, a proof-only copy of `GameLog` (in the agent's class folder, never committed) printed every game log
+    entry to `forge.log`. The player's AI cast Eyes of Gitaxias (Incubate 3), Sunfall and Excise the Imperfect (the
+    Brutalizer incubated). It activated Campus Crier from the graveyard, Theorist's Sanctum (Empower Jace 2) and the
+    Jace token's abilities, and used Jace, Reality Sculptor's +1 (Empower Jace 4 to 6). The Brutalizer's AI cast
+    Glistening Dawn ("Incubate X twice") and transformed its Incubators. The player won on turn 13: the Brutalizer
+    lost to an empty library, after Jace's ultimate (it needs 25 loyalty among Jaces).
+  - The Monte Carlo rollouts log their simulated games too, so the cast counts mix real and simulated plays. The
+    rollouts also printed 40 `Couldn't map Incubator Token` lines (`GameCopier`). That is the known token-mapping
+    gap, already seen for Wolf Tokens in the 11.02 logs and left on purpose. The rollout falls back to the heuristic
+    choice.
+
 ## Round 983: an incomplete deck sits out its duels, and an ante card you never owned costs nothing (2026-11-06)
 
 - **Why** - log review `C:\CLAUDE\PROJECTS\TFR1\notes\logs-1106b.md` P2-1 (4fb442f9, 1.27, Android). The player left
