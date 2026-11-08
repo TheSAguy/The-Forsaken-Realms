@@ -211,6 +211,17 @@
     // Law of Stakes: the first ante re-roll each day costs no shards.
     { "id": "lawOfStakes", "lasting": true, "maxPicks": 1, "minLevel": 4 },
     // Home Ground: +life in a duel fought on the player's own land (the player biome).
-    { "id": "homeGround",  "lasting": true, "maxPicks": 1, "life": 3, "minLevel": 6 }
+    { "id": "homeGround",  "lasting": true, "maxPicks": 1, "life": 3, "minLevel": 6 },
+    // Round 986 (the user approved notes/perks-fable-1108.md: "Yes, build both" - Fable's proposals, reshaped). Bounty
+    // Hunter: the Bounty's points times 1 + the rank's total (x1.5, x2) and its cap + capBonus (30% -> 40% -> 50%);
+    // offered only while the Bounty is on. Pays almost nothing at low Notoriety, by design.
+    { "id": "bountyHunter", "lasting": true, "maxPicks": 2, "ranks": [0.5, 1.0], "capBonus": [0.10, 0.20], "minLevel": 10 },
+    // Legend Slayer: the first win over each legend (by name) with the pick pays its whole card list (no 2/3 cut; the
+    // gold cut stays) plus a mythic from its deck, else a rare.
+    { "id": "legendSlayer", "lasting": true, "maxPicks": 1, "minLevel": 10 },
+    // Treasure Seeker (not "Cartographer": the Compass and the Guild): rank I, "pieces" map pieces an obelisk; rank II, a
+    // claimed treasure's gold, shards and cards x (1 + purse) - the key or Compass and the Power once. Offered only while
+    // a treasure is unclaimed.
+    { "id": "treasureSeeker", "lasting": true, "maxPicks": 2, "pieces": 2, "purse": 1.0 }
   ]
 }

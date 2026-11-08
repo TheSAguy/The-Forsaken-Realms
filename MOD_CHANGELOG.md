@@ -14264,6 +14264,90 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 986: three loot perks - Bounty Hunter, Legend Slayer, Treasure Seeker (2026-11-08)
+
+- **Why** - Fable proposed five Ascension perks; the read-only evaluation `C:\CLAUDE\PROJECTS\TFR1\notes\perks-fable-1108.md`
+  reshaped all five, and the user approved it as written ("Yes, build both"), with its four answers: Bounty Hunter pays
+  almost nothing at low Notoriety; Legend Slayer lifts the 2/3 card cut AND adds the mythic; Cartographer is renamed
+  Treasure Seeker; Tournament Regular's card is a rare (1 in 8 a mythic) from the event's set. This round builds the
+  three loot perks, which hook only TFR's own files. Round 987 builds the two town perks (Tournament Regular, Guild
+  Favorite). The pool goes from 35 lasting perks with 63 ranks to 38 with 68.
+- **Bounty Hunter** (2 ranks, from level 10, so first offered at 11; offered only while the Bounty is on - a share
+  above 0 on this difficulty): rank I multiplies the Bounty's points by 1.5 and raises its cap from 30% to 40%; rank II
+  x2 and 50%. `ascendance.json` `"ranks": [0.5, 1.0]` and a new `capBonus` field (`[0.10, 0.20]`, new
+  `AscendanceData.Choice.capBonus`). `StreakBounty.percent()` - the one spot that feeds the loot, the Alt plates and
+  the Journal, so the three agree - now calls `LootPerks.bountyPercent(points, share, cap, Ascendance.bountyFactor(),
+  Ascendance.bountyCapBonus())`. A custom-difficulty cap of 0 ("no cap") stays uncapped and takes only the factor.
+  The `[TFR-Bounty]` lines' cap words read "cap 50%, x2 (Bounty Hunter II)". On Normal: one help token +2/+2/+3%, a
+  Notoriety 20 Master +6/+9/+12%, Notoriety 40 +14/+20/+27%, a Notoriety 50 Adept and up +30/+40/+50%.
+- **Legend Slayer** (1 rank, from level 10; offered while legends are on): the first win over each legend (by name)
+  with the perk pays its whole card list - round 383's 2/3 card cut is skipped, the gold cut stays - and adds one card
+  from the legend's deck, a mythic, else a rare. `PlaceRewards.applyLegendCut` now returns that card and both callers
+  add it last (`filterDuelPayout` after a lair's return-visit cut, so the coin flip cannot drop it).
+  - **"First win" is new bookkeeping in an existing saved map:** the key `enemy|legendSlayer|<name>` in
+    `World.getOncePaidRewards()` (round 299's map, saved since then; value = the day), written by
+    `LootPerks.claimLegendSlayer` only while the perk is held. No new save field, no class change, so old saves load
+    as they did. Not the player's win record: that also counts Arena and Coin Challenge wins and guard fights (round
+    302's note), which pay no enemy loot. So a legend beaten before the pick pays the bonus at the next win over it -
+    once per legend, the same bound.
+  - The deck pick is Hunter's Ledger's, moved into `Ascendance.pickFromDeck(deck, preferMythic)` (Hunter's Ledger
+    keeps rare-first; the code graph's callers of `hunterLedgerCard`: CardBudget only, unchanged). The deck is
+    `Current.latestDeck()`, the duel just won, basic lands left out.
+  - Logs: `[TFR-LegendReward] <legend>: gold A -> B, cards N -> N (Legend Slayer: first win, no card cut, +<card>
+    (MythicRare))`, `[TFR-Ascend] Legend Slayer: <legend> slain - pays <card> (<rarity>, <set>)`, and `... was slain
+    before (day D) - the usual cut` on a later win. The HUD log notes the card.
+- **Treasure Seeker** (2 ranks, any level; offered while any treasure is unclaimed - new `TreasureHunt.anyUnclaimed`):
+  rank I, each obelisk gives 2 map pieces (the next two of that map, never past 9 - a map takes 5 obelisks); the
+  loot screen shows both piece cards (new `TreasureHunt.pieceAt`). Map Fragment items, the Arena and the
+  Archaeologist still give one. Rank II, a claimed treasure pays its gold, shards and cards twice (2,000 gold, 80
+  shards, 8 rare-or-mythic cards); the key or the Compass and the Power once. `ascendance.json` `"pieces": 2`
+  (new `AscendanceData.Choice.pieces`) and `"purse": 1.0`. Renamed from Fable's "Cartographer": the Cartographer's
+  Compass and the Capitol's Cartographer's Guild already use the word. Logs: `[TFR-Treasure] ... touched - fragment
+  2/9 (+2, Treasure Seeker)` and `[TFR-Treasure] Treasure Seeker II: the <region> treasure pays its gold, shards and
+  cards x2 (2000 gold, 80 shards, 8 cards); the <key> once`.
+- **Text** (`Ascendance.lastingName`/`effectText`, the choice dialog and the Level sheet): "Bounty x1.5, capped at
+  +40% [+Gold] (now ...)", "Your first win over each legend pays all its cards and a mythic from its deck", "Each
+  obelisk gives 2 map pieces; a treasure's [+Gold], [+Shards] and cards pay twice". Perk text lives in Java, not
+  `en-US.properties`, so that file is untouched.
+- **Icons** (`sprites/ascendance_icons`, the five free slots of the last row, x 302-702 at y 1002; the page stays
+  800x1100; previewed to the user, "Yes, use them": `C:\CLAUDE\PROJECTS\TFR1\notes\r986-perk-icons-preview.png`):
+  from the Art Library's sorted packs, as round 604 did - Dark Relics and Blood Gear (32px)'s `36_skull_coin`
+  (Bounty Hunter) and `11_horned_skull_helm` (Legend Slayer), scaled x2 nearest, and M-Xing Studio's `Map_2`
+  (Treasure Seeker), its white square cleared and fitted smoothly to 84 px. The two-rank perks carry Splinter Cache's
+  green rank chevrons (1 and 2). Regions `bountyHunter_1/_2`, `legendSlayer_1`, `treasureSeeker_1/_2`.
+- **New** `forge-gui-mobile/src/forge/adventure/util/LootPerks.java` (the pure math and bookkeeping) and
+  `forge-gui-mobile/test/forge/adventure/util/LootPerksTest.java` (6 tests: the evaluation's Bounty table on Normal,
+  the cap on Insane, the Bounty off and no cap, the obelisk pieces and the 5-obelisk map, the double treasure, Legend
+  Slayer once per legend).
+- **Docs**: GUIDE.md (the perk table's three rows, the Bounty, Legends, Lost Treasure Hunts and obelisk FAQ lines;
+  GUIDE.html regenerated, `--check` OK); Discord FAQ message 3 ("About 38 perks", a line for the three; `EDITED = {3}`).
+- **Checks**:
+  - Maven: `mvn -o -pl forge-gui-mobile -am test -Dtest=LootPerksTest,ShopSlotRollTest,SeededRollsTest`, exit 0, 19/19
+    (LootPerksTest 6/6); `mvn -o -pl forge-gui-mobile-dev -am package -DskipTests`, exit 0. Logs:
+    `C:\CLAUDE\PROJECTS\TFR1\notes\r986\mvn-test.log`, `mvn-package.log`.
+  - Agent game (this round's classes ahead of the agent jar, the changed res files copied in and put back after; every
+    duel at 50x; agent save slot 1, a 11-07 save, loads with its deck and Ascendance - old-save safe). Logs:
+    `C:\CLAUDE\PROJECTS\TFR1\notes\r986\agent-run1-forge.log` .. `agent-run3-forge.log`; shots in
+    `C:\CLAUDE\PROJECTS\TFR1\notes\r986\`.
+    - The perks are refused below level 10 (the console's `asc pick` takes the oldest waiting level), then taken; the
+      Level sheet shows the three icons and texts (`level-sheet.png`).
+    - Bounty Hunter II at Notoriety 50: `[TFR-Bounty] marked: Goblin Worker ...: flying 3/6 (bonus) + flying 3/6
+      (bonus) + deck card = 12 points x 1.5% = +36% (cap 50%, x2 (Bounty Hunter II))` (12 x 1.5% x 2 = 36%); a won
+      duel paid `Ratfolk Scavenger ... +12% ... - gold 43 -> 49, wood 5 -> 6`, and the treasure guardian's
+      `+24% ... gold 2133 -> 2645, shards 95 -> 119`.
+    - Treasure Seeker: one obelisk touch - `fragment 2/9 (+2, Treasure Seeker) (the first: the Spade given)`, the loot
+      screen with two pieces and the Spade (`treasure-seeker-pieces.png`). Rank II dig - `Treasure Seeker II: the Wastes
+      treasure pays its gold, shards and cards x2 (2000 gold, 80 shards, 8 cards); the Cartographer's Compass once`;
+      the won guardian's loot screen held 18 rewards (`treasure-seeker-double.png`), gold +2,645 and shards +119 in all
+      (the treasure, the guardian's own purse, the Bounty), one Compass.
+    - Legend Slayer: the AI lost to three Master legends (Cinderstone Brute, Sixblade Naga, Bogspawn Horror); it beat the
+      roaming champion Goblin King Phil (a legend-table member) with a test burn deck: `[TFR-LegendReward] Goblin King
+      Phil: gold 215 -> 108, cards 12 -> 12 (Legend Slayer: first win, no card cut, +Mishra's Factory (R))` - its deck
+      has no mythic, so a rare (`legend-slayer-loot.png`, 16 rewards). The planned rematch met a roaming Hedge Villager
+      instead, so a second win over the same legend was not seen in the game; LootPerksTest covers it.
+- **Not done**: no stock file (no `CORE_ENGINE_CHANGES.md` entry). No change to Hunter's Ledger's behavior. Tournament
+  Regular and Guild Favorite are round 987.
+
 ## Round 985: slow devices - print sheets off the GL thread, card textures always freed (2026-11-08)
 
 - **Why** - log review `C:\CLAUDE\PROJECTS\TFR1\notes\logs-1108.md` P3-9 and P3-11. The user approved both as one

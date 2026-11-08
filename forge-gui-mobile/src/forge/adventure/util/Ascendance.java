@@ -1157,6 +1157,25 @@ public final class Ascendance {
         AscendanceData.Choice c = choice("hunterLedger");
         if (c == null || picks("hunterLedger") <= 0 || deck == null || wins != Math.max(1, Math.round(c.value)))
             return null;
+        forge.item.PaperCard card = pickFromDeck(deck, false);
+        if (card == null) {
+            System.out.println("[TFR-Ascend] Hunter's Ledger: " + enemyName + " (win " + wins + ") - no rare or mythic in its deck");
+            return null;
+        }
+        System.out.println("[TFR-Ascend] Hunter's Ledger: " + enemyName + " (win " + wins + ") pays " + card.getName() + " ("
+                + card.getRarity() + ", " + card.getEdition() + ")");
+        GameHUD.getInstance().logNotification("Hunter's Ledger: your third win over " + enemyName + " pays " + card.getName()
+                + ".", false);
+        return card;
+    }
+    /**
+     * Round 986 (moved out of Hunter's Ledger): a random rare or mythic from {@code deck}, basic lands left out - a mythic
+     * when {@code preferMythic} and the deck has one, else a rare; the other rarity when the preferred one is missing.
+     * Null for a deck with neither.
+     */
+    static forge.item.PaperCard pickFromDeck(List<forge.item.PaperCard> deck, boolean preferMythic) {
+        if (deck == null)
+            return null;
         List<forge.item.PaperCard> rares = new ArrayList<>(), mythics = new ArrayList<>();
         for (forge.item.PaperCard card : deck) {
             if (card == null || card.getRules().getType().isBasicLand())
@@ -1166,18 +1185,63 @@ public final class Ascendance {
             else if (card.getRarity() == forge.card.CardRarity.MythicRare)
                 mythics.add(card);
         }
-        List<forge.item.PaperCard> pool = rares.isEmpty() ? mythics : rares;
-        if (pool.isEmpty()) {
-            System.out.println("[TFR-Ascend] Hunter's Ledger: " + enemyName + " (win " + wins + ") - no rare or mythic in its deck");
+        List<forge.item.PaperCard> first = preferMythic ? mythics : rares, second = preferMythic ? rares : mythics;
+        List<forge.item.PaperCard> pool = first.isEmpty() ? second : first;
+        return pool.isEmpty() ? null : pool.get(RAND.nextInt(pool.size()));
+    }
+
+    // ------------------------------------------------------------------- round 986: the three loot perks
+    // The user approved notes/perks-fable-1108.md ("Yes, build both"): Fable's proposals, reshaped.
+
+    /** Bounty Hunter: the Bounty's points, times this (x1.5, then x2). 1 without the pick. */
+    public static float bountyFactor() { return 1f + total("bountyHunter"); }
+
+    /** Bounty Hunter: added to the Bounty's cap (+10%, then +20%: 30% -> 40% -> 50%). 0 without the pick. */
+    public static float bountyCapBonus() {
+        AscendanceData.Choice c = choice("bountyHunter");
+        int n = picks("bountyHunter");
+        if (c == null || n <= 0 || c.capBonus == null || c.capBonus.length == 0)
+            return 0f;
+        return Math.max(0f, c.capBonus[Math.min(n, c.capBonus.length) - 1]);
+    }
+
+    public static int bountyHunterRank() { return picks("bountyHunter"); }
+
+    /** Legend Slayer: is it taken? */
+    public static boolean legendSlayer() { return picks("legendSlayer") > 0; }
+
+    /**
+     * Legend Slayer: the extra card on the first win over a legend - a mythic from its deck, else a rare (PlaceRewards
+     * adds it). Logged, and noted in the HUD's log. Null for a deck with neither.
+     */
+    public static forge.item.PaperCard legendSlayerCard(String legendName, List<forge.item.PaperCard> deck) {
+        forge.item.PaperCard card = pickFromDeck(deck, true);
+        if (card == null) {
+            System.out.println("[TFR-Ascend] Legend Slayer: " + legendName + " - no rare or mythic in its deck ("
+                    + (deck == null ? 0 : deck.size()) + " cards read)");
             return null;
         }
-        forge.item.PaperCard card = pool.get(RAND.nextInt(pool.size()));
-        System.out.println("[TFR-Ascend] Hunter's Ledger: " + enemyName + " (win " + wins + ") pays " + card.getName() + " ("
-                + card.getRarity() + ", " + card.getEdition() + ")");
-        GameHUD.getInstance().logNotification("Hunter's Ledger: your third win over " + enemyName + " pays " + card.getName()
-                + ".", false);
+        System.out.println("[TFR-Ascend] Legend Slayer: " + legendName + " slain - pays " + card.getName() + " ("
+                + card.getRarity() + ", " + card.getEdition() + ") and its whole card list");
+        GameHUD.getInstance().logNotification("Legend Slayer: " + EnemyData.getDisplayName(legendName) + " pays all its cards and "
+                + card.getName() + ".", false);
         return card;
     }
+
+    /** Treasure Seeker I: the map pieces an obelisk gives (2); 1 without the pick. */
+    public static int treasurePiecesPerTouch() {
+        AscendanceData.Choice c = choice("treasureSeeker");
+        return c == null || picks("treasureSeeker") < 1 ? 1 : Math.max(1, c.pieces);
+    }
+
+    /** Treasure Seeker II: a claimed treasure's gold, shards and cards, times this (2); 1 before rank II. */
+    public static int treasurePayoutTimes() {
+        AscendanceData.Choice c = choice("treasureSeeker");
+        return c == null || picks("treasureSeeker") < 2 ? 1 : Math.max(1, Math.round(1f + c.purse));
+    }
+
+    public static int treasureSeekerRank() { return picks("treasureSeeker"); }
+
     /** Round 596, Insight (the user: "Get 4 perk choices vs. 3. One time"): rewards in a level's offer - offerSize plus
      *  the pick's value. */
     public static int offerSize() { return Math.max(1, data().offerSize + Math.round(total("insight"))); }
@@ -1381,6 +1445,14 @@ public final class Ascendance {
             return false;
         // Round 604: Challenger's Mark (harder foes, richer loot) and Aura of Fear (weaker foes) exclude each other.
         if (("challenger".equals(c.id) && picks("auraOfFear") > 0) || ("auraOfFear".equals(c.id) && picks("challenger") > 0))
+            return false;
+        // Round 986: each loot perk only while what it improves is there - the Bounty on (a share above 0 on this
+        // difficulty), legends sighted, a treasure hunt still unclaimed.
+        if ("bountyHunter".equals(c.id) && StreakBounty.share() <= 0f)
+            return false;
+        if ("legendSlayer".equals(c.id) && !LegendSpawns.isEnabled())
+            return false;
+        if ("treasureSeeker".equals(c.id) && !TreasureHunt.anyUnclaimed(Current.world()))
             return false;
         if (c.lasting)
             return picks(c.id) < c.maxPicks;
@@ -1611,6 +1683,11 @@ public final class Ascendance {
             case "hunterLedger": effect = "Your " + (Math.round(c.value) == 3 ? "third" : "#" + Math.round(c.value)) + " win over a foe pays a rare from its deck"; break;
             case "lawOfStakes": effect = "Your first ante re-roll each day is free"; break;
             case "homeGround": effect = "+" + c.life + " [+Life] in duels fought on your own land"; break;
+            case "bountyHunter": effect = bountyHunterText(c, next, now); break; // round 986
+            case "legendSlayer": effect = "Your first win over each legend pays all its cards and a mythic from its deck"; break;
+            case "treasureSeeker": effect = "Each obelisk gives " + Math.max(1, c.pieces) + " map pieces"
+                    + (next > 1 ? "; a treasure's [+Gold], [+Shards] and cards pay " + timesWords(Math.round(1f + c.purse)) : "");
+                break;
             default: effect = id;
         }
         return effect;
@@ -1688,6 +1765,30 @@ public final class Ascendance {
         return Math.round(share * 100f) + "%";
     }
 
+    /** Round 986: "Bounty x1.5, capped at +40% [+Gold] (now x1.5, +40%)" - the cap from the difficulty's own. */
+    private static String bountyHunterText(AscendanceData.Choice c, int rank, float now) {
+        forge.adventure.data.TuningData t = Config.instance().getTuningData();
+        float baseCap = t == null ? 0f : t.bountyCap;
+        String text = "Bounty x" + factorWords(1f + totalAt(c, rank)) + capText(c, baseCap, rank) + " [+Gold]";
+        int had = rank - 1;
+        return now > 0f && had > 0 ? text + " (now x" + factorWords(1f + now) + capText(c, baseCap, had).replace(", capped at", ",") + ")" : text;
+    }
+
+    private static String capText(AscendanceData.Choice c, float baseCap, int rank) {
+        if (baseCap <= 0f)
+            return "";
+        float bonus = c.capBonus == null || c.capBonus.length == 0 ? 0f : c.capBonus[Math.min(rank, c.capBonus.length) - 1];
+        return ", capped at +" + pct(baseCap + bonus);
+    }
+
+    private static String factorWords(float f) {
+        return Math.abs(f - Math.round(f)) < 1e-3f ? String.valueOf(Math.round(f)) : String.format(java.util.Locale.ROOT, "%.1f", f);
+    }
+
+    private static String timesWords(int n) {
+        return n == 2 ? "twice" : n + " times";
+    }
+
     public static String lastingName(String id) {
         switch (id) {
             case "vigor": return "Morning Vigor";
@@ -1725,6 +1826,9 @@ public final class Ascendance {
             case "hunterLedger": return "Hunter's Ledger";
             case "lawOfStakes": return "Law of Stakes";
             case "homeGround": return "Home Ground";
+            case "bountyHunter": return "Bounty Hunter"; // round 986
+            case "legendSlayer": return "Legend Slayer";
+            case "treasureSeeker": return "Treasure Seeker"; // not "Cartographer": the Compass and the Guild have that word
             default: return id;
         }
     }

@@ -129,17 +129,14 @@ public final class StreakBounty {
         return t == null ? 0f : t.bountySharePerPointFor(difficulty());
     }
 
-    /** points x share, capped, in whole percent (the amount the loot is raised by, and the number the player reads). */
+    /** points x share, capped, in whole percent (the amount the loot is raised by, and the number the player reads).
+     *  Round 986, Bounty Hunter: the points times Ascendance.bountyFactor() and the cap plus bountyCapBonus() - this one
+     *  spot feeds the loot, the Alt plates and the Journal, so the three agree (LootPerks.bountyPercent). */
     public static int percent(int points) {
         TuningData t = tuning();
-        float share = share();
-        if (t == null || points <= 0 || share <= 0f)
+        if (t == null)
             return 0;
-        float raw = points * share * 100f;
-        int pct = (int) Math.floor(raw + 0.5f + 1e-3f);
-        if (t.bountyCap > 0f)
-            pct = Math.min(pct, (int) Math.floor(t.bountyCap * 100f + 1e-3f));
-        return Math.max(0, pct);
+        return LootPerks.bountyPercent(points, share(), t.bountyCap, Ascendance.bountyFactor(), Ascendance.bountyCapBonus());
     }
 
     private static String pointWords(int points) {
@@ -154,7 +151,15 @@ public final class StreakBounty {
 
     private static String capWords() {
         TuningData t = tuning();
-        return t == null || t.bountyCap <= 0f ? "no cap" : "cap " + Math.round(t.bountyCap * 100f) + "%";
+        String cap = t == null || t.bountyCap <= 0f ? "no cap"
+                : "cap " + Math.round((t.bountyCap + Ascendance.bountyCapBonus()) * 100f) + "%";
+        int rank = Ascendance.bountyHunterRank(); // round 986: "x1.5 (Bounty Hunter I)"
+        return rank <= 0 ? cap : cap + ", x" + factorWords(Ascendance.bountyFactor()) + " (Bounty Hunter "
+                + (rank == 1 ? "I" : rank == 2 ? "II" : String.valueOf(rank)) + ")";
+    }
+
+    private static String factorWords(float f) {
+        return Math.abs(f - Math.round(f)) < 1e-3f ? String.valueOf(Math.round(f)) : String.format(Locale.ROOT, "%.1f", f);
     }
 
     /**

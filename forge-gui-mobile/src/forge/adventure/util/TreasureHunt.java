@@ -374,7 +374,10 @@ public final class TreasureHunt {
             if (!touching(world, center, h[H_OBX], h[H_OBY], TOUCH_RADIUS_TILES))
                 continue;
             h[H_OBACTIVE] = 0;
-            h[H_FRAGS]++;
+            int before = h[H_FRAGS];
+            // Round 986, Treasure Seeker I: two pieces a touch (the next two of this map), never past the whole map.
+            h[H_FRAGS] = LootPerks.piecesAfterTouch(before, Ascendance.treasurePiecesPerTouch(), FRAGMENTS);
+            int gained = h[H_FRAGS] - before;
             world.bumpTreasureStamp();
             // The user: "The player will get the shovel when they encounter their first obelisk." The maps themselves open
             // from the inventory's Treasure Maps button (InventoryScene), shown once any piece is found.
@@ -385,14 +388,16 @@ public final class TreasureHunt {
             String message = h[H_FRAGS] >= FRAGMENTS
                     ? "The " + name + " obelisk gives up the last piece of its map - the " + name
                     + " map is whole, and an X marks the spot on your world map."
-                    : "You touch the " + name + " obelisk and a piece of an old map comes away in your hand"
-                    + (h[H_FRAGS] == 1 ? ", marked with an X" : "") + " (" + h[H_FRAGS] + " of " + FRAGMENTS + ")."
+                    : "You touch the " + name + " obelisk and " + (gained > 1 ? gained + " pieces" : "a piece")
+                    + " of an old map come" + (gained > 1 ? "" : "s") + " away in your hand"
+                    + (before == 0 ? ", marked with an X" : "") + " (" + h[H_FRAGS] + " of " + FRAGMENTS + ")."
                     + (first ? " An old spade lies at its foot - you take it." : "");
             GameHUD.getInstance().addNotification(message);
             System.out.println("[TFR-Treasure] " + name + " obelisk at (" + h[H_OBX] + "," + h[H_OBY] + ") touched - fragment "
-                    + h[H_FRAGS] + "/" + FRAGMENTS + (first ? " (the first: the Spade given)" : "")
+                    + h[H_FRAGS] + "/" + FRAGMENTS + (gained > 1 ? " (+" + gained + ", Treasure Seeker)" : "")
+                    + (first ? " (the first: the Spade given)" : "")
                     + "; it rises again on day " + (h[H_OBDAY] + OBELISK_DAYS));
-            showPieceCard(h, first);
+            showPieceCard(h, first, gained);
             return; // one obelisk a frame - the loot screen is up now
         }
     }
@@ -403,9 +408,10 @@ public final class TreasureHunt {
      * as a card on the loot screen - and the Spade beside it with the first. Both are the player's already, like a
      * blueprint's reveal (ResourceSpawns.grantRandomBlueprint), so leaving the screen any way loses nothing.
      */
-    private static void showPieceCard(int[] h, boolean withSpade) {
+    private static void showPieceCard(int[] h, boolean withSpade, int gained) {
         Array<Reward> reveal = new Array<>();
-        reveal.add(Reward.mapPiece(h[H_REGION], newestPiece(h), h[H_FRAGS]));
+        for (int nth = h[H_FRAGS] - Math.max(1, gained) + 1; nth <= h[H_FRAGS]; nth++) // round 986: each piece gained
+            reveal.add(Reward.mapPiece(h[H_REGION], pieceAt(h, nth), nth));
         ItemData spade = withSpade ? ItemListData.getItem(SPADE_ITEM) : null;
         if (spade != null)
             reveal.add(Reward.alreadyGranted(new Reward(spade)));
@@ -417,7 +423,22 @@ public final class TreasureHunt {
 
     /** The piece the map's latest fragment revealed (row*3+col): the center first, then the world's order. */
     public static int newestPiece(int[] h) {
-        return h[H_FRAGS] <= 1 ? 4 : h[H_ORDER + Math.min(FRAGMENTS, h[H_FRAGS]) - 2];
+        return pieceAt(h, h[H_FRAGS]);
+    }
+
+    /** Round 986: the piece the map's {@code nth} fragment revealed (row*3+col) - the center first. */
+    public static int pieceAt(int[] h, int nth) {
+        return nth <= 1 ? 4 : h[H_ORDER + Math.min(FRAGMENTS, nth) - 2];
+    }
+
+    /** Round 986: is any treasure still unclaimed? Treasure Seeker is offered only then. */
+    public static boolean anyUnclaimed(World world) {
+        if (!isEnabled() || world == null)
+            return false;
+        for (int[] h : world.getTreasureHunts())
+            if (h[H_FOUND] == 0)
+                return true;
+        return false;
     }
 
     /** Round 530: the map-piece card's title, "Blue Map" over "Piece 3 of 9". */
@@ -707,17 +728,25 @@ public final class TreasureHunt {
     /** Test placeholder treasure: 1000 gold, 40 shards and four rare-or-mythic cards of the region's color - and, from
      *  round 486, the color's castle key. */
     private static RewardData[] treasureRewards(int r) {
+        // Round 986, Treasure Seeker II: the gold, shards and cards twice; the key or Compass once (and the Power, paid
+        // by Ascendance.onTreasureFound, once).
+        int times = Ascendance.treasurePayoutTimes();
+        if (times > 1)
+            System.out.println("[TFR-Treasure] Treasure Seeker II: the " + REGION_NAMES[r] + " treasure pays its gold, shards"
+                    + " and cards x" + times + " (" + LootPerks.timesCount(1000, times) + " gold, " + LootPerks.timesCount(40, times)
+                    + " shards, " + LootPerks.timesCount(4, times) + " cards); the " + (treasureItemName(r) != null
+                    ? treasureItemName(r) : "item") + " once");
         RewardData gold = new RewardData();
         gold.type = "gold";
-        gold.count = 1000;
+        gold.count = LootPerks.timesCount(1000, times);
         gold.probability = 1;
         RewardData shards = new RewardData();
         shards.type = "shards";
-        shards.count = 40;
+        shards.count = LootPerks.timesCount(40, times);
         shards.probability = 1;
         RewardData cards = new RewardData();
         cards.type = "card";
-        cards.count = 4;
+        cards.count = LootPerks.timesCount(4, times);
         cards.probability = 1;
         cards.rarity = new String[]{"Rare", "Mythic Rare"};
         cards.colors = new String[]{TREASURE_COLORS[r]};

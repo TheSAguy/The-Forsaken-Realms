@@ -54,7 +54,13 @@ public final class PlaceRewards {
 
     /** MapStage.getReward(): the payout of a duel won inside a place, filtered in place before the reward screen. */
     public static void filterDuelPayout(Array<Reward> loot, EnemySprite sprite) {
-        applyLegendCut(loot, sprite); // round 383 - before the place checks: a hand-placed legend is a legend too
+        Reward slayer = applyLegendCut(loot, sprite); // round 383 - before the place checks: a hand-placed legend is a legend too
+        filterPlacePayout(loot, sprite);
+        if (slayer != null && loot != null) // round 986: after a lair's return-visit cut, which must not drop it
+            loot.add(slayer);
+    }
+
+    private static void filterPlacePayout(Array<Reward> loot, EnemySprite sprite) {
         PointOfInterest place = currentPlace();
         EnemyData enemy = sprite == null ? null : sprite.getData();
         if (loot == null || enemy == null || place == null || place.getData() == null)
@@ -98,7 +104,9 @@ public final class PlaceRewards {
         }
         if (notes.length() > 0)
             System.out.println("[TFR-PlaceRewards] overworld, " + sprite.getName() + ": " + notes);
-        applyLegendCut(loot, sprite); // round 383
+        Reward slayer = applyLegendCut(loot, sprite); // round 383
+        if (slayer != null)
+            loot.add(slayer); // round 986: Legend Slayer
     }
 
     /**
@@ -110,11 +118,24 @@ public final class PlaceRewards {
      * The cards dropped are picked at random, the legend's own named card (a fixed cardName on its list - Zacama's
      * Zacama, Primal Calamity) last of all. Shards, items, +Life and the land sketchbook pay as before; no legend
      * carries a card pack. A legend that is also a lair's boss takes the return-visit cut on top of this one.
+     * <p>
+     * Round 986, Legend Slayer: the first win over each legend (by name) with the perk keeps every card (the gold cut
+     * stays) and returns one more card - a mythic from the legend's deck, else a rare - for the caller to add after its
+     * other cuts. "First" is the world's saved once-paid map (LootPerks.claimLegendSlayer), so it pays once per legend
+     * from the pick on: a legend beaten before the pick pays at the next win over it. Null without the perk or on a later win.
      */
-    private static void applyLegendCut(Array<Reward> rewards, EnemySprite sprite) {
+    private static Reward applyLegendCut(Array<Reward> rewards, EnemySprite sprite) {
         EnemyData enemy = sprite == null ? null : sprite.getData();
         if (rewards == null || enemy == null || !LegendSpawns.isMember(enemy))
-            return;
+            return null;
+        boolean slayer = false;
+        if (Ascendance.legendSlayer()) {
+            World world = WorldSave.getCurrentSave().getWorld();
+            slayer = LootPerks.claimLegendSlayer(world.getOncePaidRewards(), enemy.getName(), world.getCurrentDay());
+            if (!slayer)
+                System.out.println("[TFR-LegendReward] Legend Slayer: " + enemy.getName() + " was slain before (day "
+                        + world.getOncePaidRewards().get(LootPerks.legendSlayerKey(enemy.getName())) + ") - the usual cut");
+        }
         TuningData tuning = Config.instance().getTuningData();
         float goldFactor = clamp01(tuning.legendRewardGoldFactor, 0.5f);
         float cardFactor = clamp01(tuning.legendRewardCardFactor, 0.667f);
@@ -138,15 +159,36 @@ public final class PlaceRewards {
             }
         }
         int cards = spare.size() + named.size();
-        int keepCards = keepCount(cards, cardFactor);
+        int keepCards = slayer ? cards : keepCount(cards, cardFactor);
         Collections.shuffle(spare, MyRandom.getRandom());
         spare.addAll(named); // the drop order: the rest at random, the legend's own card last
         List<Integer> drop = new ArrayList<>(spare.subList(0, cards - keepCards));
         drop.sort(Collections.reverseOrder()); // highest index first, so the lower ones stay put
         for (int i : drop)
             rewards.removeIndex(i);
+        Reward bonus = null;
+        if (slayer) {
+            forge.item.PaperCard card = Ascendance.legendSlayerCard(enemy.getName(), legendDeck());
+            if (card != null)
+                bonus = new Reward(card);
+        }
         System.out.println("[TFR-LegendReward] " + sprite.getName() + ": gold " + goldBefore + " -> " + goldAfter
-                + ", cards " + cards + " -> " + keepCards);
+                + ", cards " + cards + " -> " + keepCards + (slayer ? " (Legend Slayer: first win, no card cut"
+                + (bonus != null ? ", +" + bonus.getCard().getName() + " (" + bonus.getCard().getRarity() + ")" : ", no rare or mythic in its deck")
+                + ")" : ""));
+        return bonus;
+    }
+
+    /** Round 986: the beaten legend's deck (the duel just won), without basic lands; empty when there is none. */
+    private static List<forge.item.PaperCard> legendDeck() {
+        List<forge.item.PaperCard> cards = new ArrayList<>();
+        forge.deck.Deck deck = Current.latestDeck();
+        if (deck == null || deck.getMain() == null)
+            return cards;
+        for (java.util.Map.Entry<forge.item.PaperCard, Integer> e : deck.getMain())
+            if (e.getKey() != null && !e.getKey().getRules().getType().isBasicLand())
+                cards.add(e.getKey());
+        return cards;
     }
 
     /** Round 383: a fixed cardName on a reward list ("Karona, False God|SCG" - the set code is not compared). */

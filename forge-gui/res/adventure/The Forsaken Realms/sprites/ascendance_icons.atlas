@@ -253,3 +253,18 @@ title_7
 title_8
   xy: 202, 1002
   size: 96, 96
+bountyHunter_1
+  xy: 302, 1002
+  size: 96, 96
+bountyHunter_2
+  xy: 402, 1002
+  size: 96, 96
+legendSlayer_1
+  xy: 502, 1002
+  size: 96, 96
+treasureSeeker_1
+  xy: 602, 1002
+  size: 96, 96
+treasureSeeker_2
+  xy: 702, 1002
+  size: 96, 96

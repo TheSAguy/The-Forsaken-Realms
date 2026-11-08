@@ -54,3 +54,7 @@ monster. `EDITED = {3, 6}`. True of v1.24 too, so it can be edited in Discord no
 `{3, 6, 7, 9, 20, 23}` for this release (the messages the user reposts, plus message 1's header); reset it and `ADDED`
 at the next release. Artifact version 11 (the main thread republishes it). Paste list:
 `C:\CLAUDE\PROJECTS\TFR1\notes\faq-1.25-edits.md`; page `C:\CLAUDE\PROJECTS\TFR1\notes\faq-1.25.html`.
+
+2026-11-08 (round 986, for 1.28): message 3 (Perks & limits) says "About 38 perks" and names the three loot perks -
+Bounty Hunter, Legend Slayer, Treasure Seeker. `EDITED = {3}`. Edit it in Discord when 1.28 ships. The artifact page is
+not republished.

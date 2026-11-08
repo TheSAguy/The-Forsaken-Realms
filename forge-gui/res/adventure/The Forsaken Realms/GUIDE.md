@@ -375,7 +375,8 @@ that roams.
   you go once you're 8 tiles off - so the fight is yours to pick.
 - **The duel.** A legend you meet on the overworld starts its duels with a **Gemstone Mine** in play.
 - **The reward.** A legend pays half the gold and two thirds of the cards on its reward list (its own
-  named card is the last to go); shards, items and +Life rewards are paid in full.
+  named card is the last to go); shards, items and +Life rewards are paid in full. With the **Legend Slayer**
+  perk, your first win over each legend pays every card on its list and a mythic from its deck (a rare if it has none).
 
 The legends include the twelve added in 1.16: the Seraph of the Burning Brand and the Sunscale Dragon
 (white), the Skyvault Dragon and the Sixblade Naga (blue), the Nightscale Dragon and **Victor**, the vampire
@@ -395,7 +396,7 @@ has a map torn into nine pieces, and an Archmage guarding it.
 - **Obelisks: one piece a week per region.** Each region has one obelisk standing at a time, on open ground you can
   walk to. Walk onto it and it gives you the next piece of that region's map, shown as a card on the loot screen, then
   sinks away. A week after it rose it rises again somewhere else in the region, found or not, so obelisks give at most
-  one piece per region a week.
+  one piece per region a week - two with the **Treasure Seeker** perk.
 - **Map Fragments.** A Wastes, White, Blue, Black, Red or Green **Map Fragment** is a piece in item form: use it from
   your inventory and it fits the next piece into that map. A whole map, or one whose treasure you've dug up, refuses it
   and it stays in your bag (it sells, but no shop stocks it). Fragments come from:
@@ -412,8 +413,8 @@ has a map torn into nine pieces, and an Archmage guarding it.
   same 5 Shards.
 - **The guardian** is an Archmage with half again its usual life. Lose and the treasure stays buried - dig there
   again to call the guardian back. Win and you take the guardian's own loot plus the treasure: 1,000 gold, 40 Shards
-  and four Rare or Mythic cards of the region's color (colorless in the Wastes), 64 Power (see
-  [Ascendance](#ascendance---your-level)), and the region's prize:
+  and four Rare or Mythic cards of the region's color (colorless in the Wastes) - twice that with Treasure Seeker's
+  second rank - 64 Power (see [Ascendance](#ascendance---your-level)), and the region's prize:
   - each color's treasure holds that color's **Secret Entrance Key** (below);
   - the Wastes treasure holds the **Cartographer's Compass**: while you carry it, your world map shows every obelisk
     standing right now.
@@ -671,6 +672,7 @@ companion limit holds either way: 3 without Ascendance.
 | Appraiser | 3 | Cards sell for 10% / 15% / 20% more (an ante Buy Back still costs what it did). | 1 |
 | Architect | 3 | Buildings and town restores cost 10% / 20% / 30% less. | 1 |
 | Aura of Fear | 3 | Enemies start your duels with 10% / 20% / 30% less life. Never with Challenger's Mark. | 1 |
+| Bounty Hunter | 2 | The [Bounty](#enemies-that-adapt-to-you)'s points x1.5 and its cap +40% / points x2 and cap +50% (from +30%). Little at low notoriety, the most against well-armed enemies. Offered while the Bounty is on. | 11 |
 | Challenger's Mark | 1 | Enemies start your duels with 20% more life; your wins pay +1 card and a 25% larger resource purse. Never with Aura of Fear. | 11 |
 | Envoy | 2 | A win costs you 15% / 30% less reputation with the beaten color and its allies. Never with Warmonger. | 1 |
 | Far Sight | 2 | You see 1 / 2 tiles further on the world map, on top of any torch. | 1 |
@@ -683,6 +685,7 @@ companion limit holds either way: 3 without Ascendance.
 | Insight | 1 | Every later level offers 4 rewards, not 3. | 1 |
 | Intimidating | 3 | 5% / 10% / 15% chance that a roaming enemy you have a winning record against flees on the overworld, leaving half its loot and half its Power. Never a boss, war mage, legend, raider or quest enemy. | 1 |
 | Law of Stakes | 1 | Your first ante re-roll each day is free. | 4 |
+| Legend Slayer | 1 | Your first win over each [legend](#legends) (by name) pays every card on its list - no two-thirds cut, the gold cut stays - and a mythic from its deck (a rare if it has none). | 11 |
 | Legend Seeker | 1 | [Legends](#legends) are sighted 15% more often. | 1 |
 | Marshal | 3 | Your roaming guards fight with +4 / +8 / +12 life. | 1 |
 | Mechanic | 1 | Repairing a cracked item costs 75% less. | 1 |
@@ -701,13 +704,15 @@ companion limit holds either way: 3 without Ascendance.
 | Stubborn | 2 | A lost duel costs 25% / 50% less gold and life. | 1 |
 | Swift Feet | 3 | Overworld speed +5% / +10% / +15%. | 1 |
 | Temple Priest | 1 | Your Temple's weekly offering pays twice the cards. Offered once your Capitol has a Temple. | 1 |
+| Treasure Seeker | 2 | Each obelisk gives 2 map pieces (a map takes 5 obelisks) / a claimed treasure also pays its gold, Shards and cards twice - the key or Compass and the Power once. Offered while a [treasure](#lost-treasure-hunts) is unclaimed. | 1 |
 | Warmonger | 2 | A win gives you 15% / 30% more reputation with the beaten color's enemies. Never with Envoy. | 1 |
 | Zealot | 3 | +8% / +15% / +25% Power from everything. | 1 |
 
 Perks that change a duel work in your own duels - the Arena included, not Inn tournaments - and the guard perks in your
 roaming guards' fights. The extra cards from Challenger's Mark, Hunter's Ledger and Spoilsman come with the wins that
 pay by rank (see [What a Win Pays](#what-a-win-pays)). Focused, Guard Focus and Splinter Cache's second rank are allowed
-from level 15, and Challenger's Mark from 10, but those are milestone levels, so the first offer comes a level later.
+from level 15, and Challenger's Mark, Bounty Hunter and Legend Slayer from 10, but those are milestone levels, so the
+first offer comes a level later.
 
 ### Buildings & the Economy
 
@@ -1550,7 +1555,8 @@ pays a **Bounty**: more gold, shards, wood and stone, rounded up. It counts each
 
 Each point adds 1% on Easy, 1.5% on Normal and Hard and 2% on Insane, up to +30% in all. Examples on Normal: a
 Master at notoriety 20 (one 3/6 Wall) pays +6%, at 40 (two) +12%, and at 50 - four Walls and its own card - the full
-+30%. An Adept you have beaten 15 times in a row (three Wastes) pays +9%.
++30%. An Adept you have beaten 15 times in a row (three Wastes) pays +9%. The **Bounty Hunter** perk multiplies the
+points by 1.5 and raises the cap to +40% (rank II: x2, up to +50%), so it pays most against well-armed enemies.
 
 - **Before the fight**, hold Alt (or turn on the Units toggle) and an armed enemy's plate shows **BOUNTY +12%**
   [+Gold]. The Realm Journal's page for a streak enemy says what its Wastes alone are worth.
@@ -2319,7 +2325,8 @@ already in a slot always works, and a cracked item must be repaired first. See [
 ### What are the obelisks? How do I find a treasure?
 
 Each region - the Wastes and the five colors' lands - hides one treasure. Its obelisk gives one piece of that
-region's map a week; Map Fragments from the AI capitals' Arenas and the Archaeologist add more. Dig with the Spade
+region's map a week (two with the Treasure Seeker perk); Map Fragments from the AI capitals' Arenas and the
+Archaeologist add more. Dig with the Spade
 (5 Shards a dig) within 2 tiles of the X, or walk onto the X once the map is whole, and beat the guardian. The colors'
 treasures hold the keys to their castles. See [Lost Treasure Hunts](#lost-treasure-hunts).
 

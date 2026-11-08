@@ -155,5 +155,10 @@ public class AscendanceData {
         /** Round 604, lasting only: the level each rank is first offered at, when later ranks wait longer than minLevel
          *  (Splinter Cache's Treasure from 15). Past its end the last entry holds. */
         public int[] rankLevels;
+        /** Round 986, lasting only: the share added to a cap after each pick (Bounty Hunter: the Bounty's cap +0.10, then
+         *  +0.20). Past its end the last entry holds. */
+        public float[] capBonus;
+        /** Round 986, lasting only: pieces of a treasure map an obelisk gives with the pick (Treasure Seeker: 2). */
+        public int pieces;
     }
 }

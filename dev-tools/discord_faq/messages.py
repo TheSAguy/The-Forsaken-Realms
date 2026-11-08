@@ -6,8 +6,9 @@ FAQ_VERSION = "v1.27"
 # What this version changed, by message number: EDITED are edited in place in Discord, ADDED are new topics. Support
 # is always the last message: new topics go before it, and the user reposts Support at the end of the channel.
 # build_page.py tags them. Reset both at the next release.
-# 1.28: nothing changed yet (round 980 reset them after 1.27; v1.27's own set was {1, 7, 9, 13}, none ADDED).
-EDITED = set()
+# 1.28 (round 980 reset them after 1.27; v1.27's own set was {1, 7, 9, 13}, none ADDED): round 986 edits 3 (the three
+# loot perks: Bounty Hunter, Legend Slayer, Treasure Seeker; "About 38 perks").
+EDITED = {3}
 ADDED = set()
 
 M = []
@@ -59,11 +60,12 @@ M.append(("Ascendance: gear limits, perks, your hero's size", "Perks & limits", 
 **A:** Your level limits how many **main items** you wear (head, neck, body, both hands, legs, boots): 1 to start, up to 7 at level 40 (see the table above). It also limits **companions**, items that start a creature in play: 1, then 2 at level 15 and 3 at 25. Swapping what's already in a slot always works. A **cracked** item must be repaired first - losing to a boss, or running out of life, cracks one item you wear.
 
 **Q: What are the lasting perks?**
-**A:** About 35 perks that last the whole run. Most have ranks: take one again to rank it up. A few examples:
+**A:** About 38 perks that last the whole run. Most have ranks: take one again to rank it up. A few examples:
 - **Haggler** (shop prices up to -15%), **Swift Feet** (up to +15% speed), **Far Sight** (up to +2 tiles of sight), **Prospector** (up to +45% resource pickups and mine income)
 - **Aura of Fear** (enemies start with up to 30% less life), **Opening Gambit** (win the coin toss 75% of the time), **Morning Vigor**, **Shardwell**
 - **Zealot** (up to +25% Power), **Insight** (4 reward choices a level), **Gambler** (two cheaper re-rolls)
 - **Marshal**, **Medic** and **Spoils of War** for your roaming guards
+- **Bounty Hunter** (a bigger Bounty, up to +50%), **Legend Slayer** (a legend's full loot and a mythic), **Treasure Seeker** (two map pieces an obelisk, a double treasure)
 - **Envoy** and **Warmonger** bend the Net-0 rule in your favor
 Don't like an offer? **Re-roll** it once per level for 35-50 Shards. The **Level sheet** (on the Asc panel or your character sheet) lists every level you've reached and every perk you hold.
 
