@@ -35,6 +35,23 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 990 - stage viewports kept in step with the window (logs-1108b P2-1; an upstream bug too)
+Stock `GameHUD`, `MapStage` and `WorldStage` size their viewports once, in the `Stage` constructor, and `Forge.resize`
+reaches only the current scene; a launch at 0x0 left map dialogs empty and unclickable. Upstream has the same code.
+- `forge-gui-mobile/src/forge/Forge.java` (STOCK): `resize` calls `StageViewports.sync(width, height, "on resize")`
+  after `currentScene.resize`; `resume` ends with `StageViewports.syncToWindow("on resume")`; `switchScene` and
+  `switchToLast` call `forge.adventure.scene.SceneViewports.beforeEnter(currentScene)` right before
+  `currentScene.enter()`. One line each. On a merge, keep the sync after the stock resize and the scene call before
+  `enter()`.
+- `forge-gui-mobile/src/forge/adventure/scene/HudScene.java` (STOCK): `enter()` starts with
+  `StageViewports.syncToWindow("on enter")`.
+- `forge-gui-mobile/src/forge/adventure/stage/GameStage.java` (STOCK): the constructor calls
+  `StageViewports.track(this)` after `camera = ...` (`WorldStage.instance` is private, so the stages register).
+- `forge-gui-mobile/src/forge/adventure/util/MapDialog.java` (STOCK): the round-279 watchdog calls a new private
+  `checkViewport()` when the options are all visible; it logs and syncs if the dialog's stage viewport is stale.
+- New TFR files (not stock): `util/StageViewports.java`, `scene/SceneViewports.java` (in `scene` for package access
+  to `UIScene.stage`), `test/.../StageViewportsTest.java`. `UIScene.java` is not edited.
+
 ### Round 989 - the HUD starts hidden in caves and dungeons (TfrHud, ported from TFR 2)
 - `forge-gui-mobile/src/forge/adventure/stage/MapStage.java` (STOCK): `loadMap` calls
   `forge.adventure.util.TfrHud.mapLoaded(targetMap)` right after `spawn(spawnTargetId)`; `clearIsInMap` calls

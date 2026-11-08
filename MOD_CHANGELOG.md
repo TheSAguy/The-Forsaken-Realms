@@ -14264,6 +14264,57 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 990: dialogs after a minimized launch - the stage viewports kept in step with the window (2026-11-08)
+
+The user approved the fix for logs-1108b P2-1 ("Yes, build it"). A player's "freeze turning in the slime quest" was any
+map dialog after a launch that loaded at 0x0 (minimized, or alt-tabbed during the splash): an empty frame with no text
+that took no click, for the whole launch. Reproduced on v1.26 and on round 989's build.
+
+- **Cause.** libGDX's `Stage` sizes its viewport to the window once, in its constructor. `GameHUD`, `MapStage` and
+  `WorldStage` are built once a launch, before the menu, and `Forge.resize` reaches only the current scene (`HudScene`
+  has no `resize`). At a 0x0 launch all three kept a 0x0 screen viewport. Map dialogs live on the HUD stage; a `Dialog`
+  is a `Window`, which clips its children with a scissor from that viewport, so everything inside the frame was clipped,
+  and clicks unprojected through a 0x0 screen to nowhere. Upstream Forge has the same code.
+- **New `util/StageViewports`.** `sync(w, h, why)` brings every built singleton stage to the window; a 0 size (still
+  minimized) changes nothing, and nothing is constructed. The HUD gets `viewport.update(w, h, true)`. `MapStage` and
+  `WorldStage` get **only their screen bounds** (`fitScreenOnly`): `GameStage.setBounds` sets their world size to the
+  map's bounds, and `update` ends in `apply()`, which copies the world size into the camera - a plain
+  `update(w, h, false)` would have shown the whole map. Their camera (size, zoom, position following the player) is
+  untouched. The game stages register from the `GameStage` constructor (`WorldStage.instance` is private).
+- **Called from** `Forge.resize` ("on resize"), `Forge.resume` ("on resume") and, as a backstop, `HudScene.enter()`
+  ("on enter").
+- **The wider half, found in this round's agent test:** a UI scene not on screen during a windowed resize kept its old
+  viewport too. After a resize on the map, the inventory (built earlier) drew its item list empty, its scroll pane
+  clipped by the stale size. New `scene/SceneViewports.beforeEnter`, called by `Forge.switchScene` and `switchToLast`
+  right before `enter()`: a stale `UIScene` gets its own stock `resize` (what it would have had on screen; no UI scene
+  moves its camera). It sits in the `scene` package to read `UIScene.stage`; `UIScene.java` is not edited.
+- **The dialog watchdog** (round 279) stopped silently when the options were "visible". Now, with all options visible,
+  it checks the dialog's stage viewport; a 0-sized or mismatched one is logged and synced (the dialog's layout is in
+  world units, so only its clip and input change).
+- **Log:** `[TFR-Viewport] <HUD|MapStage|WorldStage|<Scene>> stage was WxH - updated to WxH (on resize|on enter|on
+  resume|dialog watchdog)` for every fix (a window drag's run of ordinary resizes is thinned to one a second; a fix from
+  0x0 always logs); `[TFR-Viewport] dialog N's options are visible but its stage's screen viewport is WxH and the window
+  WxH ...` from the watchdog.
+- **Test:** `StageViewportsTest` (7 cases: a real size needs both sides; a 0x0 viewport is stale once the window is real,
+  not while minimized; a matching one is left alone; a windowed resize makes it stale; a game stage's camera keeps its
+  size, position and zoom with the map's world size; a letterboxing viewport gets its own bounds; `sync(0, 0)` changes
+  nothing). Maven `-o -pl forge-gui-mobile -am test -Dtest=StageViewportsTest,TfrHudTest`: exit 0, 13/13.
+- **Agent check** (shots and logs in `C:\CLAUDE\PROJECTS\TFR1\notes\r990\`; the classes ahead of the agent jar):
+  - *Launched minimized* (minimized 1.4 s after the window appeared, restored after 30 s, a new world): `screen=0x0` at
+    launch, then `HUD stage was 0x0 - updated to 1280x720 (on resize)` and the MapStage and WorldStage lines. The intro
+    dialog shows its text and both options (`fixed-launched-minimized-intro-dialog.png`), and a real OS mouse click on
+    "Skip the introduction" answered it (`fixed-launched-minimized-after-mouse-click.png`). On v1.26 and round 989 the
+    same launch gave an empty frame (`C:\CLAUDE\PROJECTS\TFR1\notes\logs-1108b\`).
+  - *A normal launch:* `screen=1280x720`, no `[TFR-Viewport]` line until a resize, the intro as before
+    (`normal-launch-intro-dialog.png`).
+  - *A windowed resize after loading* (twice, with a dialog up): the dialog draws whole at the new size
+    (`windowed-resized-dialog.png`) and the bridge's click answered it. The inventory after a resize on the map: empty
+    before `SceneViewports` (`inventory-after-windowed-resize-BEFORE-scene-fix.png`), its items back after
+    (`inventory-after-windowed-resize.png`; `InventoryScene stage was 1280x720 - updated to 1628x2130 (on enter)`).
+  - Not checked: a real mouse click after a windowed resize. The game window could not be brought to the front (the
+    desktop was in use), and posted mouse messages do not reach GLFW. The draw (the clip) and the log show the viewport
+    matching the window.
+
 ## Round 989: the HUD starts hidden in caves and dungeons - TFR 2's rule ported (2026-11-08)
 
 The user: "In TFR2, we had the HUD minimized when entering a dungeon. I'd like that in TFR1 also." A port of TFR 2's

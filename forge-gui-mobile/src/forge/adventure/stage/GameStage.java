@@ -506,6 +506,7 @@ public abstract class GameStage extends Stage {
             GameStage.this.getPlayerSprite();
         });
         camera = (OrthographicCamera) getCamera();
+        forge.adventure.util.StageViewports.track(this); // TFR round 990: kept in step with the window (logs-1108b P2-1)
 
         backgroundSprites = new Group();
         foregroundSprites = new SpriteGroup();

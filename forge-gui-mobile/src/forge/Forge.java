@@ -1099,6 +1099,9 @@ public class Forge implements ApplicationListener {
             }
             if (currentScene != null)
                 currentScene.resize(width, height);
+            // TFR round 990 (logs-1108b P2-1): the HUD, map and world stages are not the current scene's, so nothing
+            // else resizes them; a launch at 0x0 left map dialogs empty and unclickable for the whole launch.
+            forge.adventure.util.StageViewports.sync(width, height, "on resize");
         } catch (Exception ex) {
             //graphics.end();
             forge.adventure.util.SessionLog.onError("resize to " + width + "x" + height, ex); // TFR round 777, as above
@@ -1137,6 +1140,7 @@ public class Forge implements ApplicationListener {
         if (MatchController.getHostedMatch() != null) {
             MatchController.getHostedMatch().resume();
         }
+        forge.adventure.util.StageViewports.syncToWindow("on resume"); // TFR round 990, as in resize()
     }
 
     @Override
@@ -1233,6 +1237,7 @@ public class Forge implements ApplicationListener {
         currentScene = newScene;
         forge.adventure.util.SessionLog.onScene(newScene); // TFR round 777: the error trail, a duel's clock
 
+        forge.adventure.scene.SceneViewports.beforeEnter(currentScene); // TFR round 990: a resize it missed off screen
         currentScene.enter();
         if (currentScene instanceof DuelScene)
             Forge.clearTransitionScreen(true);
@@ -1250,6 +1255,7 @@ public class Forge implements ApplicationListener {
             storeScreen();
             currentScene = lastScene.get(lastScene.size - 1);
             forge.adventure.util.SessionLog.onScene(currentScene); // TFR round 777
+            forge.adventure.scene.SceneViewports.beforeEnter(currentScene); // TFR round 990, as in switchScene
             currentScene.enter();
             Adventure.getInstance().sceneWasSwapped = true;
             lastScene.removeIndex(lastScene.size - 1);

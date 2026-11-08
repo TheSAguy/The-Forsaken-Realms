@@ -49,6 +49,9 @@ public abstract class HudScene extends Scene implements InputProcessor, IAfterMa
 
     @Override
     public void enter() {
+        // TFR round 990 (logs-1108b P2-1): a backstop for a resize that never reached the HUD - its stage holds the map
+        // dialogs, and a stale screen viewport clips them empty and sends their clicks nowhere.
+        forge.adventure.util.StageViewports.syncToWindow("on enter");
         Gdx.input.setInputProcessor(this);
         stage.enter();
         hud.enter();

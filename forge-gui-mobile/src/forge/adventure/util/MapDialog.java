@@ -359,6 +359,8 @@ public class MapDialog {
                     if (!button.isVisible())
                         hidden++;
                 }
+                if (live > 0 && hidden == 0)
+                    checkViewport(); // round 990: "visible" is not "on screen" when the stage's viewport is stale
                 if (live == 0 || hidden == 0) {
                     done = true; // nothing on screen to rescue, or the typing revealed them itself
                     return;
@@ -395,6 +397,31 @@ public class MapDialog {
                 A.skipToTheEnd();
                 for (TextraButton button : buttons)
                     button.setVisible(true);
+            }
+
+            // Round 990 (logs-1108b P2-1): the case this watchdog could not see. After a launch at 0x0 the HUD
+            // stage, which holds this dialog, kept a 0x0 screen viewport: the typing ran, end() showed the options,
+            // and the Window's clip (computed from that viewport) drew none of it and sent every click nowhere.
+            // HudScene.enter() and Forge.resize now keep the viewport in step; if it is still wrong here, say so in
+            // the log, and fix it - the dialog's layout is in world units, so only the clip and input change.
+            private void checkViewport() {
+                com.badlogic.gdx.scenes.scene2d.Stage on = null;
+                for (TextraButton button : buttons) {
+                    if (button.getStage() != null) {
+                        on = button.getStage();
+                        break;
+                    }
+                }
+                if (on == null || Gdx.graphics == null)
+                    return;
+                int ww = Gdx.graphics.getWidth(), wh = Gdx.graphics.getHeight();
+                if (!StageViewports.isStale(on.getViewport(), ww, wh))
+                    return;
+                System.out.println("[TFR-Viewport] dialog " + parentID + "'s options are visible but its stage's screen"
+                        + " viewport is " + on.getViewport().getScreenWidth() + "x" + on.getViewport().getScreenHeight()
+                        + " and the window " + ww + "x" + wh + " - they would draw clipped and take no click; syncing"
+                        + " the stages (" + (text == null ? 0 : text.length()) + " chars)");
+                StageViewports.sync(ww, wh, "dialog watchdog");
             }
         }, DIALOG_POLL, DIALOG_POLL, polls);
         float width;

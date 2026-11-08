@@ -31,11 +31,15 @@ shards and +1 card a card reward (epilogue and stage epilogues, scaled copies, n
 15 for new ones; new `util/TownPerks` + `TownPerksTest`; stock `AdventureEventData`, `EventScene`, `AdventureQuestData`,
 `AdventureQuestController`; `ascendance_icons` page 800x1200; 40 lasting perks, 71 ranks), round 988 (the perk icons repainted) and round 989 (the HUD
 starts in its hidden view in a cave or dungeon, the player's toggle kept level to level, the world map's view back on
-leaving - TFR 2's rule ported: new `util/TfrHud` + `TfrHudTest`, `GameHUD.isHudHidden()`, console `hud`, `[TFR-Hud]`).
+leaving - TFR 2's rule ported: new `util/TfrHud` + `TfrHudTest`, `GameHUD.isHudHidden()`, console `hud`, `[TFR-Hud]`) and round 990 (map dialogs after a launch that loaded at 0x0 - the "freeze turning in the
+slime quest", logs-1108b P2-1: new `util/StageViewports` keeps the HUD, map and world stages' screen viewports in step
+with the window from `Forge.resize`/`resume` and `HudScene.enter`, the game stages' cameras untouched; new
+`scene/SceneViewports` resizes a UI scene that missed a resize off screen before it is entered; the dialog watchdog
+logs a stale viewport; `[TFR-Viewport]`; `StageViewportsTest`; an upstream bug too).
 Engine = the 11.05 daily (round 978, upstream `1e8c35fca3e`; round 769's R1-R4 still
 keep TFR's synchronous auto save, eager shops, Inn events and place entry; bosses keep the player's AI setting through
 `bossAiFollowsSetting`); next merge from upstream after `1e8c35fca3e` (its first commit is `f62f804806c`, #12695, five AI files and `MagicStack`); BASE_INSTALL is that daily, so packages need no
-`--allow-base-mismatch`. Next version: 1.28 / 12800. Next free round: 990. The agent profile's window is
+`--allow-base-mismatch`. Next version: 1.28 / 12800. Next free round: 991. The agent profile's window is
 1280x720 - at 3840x2160 it covered the screen, got minimized, and a minimized game stops (the bridge times out, shots
 come back 1x1). Agent games keep their own LOCALAPPDATA cache (round 860). Log sharing (round 698) posts to Discord
 through a webhook kept OUT of git in `C:\TFR\secrets\discord_log_webhook.txt` - never commit it; the packager and
