@@ -14264,6 +14264,100 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 987: two town perks - Tournament Regular, Guild Favorite (2026-11-08)
+
+- **Why** - the second half of Fable's five perks as reshaped in `C:\CLAUDE\PROJECTS\TFR1\notes\perks-fable-1108.md`
+  (sections 2 and 3; the user: "Yes, build both"), including its answer on the user's own Tournament Regular idea, "an
+  extra CARD for a bracket won": a rare from the event's set, 1 in 8 a mythic. Round 986 built the three loot perks.
+  The pool goes from 38 lasting perks with 68 ranks to 40 with 71.
+- **Tournament Regular** (2 ranks, any level): rank I, Inn entry fees in gold and shards -25%; rank II, -50%. The
+  Challenge Coin options are unchanged. From rank I a won bracket - a 3-0 champion (`TownPerks.isChampion`: 3 wins, no
+  loss; not the Power rule's "no loss", which counts an event left after one win) - pays one extra card from the event's
+  own set (its pack editions, else its block's sets): a rare, or 1 in 8 a mythic; a set with no mythics gives a rare.
+  `ascendance.json` `"ranks": [0.25, 0.5]`, `"cards": 1` and a new `"mythicChance": 0.125`
+  (`AscendanceData.Choice.mythicChance`).
+  - **Every fee read goes through one helper**, `Ascendance.innFee(fee, changes)` = `TownPerks.innFee(fee, town price,
+    innFeeFactor())`, rounded once - so the fee shown is the fee charged (round 852's False Life lesson), and without
+    the perk every number is stock's `Math.round(fee x town)` (TownPerksTest checks that). The evaluation counted 10
+    reads; there are 13, all covered: `AdventureEventData.getDescription` 6 (Draft, Jumpstart, Sealed x gold and
+    shards), `EventScene`'s entry dialog 6 (the two option names, the `hasGold`/`hasShards` conditions, the
+    `spendGold`/`spendShards` actions) and `voidUndealableEvent`'s fallback refund 1. No `townPriceModifier` local is
+    left in either file. Refunds of a paid entry already use what was paid (round 334's `entryPaidGold`/`Shards`), and
+    `InnScene`'s saved-fee check (round 360) compares the unscaled fees, so neither needed a change.
+  - The card is added in `giveRewards` behind round 369's `firstAward`, so a re-opened reward screen cannot pay twice.
+  - Logs: `[TFR-TournamentRegular] Draft entry at <town>: town price x1.0, fees x0.75 (rank 1) - 3000 gold -> 2250, 50
+    shards -> 38; coin options unchanged`; `[TFR-TournamentRegular] Draft on <block> won 3-0: pays <card> (Rare, <set>;
+    roll 0.412 vs mythic 0.125, N rares / M mythics in the set)`, or `... 2-1 - not a won bracket, no extra card`. The
+    HUD log notes the card.
+- **Guild Favorite** (1 rank, from level 6): side quests - never story quests - pay +50% gold and shards and +1 card on
+  each card reward entry, and a side quest whose clock starts after the pick gets 5 more days (15 -> 20 on the
+  standard settings; a custom difficulty's limit + 5). `ascendance.json` `"purse": 0.5, "cards": 1, "days": 5,
+  "minLevel": 6`.
+  - **Where:** `Ascendance.guildFavoriteRewards(quest, dialog, part)` scales a side quest's reward dialog just before it
+    is queued: the quest's epilogue in `AdventureQuestData.getEpilogue()`'s once-only branch, and each stage epilogue in
+    `AdventureQuestController`'s dialog sweep (stage epilogues carry 14 card, 2 shard, 1 gold and 6 addGold entries in
+    `quests.json`'s side quests). Chosen over `MapDialog`'s `grantRewards`/`addGold`, which does not know the quest.
+    It raises `addGold`/`addShards`, the `"gold"`/`"shards"` rewards (count and `addMaxCount`) x1.5 rounded half up
+    (500 -> 750, 750 -> 1,125, 5 -> 8), adds 1 to each `"card"`/`"randomCard"`/`"deckCard"` entry, and rewrites the
+    dialog's own "+N [+Gold]" / "+N [+Shards]" text to match (`TownPerks.scaleRewardText`; reputation untouched), so
+    an invasion's "(+2 Local [+Reputation], +500 [+Gold])" line reads what it pays.
+  - **The copy is the quest's own; the reward entries were not.** `DialogData`'s copy constructor copies the actions
+    (round 889) but `ActionData` copies `grantRewards` with an array `clone()`, so the `RewardData` objects are shared
+    with the quest template. Each scaled entry is a new `RewardData(r)` put into the copy's own array; the template is
+    never written. Each branch runs once per quest/stage (`epilogueDisplayed`), so nothing is scaled twice.
+  - **Days:** `QuestExpiry.sideQuestDays()` returns `TownPerks.questDays(tuning.sideQuestDays,
+    Ascendance.guildFavoriteDays())`. It is read only when a quest's clock starts, and the limit is stored per quest
+    (round 367), so it reaches quests accepted after the pick only. Story quests and the relic-trail chain still have
+    no timer.
+  - Logs: `[TFR-GuildFavorite] "<quest>" epilogue: gold 500 -> 750, shards 4 -> 6, card entries 3 (+1 each), 1 reward
+    line(s) rewritten (x1.5, side quest)`; the `[QuestExpiry] ... accepted on day D - 20 days ([TFR-GuildFavorite] +5)`.
+- **Text** (`Ascendance.lastingName`/`effectText`): "Inn entry fees -25% [+Gold] [+Shards]; a 3-0 bracket win pays a rare
+  from its set (1 in 8 a mythic)", rank II "Inn entry fees -50% [+Gold] [+Shards] (now -25%)"; "Side quests pay +50%
+  [+Gold] and [+Shards] and +1 card on each card reward; new ones get 20 days, not 15" (the days part only while side
+  quests have a timer). Perk text lives in Java, so `en-US.properties` is untouched.
+- **Icons** (`sprites/ascendance_icons`; the page was full after round 986, so it grows from 800x1100 to 800x1200 with a
+  new row at y 1102; previewed to the user: `C:\CLAUDE\PROJECTS\TFR1\notes\r987-perk-icons-preview.png` and
+  `-1x.png`): from the Art Library's "Game Icons Fantasy Things (painted)" `PNG_1` - `4.png`, a gold trophy (Tournament
+  Regular, with Splinter Cache's green rank chevrons 1 and 2), and `7.png`, a star medal on a red ribbon (Guild
+  Favorite) - fitted smoothly to 84 px. Regions `tournamentRegular_1/_2`, `guildFavorite_1`.
+- **New** `forge-gui-mobile/src/forge/adventure/util/TownPerks.java` (the pure math) and
+  `forge-gui-mobile/test/forge/adventure/util/TownPerksTest.java` (6 tests: fees unchanged without the perk; the
+  evaluation's fees, town price x perk once; only a 3-0 champion; 1 in 8 a mythic and the no-mythic set; the quest gold,
+  shards, cards and days; the reward line rewritten, reputation untouched).
+- **Docs**: GUIDE.md (perk table rows, the Quests timer line, the Inn's fee and champion lines; GUIDE.html regenerated,
+  `--check` OK); Discord FAQ message 3 ("About 40 perks", a line for the two; `EDITED` stays `{3}`);
+  `CORE_ENGINE_CHANGES.md` (four stock files).
+- **Checks**:
+  - Maven: `mvn -o -pl forge-gui-mobile -am test -Dtest=TownPerksTest,LootPerksTest,ShopSlotRollTest,SeededRollsTest`,
+    exit 0, 25/25 (TownPerksTest 6/6); `mvn -o -pl forge-gui-mobile-dev -am package -DskipTests`, exit 0 (rebuilt after
+    the two log-line fixes below). Logs: `C:\CLAUDE\PROJECTS\TFR1\notes\r987\mvn-test.log`, `mvn-package.log`.
+  - Agent game (this round's classes ahead of the agent jar, the changed res files copied in and put back after; agent
+    save slot 1, not saved; every duel at 50x through `tfr_agent.py settle`). Log: `C:\CLAUDE\PROJECTS\TFR1\notes\r987\agent-forge.log`; shots in
+    `C:\CLAUDE\PROJECTS\TFR1\notes\r987\`.
+    - The console's `asc pick guildFavorite` is refused at level 1 (min level 6) and taken at level 6; the Level sheet
+      shows both icons and texts (`level-sheet.png`).
+    - Guild Favorite: side quest 76 ("A Town from Black's Hand") given and its flag set - `[QuestExpiry] ... accepted on
+      day 1 - 20 days ([TFR-GuildFavorite] +5)`; at Benalia its epilogue paid 2,250 gold, 150 shards and 4 white rares
+      (written: 1,500, 100, 3) - `[TFR-GuildFavorite] "A Town from Black's Hand" epilogue: gold 1500 -> 2250, shards
+      100 -> 150, card entries 1 (+1 each)`; the purse went 3,043 -> 5,293 and 10 -> 160 (`guild-favorite-loot.png`).
+    - Tournament Regular I at the Capitol's Inn (raised by console for an open Inn), Jumpstart: the description and the
+      entry dialog both read 371 gold / 37 shards (500 / 50 x town 0.99 x 0.75), the coin option unchanged; paying
+      charged exactly 37 shards (2,110 -> 2,073), and later 371 gold (54,493 -> 54,122) (`inn-fee-description.png`,
+      `inn-fee-entry.png`). `[TFR-TournamentRegular] Jumpstart entry at ...: town price x0.99, fees x0.75 (rank 1) - 500
+      gold -> 371, 50 shards -> 37; coin options unchanged`.
+    - Fourteen brackets were played (the AI pilots the player's seat; `bracket-loop.txt`): 2-1, 1-1, 0-1 and the like each
+      logged `... - not a won bracket, no extra card` and paid no card. The first 3-0 (three black packs) logged
+      `[TFR-TournamentRegular] Jumpstart on Jumpstart won 3-0: pays Talrand, Sky Summoner (R, JMP; roll 0.671 vs mythic
+      0.125, 88 rares / 17 mythics in the set)`, and the champion's reward screen held Talrand beside the 500 gold and
+      the event pack (`inn-bracket-won-3-0.png`, `tournament-regular-champion-card.png`). A mythic roll was not seen in
+      the game; TownPerksTest covers the 1 in 8.
+    - Two log fixes from the run: the fee line printed the Inn's raw place id (now its display name), and every stage
+      epilogue with nothing to raise printed a line (now silent).
+    - Seen, not this round's: the agent bridge's state reader (`AgentObserver.player` -> `PointOfInterest.getDisplayName`)
+      logs a `MissingResourceException ... adv.poi.Orazca.displayName` stack each poll while the player stands in the
+      Capitol (99 in this log). Agent-only noise.
+- **Not done**: no change to Haggler (it never touched the Inn) or to quest reputation and Power (Zealot scales Power).
+
 ## Round 986: three loot perks - Bounty Hunter, Legend Slayer, Treasure Seeker (2026-11-08)
 
 - **Why** - Fable proposed five Ascension perks; the read-only evaluation `C:\CLAUDE\PROJECTS\TFR1\notes\perks-fable-1108.md`

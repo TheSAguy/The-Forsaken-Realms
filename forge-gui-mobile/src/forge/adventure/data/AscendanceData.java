@@ -160,5 +160,7 @@ public class AscendanceData {
         public float[] capBonus;
         /** Round 986, lasting only: pieces of a treasure map an obelisk gives with the pick (Treasure Seeker: 2). */
         public int pieces;
+        /** Round 987, lasting only: the chance a prize card is a mythic instead of a rare (Tournament Regular: 1 in 8). */
+        public float mythicChance;
     }
 }

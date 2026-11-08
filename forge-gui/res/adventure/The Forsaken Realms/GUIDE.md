@@ -679,6 +679,7 @@ companion limit holds either way: 3 without Ascendance.
 | Focused | 1 | Your first mulligan in each game is free - you keep a full hand. | 16 |
 | Gambler | 1 | Two re-rolls a level instead of one, each at half price. | 1 |
 | Guard Focus | 1 | Your roaming guards' first mulligan in each game is free. | 16 |
+| Guild Favorite | 1 | [Side quests](#quests) (never story quests) pay 50% more gold and Shards and +1 card on each card reward, and a side quest you take after the pick lasts 20 days, not 15. | 6 |
 | Haggler | 3 | Shop prices -5% / -10% / -15%. | 1 |
 | Home Ground | 1 | +3 life in duels fought on your own land, your towns included. | 6 |
 | Hunter's Ledger | 1 | Your third win over an enemy (by name) adds a rare from its deck to the loot, else a mythic - once per enemy. | 8 |
@@ -704,6 +705,7 @@ companion limit holds either way: 3 without Ascendance.
 | Stubborn | 2 | A lost duel costs 25% / 50% less gold and life. | 1 |
 | Swift Feet | 3 | Overworld speed +5% / +10% / +15%. | 1 |
 | Temple Priest | 1 | Your Temple's weekly offering pays twice the cards. Offered once your Capitol has a Temple. | 1 |
+| Tournament Regular | 2 | [Inn tournament](#inn-tournaments) entry fees in gold and Shards -25%, and winning a bracket 3-0 pays an extra card from the event's set - a rare, 1 in 8 a mythic / fees -50%. The Challenge Coin entry is unchanged. | 1 |
 | Treasure Seeker | 2 | Each obelisk gives 2 map pieces (a map takes 5 obelisks) / a claimed treasure also pays its gold, Shards and cards twice - the key or Compass and the Power once. Offered while a [treasure](#lost-treasure-hunts) is unclaimed. | 1 |
 | Warmonger | 2 | A win gives you 15% / 30% more reputation with the beaten color's enemies. Never with Envoy. | 1 |
 | Zealot | 3 | +8% / +15% / +25% Power from everything. | 1 |
@@ -914,7 +916,8 @@ its fourth).
 
 - **Up to 10 side quests** can be active at once.
 - **A side quest lasts 15 days** from when you take it, then fails (quests taken in an older version keep
-  the 20 days they started with). Story quests never expire.
+  the 20 days they started with). Story quests never expire. With the **Guild Favorite** perk, side quests you take
+  afterwards last 20 days and pay 50% more gold and Shards and an extra card on each card reward.
 - **"Return to town" stages wait for you.** A bounty or reward that asks you to go back pays when you
   walk into that town - not wherever you happen to be. If the stage starts while you're already standing
   in the town, step out and back in.
@@ -1965,7 +1968,8 @@ one at all.) A coin holder can also turn up in your own Arena's bracket - see
 ### Inn Tournaments
 
 Every Inn runs one, and it turns over at the start of each in-game week (days 8, 15, 22 and so on) -
-unless you've entered it or have prizes waiting. The entry fee scales with the town's opinion of you.
+unless you've entered it or have prizes waiting. The entry fee scales with the town's opinion of you, and the
+**Tournament Regular** perk takes 25% (rank II: 50%) off the gold and Shards fee.
 
 - **Your own towns run on your own stock**: the card pool is your race's editions plus everything
   you've researched. It widens as you unlock more sets, and a tournament you haven't entered yet
@@ -1985,6 +1989,8 @@ unless you've entered it or have prizes waiting. The entry fee scales with the t
   Coin). An Inn offers it only while this run has fewer than 25 duel wins (Arena wins count; a New Game+
   starts the count over), and then about 3 deals in 10. After 25 wins, or after you have played one
   Jumpstart tournament - on any run, New Game+ included - Inns only offer Draft and Sealed.
+- **Winning a tournament** (3-0) with the **Tournament Regular** perk adds one card from the event's own set to the
+  prizes: a rare, or 1 time in 8 a mythic.
 - **Winning a tournament** raises that town's reputation with you by 1 - once a week per town: after a win, that
   Inn deals no new tournament until the week turns (days 8, 15, 22...), and its line reads "Won - back next week".
 - **Simulated AI rounds** belong to their own tournament and round: walk out of the Inn while they run and the next

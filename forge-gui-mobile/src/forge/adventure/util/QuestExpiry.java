@@ -25,7 +25,9 @@ public class QuestExpiry {
     // Tunable since 2026-08-20 (TuningData.sideQuestDays, plane settings.json sets 20); the old
     // hardcoded 30 remains the built-in default when no settings.json exists.
     private static int sideQuestDays() {
-        return Config.instance().getTuningData().sideQuestDays;
+        // Round 987: Guild Favorite +5 days (15 -> 20). Read when a quest's clock starts and stored as its own limit
+        // (round 367), so it reaches quests accepted after the pick only.
+        return TownPerks.questDays(Config.instance().getTuningData().sideQuestDays, Ascendance.guildFavoriteDays());
     }
 
     /** Round 367: the limit every quest whose clock started before this round keeps (settings.json said 20 then). */
@@ -108,7 +110,8 @@ public class QuestExpiry {
         world.getQuestAcceptedDay().put(key, world.getCurrentDay());
         world.getQuestDayLimit().put(key, sideQuestDays());
         System.out.println("[QuestExpiry] " + quest.getName() + " accepted on day " + world.getCurrentDay() + " - "
-                + sideQuestDays() + " days");
+                + sideQuestDays() + " days" + (Ascendance.guildFavoriteDays() > 0 ? " ([TFR-GuildFavorite] +"
+                + Ascendance.guildFavoriteDays() + ")" : ""));
     }
 
     /** Chain side quests (the converted "relic trail" line, 2026-08-26 review finding) are

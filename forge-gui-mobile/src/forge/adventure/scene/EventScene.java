@@ -72,7 +72,17 @@ public class EventScene extends MenuScene implements IAfterMatch {
         super(Forge.isLandscapeMode() ? "ui/event.json" : "ui/event_portrait.json");
         Localizer localizer = Forge.getLocalizer();
         // TODO: Add translation
-        float townPriceModifier = changes == null ? 1f : changes.getTownPriceModifier();
+        // TFR round 987: every entry fee through Ascendance.innFee (town price x Tournament Regular), so the option shown,
+        // its condition and the amount charged agree - and AdventureEventData's description says the same.
+        if (forge.adventure.util.Ascendance.innFeeFactor() < 1f)
+            System.out.println("[TFR-TournamentRegular] " + currentEvent.format + " entry at "
+                    + forge.adventure.util.DungeonSources.displayNameOf(currentEvent.sourceID)
+                    + ": town price x" + (changes == null ? 1f : changes.getTownPriceModifier()) + ", fees x"
+                    + forge.adventure.util.Ascendance.innFeeFactor() + " (rank " + forge.adventure.util.Ascendance.tournamentRegularRank()
+                    + ") - " + currentEvent.eventRules.goldToEnter + " gold -> "
+                    + forge.adventure.util.Ascendance.innFee(currentEvent.eventRules.goldToEnter, changes) + ", "
+                    + currentEvent.eventRules.shardsToEnter + " shards -> "
+                    + forge.adventure.util.Ascendance.innFee(currentEvent.eventRules.shardsToEnter, changes) + "; coin options unchanged");
         DialogData introDialog = new DialogData();
         introDialog.text = "Enter this event?";
         DialogData enterWithCoin = new DialogData();
@@ -81,17 +91,17 @@ public class EventScene extends MenuScene implements IAfterMatch {
         // Round 335 (the user, with a mock-up: "add in brackets next to the entry fee how much of each you have"): every
         // option ends with the balance it draws on. An option the player cannot pay stays hidden, as before.
         enterWithShards.name = String.format("Spend %d [+shards] (%d)",
-                Math.round(currentEvent.eventRules.shardsToEnter * townPriceModifier), Current.player().getShards());
+                forge.adventure.util.Ascendance.innFee(currentEvent.eventRules.shardsToEnter, changes), Current.player().getShards());
         DialogData enterWithGold = new DialogData();
         enterWithGold.name = String.format("Spend %d [+gold] (%d)",
-                Math.round(currentEvent.eventRules.goldToEnter * townPriceModifier), Current.player().getGold());
+                forge.adventure.util.Ascendance.innFee(currentEvent.eventRules.goldToEnter, changes), Current.player().getGold());
 
         DialogData.ConditionData hasGold = new DialogData.ConditionData();
-        hasGold.hasGold = Math.round(currentEvent.eventRules.goldToEnter * townPriceModifier);
+        hasGold.hasGold = forge.adventure.util.Ascendance.innFee(currentEvent.eventRules.goldToEnter, changes);
         enterWithGold.condition = new DialogData.ConditionData[]{hasGold};
 
         DialogData.ConditionData hasShards = new DialogData.ConditionData();
-        hasShards.hasShards = Math.round(currentEvent.eventRules.shardsToEnter * townPriceModifier);
+        hasShards.hasShards = forge.adventure.util.Ascendance.innFee(currentEvent.eventRules.shardsToEnter, changes);
         enterWithShards.condition = new DialogData.ConditionData[]{hasShards};
 
         // Which Coin item (if any) this entry option redeems - captured here so
@@ -138,11 +148,11 @@ public class EventScene extends MenuScene implements IAfterMatch {
         }
 
         DialogData.ActionData spendGold = new DialogData.ActionData();
-        spendGold.addGold = -Math.round(currentEvent.eventRules.goldToEnter * townPriceModifier);
+        spendGold.addGold = -forge.adventure.util.Ascendance.innFee(currentEvent.eventRules.goldToEnter, changes);
         enterWithGold.action = new DialogData.ActionData[]{spendGold};
 
         DialogData.ActionData spendShards = new DialogData.ActionData();
-        spendShards.addShards = -Math.round(currentEvent.eventRules.shardsToEnter * townPriceModifier);
+        spendShards.addShards = -forge.adventure.util.Ascendance.innFee(currentEvent.eventRules.shardsToEnter, changes);
         enterWithShards.action = new DialogData.ActionData[]{spendShards};
 
 
@@ -1031,8 +1041,7 @@ public class EventScene extends MenuScene implements IAfterMatch {
         } else {
             int gold = currentEvent.entryPaidGold;
             if (gold <= 0) {
-                float townPriceModifier = changes == null ? 1f : changes.getTownPriceModifier();
-                gold = Math.round(currentEvent.eventRules.goldToEnter * townPriceModifier);
+                gold = forge.adventure.util.Ascendance.innFee(currentEvent.eventRules.goldToEnter, changes);
             }
             Current.player().giveGold(gold);
             refunded = gold + " [+Gold]";

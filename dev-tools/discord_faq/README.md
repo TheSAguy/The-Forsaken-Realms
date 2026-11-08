@@ -58,3 +58,5 @@ at the next release. Artifact version 11 (the main thread republishes it). Paste
 2026-11-08 (round 986, for 1.28): message 3 (Perks & limits) says "About 38 perks" and names the three loot perks -
 Bounty Hunter, Legend Slayer, Treasure Seeker. `EDITED = {3}`. Edit it in Discord when 1.28 ships. The artifact page is
 not republished.
+Round 987 (also for 1.28): message 3 says "About 40 perks" and adds Tournament Regular and Guild Favorite. `EDITED`
+stays `{3}`.

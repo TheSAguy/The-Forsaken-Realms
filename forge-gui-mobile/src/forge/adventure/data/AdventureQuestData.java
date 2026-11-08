@@ -766,6 +766,9 @@ public class AdventureQuestData implements Serializable {
         if (epilogue != null && !epilogue.isDisplayed() && !epilogueDisplayed) {
             epilogue.markDisplayed();
             epilogueDisplayed = true;
+            // TFR round 987: Guild Favorite raises a side quest's own epilogue copy (never a story quest's), once - this
+            // branch runs once per quest.
+            forge.adventure.util.Ascendance.guildFavoriteRewards(this, epilogue, "epilogue");
             return epilogue;
         }
         return null;

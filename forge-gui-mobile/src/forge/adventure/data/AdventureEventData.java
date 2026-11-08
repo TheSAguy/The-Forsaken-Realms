@@ -1152,6 +1152,13 @@ public class AdventureEventData implements Serializable {
                 ret.addAll(data.generate(false, true));
             }
         }
+        // TFR round 987: Tournament Regular - a won bracket (3-0 champion) pays one card from the event's set, a rare or
+        // 1 in 8 a mythic. Behind round 369's firstAward, so a re-opened reward screen cannot pay it twice.
+        if (firstAward) {
+            forge.item.PaperCard regularCard = forge.adventure.util.Ascendance.tournamentRegularCard(this);
+            if (regularCard != null)
+                ret.add(new Reward(regularCard));
+        }
         if (ret.size > 0) {
             RewardScene.instance().loadRewards(ret, RewardScene.Type.EventReward, null);
             Forge.switchScene(RewardScene.instance());
@@ -1240,7 +1247,7 @@ public class AdventureEventData implements Serializable {
 
     public String getDescription(PointOfInterestChanges changes) {
         Localizer localizer = Forge.getLocalizer();
-        float townPriceModifier = changes == null ? 1f : changes.getTownPriceModifier();
+        // TFR round 987: every entry fee through Ascendance.innFee (town price x Tournament Regular), as EventScene charges it.
         if (format == AdventureEventController.EventFormat.Draft) {
             description = localizer.getMessage("advEventTypeBoosterDraft");
             description += "Block: " + getCardBlock() + "\n";
@@ -1248,7 +1255,7 @@ public class AdventureEventData implements Serializable {
             description += "Competition Style: " + participants.length + " players, matches played as best of " + eventRules.gamesPerMatch + ", " + (eventRules.getPairingDescription()) + "\n\n";
 
             if (eventStatus == AdventureEventController.EventStatus.Available) {
-                description += String.format("Pay 1 Entry Fee\n- Gold %d[][+Gold][BLACK]\n- Mana Shards %d[][+Shards][BLACK]\n", Math.round(eventRules.goldToEnter * townPriceModifier), Math.round(eventRules.shardsToEnter * townPriceModifier));
+                description += String.format("Pay 1 Entry Fee\n- Gold %d[][+Gold][BLACK]\n- Mana Shards %d[][+Shards][BLACK]\n", forge.adventure.util.Ascendance.innFee(eventRules.goldToEnter, changes), forge.adventure.util.Ascendance.innFee(eventRules.shardsToEnter, changes));
                 if (eventRules.acceptsBronzeChallengeCoin) {
                     description += "- Bronze Challenge Coin [][+BronzeChallengeCoin][BLACK]\n\n";
                 } else if (eventRules.acceptsSilverChallengeCoin) {
@@ -1264,7 +1271,7 @@ public class AdventureEventData implements Serializable {
             description = "Event Type: Jumpstart\n";
             description += "Block: " + getCardBlock() + "\n";
             description += "Competition Style: " + participants.length + " players, matches played as best of " + eventRules.gamesPerMatch + ", " + (eventRules.getPairingDescription()) + "\n\n";
-            description += String.format("Pay 1 Entry Fee\n- Gold %d[][+Gold][BLACK]\n- Mana Shards %d[][+Shards][BLACK]\n", Math.round(eventRules.goldToEnter * townPriceModifier), Math.round(eventRules.shardsToEnter * townPriceModifier));
+            description += String.format("Pay 1 Entry Fee\n- Gold %d[][+Gold][BLACK]\n- Mana Shards %d[][+Shards][BLACK]\n", forge.adventure.util.Ascendance.innFee(eventRules.goldToEnter, changes), forge.adventure.util.Ascendance.innFee(eventRules.shardsToEnter, changes));
             if (eventRules.acceptsBronzeChallengeCoin) {
                 description += "- Bronze Challenge Coin [][+BronzeChallengeCoin][BLACK]\n\n";
             } else if (eventRules.acceptsSilverChallengeCoin) {
@@ -1286,8 +1293,8 @@ public class AdventureEventData implements Serializable {
 
             if (eventStatus == AdventureEventController.EventStatus.Available) {
                 description += String.format("Pay 1 Entry Fee\n- Gold %d[][+Gold][BLACK]\n- Mana Shards %d[][+Shards][BLACK]\n",
-                        Math.round(eventRules.goldToEnter * townPriceModifier),
-                        Math.round(eventRules.shardsToEnter * townPriceModifier));
+                        forge.adventure.util.Ascendance.innFee(eventRules.goldToEnter, changes),
+                        forge.adventure.util.Ascendance.innFee(eventRules.shardsToEnter, changes));
 
                 if (eventRules.acceptsSilverChallengeCoin) {
                     description += "- Silver Challenge Coin [][+SilverChallengeCoin][BLACK]\n\n";

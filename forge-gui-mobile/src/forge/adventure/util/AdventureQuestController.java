@@ -352,6 +352,7 @@ public class AdventureQuestController implements Serializable {
 
                 if (questStage.getStatus() == COMPLETE && questStage.epilogue != null && !questStage.epilogueDisplayed){
                     questStage.epilogueDisplayed = true;
+                    Ascendance.guildFavoriteRewards(quest, questStage.epilogue, "stage \"" + questStage.name + "\""); // TFR round 987
                     dialogQueue.add(questStage.epilogue);
                 }
             }

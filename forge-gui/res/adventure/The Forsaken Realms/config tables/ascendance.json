@@ -222,6 +222,13 @@
     // Treasure Seeker (not "Cartographer": the Compass and the Guild): rank I, "pieces" map pieces an obelisk; rank II, a
     // claimed treasure's gold, shards and cards x (1 + purse) - the key or Compass and the Power once. Offered only while
     // a treasure is unclaimed.
-    { "id": "treasureSeeker", "lasting": true, "maxPicks": 2, "pieces": 2, "purse": 1.0 }
+    { "id": "treasureSeeker", "lasting": true, "maxPicks": 2, "pieces": 2, "purse": 1.0 },
+    // Round 987, the two town perks (same approval). Tournament Regular: Inn entry fees in gold and shards x (1 - the
+    // rank's total) - 25%, then 50% off; the Challenge Coin options are unchanged. From rank I a won bracket (3-0
+    // champion) pays "cards" extra card from the event's own set: a rare, or a mythic at "mythicChance" (1 in 8).
+    { "id": "tournamentRegular", "lasting": true, "maxPicks": 2, "ranks": [0.25, 0.5], "cards": 1, "mythicChance": 0.125 },
+    // Guild Favorite: side quests (never story quests) pay +purse gold and shards and +cards on each card reward, and a
+    // side quest accepted after the pick gets "days" more before it fails (15 -> 20 on the standard settings).
+    { "id": "guildFavorite", "lasting": true, "maxPicks": 1, "purse": 0.5, "cards": 1, "days": 5, "minLevel": 6 }
   ]
 }

@@ -1242,6 +1242,177 @@ public final class Ascendance {
 
     public static int treasureSeekerRank() { return picks("treasureSeeker"); }
 
+    // ------------------------------------------------------------------- round 987: the two town perks
+    // Same approval (notes/perks-fable-1108.md sections 2 and 3). Both hook stock files - see CORE_ENGINE_CHANGES.md.
+
+    /** Tournament Regular: Inn entry fees in gold and shards, times this (0.75, then 0.5). 1 without the pick. */
+    public static float innFeeFactor() { return Math.max(0f, 1f - total("tournamentRegular")); }
+
+    public static int tournamentRegularRank() { return picks("tournamentRegular"); }
+
+    /**
+     * Round 987: every Inn entry-fee read (AdventureEventData.getDescription, EventScene's entry dialog and its refund) goes
+     * through this, so the fee shown is the fee charged (round 852's lesson): the unscaled fee x the town's price modifier
+     * x Tournament Regular's factor. Without the pick it is the stock Math.round(fee x town).
+     */
+    public static int innFee(int baseFee, forge.adventure.pointofintrest.PointOfInterestChanges changes) {
+        return TownPerks.innFee(baseFee, changes == null ? 1f : changes.getTownPriceModifier(), innFeeFactor());
+    }
+
+    /**
+     * Tournament Regular: the extra card a won bracket (3-0 champion) pays - one card from the event's own set (its pack
+     * editions, else its block's sets): a rare, or at the choice's mythicChance (1 in 8) a mythic; a set with no mythics
+     * gives a rare. Logged and noted in the HUD's log. Null without the pick, for a non-champion, or with no such card.
+     */
+    public static forge.item.PaperCard tournamentRegularCard(AdventureEventData event) {
+        AscendanceData.Choice c = choice("tournamentRegular");
+        if (c == null || picks("tournamentRegular") <= 0 || event == null || c.cards <= 0)
+            return null;
+        if (!TownPerks.isChampion(event.matchesWon, event.matchesLost)) {
+            System.out.println("[TFR-TournamentRegular] " + event.format + " on " + event.cardBlockName + ": "
+                    + event.matchesWon + "-" + event.matchesLost + " - not a won bracket, no extra card");
+            return null;
+        }
+        List<String> codes = new ArrayList<>();
+        if (event.packConfiguration != null)
+            for (String code : event.packConfiguration)
+                if (code != null && !code.isEmpty() && !codes.contains(code))
+                    codes.add(code);
+        if (codes.isEmpty() && event.getCardBlock() != null)
+            for (forge.card.CardEdition e : event.getCardBlock().getSets())
+                if (e != null && !codes.contains(e.getCode()))
+                    codes.add(e.getCode());
+        java.util.Collections.shuffle(codes, RAND);
+        for (String code : codes) {
+            forge.card.CardEdition edition = forge.StaticData.instance().getCardEdition(code);
+            if (edition == null)
+                continue;
+            List<forge.card.CardEdition.EditionEntry> rares = new ArrayList<>(), mythics = new ArrayList<>();
+            for (forge.card.CardEdition.EditionEntry entry : edition.getObtainableCards()) {
+                if (entry.rarity() == forge.card.CardRarity.Rare)
+                    rares.add(entry);
+                else if (entry.rarity() == forge.card.CardRarity.MythicRare)
+                    mythics.add(entry);
+            }
+            if (rares.isEmpty() && mythics.isEmpty())
+                continue;
+            float roll = RAND.nextFloat();
+            boolean mythic = TownPerks.championMythic(roll, c.mythicChance, !mythics.isEmpty(), !rares.isEmpty());
+            List<forge.card.CardEdition.EditionEntry> pool = new ArrayList<>(mythic ? mythics : rares);
+            java.util.Collections.shuffle(pool, RAND);
+            for (forge.card.CardEdition.EditionEntry entry : pool) {
+                forge.item.PaperCard card = forge.StaticData.instance().fetchCard(entry.name(), code, entry.collectorNumber());
+                if (card == null)
+                    card = forge.StaticData.instance().getCommonCards().getCard(entry.name(), code);
+                if (card == null || card.getRules().getType().isBasicLand())
+                    continue;
+                System.out.println("[TFR-TournamentRegular] " + event.format + " on " + event.cardBlockName + " won "
+                        + event.matchesWon + "-" + event.matchesLost + ": pays " + card.getName() + " (" + card.getRarity()
+                        + ", " + code + "; roll " + String.format(java.util.Locale.ROOT, "%.3f", roll) + " vs mythic "
+                        + c.mythicChance + ", " + rares.size() + " rares / " + mythics.size() + " mythics in the set)");
+                GameHUD.getInstance().logNotification("Tournament Regular: your bracket win pays "
+                        + (mythic ? "a mythic, " : "") + card.getName() + ".", false);
+                return card;
+            }
+        }
+        System.out.println("[TFR-TournamentRegular] " + event.format + " on " + event.cardBlockName + ": no rare or mythic"
+                + " found in " + codes + " - no extra card");
+        return null;
+    }
+
+    /** Guild Favorite: is it taken? */
+    public static boolean guildFavorite() { return picks("guildFavorite") > 0; }
+
+    /** Guild Favorite: days added to a side quest's limit when its clock starts (5). 0 without the pick. */
+    public static int guildFavoriteDays() {
+        AscendanceData.Choice c = choice("guildFavorite");
+        return c == null || picks("guildFavorite") <= 0 ? 0 : Math.max(0, c.days);
+    }
+
+    /**
+     * Guild Favorite: a side quest's reward dialog (its epilogue, or a stage's), scaled in place just before it is queued
+     * - gold and shards (addGold, addShards, "gold"/"shards" rewards with their addMaxCount) x (1 + purse), each card
+     * reward entry +cards, and the dialog's own "+N [+Gold]" / "+N [+Shards]" text to match. Story quests are never
+     * touched. The dialog is the quest's own copy (round 889: its actions are copied per quest); the reward entries are
+     * shared with the template, so each scaled entry is a new RewardData put into the copy's own array.
+     */
+    public static void guildFavoriteRewards(AdventureQuestData quest, forge.adventure.data.DialogData dialog, String part) {
+        if (quest == null || dialog == null || quest.storyQuest || !guildFavorite())
+            return;
+        AscendanceData.Choice c = choice("guildFavorite");
+        if (c == null)
+            return;
+        int[] tally = new int[6]; // gold before, after; shards before, after; card entries; texts rewritten
+        scaleQuestDialog(dialog, c.purse, Math.max(0, c.cards), tally, 0);
+        if (tally[0] == 0 && tally[2] == 0 && tally[4] == 0)
+            return; // most stage epilogues pay nothing - no line for them
+        System.out.println("[TFR-GuildFavorite] \"" + quest.getName() + "\" " + part + ": gold " + tally[0] + " -> " + tally[1]
+                + ", shards " + tally[2] + " -> " + tally[3] + ", card entries " + tally[4] + " (+" + c.cards + " each), "
+                + tally[5] + " reward line(s) rewritten (x" + factorWords(1f + c.purse) + ", side quest)");
+        GameHUD.getInstance().logNotification("Guild Favorite: \"" + quest.getName() + "\" pays more.", false);
+    }
+
+    private static void scaleQuestDialog(forge.adventure.data.DialogData d, float purse, int cards, int[] tally, int depth) {
+        if (d == null || depth > 12)
+            return;
+        String text = TownPerks.scaleRewardText(d.text, purse);
+        if (text != null && !text.equals(d.text)) {
+            d.text = text;
+            tally[5]++;
+        }
+        if (d.action != null)
+            for (forge.adventure.data.DialogData.ActionData a : d.action) {
+                if (a == null)
+                    continue;
+                if (a.addGold > 0) {
+                    tally[0] += a.addGold;
+                    a.addGold = TownPerks.questAmount(a.addGold, purse);
+                    tally[1] += a.addGold;
+                }
+                if (a.addShards > 0) {
+                    tally[2] += a.addShards;
+                    a.addShards = TownPerks.questAmount(a.addShards, purse);
+                    tally[3] += a.addShards;
+                }
+                if (a.grantRewards != null)
+                    for (int i = 0; i < a.grantRewards.length; i++)
+                        a.grantRewards[i] = scaledQuestReward(a.grantRewards[i], purse, cards, tally);
+            }
+        if (d.options != null)
+            for (forge.adventure.data.DialogData option : d.options)
+                scaleQuestDialog(option, purse, cards, tally, depth + 1);
+    }
+
+    private static forge.adventure.data.RewardData scaledQuestReward(forge.adventure.data.RewardData r, float purse, int cards,
+                                                                     int[] tally) {
+        if (r == null || r.type == null)
+            return r;
+        switch (r.type) {
+            case "gold":
+            case "shards": {
+                forge.adventure.data.RewardData s = new forge.adventure.data.RewardData(r);
+                s.count = TownPerks.questAmount(r.count, purse);
+                s.addMaxCount = TownPerks.questAmount(r.addMaxCount, purse);
+                int k = "gold".equals(r.type) ? 0 : 2;
+                tally[k] += r.count;
+                tally[k + 1] += s.count;
+                return s;
+            }
+            case "card":
+            case "randomCard":
+            case "deckCard": {
+                if (r.count <= 0 || cards <= 0)
+                    return r;
+                forge.adventure.data.RewardData s = new forge.adventure.data.RewardData(r);
+                s.count = TownPerks.questCards(r.count, cards);
+                tally[4]++;
+                return s;
+            }
+            default:
+                return r;
+        }
+    }
+
     /** Round 596, Insight (the user: "Get 4 perk choices vs. 3. One time"): rewards in a level's offer - offerSize plus
      *  the pick's value. */
     public static int offerSize() { return Math.max(1, data().offerSize + Math.round(total("insight"))); }
@@ -1688,6 +1859,12 @@ public final class Ascendance {
             case "treasureSeeker": effect = "Each obelisk gives " + Math.max(1, c.pieces) + " map pieces"
                     + (next > 1 ? "; a treasure's [+Gold], [+Shards] and cards pay " + timesWords(Math.round(1f + c.purse)) : "");
                 break;
+            case "tournamentRegular": // round 987
+                effect = "Inn entry fees -" + pct(then) + " [+Gold] [+Shards]" + (now > 0 ? " (now -" + pct(now) + ")" : "")
+                        + (next == 1 ? "; a 3-0 bracket win pays a rare from its set (1 in " + Math.round(1f / Math.max(0.01f, c.mythicChance))
+                        + " a mythic)" : "");
+                break;
+            case "guildFavorite": effect = guildFavoriteText(c); break;
             default: effect = id;
         }
         return effect;
@@ -1785,6 +1962,18 @@ public final class Ascendance {
         return Math.abs(f - Math.round(f)) < 1e-3f ? String.valueOf(Math.round(f)) : String.format(java.util.Locale.ROOT, "%.1f", f);
     }
 
+    /** Round 987: "Side quests pay +50% [+Gold] and [+Shards], +1 card a card reward, and give 20 days" - the days from
+     *  the difficulty's own limit, left out when side quests have no timer. */
+    private static String guildFavoriteText(AscendanceData.Choice c) {
+        String text = "Side quests pay +" + pct(c.purse) + " [+Gold] and [+Shards] and +" + Math.max(0, c.cards)
+                + " card on each card reward";
+        ConfigData config = Config.instance().getConfigData();
+        forge.adventure.data.TuningData t = Config.instance().getTuningData();
+        if (config != null && config.sideQuestTimerEnabled && t != null && c.days > 0)
+            text += "; new ones get " + TownPerks.questDays(t.sideQuestDays, c.days) + " days, not " + t.sideQuestDays;
+        return text;
+    }
+
     private static String timesWords(int n) {
         return n == 2 ? "twice" : n + " times";
     }
@@ -1829,6 +2018,8 @@ public final class Ascendance {
             case "bountyHunter": return "Bounty Hunter"; // round 986
             case "legendSlayer": return "Legend Slayer";
             case "treasureSeeker": return "Treasure Seeker"; // not "Cartographer": the Compass and the Guild have that word
+            case "tournamentRegular": return "Tournament Regular"; // round 987
+            case "guildFavorite": return "Guild Favorite";
             default: return id;
         }
     }

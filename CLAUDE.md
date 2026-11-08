@@ -20,15 +20,20 @@ and Empower cards: new `IncubateAi`/`EmpowerAi` in `SpellApiToAi`, an upstream g
 round 985 (slow devices: the print sheets are built on a background thread after a load or a new world, once and
 under a lock, not on the GL thread at the first booster - `[TFR-PrintSheets]`, `[TFR-Perf] print sheets loaded on`;
 card textures are unloaded one file at a time, so one failure no longer strands the rest - `[TFR-Memory] card texture
-unload failed` - logs-1108 P3-9 and P3-11) and round 986 (three loot perks from Fable's proposals, approved in
+unload failed` - logs-1108 P3-9 and P3-11), round 986 (three loot perks from Fable's proposals, approved in
 `notes/perks-fable-1108.md`: Bounty Hunter - the Bounty's points x1.5/x2, cap 40%/50%; Legend Slayer - the first win over
 each legend pays its whole card list and a mythic from its deck, keyed `enemy|legendSlayer|<name>` in the world's
 once-paid map; Treasure Seeker - 2 map pieces an obelisk, then a treasure's gold, shards and cards twice; new
-`util/LootPerks` + `LootPerksTest`; 38 lasting perks, 68 ranks; round 987 builds Tournament Regular and Guild Favorite).
+`util/LootPerks` + `LootPerksTest`; 38 lasting perks, 68 ranks) and round 987 (the two town perks, same approval:
+Tournament Regular - Inn entry fees in gold and shards -25%/-50%, all 13 fee reads through `Ascendance.innFee`, and a
+3-0 bracket pays a rare from the event's set, 1 in 8 a mythic; Guild Favorite, level 6+ - side quests pay +50% gold and
+shards and +1 card a card reward (epilogue and stage epilogues, scaled copies, never story quests) and 20 days instead of
+15 for new ones; new `util/TownPerks` + `TownPerksTest`; stock `AdventureEventData`, `EventScene`, `AdventureQuestData`,
+`AdventureQuestController`; `ascendance_icons` page 800x1200; 40 lasting perks, 71 ranks).
 Engine = the 11.05 daily (round 978, upstream `1e8c35fca3e`; round 769's R1-R4 still
 keep TFR's synchronous auto save, eager shops, Inn events and place entry; bosses keep the player's AI setting through
 `bossAiFollowsSetting`); next merge from upstream after `1e8c35fca3e` (its first commit is `f62f804806c`, #12695, five AI files and `MagicStack`); BASE_INSTALL is that daily, so packages need no
-`--allow-base-mismatch`. Next version: 1.28 / 12800. Next free round: 987. The agent profile's window is
+`--allow-base-mismatch`. Next version: 1.28 / 12800. Next free round: 988. The agent profile's window is
 1280x720 - at 3840x2160 it covered the screen, got minimized, and a minimized game stops (the bridge times out, shots
 come back 1x1). Agent games keep their own LOCALAPPDATA cache (round 860). Log sharing (round 698) posts to Discord
 through a webhook kept OUT of git in `C:\TFR\secrets\discord_log_webhook.txt` - never commit it; the packager and

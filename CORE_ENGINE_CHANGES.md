@@ -35,6 +35,26 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 987 - the town perks: Tournament Regular (Inn fees, a champion's card) and Guild Favorite (side quests)
+- `forge-gui-mobile/src/forge/adventure/data/AdventureEventData.java` (STOCK): `getDescription` drops its local
+  `townPriceModifier`; its six fee reads (Draft, Jumpstart and Sealed, gold and shards each) call
+  `forge.adventure.util.Ascendance.innFee(eventRules.goldToEnter / shardsToEnter, changes)` - town price x Tournament
+  Regular's factor, rounded once, so without the perk the number is stock's `Math.round(fee x town)`. `giveRewards`
+  adds, after the `rewards` loop and behind round 369's `firstAward`, `Ascendance.tournamentRegularCard(this)` as one
+  more `Reward` (null without the perk or for a non-3-0 finish). On a merge: if upstream changes the fee strings or
+  `giveRewards`' reward list, keep both calls; every fee read must go through `innFee`.
+- `forge-gui-mobile/src/forge/adventure/scene/EventScene.java` (STOCK): the constructor drops its local
+  `townPriceModifier`; the shards and gold option names, the `hasGold`/`hasShards` conditions and the `spendGold`/
+  `spendShards` actions (six reads) call `Ascendance.innFee(..., changes)`, plus a `[TFR-TournamentRegular]` line when
+  the perk cuts the fee. `voidUndealableEvent`'s fallback refund (no recorded payment) does too (the seventh read).
+- `forge-gui-mobile/src/forge/adventure/data/AdventureQuestData.java` (STOCK): `getEpilogue()`'s once-only branch calls
+  `Ascendance.guildFavoriteRewards(this, epilogue, "epilogue")` before returning it - side quests only; it swaps in
+  scaled copies of the shared `RewardData` entries and raises the copy's own `addGold`/`addShards` and reward text.
+- `forge-gui-mobile/src/forge/adventure/util/AdventureQuestController.java` (STOCK): the stage-epilogue branch of the
+  dialog sweep calls `Ascendance.guildFavoriteRewards(quest, questStage.epilogue, ...)` right after
+  `epilogueDisplayed = true`, before queueing it.
+- New TFR files (not stock): `util/TownPerks.java`, `test/.../TownPerksTest.java`.
+
 ### Round 985 - print sheets built once under a lock (and ImageKeys' caches locked); card textures unloaded one at a time
 - `forge-core/src/main/java/forge/StaticData.java` (STOCK): `printSheets` is `volatile`, with a new
   `printSheetsLock`. `getPrintSheets()` is double-checked locking around the stock

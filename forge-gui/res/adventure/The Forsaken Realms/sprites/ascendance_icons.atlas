@@ -1,6 +1,6 @@
 
 ascendance_icons.png
-size: 800,1100
+size: 800,1200
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
@@ -267,4 +267,13 @@ treasureSeeker_1
   size: 96, 96
 treasureSeeker_2
   xy: 702, 1002
+  size: 96, 96
+tournamentRegular_1
+  xy: 2, 1102
+  size: 96, 96
+tournamentRegular_2
+  xy: 102, 1102
+  size: 96, 96
+guildFavorite_1
+  xy: 202, 1102
   size: 96, 96
