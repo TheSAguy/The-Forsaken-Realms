@@ -14264,6 +14264,40 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 988: the perk icons repainted - one painted look for every Ascension perk (2026-11-08)
+
+The user, through the Art main thread: "Let's do the same for TFR1's perk icons. See if any needs updating/enhancing
+please." The same review TFR 2's Boon icons had: every region of `sprites/ascendance_icons` drawn at game size (choice
+row 26 units = 69 px at 720p / 104 px at 1080p; Level sheet 12 units = 32 / 48 px; Linear), then look-alikes, misfits
+and weak reads flagged. Approved: "Yes, as recommended", then "Yes, install it" from the installed preview.
+
+- **Found:** four looks on one page - Heroes III skill tiles and Painted Skill tiles (kept), beside 21 perks of 3x
+  pixel icons that go soft at game size and loose painted objects with no tile, ranked by 3-px green chevrons. Look-alikes:
+  Temple Priest and Home Ground (both candles), Researcher and Treasure Seeker (magnifiers), Shardwell I and the Shards
+  reward (the same picture), Tournament Regular and the title goblets, Treasure Seeker among the parchment squares.
+- **`sprites/ascendance_icons.png`: 41 regions replaced in place** (the `.atlas` is unchanged; each region's 2-px
+  extruded gutter redrawn). Ranks are TFR 1's silver (rank II of three) and gold (top rank) rims, lifted from
+  Prospector II/III; no chevrons are left on lasting perks.
+  - New painted tiles (ChatGPT, in the Painted Skill style; Art Library `Projects/The Forsaken Realms/Game Art/Perk Icons`):
+    Shardwell (a well of violet shards), Opening Gambit (a flicked coin), Gambler (two dice), Intimidating (a roaring
+    wolf), Focused (a fanned hand), Aura of Fear (a hooded wraith in violet mist), Pact of Embers (a burning sealed
+    contract), Challenger's Mark (a flung gauntlet), Scientist (a flask of five colors), Guard Focus (a shield and
+    cards), Spoils of War (a weapon rack and a glowing card), Legend Seeker (a giant paw print), Law of Stakes (a gavel
+    on a card), Bounty Hunter (a wanted poster and a gold pouch), Legend Slayer (a sword through a dragon skull),
+    Treasure Seeker (a rune obelisk and a map scrap), Guild Favorite (a notice board with a gold star).
+  - Swapped to existing art: Temple Priest `faith_and_cloister_01`, Researcher `scribe_and_scholarship_01`, Appraiser
+    `trade_and_coin_01`, Hunter's Ledger `hunting_02`, Warmonger `swordsmanship_01` (Painted Skill Icons, 128 ->
+    96 LANCZOS); Zealot, Insight and Home Ground take TFR 2's painted Boon tiles of the same perks.
+  - Tweaked: Splinter Cache's crystals and round 987's Tournament Regular cup sit on painted gradient tiles.
+  - Unchanged, byte-identical (checked per pixel): the Heroes III perks, Prospector, Architect, Mechanic, Medic, every
+    one-time reward, the title medals and the heart (50 regions); nothing outside the 41 cells and their gutters moved.
+- **CREDITS.md:** Shikashi's line keeps only the pendants and the Power sun; the Medieval Skill Icons line names the five
+  swapped tiles; a new line for the ChatGPT-painted perk icons.
+- Build and review files (not in the repo): `C:\CLAUDE\PROJECTS\ART\notes\tfr1_perk_icons\` (`tools\build.py`,
+  `tools\verify.py`, `review\installed_preview.png`, `review\installed_988.png`).
+- Not seen in the running game; the page loads by the unchanged `.atlas`. TFR 2 shares the duel-perk regions (its
+  Boons 27-37) through its own copy of the page and can carry them over.
+
 ## Round 987: two town perks - Tournament Regular, Guild Favorite (2026-11-08)
 
 - **Why** - the second half of Fable's five perks as reshaped in `C:\CLAUDE\PROJECTS\TFR1\notes\perks-fable-1108.md`

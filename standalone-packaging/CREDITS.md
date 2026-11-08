@@ -287,18 +287,19 @@ Some enemies use free sprite packs, adapted into the game's atlas format:
 ## Item art
 
 - **Neck pendants** (the gold chain and the lotus bud, coin, leaf and feather pendants of the fifteen mana items that
-  hang at the neck), **the Power icon** (the radiant sun of Ascendance's Power), **the Opening Gambit coin**, **the
-  Zealot icons** (the Power sun, with rank chevrons drawn for this game), **the Gambler's dice** and **the Appraiser
-  icons** (the hand catching coins, with the same chevrons), **the Scientist's flask**, **the Researcher's magnifying
-  glass**, **the Intimidating grin** (with the rank chevrons), **the Temple Priest's candle**, **the Focused card** and
-  **the Guard Focus helmet** and **the Spoils of War chest** (Ascendance rewards) -
-  **Shikashi's Fantasy Icons Pack** by **Shikashi**; supplied by the user.
+  hang at the neck) and **the Power icon** (the radiant sun of Ascendance's Power) - **Shikashi's Fantasy Icons Pack**
+  by **Shikashi**; supplied by the user.
 - **Ascendance reward icons** (the pictures on the level-up choices and the Level sheet) - the Basic, Advanced and
   Expert secondary-skill icons of **Heroes of Might and Magic III** (First Aid, Estates, Logistics, Scouting,
   Leadership, Resistance, Armorer, Luck and Diplomacy), © New World Computing / The 3DO Company, 1999; and for
-  Prospector, Architect, Mechanic, Medic and town reputation the free **32 Medieval Skill Icons** pack (mining, masonry,
-  smithing, medicine, speech and diplomacy), with our thanks to its creator, the silver and gold rank rims added for
-  this game; supplied by the user.
+  Prospector, Architect, Mechanic, Medic, Temple Priest, Researcher, Appraiser, Hunter's Ledger, Warmonger and town
+  reputation the free **32 Medieval Skill Icons** pack (mining, masonry, smithing, medicine, faith and cloister, scribe
+  and scholarship, trade and coin, hunting, swordsmanship, speech and diplomacy), with our thanks to its creator, the
+  silver and gold rank rims added for this game; supplied by the user.
+- **Painted perk icons** (round 988: Shardwell, Opening Gambit, Gambler, Intimidating, Focused, Aura of Fear, Pact of
+  Embers, Challenger's Mark, Scientist, Guard Focus, Spoils of War, Legend Seeker, Law of Stakes, Bounty Hunter, Legend
+  Slayer, Treasure Seeker, Guild Favorite, Zealot, Insight and Home Ground) - made by the game's author with ChatGPT,
+  in the style of the Medieval Skill Icons.
 - **Ascendance title medals** (the Level sheet's icons for the six title levels) - steps of the **Free Game
   Achievement Vector RPG Icons** set by **CraftPix.net** (https://craftpix.net/file-licenses/); supplied by the user.
 - **The Soothsayer's Hat icon** (round 648) - the pointed hat of the free **16x16 RPG Item Pack**, recolored blue with a gold band and star for this game; supplied by the user, and our thanks to the pack's unnamed author(s).
