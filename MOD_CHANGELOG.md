@@ -14264,6 +14264,34 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 989: the HUD starts hidden in caves and dungeons - TFR 2's rule ported (2026-11-08)
+
+The user: "In TFR2, we had the HUD minimized when entering a dungeon. I'd like that in TFR1 also." A port of TFR 2's
+`Tfr2Hud` (2026-11-07), without its TFR 2 world gate.
+
+- **New `util/TfrHud`.** `MapStage.loadMap` calls `TfrHud.mapLoaded(targetMap)` once the map stands (after `spawn`).
+  When the root point's type is `cave` or `dungeon`, it records the world map's HUD view (`GameHUD.isHudHidden()`) and
+  puts the HUD in its hidden view, the one a double tap on the avatar toggles (`GameHUD.showHideHUD(true)`): only the
+  avatar shows, at the map's 40%. Towns, castles, capitals and side-boss places are untouched.
+- **Inside**, the double tap still toggles it. A next level keeps the player's choice: `showHideMap(false)` fades
+  every group back in at each level's load, so a hidden view is re-applied there; a shown one is left alone.
+- **Leaving.** `MapStage.clearIsInMap` (the world map scene's `enter`, a load, a failed map load) calls
+  `TfrHud.mapLeft()` after `showHideMap(true)`, which always restores the world map's own view - hidden if the player
+  had it hidden before going in. Nothing is saved: every new cave or dungeon starts hidden again. A load reaches
+  `clearIsInMap`, so the state never outlives a save.
+- **`GameHUD.isHudHidden()`**, a one-line accessor for the existing `hidden` field (stock file).
+- **Console `hud [state|toggle|hide|show]`** (cheats; the agent's `cmd console`): toggles the view and prints it.
+- **Log:** `[TFR-Hud] entered a <kind> (<map>): HUD hidden; the world map's was <shown|hidden>`,
+  `[TFR-Hud] next level <map>: kept <hidden|shown>`, `[TFR-Hud] left the dungeon: HUD <..> as on the world map (it was
+  <..> inside)`, `[TFR-Hud] state ...` from the console.
+- **Test:** `TfrHudTest` (6 cases: the kinds, towns untouched, hide then restore, a hidden world map stays hidden, a next
+  level keeps either choice and re-applies the hidden one, every dungeon starts hidden again) through a fake view.
+- **Agent check** (shots in `C:\CLAUDE\PROJECTS\TFR1\notes\r989\`): the agent game on slot 99, the classes ahead of the
+  jar. The world map HUD shown (1); teleported into CaveLarge1 ("Forgotten Cave", `cave_multilevel/cave_16`) - avatar
+  only (2); toggled shown (3), stairs to `cave_16B` kept it shown (4); hidden again, stairs to `cave_16BR1` kept it
+  hidden (5); `leave` - the world map's full HUD back (6). Orazca (a town) after it: shown, untouched. Every
+  `[TFR-Hud]` line above in the agent's forge.log.
+
 ## Round 988: the perk icons repainted - one painted look for every Ascension perk (2026-11-08)
 
 The user, through the Art main thread: "Let's do the same for TFR1's perk icons. See if any needs updating/enhancing

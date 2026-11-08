@@ -35,6 +35,17 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 989 - the HUD starts hidden in caves and dungeons (TfrHud, ported from TFR 2)
+- `forge-gui-mobile/src/forge/adventure/stage/MapStage.java` (STOCK): `loadMap` calls
+  `forge.adventure.util.TfrHud.mapLoaded(targetMap)` right after `spawn(spawnTargetId)`; `clearIsInMap` calls
+  `TfrHud.mapLeft()` after `GameHUD.getInstance().showHideMap(true)` (it must stay after it: showHideMap(true) fades every
+  group back in, and mapLeft then puts the world map's hidden view back). One line each.
+- `forge-gui-mobile/src/forge/adventure/stage/GameHUD.java` (STOCK): a new `isHudHidden()` accessor for the existing
+  `hidden` field, above `showHideHUD`. If upstream renames `hidden` or reworks `showHideHUD`, keep the accessor reading
+  whatever the double tap toggles.
+- `forge-gui-mobile/src/forge/adventure/stage/ConsoleCommandInterpreter.java`: one `registerCommand` line, `hud`.
+- New TFR files (not stock): `util/TfrHud.java`, `test/.../TfrHudTest.java`.
+
 ### Round 987 - the town perks: Tournament Regular (Inn fees, a champion's card) and Guild Favorite (side quests)
 - `forge-gui-mobile/src/forge/adventure/data/AdventureEventData.java` (STOCK): `getDescription` drops its local
   `townPriceModifier`; its six fee reads (Draft, Jumpstart and Sealed, gold and shards each) call

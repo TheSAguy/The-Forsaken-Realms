@@ -1389,6 +1389,11 @@ public class GameHUD extends Stage {
         }
     }
 
+    /** Round 989 (TfrHud): the HUD is in its hidden view (a double tap on the avatar). */
+    public boolean isHudHidden() {
+        return hidden;
+    }
+
     public void showHideHUD(boolean hide) {
         if (hide) {
             hudGroup.addAction(Actions.fadeOut(0.5f));

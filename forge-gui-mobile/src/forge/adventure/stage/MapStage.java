@@ -700,6 +700,7 @@ public class MapStage extends GameStage {
         chaser = null; // round 724
         chaseSeen.clear(); // round 982
         GameHUD.getInstance().showHideMap(true);
+        forge.adventure.util.TfrHud.mapLeft(); // round 989: the world map's HUD view back after a cave or dungeon
     }
 
     public void draw(Batch batch) {
@@ -1018,6 +1019,7 @@ public class MapStage extends GameStage {
             EconomyBuildings.settleCapitolBoosterLot(this, boosterLotId);
         assignLootGuards(targetMap); // round 279, after the layer loop so every booster, chest and enemy is in
         spawn(spawnTargetId);
+        forge.adventure.util.TfrHud.mapLoaded(targetMap); // round 989: a cave or dungeon starts with the HUD hidden
 
         if (effect != null && enemies.size() > 0) {
             effectDialog(effect);
