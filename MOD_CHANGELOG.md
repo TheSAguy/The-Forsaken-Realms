@@ -14264,6 +14264,79 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 985: slow devices - print sheets off the GL thread, card textures always freed (2026-11-08)
+
+- **Why** - log review `C:\CLAUDE\PROJECTS\TFR1\notes\logs-1108.md` P3-9 and P3-11. The user approved both as one
+  round ("Yes, build it"). Neither changes gameplay.
+  - **P3-9:** Forge builds every print sheet (`printsheets.txt` plus every edition's sections) the first time a
+    booster is made in a launch, on whatever thread asks. In Adventure that is usually the GL thread: an Inn's draft
+    event on town entry, a shop, a reward. A 3.8 GB tablet (ebb52f38) spent more than 22 s there, and a home press
+    during it got the app killed by libGDX's 4 s pause wait (`[TFR-WorldGenPause] killed by libGDX's pause wait`,
+    then `SIGNALED 9` in the foreground). The 69 `An unsupported card was requested` lines once per launch are that
+    build.
+  - **P3-11:** `ImageCache.disposeTextures()` and `unloadCardTextures(true)` unloaded every card texture inside one
+    `try` around the whole loop. One exception partway through stopped the loop, and `disposeTextures()` then cleared
+    the list anyway, so the rest stayed loaded for good: 465855fc showed `images=0` with `cards:885`.
+- **Print sheets, once and under a lock** - `forge-core/src/main/java/forge/StaticData.java` (stock file):
+  `printSheets` is `volatile` and `getPrintSheets()` builds it under a new `printSheetsLock` (double-checked). Two
+  callers at once get one build: the second waits for it, as a booster did before when it built them itself. No
+  caller can see a half-built storage. The build prints `[TFR-Perf] print sheets loaded on <thread> in N ms` once a
+  launch, so a slow device still shows up when the GL thread wins the race. New `arePrintSheetsLoaded()`.
+  - **Thread safety, checked:** `PrintSheet.initializePrintSheets` reads `printsheets.txt` with `java.io` and builds
+    `PrintSheet`/`CardPool` objects from the card database. On mobile `FModel` loads every card script at startup
+    (`loadCardsLazily` is false when `GuiBase.isMobile()`), so the build only reads the card maps. The lazy-load path
+    (desktop's option) is under `StaticData.lazyLoadLock` already. Nothing in it touches GL, libGDX, textures or the
+    UI. The lock order is `printSheetsLock` then `lazyLoadLock`, and nothing under `lazyLoadLock` asks for print
+    sheets, so there's no deadlock. `BoosterGenerator` only reads the finished storage.
+  - **One thing that was not thread-safe:** the build picks printings through `CardDb.getCardFromSet`, which calls
+    `PaperCard.hasImage` -> `ImageKeys.hasImage`. That fills `ImageKeys`' plain `HashMap` caches (`editionImageLookup`,
+    `editionAlias`, `cachedContent`, `cachedCards`), and the GL thread reads and writes the same maps in
+    `getImageFile` when it looks up a card picture. The new test found it: on a worker thread the build reached the
+    real `ImageKeys`. `forge-core/src/main/java/forge/ImageKeys.java` (stock file): `hasImage(PaperCard, boolean)`,
+    `getImageFile`, `getCachedCardsFile` and `clearMissingCards` are now `static synchronized`. None of them calls
+    out to another lock, so the lock order stays `printSheetsLock` -> `lazyLoadLock` -> `ImageKeys.class`. A
+    folder listing in `hasImage` (the first look at an edition) can make the GL thread wait a few ms. Before, the
+    GL thread did all of that work itself.
+- **The warm-up** - new `forge-gui-mobile/src/forge/adventure/util/PrintSheetWarm.java`. `WorldSave.load()` (after a
+  load that worked) and `WorldSave.generateNewWorld()` (at its end) call `PrintSheetWarm.start(...)`. The first call
+  in a launch starts a daemon thread, `TFR-PrintSheets`, at minimum priority, so a slow device's GL thread comes
+  first. It calls `getPrintSheets()` once and logs `[TFR-PrintSheets] warmed in N ms (TFR-PrintSheets, after a load,
+  N sheets)`. Later loads do nothing. If the sheets are already built it logs `already loaded`. A failure, an
+  `OutOfMemoryError` included, is logged as `[TFR-PrintSheets] warm failed` and the first booster builds them as
+  before. It takes `StaticData.instance()`, not `FModel.getMagicDb()`, so it can never be the thing that builds a
+  card database. The thread is a daemon, so it never keeps a JVM alive, and no unit test reaches `WorldSave.load`.
+- **Card textures, one at a time** - new `forge-gui-mobile/src/forge/assets/CardTextureUnload.java`;
+  `forge-gui-mobile/src/forge/assets/ImageCache.java` (stock file) calls it from both loops. It copies `cardsLoaded`
+  first (a copy that collides with a concurrent add is taken again, up to 5 times). Each file gets its own `try`. A
+  file that unloaded leaves the list; one whose unload threw stays listed, so the next unload retries it. A card
+  added during the loop also stays listed, where `clear()` used to forget it. The first failure of a launch logs
+  `[TFR-Memory] card texture unload failed: <file> <exception>`. `unloadCardTextures(true)` now clears the syncQ and
+  the card art cache even after a failure. Before, one exception skipped them too, and the art cache kept regions of
+  textures that had just been unloaded.
+- **Not done:** the partial unload, `unloadCardTextures(false)` (the over-`cacheSize` trim, stock), iterates a
+  `Sets.difference` view of `cardsLoaded` while removing from `cardsLoaded`. That throws a swallowed
+  `ConcurrentModificationException` after the first removal, so each call frees one texture and skips
+  `clearcardArtCache()`. Left alone because fixing it changes how many textures every load frees; raised with the
+  Manager.
+- **Tests** - Maven exit 0 (offline):
+  - `-pl forge-gui-mobile-dev -am package`: new `forge-gui-mobile/test/forge/assets/CardTextureUnloadTest.java`, 3
+    tests, all pass, no GL needed. One failing file skips only itself (49 of 50 unload, the bad one stays listed). A
+    card added mid-loop doesn't stop the loop and stays listed. The failure line is logged once. The jar was rebuilt
+    after the last `.java` edit.
+  - `-pl forge-gui-desktop -am test`: new `forge-gui-desktop/src/test/java/forge/card/PrintSheetsOnceTest.java`. Six
+    threads ask a fresh, eagerly loaded database for its print sheets at once. All get the same storage, it isn't
+    empty, `arePrintSheetsLoaded()` turns true, and exactly one `[TFR-Perf] print sheets loaded on` line is printed.
+    It uses the real `ImageKeys` with an empty picture folder, because Mockito's static mock holds only on the test's
+    own thread. Run with `CardDbCardMockTestCase` and `CardDbWithNoImageCardDbMockTestCase` (they mock the now
+    `synchronized` `ImageKeys.hasImage`): 110 tests, 0 failures. The first run of the test failed with an NPE in
+    `ImageKeys` on a worker thread, which is how the `ImageKeys` caches came into this round.
+  - Not run: the Android build (no Android-only API used: `AtomicBoolean`, `Consumer`, a daemon `Thread`), and the
+    agent game (nothing here is visible in play; the logs are the check). The race test passes with the lock, but
+    the old unlocked code could also pass it by luck, so it guards the contract rather than proving the old bug.
+- **Proof in the next logs:** ebb52f38's next 1.28 log should show `[TFR-PrintSheets] warmed in` soon after its load
+  line, its `[TFR-Perf] print sheets loaded on TFR-PrintSheets`, and an Inn entry with no 22 s gap. After a dispose,
+  the next `[TFR-Memory]` line should show `cards:` near 0, or one `card texture unload failed` line naming the file.
+
 ## Round 984: the AI casts its Incubate and Empower cards (2026-11-07)
 
 - **Why** - log review `C:\CLAUDE\PROJECTS\TFR1\notes\logs-1107.md` P3-5. `SpellApiToAi` had no entry for

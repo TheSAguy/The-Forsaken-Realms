@@ -72,7 +72,10 @@ public class StaticData {
     private IStorage<SealedTemplate> tournaments;
     private IStorage<FatPack.Template> fatPacks;
     private IStorage<BoosterBox.Template> boosterBoxes;
-    private IStorage<PrintSheet> printSheets;
+    // TFR round 985: volatile + printSheetsLock, so a warm-up thread and the GL thread never both build the sheets
+    // and neither reads a half-built storage. See getPrintSheets().
+    private volatile IStorage<PrintSheet> printSheets;
+    private final Object printSheetsLock = new Object();
     private final Map<String, List<String>> setLookup = new HashMap<>();
 
     private static StaticData lastInstance = null;
@@ -567,9 +570,26 @@ public class StaticData {
     }
 
     public IStorage<PrintSheet> getPrintSheets() {
-        if (printSheets == null)
-            printSheets = PrintSheet.initializePrintSheets(new File(blockDataFolder, "printsheets.txt"), getEditions());
-        return printSheets;
+        // TFR round 985 (logs-1108 P3-9): built once, under a lock. Adventure warms this on a background thread after a
+        // load; a booster asked for meanwhile waits for that build instead of starting a second one. The build only
+        // reads text files and the (already loaded) card database - no GL state.
+        IStorage<PrintSheet> sheets = printSheets;
+        if (sheets != null)
+            return sheets;
+        synchronized (printSheetsLock) {
+            if (printSheets == null) {
+                long started = System.nanoTime();
+                printSheets = PrintSheet.initializePrintSheets(new File(blockDataFolder, "printsheets.txt"), getEditions());
+                System.out.println("[TFR-Perf] print sheets loaded on " + Thread.currentThread().getName() + " in "
+                        + (System.nanoTime() - started) / 1000000 + " ms");
+            }
+            return printSheets;
+        }
+    }
+
+    /** TFR round 985: true once the print sheets are built (a warm-up has nothing left to do). */
+    public boolean arePrintSheetsLoaded() {
+        return printSheets != null;
     }
 
     public CardDb getCommonCards() {

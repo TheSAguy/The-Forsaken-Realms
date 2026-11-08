@@ -148,14 +148,9 @@ public class ImageCache {
     public void disposeTextures() {
         CardRenderer.clearcardArtCache();
         //unload all cardsLoaded
-        try {
-            for (String fileName : getCardsLoaded()) {
-                if (Forge.getAssets().manager().get(fileName, Texture.class, false) != null) {
-                    Forge.getAssets().manager().unload(fileName);
-                }
-            }
-        } catch (Exception ignored) {}
-        getCardsLoaded().clear();
+        // TFR round 985 (logs-1108 P3-11): one file at a time, over a copy. One exception used to stop the loop, and a
+        // clear() after it forgot every texture still loaded. A file that failed stays listed (CardTextureUnload).
+        CardTextureUnload.unloadAll(getCardsLoaded(), this::unloadCardTexture);
         imageRecord.get().clear();
         counter = 0;
         ((Forge) Gdx.app.getApplicationListener()).needsUpdate = true;
@@ -485,21 +480,23 @@ public class ImageCache {
         return GuiBase.isIOS() && absolutePath.contains("/Documents/cache");
     }
 
+    /** TFR round 985: one card texture out of the AssetManager, when it is loaded there. */
+    private void unloadCardTexture(String fileName) {
+        if (Forge.getAssets().manager().get(fileName, Texture.class, false) != null) {
+            Forge.getAssets().manager().unload(fileName);
+        }
+    }
+
     public void unloadCardTextures(boolean removeAll) {
         if (removeAll) {
-            try {
-                // Iterate cardsLoaded (not getAssetNames filtered by ".full") so downloaded card paths that
-                // don't contain ".full" are released too, and non-card assets are never touched.
-                for (String fileName : getCardsLoaded()) {
-                    if (Forge.getAssets().manager().get(fileName, Texture.class, false) != null) {
-                        Forge.getAssets().manager().unload(fileName);
-                    }
-                }
-                getSyncQ().clear();
-                getCardsLoaded().clear();
-                counter = 0;
-                CardRenderer.clearcardArtCache();
-            } catch (Exception ignored) {}
+            // Iterate cardsLoaded (not getAssetNames filtered by ".full") so downloaded card paths that
+            // don't contain ".full" are released too, and non-card assets are never touched.
+            // TFR round 985 (logs-1108 P3-11): one file at a time, over a copy, so one bad unload skips only that file;
+            // the art cache is cleared even then (its regions point at the textures just unloaded).
+            CardTextureUnload.unloadAll(getCardsLoaded(), this::unloadCardTexture);
+            getSyncQ().clear();
+            counter = 0;
+            CardRenderer.clearcardArtCache();
             return;
         }
         if (getCardsLoaded().size() <= maxCardCapacity)

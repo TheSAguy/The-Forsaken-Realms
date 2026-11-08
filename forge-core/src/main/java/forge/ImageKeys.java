@@ -94,13 +94,16 @@ public final class ImageKeys {
 
     private static final Map<String, File> cachedCards = new HashMap<>(50000);
     public static HashSet<String> missingCards = new HashSet<>();
-    public static void clearMissingCards() {
+    // TFR round 985: the caches below (cachedCards, toFind, missingCards' clear, editionImageLookup, editionAlias,
+    // cachedContent) are read and written under ImageKeys.class, because Adventure builds the print sheets - which
+    // calls hasImage() for every printing - on a background thread while the GL thread looks up card images.
+    public static synchronized void clearMissingCards() {
         missingCards.clear();
     }
-    public static File getCachedCardsFile(String key) {
+    public static synchronized File getCachedCardsFile(String key) {
         return cachedCards.get(key);
     }
-    public static File getImageFile(String key) {
+    public static synchronized File getImageFile(String key) {
         if (StringUtils.isEmpty(key))
             return null;
 
@@ -433,7 +436,7 @@ public final class ImageKeys {
     public static boolean hasImage(PaperCard pc) {
         return hasImage(pc, false);
     }
-    public static boolean hasImage(PaperCard pc, boolean update) {
+    public static synchronized boolean hasImage(PaperCard pc, boolean update) {
         Boolean editionHasImage = editionImageLookup.get(pc.getEdition());
         if (editionHasImage == null) {
             String setFolder = getSetFolder(pc.getEdition());

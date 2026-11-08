@@ -35,6 +35,31 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 985 - print sheets built once under a lock (and ImageKeys' caches locked); card textures unloaded one at a time
+- `forge-core/src/main/java/forge/StaticData.java` (STOCK): `printSheets` is `volatile`, with a new
+  `printSheetsLock`. `getPrintSheets()` is double-checked locking around the stock
+  `PrintSheet.initializePrintSheets(...)` call, and prints `[TFR-Perf] print sheets loaded on <thread> in N ms` after
+  the one build. New `arePrintSheetsLoaded()`. Why: Adventure now warms the sheets on a background thread
+  (`forge-gui-mobile/src/forge/adventure/util/PrintSheetWarm.java`, a TFR file), so the GL thread and that thread
+  may both ask at once. Stock built them unlocked on whichever thread asked first.
+- `forge-core/src/main/java/forge/ImageKeys.java` (STOCK): `clearMissingCards()`, `getCachedCardsFile()`,
+  `getImageFile()` and `hasImage(PaperCard, boolean)` are `static synchronized` (one comment above them; bodies
+  unchanged). The print-sheet build calls `PaperCard.hasImage` for printings, which fills the plain `HashMap` caches
+  (`editionImageLookup`, `editionAlias`, `cachedContent`, `cachedCards`) that the GL thread's `getImageFile` reads
+  and writes. None of the four calls out to another lock, so the order stays printSheetsLock -> lazyLoadLock ->
+  ImageKeys.class. The public `missingCards` field is still read unlocked elsewhere (stock).
+- `forge-gui-mobile/src/forge/assets/ImageCache.java` (STOCK): `disposeTextures()` and `unloadCardTextures(true)`
+  call the new `CardTextureUnload.unloadAll(getCardsLoaded(), this::unloadCardTexture)` (new TFR file
+  `forge-gui-mobile/src/forge/assets/CardTextureUnload.java`; new private `unloadCardTexture(String)` holds the stock
+  `get(..., false) != null -> unload` lines). That replaces the stock single `try` around the whole loop.
+  `disposeTextures()` no longer calls `getCardsLoaded().clear()`: a path leaves the set when it unloads, and one whose
+  unload threw stays listed. `unloadCardTextures(true)` clears the syncQ and the card art cache even after a failure.
+  The partial unload (`unloadCardTextures(false)`) is untouched.
+- **At a merge:** if upstream rewrites either method, keep upstream's shape and put the loop back through
+  `CardTextureUnload.unloadAll`. If upstream makes `getPrintSheets()` thread-safe itself, take theirs and keep only
+  the `[TFR-Perf]` line and `arePrintSheetsLoaded()` (`PrintSheetWarm` uses it). If upstream reworks ImageKeys'
+  caches (concurrent maps, say), take theirs and drop our `synchronized` words only once the caches are thread-safe.
+
 ### Round 984 - AI for Incubate and Empower (an upstream gap, meant to go upstream)
 - `forge-ai/src/main/java/forge/ai/SpellApiToAi.java` (STOCK): two map lines,
   `.put(ApiType.Empower, EmpowerAi.class)` (after `Effect`) and `.put(ApiType.Incubate, IncubateAi.class)` (after
