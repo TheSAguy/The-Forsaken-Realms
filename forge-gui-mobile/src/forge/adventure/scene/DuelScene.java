@@ -120,6 +120,10 @@ public class DuelScene extends ForgeScene {
     FOptionPane bossDialogue;
     List<IPaperCard> playerExtras = new ArrayList<>();
     List<IPaperCard> AIExtras = new ArrayList<>();
+    // Enemy decks generated off the GL thread; consumed (and cleared) by enter()
+    private List<Deck> pregenDecks = null;
+    private int pregenToken = 0;
+    private volatile boolean pregenInFlight = false;
     private static final HashMap<Integer, String> introKeysMap = new HashMap<>(64);
     private static final HashMap<Integer, String> insultKeysMap = new HashMap<>(64);
     private static final cardFDisplayObject cardDisplay = new cardFDisplayObject();
@@ -898,6 +902,8 @@ public class DuelScene extends ForgeScene {
             startCards.addAll(data.startBattleWithCards());
             startCardsTapped.addAll(data.startBattleWithCardsTapped());
             startCardsInCommandZone.addAll(data.startBattleWithCardsInCommandZone());
+            if (data.startBattleScript != null)
+                player.addStartGameScript(Arrays.asList(data.startBattleScript));
             extraManaShards += data.extraManaShards;
         }
         // Round 160 diagnostic (user: "I don't think the Medal I'm wearing is working"): one line
@@ -961,6 +967,56 @@ public class DuelScene extends ForgeScene {
                 + " - and it will not grow any stronger." + forgets;
     }
 
+    /** True while enemy decks are being generated in the background (Forge.switchScene must keep the VS screen up). */
+    public boolean isGeneratingDecks() {
+        return pregenInFlight;
+    }
+
+    private boolean needsEnemyDeckGeneration() {
+        if (chaosBattle) return false;
+        // TFR round 994: no Arena branch (round 125: an Arena fighter plays its own deck, as in the wild), and the Deck
+        // Tester's fixed deck needs nothing built
+        return eventData == null && !enemy.getData().copyPlayerDeck && enemy.getData().fixedDeck == null;
+    }
+
+    private Deck generateEnemyDeck(EnemyData e) {
+        // TFR round 994: upstream's Arena branch (a random genetic-AI deck) left out - round 125
+        boolean useGeneticAI = Config.instance().getConfigData().enableGeneticAI
+                && (Current.player().isUsingCustomDeck() || Current.player().isHardorInsaneDifficulty());
+        return e.generateDeck(Current.player().isFantasyMode(), useGeneticAI);
+    }
+
+    private void startDeckPregeneration() {
+        final int token = ++pregenToken;
+        pregenInFlight = true;
+        final long started = System.currentTimeMillis(); // TFR round 994
+        new Thread(() -> {
+            List<Deck> decks = new ArrayList<>();
+            try {
+                EnemyData e = enemy.getData();
+                for (int i = 0; i < 9 && e != null; i++) {
+                    decks.add(e.copyPlayerDeck || e.fixedDeck != null ? null : generateEnemyDeck(e)); // TFR round 994
+                    e = e.nextEnemy;
+                }
+            } catch (Throwable t) {
+                t.printStackTrace();
+                decks = new ArrayList<>(); // empty: enter() falls back to inline generation
+            }
+            final List<Deck> result = decks;
+            System.out.println("[TFR-DeckGen] " + result.size() + " enemy deck(s) built off the GL thread in "
+                    + (System.currentTimeMillis() - started) + " ms"); // TFR round 994
+            Gdx.app.postRunnable(() -> {
+                if (token != pregenToken) return; // scene was left while generating
+                pregenDecks = result;
+                enter();
+            });
+        }, "AdventureDeckGen").start();
+    }
+
+    private Deck pregenDeck(List<Deck> list, int i) {
+        return list != null && i < list.size() ? list.get(i) : null;
+    }
+
     @Override
     public void enter() {
         ResourceGlyphs.register(); // round 881: the {Gold} of the ante popups
@@ -968,6 +1024,15 @@ public class DuelScene extends ForgeScene {
         Adventure.getInstance().renderTransitionScreen = false;
         Localizer localizer = Forge.getLocalizer();
         SoundSystem.instance.stopBackgroundMusic();
+
+        if (pregenDecks == null && needsEnemyDeckGeneration()) {
+            startDeckPregeneration();
+            return; // VS screen stays up; we re-enter when decks are ready
+        }
+        final boolean resumedAfterPregen = pregenDecks != null;
+        final List<Deck> pregen = pregenDecks;
+        pregenDecks = null;
+        pregenInFlight = false;
         GameType mainGameType;
         boolean isDeckMissing = false;
         String isDeckMissingMsg = "";
@@ -984,7 +1049,6 @@ public class DuelScene extends ForgeScene {
 
         List<RegisteredPlayer> players = new ArrayList<>();
 
-        applyAdventureDeckRules(mainGameType.getDeckFormat());
         int playerCount = 1;
         EnemyData currentEnemy = enemy.getData();
         for (int i = 0; i < 8 && currentEnemy != null; i++) {
@@ -992,50 +1056,13 @@ public class DuelScene extends ForgeScene {
             currentEnemy = currentEnemy.nextEnemy;
         }
 
-        humanPlayer = RegisteredPlayer.forVariants(playerCount, appliedVariants, playerDeck, null, false, null, null);
-        // Deck Tester "Simulated" mode (2026-08-13, user spec) - the ONLY line that changes for a
-        // fully-AI-vs-AI test duel; everything else below (avatar/name wiring, starting life/
-        // shards, the humanPlayer RegisteredPlayer itself) is unaffected, since Forge's core
-        // HostedMatch already treats a humanCount==0 match as a normal spectated game (same
-        // MatchController screen, same AdventureWinLose win/lose flow) with no other plumbing
-        // needed.
-        // Round 161: the agent bridge's auto-battle pilots the PLAYER's seat with the AI but keeps
-        // everything else the player's fight (equipment, ante, rewards, statistics) - unlike
-        // aiControlsPlayerSide, which means "spectator / guard" and strips all of that.
-        LobbyPlayer playerObject = aiControlsPlayerSide || forge.adventure.agent.AgentBridge.aiPilotsPlayer()
-                ? GamePlayerUtil.createAiPlayer(advPlayer.getName(), "")
-                : GamePlayerUtil.getGuiPlayer();
-        FSkin.getAvatars().put(playerAvatarKey, advPlayer.avatar());
-        playerObject.setAvatarIndex(playerAvatarKey);
-        humanPlayer.setPlayer(playerObject);
-        humanPlayer.setTeamNumber(0);
-        humanPlayer.setStartingLife(guardDeck != null ? guardStartingLife
-                : eventData != null ? eventData.eventRules.startingLife : advPlayer.getLife());
-        // Round 173 (code review G10): not when the AI plays the player's seat. A watched guard fight
-        // handed the guard the PLAYER's whole shard purse, and the stock AI pays a PayShards cost with
-        // PaymentDecision.number(0), so every shard ability on the guard's gear cards (Flame Sword,
-        // Giant Scythe...) fired for free, as often as it liked - while the simulated fight, which has
-        // no purse, could not use them at all. A spectator's purse stays out of the fight, like its
-        // equipment and blessing below; the guard's own gear still adds its shards through
-        // addEffects(). The Deck Tester's watched AI-vs-AI mode now matches its headless mode too.
-        if (!aiControlsPlayerSide && (eventData == null || eventData.eventRules.allowsShards))
-            humanPlayer.setManaShards(advPlayer.getShards());
-
         Array<EffectData> playerEffects = new Array<>();
         Array<EffectData> oppEffects = new Array<>();
 
-        Map<DeckProxy, Pair<List<String>, List<String>>> deckProxyMapMap = null;
-        DeckProxy deckProxy = null;
-        if (chaosBattle) {
-            deckProxyMapMap = DeckProxy.getAllQuestChallenges();
-            deckProxy = Aggregates.random(deckProxyMapMap.keySet());
-            //playerextras
-            List<IPaperCard> playerCards = new ArrayList<>();
-            for (String s : deckProxyMapMap.get(deckProxy).getLeft()) {
-                playerCards.add(QuestUtil.readExtraCard(s));
-            }
-            humanPlayer.addExtraCardsOnBattlefield(playerCards);
-        }
+        // TFR round 994: the player's seat is registered after the effects are collected (upstream #12751), so the
+        // Ascendance settings below wait for it
+        float tfrTossWeight = 1f;
+        boolean tfrFreeMulligan = false;
 
         // ROUND 156 BUG FIX (user playtest: "the guards all start with my items... That seems OP.
         // I don't think they should start with player equipment"). Correct, and the round-145
@@ -1104,18 +1131,18 @@ public class DuelScene extends ForgeScene {
             // GameAction.weightedCoinToss logs the roll).
             float tossWeight = forge.adventure.util.Ascendance.coinTossWeight();
             if (tossWeight != 1f) {
-                humanPlayer.setCoinTossWeight(tossWeight);
+                tfrTossWeight = tossWeight;
                 System.out.println("[TFR-Ascend] Opening Gambit: the coin toss favors the player "
                         + Math.round(100f * forge.adventure.util.Ascendance.openingTossChance()) + "%");
             }
             // Round 566: Focused - the player's first mulligan costs no card (the engine's MulliganService logs it).
             if (forge.adventure.util.Ascendance.freeMulligan())
-                humanPlayer.setFreeMulligan(true);
+                tfrFreeMulligan = true;
         }
         // Round 566: Guard Focus - a watched roaming guard's first mulligan costs no card (the headless fight sets the
         // same on its seat in WorldStage.simulateGuardDuel).
         if (guardDeck != null && forge.adventure.util.Ascendance.guardFreeMulligan())
-            humanPlayer.setFreeMulligan(true);
+            tfrFreeMulligan = true;
         // Round 163 (MOD_SCOPE #118): a roaming guard's own equipment. Its effects go on the guard's
         // seat and its items' opponent effects on the mage's, exactly as the player's do above.
         if (guardEffects != null) {
@@ -1157,6 +1184,54 @@ public class DuelScene extends ForgeScene {
                 playerEffects.add(dungeonEffect.opponent);
         }
 
+        applyAdventureDeckRules(mainGameType.getDeckFormat(), allowsIllegalCommander(playerEffects));
+        humanPlayer = RegisteredPlayer.forVariants(playerCount, appliedVariants, playerDeck, null, false, null, null);
+        // Deck Tester "Simulated" mode (2026-08-13, user spec) - the ONLY line that changes for a
+        // fully-AI-vs-AI test duel; everything else below (avatar/name wiring, starting life/
+        // shards, the humanPlayer RegisteredPlayer itself) is unaffected, since Forge's core
+        // HostedMatch already treats a humanCount==0 match as a normal spectated game (same
+        // MatchController screen, same AdventureWinLose win/lose flow) with no other plumbing
+        // needed.
+        // Round 161: the agent bridge's auto-battle pilots the PLAYER's seat with the AI but keeps
+        // everything else the player's fight (equipment, ante, rewards, statistics) - unlike
+        // aiControlsPlayerSide, which means "spectator / guard" and strips all of that.
+        LobbyPlayer playerObject = aiControlsPlayerSide || forge.adventure.agent.AgentBridge.aiPilotsPlayer()
+                ? GamePlayerUtil.createAiPlayer(advPlayer.getName(), "")
+                : GamePlayerUtil.getGuiPlayer();
+        FSkin.getAvatars().put(playerAvatarKey, advPlayer.avatar());
+        playerObject.setAvatarIndex(playerAvatarKey);
+        humanPlayer.setPlayer(playerObject);
+        humanPlayer.setTeamNumber(0);
+        humanPlayer.setStartingLife(guardDeck != null ? guardStartingLife
+                : eventData != null ? eventData.eventRules.startingLife : advPlayer.getLife());
+        // Round 173 (code review G10): not when the AI plays the player's seat. A watched guard fight
+        // handed the guard the PLAYER's whole shard purse, and the stock AI pays a PayShards cost with
+        // PaymentDecision.number(0), so every shard ability on the guard's gear cards (Flame Sword,
+        // Giant Scythe...) fired for free, as often as it liked - while the simulated fight, which has
+        // no purse, could not use them at all. A spectator's purse stays out of the fight, like its
+        // equipment and blessing below; the guard's own gear still adds its shards through
+        // addEffects(). The Deck Tester's watched AI-vs-AI mode now matches its headless mode too.
+        if (!aiControlsPlayerSide && (eventData == null || eventData.eventRules.allowsShards))
+            humanPlayer.setManaShards(advPlayer.getShards());
+
+        if (tfrTossWeight != 1f)
+            humanPlayer.setCoinTossWeight(tfrTossWeight);
+        if (tfrFreeMulligan)
+            humanPlayer.setFreeMulligan(true);
+
+        Map<DeckProxy, Pair<List<String>, List<String>>> deckProxyMapMap = null;
+        DeckProxy deckProxy = null;
+        if (chaosBattle) {
+            deckProxyMapMap = DeckProxy.getAllQuestChallenges();
+            deckProxy = Aggregates.random(deckProxyMapMap.keySet());
+            //playerextras
+            List<IPaperCard> playerCards = new ArrayList<>();
+            for (String s : deckProxyMapMap.get(deckProxy).getLeft()) {
+                playerCards.add(QuestUtil.readExtraCard(s));
+            }
+            humanPlayer.addExtraCardsOnBattlefield(playerCards);
+        }
+
         addEffects(humanPlayer, playerEffects);
 
         currentEnemy = enemy.getData();
@@ -1195,8 +1270,12 @@ public class DuelScene extends ForgeScene {
                 // `copyPlayerDeck` - see EnemyData.fixedDeck's own comment.
                 deck = currentEnemy.fixedDeck;
             } else {
-                boolean useGeneticAI = Config.instance().getConfigData().enableGeneticAI && (Current.player().isUsingCustomDeck() || Current.player().isHardorInsaneDifficulty());
-                deck = currentEnemy.copyPlayerDeck ? this.playerDeck : currentEnemy.generateDeck(Current.player().isFantasyMode(), useGeneticAI);
+                if (currentEnemy.copyPlayerDeck) {
+                    deck = this.playerDeck;
+                } else {
+                    deck = pregenDeck(pregen, i);
+                    if (deck == null) deck = generateEnemyDeck(currentEnemy);
+                }
             }
             if (deck == null) {
                 isDeckMissing = true;
@@ -1206,6 +1285,9 @@ public class DuelScene extends ForgeScene {
                 System.err.println(isDeckMissingMsg);
                 deck = this.eventData == null && canUseGeneticAI ? Aggregates.random(DeckProxy.getAllGeneticAIDecks()).getDeck() : this.playerDeck;
             }
+            //A copy of the player's deck keeps the player's commander, already checked by applyAdventureDeckRules.
+            if (deck != this.playerDeck && mainGameType.getDeckFormat().hasCommander() && !allowsIllegalCommander(oppEffects))
+                deck = withoutIllegalCommanders(deck, mainGameType.getDeckFormat());
             Deck deckBuilt = deck; // round 897: the whole deck, for the Journal - the card below may leave it
             // Round 793: a permanent from this seat's own deck - picked now, so the seat registers with the deck that card
             // left (a copy; the Walls block below puts the card in play). Round 799: on top of the Walls, from the
@@ -1502,6 +1584,8 @@ public class DuelScene extends ForgeScene {
         }
         super.enter();
         matchOverlay.show();
+        if (resumedAfterPregen)
+            Forge.clearTransitionScreen(true); // Forge.switchScene skipped this while we were generating
     }
 
     private static final String PLACEHOLDER_MAIN = "Wastes";
@@ -1509,7 +1593,30 @@ public class DuelScene extends ForgeScene {
     private static final String PLACEHOLDER_ATTRACTION = "Coin-Operated Pony";
     private static final String PLACEHOLDER_CONTRAPTION = "Automatic Fidget Spinner";
 
-    private void applyAdventureDeckRules(DeckFormat format) {
+    private static boolean allowsIllegalCommander(Array<EffectData> effects) {
+        for (EffectData effect : effects) {
+            if (effect.allowIllegalCommander)
+                return true;
+        }
+        return false;
+    }
+
+    private static Deck withoutIllegalCommanders(Deck deck, DeckFormat format) {
+        List<PaperCard> illegal = new ArrayList<>();
+        for (PaperCard commander : deck.getCommanders()) {
+            if (!format.isLegalCommander(commander.getRules()))
+                illegal.add(commander);
+        }
+        if (illegal.isEmpty())
+            return deck;
+        //Edit a copy, because the deck can be one that is reused.
+        Deck copy = new Deck(deck);
+        copy.get(DeckSection.Commander).removeAllFlat(illegal);
+        copy.getMain().add(illegal);
+        return copy;
+    }
+
+    private void applyAdventureDeckRules(DeckFormat format, boolean allowIllegalCommander) {
         if(FModel.getPreferences().getPrefBoolean(ForgePreferences.FPref.DEV_MODE_ENABLED)
                 && !FModel.getPreferences().getPrefBoolean(ForgePreferences.FPref.ENFORCE_DECK_LEGALITY))
             return;
@@ -1518,7 +1625,7 @@ public class DuelScene extends ForgeScene {
         CardPool mainSection = playerDeck.getMain(), attractions = playerDeck.get(DeckSection.Attractions), contraptions = playerDeck.get(DeckSection.Contraptions);
 
         if(format.hasCommander()) {
-            applyAdventureCommandZoneRules(playerDeck, format);
+            applyAdventureCommandZoneRules(playerDeck, format, allowIllegalCommander);
         }
 
         removeExcessCopies(mainSection, format);
@@ -1617,24 +1724,25 @@ public class DuelScene extends ForgeScene {
         return maxDeckSize;
     }
 
-    private static void applyAdventureCommandZoneRules(Deck playerDeck, DeckFormat format) {
+    private static void applyAdventureCommandZoneRules(Deck playerDeck, DeckFormat format, boolean allowIllegalCommander) {
         CardPool commandPool = playerDeck.getOrCreate(DeckSection.Commander);
 
         //1. Validate command section.
         List<PaperCard> removals = new ArrayList<>();
         List<PaperCard> commanders = playerDeck.getCommanders(); //ordered flat list
+        boolean enforceLegality = !allowIllegalCommander && FModel.getPreferences().getPrefBoolean(ForgePreferences.FPref.ENFORCE_DECK_LEGALITY);
         if (commanders.size() > 2) {
             removals.addAll(commanders.subList(2, commanders.size()));
             commanders = commanders.subList(0, 2);
         }
         if (!commanders.isEmpty()) {
             PaperCard mainCommander = commanders.get(0);
-            if (!format.isLegalCommander(mainCommander.getRules()))
+            if (!format.isAllowedCommander(mainCommander.getRules(), enforceLegality))
                 removals.add(mainCommander);
             if (commanders.size() > 1) {
                 PaperCard partnerCommander = commanders.get(1);
                 if (removals.contains(mainCommander)) {
-                    if (!format.isLegalCommander(partnerCommander.getRules()))
+                    if (!format.isAllowedCommander(partnerCommander.getRules(), enforceLegality))
                         removals.add(partnerCommander); //Main is invalid but partner is valid.
                 } else if (!mainCommander.getRules().canBePartnerCommanders(partnerCommander.getRules()))
                     removals.add(partnerCommander); //Invalid partnership.
@@ -1700,6 +1808,9 @@ public class DuelScene extends ForgeScene {
 
     @Override
     public boolean leave() {
+        pregenToken++;
+        pregenInFlight = false;
+        pregenDecks = null;
         Adventure.getInstance().renderTransitionScreen = true;
         return super.leave();
     }

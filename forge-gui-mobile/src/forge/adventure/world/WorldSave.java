@@ -64,7 +64,6 @@ public class WorldSave {
     private final SignalList onLoadList = new SignalList();
     private static long lastPreviewTimestamp = 0L;
     private static final long COOLDOWN_WINDOW_MS = 800L;
-    private static boolean firstCapture = true;
     private static final ExecutorService SAVE_EXECUTOR =
         Executors.newSingleThreadExecutor(r -> {
             Thread thread = new Thread(r, "Forge-Adventure-Save");
@@ -1078,42 +1077,46 @@ public class WorldSave {
 
     // prevent spam of preview if user repeatedly/accidentally reopen scene that request previews
     public static void requestPreview() {
+        requestPreview(false);
+    }
+
+    /**
+     * @param force skip the cooldown, for a caller that uses the preview right away (quick save)
+     */
+    public static void requestPreview(final boolean force) {
         final long currentTimestamp = TimeUtils.millis();
-
-        if (firstCapture) {
-            firstCapture = false;
-            // init once
-            currentSave.header.createPreview();
-            System.out.println("[TFR-Preview] first capture (" + sceneName() + ")"); // TFR round 981
+        final PreviewAction action = previewAction(GuiBase.getInterface().isGuiThread(),
+                currentTimestamp, lastPreviewTimestamp, force);
+        if (action == PreviewAction.SKIP) {
             return;
         }
-
-        // If 800ms has not passed since the last successful generation, skip
-        if (currentTimestamp - lastPreviewTimestamp < COOLDOWN_WINDOW_MS) {
-            return;
-        }
-
-        // Update the timestamp immediately to lock out parallel thread spam on the spot
         lastPreviewTimestamp = currentTimestamp;
-        // TFR round 981 (Discord, Nova: "the preview image of each save file is the save menu"): every caller asks for
-        // the picture and then switches scene in the same frame (openMenu, openInventory, F5, Forge.switchScene). A
-        // posted capture runs after that frame has drawn the new scene and swapped (LWJGL3 runs app runnables after
-        // Lwjgl3Window.update), and a back buffer after a swap is undefined: a flip driver hands back an older frame
-        // (the world - the user's AMD), a copy-on-swap driver the frame just drawn (the menu). F5 also saved before
-        // the posted capture ran, so a quick save carried the previous picture. On the GL thread the capture is taken
-        // now, before the new scene is drawn anywhere - as the session's first capture always was. Posted only off it.
-        if (GuiBase.getInterface() != null && GuiBase.getInterface().isGuiThread()) {
+        if (action == PreviewAction.NOW) {
             currentSave.header.createPreview();
-            System.out.println("[TFR-Preview] captured now (" + sceneName() + ")");
+            System.out.println("[TFR-Preview] captured now (" + sceneName() + ")"); // TFR round 981
             return;
         }
-        System.out.println("[TFR-Preview] posted - off the GL thread (" + sceneName() + ")");
+        System.out.println("[TFR-Preview] posted - off the GL thread (" + sceneName() + ")"); // TFR round 981
         Gdx.app.postRunnable(new Runnable() {
             @Override
             public void run() {
                 currentSave.header.createPreview();
             }
         });
+    }
+
+    enum PreviewAction { SKIP, NOW, LATER }
+
+    static PreviewAction previewAction(final boolean onGlThread, final long now, final long last, final boolean force) {
+        // If 800ms has not passed since the last generation, skip
+        if (!force && now - last < COOLDOWN_WINDOW_MS) {
+            return PreviewAction.SKIP;
+        }
+        // On the GL thread the capture has to happen now. Queued, it runs after the frame that already shows the next
+        // scene (the menu) was swapped, and what the back buffer holds then depends on the driver: the frame before
+        // (the world) or the frame just drawn (the menu). Input is handled before the frame is drawn, so now the back
+        // buffer still holds a world frame. Other threads cannot read the GL buffer at all and have to queue.
+        return onGlThread ? PreviewAction.NOW : PreviewAction.LATER;
     }
 
     /** TFR round 981: the scene on screen when a preview was asked for, for the [TFR-Preview] line. */

@@ -20,7 +20,11 @@ import java.util.WeakHashMap;
  * <ul>
  *   <li><b>the AI repeating itself</b>: the same ability of the same card put on the stack by the AI
  *   {@link #AI_BAR_AT} times in one turn is barred for the AI for the rest of that turn (AiController skips it), so the
- *   game moves on;</li>
+ *   game moves on. Round 994: the count starts over each time an opponent of the AI has lost life since its last
+ *   activation (round 840's rule for trigger chains), so a loop that is killing the player - upstream's FlatMC
+ *   LoopRunner, Mikaeus and a Triskelion - runs to the end; one that loses nobody life is still barred at 25. A loop
+ *   that drains life but cannot kill (Platinum Angel, a life-gain offset) stops at {@link #AI_BACKSTOP_AT} uses of an
+ *   ability of that card name in a turn, whatever happened - upstream's own LoopRunner ceiling;</li>
  *   <li><b>a trigger chain nobody can stop</b>: the same trigger of the same card coming back {@link #TRIGGER_DRAW_AT}
  *   times with no player choosing to cast or activate anything in between, and nobody losing life, ends the game as a
  *   draw. A trigger is counted only when no copy of it is already waiting on the stack, so a board wipe's batch of
@@ -47,10 +51,15 @@ public final class LoopBreaker {
     public static final int TRIGGER_DRAW_AT = 25;
     public static final int DRAW_OFFER_AT = 10;
     public static final int TRIGGER_BACKSTOP_AT = 1000;
+    /** Round 994: uses of one ability of one card name in a turn by the AI, life lost or not (LoopRunner.MAX_ACTIVATIONS). */
+    public static final int AI_BACKSTOP_AT = 300;
 
     private static final class State {
         int turn = Integer.MIN_VALUE;
         final Map<String, Integer> aiRepeats = new HashMap<>();
+        final Map<String, Integer> aiRawRepeats = new HashMap<>();   // round 994: by card name, never reset by life lost
+        final Map<Integer, Integer> aiOppLifeMarks = new HashMap<>(); // round 994: each AI's opponents' life lost, at its last use
+        final Set<String> barredRaw = new HashSet<>();               // round 994: name keys over AI_BACKSTOP_AT
         final Map<String, Integer> triggerRepeats = new HashMap<>(); // round 840: reset by any life lost too
         final Map<String, Integer> rawRepeats = new HashMap<>();     // round 840: reset only by a player acting
         final Map<String, Integer> triggerLows = new HashMap<>();    // round 930: each live chain's lowest stack size
@@ -72,6 +81,9 @@ public final class LoopBreaker {
         if (turn != s.turn) {
             s.turn = turn;
             s.aiRepeats.clear();
+            s.aiRawRepeats.clear();
+            s.aiOppLifeMarks.clear();
+            s.barredRaw.clear();
             s.triggerRepeats.clear();
             s.rawRepeats.clear();
             s.triggerLows.clear();
@@ -88,6 +100,12 @@ public final class LoopBreaker {
     private static String key(SpellAbility sa) {
         Card host = sa.getHostCard();
         return (host == null ? "?" : host.getId()) + "|" + (sa.isTrigger() ? "T" + sa.getSourceTrigger() : sa.getDescription());
+    }
+
+    /** Round 994: the backstop's key - the card's name, not its id, so a card that comes back as a new object counts on. */
+    private static String rawKey(SpellAbility sa) {
+        Card host = sa.getHostCard();
+        return (host == null ? "?" : host.getName()) + "|" + sa.getDescription();
     }
 
     private static String label(SpellAbility sa) {
@@ -132,6 +150,22 @@ public final class LoopBreaker {
             Player activator = sa.getActivatingPlayer();
             if (activator == null || activator.getController() == null || !activator.getController().isAI())
                 return false;
+            // round 994: an opponent lost life since this AI's last use - the loop is going somewhere, every count starts over
+            int oppLost = opponentsLifeLost(activator);
+            Integer mark = s.aiOppLifeMarks.put(activator.getId(), oppLost);
+            if (mark != null && mark != oppLost)
+                s.aiRepeats.clear();
+            int raw = s.aiRawRepeats.merge(rawKey(sa), 1, Integer::sum);
+            if (raw == AI_BACKSTOP_AT) {
+                s.barredRaw.add(rawKey(sa));
+                if (s.barredWhat == null)
+                    s.barredWhat = label(sa);
+                s.bars++;
+                String msg = "Loop breaker: " + activator.getName() + " used " + label(sa) + " " + raw
+                        + " times this turn, life lost or not - the AI stops using it until next turn.";
+                System.out.println("[TFR-LoopBreak] " + msg);
+                game.getGameLog().add(GameLogEntryType.INFORMATION, msg);
+            }
             int n = s.aiRepeats.merge(key, 1, Integer::sum);
             note(s, n, sa);
             if (n == AI_BAR_AT) {
@@ -185,7 +219,8 @@ public final class LoopBreaker {
         if (game == null || sa == null)
             return false;
         State s = states.get(game);
-        return s != null && !s.barred.isEmpty() && s.turn == currentTurn(game) && s.barred.contains(key(sa));
+        return s != null && s.turn == currentTurn(game)
+                && (s.barred.contains(key(sa)) || s.barredRaw.contains(rawKey(sa))); // round 994: the backstop too
     }
 
     /**
@@ -235,6 +270,14 @@ public final class LoopBreaker {
         int sum = 0;
         for (Player p : game.getRegisteredPlayers())
             sum += p.getLifeLostThisTurn();
+        return sum;
+    }
+
+    /** Round 994: life lost this turn by the player's opponents. */
+    private static int opponentsLifeLost(Player p) {
+        int sum = 0;
+        for (Player o : p.getOpponents())
+            sum += o.getLifeLostThisTurn();
         return sum;
     }
 

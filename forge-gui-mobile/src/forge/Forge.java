@@ -1240,7 +1240,7 @@ public class Forge implements ApplicationListener {
 
         forge.adventure.scene.SceneViewports.beforeEnter(currentScene); // TFR round 990: a resize it missed off screen
         currentScene.enter();
-        if (currentScene instanceof DuelScene)
+        if (currentScene instanceof DuelScene duel && !duel.isGeneratingDecks())
             Forge.clearTransitionScreen(true);
         return true;
     }

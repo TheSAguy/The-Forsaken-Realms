@@ -35,6 +35,46 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 994 - the engine to the 11.09 daily (upstream `7d0acc8aa92`)
+- `forge-gui-mobile/src/forge/adventure/data/EffectData.java` (STOCK): upstream pinned its own `serialVersionUID`
+  (`-1350202758899129612L`); **ours stays `-5573686949131910962L`** (round 90) - upstream's value would empty every TFR
+  save's inventory. Keep ours on every merge. Took upstream's `startBattleScript`, `allowIllegalCommander` and the
+  `cardsFromNames`/`cardFromName` helpers; our `startBattleWithCardTapped` copy line (town-assault defender land) and
+  `startBattleWithCardsTapped()` (now through `cardsFromNames`) kept.
+- `forge-gui-mobile/src/forge/adventure/scene/DuelScene.java` (STOCK):
+  - #12730's background deck build taken: `needsEnemyDeckGeneration()` adds `fixedDeck == null` and drops upstream's
+    `arenaBattleChallenge` term; `generateEnemyDeck()` has no Arena branch (round 125: an Arena fighter plays its own
+    deck); the pregeneration loop skips a fixed deck; a `[TFR-DeckGen]` line with the count and time. All marked
+    `TFR round 994`.
+  - #12751's order taken: effects collected first, then `applyAdventureDeckRules(format, allowsIllegalCommander(...))`,
+    then the player's `RegisteredPlayer`. TFR's whole seat block (AgentBridge AI pilot, guard starting life, round
+    173's purse rule, chaos extras) moved down with it; Opening Gambit's coin toss and the two free mulligans (rounds
+    525/566) are kept in the locals `tfrTossWeight`/`tfrFreeMulligan` and applied right after the seat is built.
+  - Upstream's commander strip (`withoutIllegalCommanders`) runs before round 897's `deckBuilt` and round 793's
+    notoriety card. Round 417's "Item not found" line kept.
+- `forge-gui-mobile/src/forge/adventure/world/WorldSave.java` (STOCK): upstream #12745 fixed round 981's bug its own way
+  (`previewAction`, `requestPreview(boolean force)`); took it, kept the `[TFR-Preview]` lines ("captured now",
+  "posted - off the GL thread") and `sceneName()`. Round 981's own branch is gone.
+- `forge-gui-mobile/src/forge/adventure/data/RewardData.java` (STOCK): `invalidateCardPool()` also clears upstream's
+  `allEnemyCards`; our two cache invalidations follow.
+- `forge-ai/src/main/java/forge/ai/SpellApiToAi.java` (STOCK): upstream #12748 mapped `Incubate` to `AlwaysPlayAi`;
+  **ours stays `IncubateAi`** (round 984). The map is an ImmutableMap: never let both lines in.
+- `forge-game/src/main/java/forge/game/phase/PhaseHandler.java` (STOCK): Two-Headed Giant (#12587) rewrote
+  `declareAttackersTurnBasedAction` into a team loop; round 929's retry limit re-applied on top, `whoDeclares` restored
+  as a local (the turn player's declarer) for `AttackRetryLimit.giveUp`.
+- `forge-game/src/main/java/forge/game/LoopBreaker.java` (TFR's own, round 708; upstream has no copy): the AI's count
+  for an ability starts over whenever one of its opponents has lost life since its last use (new `aiOppLifeMarks`,
+  `opponentsLifeLost`), so upstream's FlatMC `LoopRunner` finishes a kill loop; a new backstop bars an ability of one
+  card name after `AI_BACKSTOP_AT` = 300 AI uses in a turn, life lost or not (`aiRawRepeats`, `barredRaw`, `rawKey`;
+  `isBarred` checks both). 300 is upstream's `LoopRunner.MAX_ACTIVATIONS`: if upstream changes it, follow.
+  `LoopBreakerTest` +2.
+- `forge-gui/res/adventure/The Forsaken Realms/config.json`: `engineBuildVersion` `2.0.16-SNAPSHOT-11.09`.
+- Merged clean beside our edits: `AiController` (round 708's LoopBreaker check kept as its own early return in the
+  `removeIf`), `ComputerUtil`, `ComputerUtilCard`, `ComputerUtilCombat`, `PlayerControllerAi`, `MatchController`,
+  `Forge.java` (`switchScene` skips the transition clear while decks build), `GameStage` (F5 `requestPreview(true)`),
+  `UndoManager` (#12753's compact deltas; round 898's `snapshotObjects()` kept), `SaveFileData` (#12767's UID-adopt
+  fallback beside round 90's pins).
+
 ### Round 993 - hover tips (TFR 2's Tfr2Tips ported) and "Show tooltips: Auto / On / Off"
 - `forge-gui-mobile/src/forge/Forge.java` (STOCK): `render()` calls `TfrTips.frame()` in the adventure branch, right after
   round 974's `crashTestAt("frame")` and before `Adventure.getInstance().render(delta)`.

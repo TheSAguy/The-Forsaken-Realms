@@ -14264,6 +14264,96 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 994: the engine to the 11.09 daily (upstream `7d0acc8aa92`) (2026-11-09)
+
+The user: "Once done with the logs. Let's update the engine: E:\GAMES\Forge_2" (the 11.09 daily installed as
+BASE_INSTALL). The standing release order takes the engine first. 86 commits, 894 files since round 978's
+`1e8c35fca3e` (#12695 to #12770).
+
+- **Matched**: BASE_INSTALL's `CHANGES.txt` is headed by #12770 "Fix Grenzo and other cast-only effects letting lands
+  be played" (`7d0acc8aa92`, 17:22:43 UTC); its next entry, #12776 "Clean scripts" (`fcebf4b7d0a`), changed four card
+  scripts that match BASE_INSTALL's `cardsfolder.zip` byte for byte (and differ from their parents);
+  `.installationinformation` says `APP_VER 11.09`, the jar manifest `2.0.16-SNAPSHOT-11.09`; `build.txt`'s 18:26:05 is
+  before the next upstream commit `b3802f9255a` (#12773, 20:00:03 UTC), which is not taken: it is the next merge's first
+  commit. No pom change (the build stayed offline), no Android identity, README, `Zone.java`, splash or launcher-icon
+  file in the range.
+- **Upstream brought**:
+  - **AI**: a large Flat Monte Carlo push (26 new `forge-ai/.../simulation` classes): combo plans and assembly
+    (Vintage meta, Doomsday, Trix, Channel), a `LoopRunner` that runs finite kill loops (Mikaeus and a Triskelion,
+    Heliod and a Walking Ballista), `ActivationGuard`/`TimedAbilityGuard` vetoes, Dig/Scry/Surveil choices from the deck
+    plan, planeswalker loyalty, activated-ability timing (no plays in its own upkeep or draw step, flash permanents held
+    on its own turn, pump tricks after blocks), Connive cost checks, a `RunawayLoop` cap of 40 uses of a card's ability
+    a turn; Incubate gets an AI (#12748, not taken - below); the AI no longer pumps keywords a creature already has
+    (#12749); `Reckless.ai`, `Cautious.ai` and `Experimental.ai` gain FlatMC tuning blocks.
+  - **Rules**: Two-Headed Giant (#12587: team turns, shared life, team attacks, CR 810.8 team losses), Grenzo-style
+    cast-only effects no longer let lands be played (#12770), Dig fixes (#12726), "target creature you control" on five
+    scripts, stun counters, Werewolf Pack Leader, Star Trek (TRK/TRC) cards and achievements, many card script fixes.
+  - **Adventure**: enemy decks built off the GL thread while the VS screen stays up (#12730 "Fix Adventure fights", with
+    `AiCardLists` and the enemy card pool made cheaper), effects that run card-script lines at battle start (#12755,
+    replacing #12741/#12744's hand and suspend fields), `allowIllegalCommander` (#12751), the save preview captured on
+    the GL thread (#12745), saves written before a UID pin load on Android (#12767), Realm of Legends 1.091/1.092.
+  - **Other**: a How to Play tutorial (#12363) on the home screen, compact reverse-delta undo history (#12753), targeting
+    arrows hidden under the stack and menus, mobile lobby layout, netplay and concede fixes.
+
+### The conflicts
+
+Six text conflicts, and one found by upstream's own test. The user's answers, relayed by the TFR 1 main thread: Q1 "Take
+it (Recommended)", Q2 "Reset on life loss (Recommended)", Q3 "Keep ours (Recommended)"; the AI tuning "Take it, watch
+logs (Recommended)".
+
+| File / feature | Upstream changed | Kept vs took | Impact |
+|---|---|---|---|
+| `DuelScene.enter()`: enemy decks off the GL thread (#12730) | The chain's enemy decks are generated on an `AdventureDeckGen` thread; `enter()` returns at once and runs again when they are ready; `Forge.switchScene` keeps the VS screen up meanwhile | **Took it, adapted** (Q1): `needsEnemyDeckGeneration()`/`generateEnemyDeck()` follow TFR's rules - no Arena genetic-deck branch (round 125: an Arena fighter plays its own deck), no build for the Deck Tester's fixed deck; `[TFR-DeckGen] N enemy deck(s) built off the GL thread in M ms` | The VS screen keeps animating while decks build instead of freezing (slow devices, Android). TFR's deck code now runs on a second thread while only the VS screen draws |
+| Round 708's loop breaker vs upstream's `LoopRunner` (no text conflict: `FlatMonteCarloLoopRunnerTest.mikaeusAndTheTriskelionKillTheOpponentInATurn` failed, the opponent left at 7) | The AI runs finite kill loops on purpose, up to 300 activations (`LoopRunner.MAX_ACTIVATIONS`), and caps other runaway activations at 40 (`RunawayLoop`) | **Ours changed** (Q2): the AI's count for an ability starts over whenever one of its opponents has lost life since its last use (round 840's rule for trigger chains), so a loop that is killing the player finishes and one that costs nobody life is still barred at 25; a new backstop bars an ability of one card name after 300 AI uses in a turn, life lost or not (`AI_BACKSTOP_AT`, keyed by name so undying or a blink does not reset it) | An enemy that assembles a two-card kill loop (rare in TFR decks) now kills that turn, as in stock Forge; a loop that drains but cannot kill (Platinum Angel, life gain) still ends. `[TFR-LoopBreak] ... life lost or not` |
+| `EffectData.serialVersionUID` | Pinned `-1350202758899129612L` | **Kept ours** `-5573686949131910962L` (round 90). Took the new fields (`startBattleScript`, `allowIllegalCommander`) and `cardsFromNames`; our `startBattleWithCardTapped` kept | Upstream's value would have emptied every TFR save's inventory (round 88). New fields under a pinned UID load old saves |
+| `DuelScene.enter()`: the player's seat (#12751) | Effects collected first, then `applyAdventureDeckRules(format, allowsIllegalCommander(...))`, then the seat | **Took the order**; TFR's seat block moved with it; Opening Gambit's coin toss and the free mulligans held in two locals until the seat exists; upstream's commander strip before round 897's `deckBuilt` | No player-visible change |
+| `SpellApiToAi` Incubate (#12748) | `Incubate -> AlwaysPlayAi` | **Kept ours** (Q3): `IncubateAi` (round 984) | The AI keeps casting Incubate at main 2 or the opponent's end step and weighs Compleated Huntmaster's sacrifice |
+| `PhaseHandler.declareAttackersTurnBasedAction` (#12587) | A team loop: each attacking team member declares into one attack | **Took it; kept round 929's retry limit** (`whoDeclares` restored as a local) | None in a 1v1 duel |
+| `WorldSave.requestPreview` (#12745) | Upstream's own fix of round 981's bug (`previewAction`, a `force` flag for F5) | **Took it; kept the `[TFR-Preview]` lines** | As round 981; F5 also skips the 800 ms cooldown |
+
+Trivial: `RewardData.invalidateCardPool()` (both clears), `DuelScene`'s "Item not found" line (round 417's kept).
+
+**Merged clean beside our edits** (checked): `AiController` (round 708's LoopBreaker check stays its own early return in
+the `removeIf`; round 924 intact), `ComputerUtil` (rounds 720/800), `ComputerUtilCard` (round 800 before #12749's skip),
+`ComputerUtilCombat`, `PlayerControllerAi` (rounds 708/840), `MatchController` (two small hunks: team phase labels, a
+DelayedReveal; ours intact), `Forge.java`, `GameStage`, `UndoManager` (round 898's `snapshotObjects()`), `SaveFileData`.
+Round 769's bosses: `selectAI`, `bossAiFollowsSetting`, `Default/Hard/Hardest.ai` and `AiProps` unchanged.
+
+### The flagged upstream changes
+
+- **#12730 "Fix Adventure fights"** and **#12771 "Fixed missing boss drop"**: the first is the table's first row; the
+  second is Realm of Legends' Lyna (Soltari Shoes -> Soltari Skirt) - TFR's Lyna already drops the Skirt.
+- **The FlatMC tuning** (the user: take it, watch logs): `Reckless.ai` (241 TFR enemies) gets few samples, a low risk
+  weight and no reactive FlatMC play; `Cautious.ai` (119) high risk and hold-mana weights; both get the new timing rules.
+  TFR edits no `.ai` file. **1.28 log watch**: win ratios and duel times against reckless and cautious enemies.
+  `MATCH_AI_SIDEBOARDING_MODE` now defaults to "AI" on a fresh profile.
+- **The Tutorial (#12363)**: reached only from a new "How to Play" button on the home screen, which TFR never shows
+  (`adventureOnly`); `CoachPanel`/`TutorialOverlay` are built only by its director. Nothing in an Adventure duel, no new
+  preference, no overlap with round 993's tips (`TfrTips.frame()` runs only on the adventure branch, never over an
+  FScreen).
+- **Realm of Legends 1.091/1.092**: RoL-only (its restricted list, the Cruelclaw deck rebalance, Star Trek commander
+  precons, the inventory doll). Nothing imported, so the cross-plane checklist is not engaged.
+- **allowIllegalCommander (#12751)**: an effect field, false by default; no TFR item sets it.
+- **Compact undo history (#12753)**: on every platform, not only Android; TFR's undo is Single step (round 615), so it
+  runs in our duels. `[TFR-Memory]`'s `undoObjects=` (round 898) now counts a whole capture, not what a delta keeps, so it
+  overstates what undo holds - a follow-up: log retained bytes.
+- **Two-Headed Giant (#12587)**: no adventure file; core files changed for teams; no effect in Adventure duels.
+- **Graphics.java, FSkinFont.java, AdventureEventData.java**: untouched by upstream (the queued glyph-pool and Inn Draft
+  reward guards apply as planned). `MatchController.java`: the two hunks above.
+
+### Also in this round
+- `forge-gui/res/adventure/The Forsaken Realms/config.json`: `engineBuildVersion` `2.0.16-SNAPSHOT-11.09`.
+- `forge-game/.../LoopBreaker.java` and `LoopBreakerTest` (two new tests: `anAiLoopThatCostsTheOpponentLifeStartsOver`,
+  `anAiLoopThatCannotKillStopsAtTheBackstop`).
+
+**Tested:**
+- Maven `-o -pl forge-gui-mobile,forge-gui-desktop -am test`, exit 0, checkstyle clean in every module: forge-game 30,
+  forge-gui 25, forge-gui-mobile 78, forge-gui-desktop 2323 run, 0 failed, 6 skipped (`FlatMonteCarloLoopRunnerTest` 15
+  including the Mikaeus/Triskelion kill, `LoopBreakerTest` 13). Before the loop-breaker change: 2321 run, that one
+  failure. Then `-o -pl forge-gui-mobile-dev -am package -DskipTests`, exit 0 (the shipping jar, 14:56).
+- In-game: not yet - `locks\agent` was held (since 09:27, owner not running) when this was committed; the 50x smoke
+  test (new game, duels, a dungeon's hidden HUD, a shop) follows as round 994 (follow-up).
+
 ## Round 993: hover tips - TFR 2's tips ported, the world-map HUD, New Game and Settings (2026-11-09)
 
 The user's request (2026-11-09): "TFR2 makes good use of "Tooltips" that pop-up. Mosely over buttons/ but other spots

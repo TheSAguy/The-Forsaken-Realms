@@ -40,6 +40,64 @@ public class LoopBreakerTest extends AITest {
         AssertJUnit.assertFalse("barring is not a draw", game.isGameOver());
     }
 
+    /** Round 994: an AI loop that keeps costing its opponent life (upstream's LoopRunner: Mikaeus and a Triskelion) starts
+     *  over each time, so it runs past 25; the count is the AI's opponents' life, not its own. */
+    @Test
+    public void anAiLoopThatCostsTheOpponentLifeStartsOver() {
+        Game game = initAndCreateGame();
+        Player opp = game.getPlayers().get(0);
+        Player ai = game.getPlayers().get(1);
+        game.getPhaseHandler().devModeSet(PhaseType.MAIN1, ai);
+        opp.setLife(100, null);
+        SpellAbility ping = aiAbility(addCard("Triskelion", ai), ai);
+
+        for (int i = 1; i <= 60; i++) {
+            game.getStack().add(ping);
+            if (i % 2 == 0)
+                opp.loseLife(1, true, false, ping); // every second use lands on the opponent, as the Triskelion's round does
+        }
+        AssertJUnit.assertFalse("60 uses that keep costing the opponent life are not barred", LoopBreaker.isBarred(game, ping));
+        AssertJUnit.assertEquals(70, opp.getLife());
+
+        ai.loseLife(1, true, false, ping); // the AI's own life is no progress
+        for (int i = 1; i <= 24; i++)
+            game.getStack().add(ping);
+        AssertJUnit.assertFalse("24 in a row with no opponent life lost: not yet", LoopBreaker.isBarred(game, ping));
+        game.getStack().add(ping);
+        AssertJUnit.assertTrue("the 25th in a row with nothing lost bars it", LoopBreaker.isBarred(game, ping));
+    }
+
+    /** Round 994: a loop that drains life but cannot kill (Platinum Angel, a life-gain offset) still ends, at
+     *  AI_BACKSTOP_AT uses of that card name's ability in a turn. */
+    @Test
+    public void anAiLoopThatCannotKillStopsAtTheBackstop() {
+        Game game = initAndCreateGame();
+        Player opp = game.getPlayers().get(0);
+        Player ai = game.getPlayers().get(1);
+        game.getPhaseHandler().devModeSet(PhaseType.MAIN1, ai);
+        opp.setLife(5000, null); // stands in for "can't lose"
+        SpellAbility ping = aiAbility(addCard("Triskelion", ai), ai);
+
+        for (int i = 1; i < LoopBreaker.AI_BACKSTOP_AT; i++) {
+            game.getStack().add(ping);
+            opp.loseLife(1, true, false, ping);
+        }
+        AssertJUnit.assertFalse("299 uses with life lost each time: not barred yet", LoopBreaker.isBarred(game, ping));
+        game.getStack().add(ping);
+        AssertJUnit.assertTrue("the 300th bars it, life lost or not", LoopBreaker.isBarred(game, ping));
+
+        // a fresh object of the same card (undying, a blink) is the same loop
+        SpellAbility again = aiAbility(addCard("Triskelion", ai), ai);
+        AssertJUnit.assertTrue("a new Triskelion is barred too", LoopBreaker.isBarred(game, again));
+        AssertJUnit.assertFalse("barring is not a draw", game.isGameOver());
+    }
+
+    private SpellAbility aiAbility(Card host, Player ai) {
+        SpellAbility sa = AbilityFactory.getAbility("AB$ DealDamage | Cost$ 0 | ValidTgts$ Any | NumDmg$ 1 | SpellDescription$ Ping.", host);
+        sa.setActivatingPlayer(ai);
+        return sa;
+    }
+
     @Test
     public void aTriggerComingBack25TimesWithNobodyActingIsADraw() {
         Game game = initAndCreateGame();

@@ -46,11 +46,15 @@ the Job Board its reputation and building slots, Speed-Up a "50x" tag; ability n
 `Forge.render`, the gold-framed box, texts in the plane's `config tables/tips.json` with `{tuning.FIELD}` fills - on the
 world-map HUD (`util/TfrHudTips`, ability buttons included), New Game and Settings; "Show tooltips: Auto / On / Off"
 (`SettingData.tfrTooltips`, global, Auto = on for Easy/Normal, off for Hard/Insane, New Game's button follows the
-difficulty box); mouse only; console `tips`, `[TFR-Tips]`; `TfrTipsTest`; rounds B-D to come).
-Engine = the 11.05 daily (round 978, upstream `1e8c35fca3e`; round 769's R1-R4 still
+difficulty box); mouse only; console `tips`, `[TFR-Tips]`; `TfrTipsTest`; rounds B-D to come) and round 994 (the engine
+to the 11.09 daily, below; enemy decks built off the GL thread while the VS screen stays up, `[TFR-DeckGen]`; the loop
+breaker's AI count starts over when an opponent loses life, with a 300-use backstop, so upstream's FlatMC kill loops
+finish; `EffectData`'s UID and `IncubateAi` kept ours). **1.28 log watch**: upstream's FlatMC tuning for `Reckless.ai`
+and `Cautious.ai` (360 TFR enemies) - win ratios and duel times against them.
+Engine = the 11.09 daily (round 994, upstream `7d0acc8aa92`; round 769's R1-R4 still
 keep TFR's synchronous auto save, eager shops, Inn events and place entry; bosses keep the player's AI setting through
-`bossAiFollowsSetting`); next merge from upstream after `1e8c35fca3e` (its first commit is `f62f804806c`, #12695, five AI files and `MagicStack`); BASE_INSTALL is that daily, so packages need no
-`--allow-base-mismatch`. Next version: 1.28 / 12800. Next free round: 994. The agent profile's window is
+`bossAiFollowsSetting`); next merge from upstream after `7d0acc8aa92` (its first commit is `b3802f9255a`, #12773, hidden-zone ChangeZone in APNAP order); BASE_INSTALL is that daily, so packages need no
+`--allow-base-mismatch`. Next version: 1.28 / 12800. Next free round: 997 (995 and 996 handed out). The agent profile's window is
 1280x720 - at 3840x2160 it covered the screen, got minimized, and a minimized game stops (the bridge times out, shots
 come back 1x1). Agent games keep their own LOCALAPPDATA cache (round 860). Log sharing (round 698) posts to Discord
 through a webhook kept OUT of git in `C:\TFR\secrets\discord_log_webhook.txt` - never commit it; the packager and
