@@ -97,6 +97,9 @@ md` already gets updated after every change.
 - Follow-up: `FSkinFont`'s three measure catches pass the thread-local layout (`onLayoutFailure(where, str, e,
   glyphLayoutThreadLocal.get())`, its broken runs dropped); `FSkinFont.draw` wraps `font.draw` in `try { } catch
   (RuntimeException e) { GlyphPoolGuard.onDrawFailure(font); throw e; }` (the font cache cleared, then a heal).
+- Follow-up 2: `forge-gui-mobile/src/forge/card/CardRenderer.java` (STOCK): `drawText`'s catch (round 816) ends with
+  `forge.util.GlyphPoolGuard.recover(glyphLayout, font, ...)`, `measure`'s catch (round 846) with
+  `GlyphPoolGuard.recover(glyphLayout, null, ...)`, after their own log lines.
 - New TFR-only: `forge-gui-mobile/src/forge/util/GlyphPoolGuard.java`, `forge-gui-mobile/test/forge/util/GlyphPoolGuardTest.java`.
   It reads libGDX's private `GlyphLayout.glyphRunPool` and `Pool.freeObjects` by reflection: on a libGDX update, check
   both still exist (the guard logs `[TFR-GlyphPool] guard off` and does nothing if not; `GlyphPoolGuardTest` fails).

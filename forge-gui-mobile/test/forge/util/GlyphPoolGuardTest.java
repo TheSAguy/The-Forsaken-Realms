@@ -215,6 +215,54 @@ public class GlyphPoolGuardTest {
         }
     }
 
+    /**
+     * Round 995 follow-up 2: CardRenderer's counter and marker tabs lay their text out with one static layout, then draw
+     * it with the font (drawText), and log a failure themselves. recover() is their whole recovery.
+     */
+    private static int failingCounterFrames(boolean recover) {
+        BitmapFont font = headlessFont();
+        GlyphLayout counterLayout = new GlyphLayout(); // CardRenderer's static glyphLayout
+        Pool<GlyphLayout.GlyphRun> pool = GlyphPoolGuard.runPoolForTest();
+        for (int i = 0; i < 8; i++) {
+            GlyphLayout.GlyphRun run = new GlyphLayout.GlyphRun();
+            pool.free(run);
+            pool.free(run);
+        }
+        int failed = 0;
+        for (int frame = 0; frame < 6; frame++) {
+            try {
+                counterLayout.setText(font, "+1/+1 Counter", Color.WHITE, 40, Align.left, true);
+                font.getCache().clear();
+                font.getCache().addText("+1/+1 Counter", 0, 0, 40, Align.left, true);
+            } catch (RuntimeException e) {
+                failed++;
+                if (recover)
+                    GlyphPoolGuard.recover(counterLayout, font, "test");
+                else
+                    GlyphPoolGuard.heal("test");
+            }
+        }
+        return failed;
+    }
+
+    @Test
+    public void cardRenderersStaticLayoutRecoversAfterOneFrame() {
+        PrintStream err = System.err, out = System.out;
+        System.setErr(new PrintStream(new ByteArrayOutputStream(), true));
+        System.setOut(new PrintStream(new ByteArrayOutputStream(), true));
+        try {
+            AssertJUnit.assertEquals("a heal alone: the counter text fails every frame", 6, failingCounterFrames(false));
+            reset();
+            AssertJUnit.assertEquals("recovered: only the poisoned frame fails", 1, failingCounterFrames(true));
+            GlyphPoolGuard.runPoolForTest().free(new GlyphLayout.GlyphRun());
+            GlyphPoolGuard.recover(null, null, "test"); // no layout, no font: only the heal
+            AssertJUnit.assertEquals(0, GlyphPoolGuard.runPoolForTest().getFree());
+        } finally {
+            System.setErr(err);
+            System.setOut(out);
+        }
+    }
+
     @Test
     public void aCleanPoolHealsSilentlyAfterTheFirstLine() {
         PrintStream out = System.out, err = System.err;

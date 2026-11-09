@@ -14529,6 +14529,16 @@ exactly "End\nTurn" (`FButton.draw:416`, round 908's `[TFR-Render] text not draw
     caption.
   - Tests: `GlyphPoolGuardTest` 6 (+2: the measure and draw cycles, heal alone 6/6 frames failing vs. 1/6 fixed). Maven
     `-o -pl forge-gui-mobile -am test` (all module test classes): exit 0, 104/104; desktop jar exit 0.
+- **Follow-up 2: CardRenderer's counter and marker tabs** (rounds 816 and 846; the main thread: "do the CardRenderer
+  follow-up"). They lay their text out with one static `GlyphLayout`, then draw it with the raw `BitmapFont`, and catch a
+  failure with their own once-a-launch `[TFR-Render] counter/marker text ...` line, so the same re-poison applied: the
+  static layout kept its broken runs and freed them into the pool on its next `setText`. Both catches (`drawText`,
+  `measure`) now call the new `GlyphPoolGuard.recover(failedLayout, font, reason)`: the static layout's runs dropped,
+  the font's cache cleared on the GL thread (drawText only), the pool healed; their own log lines are unchanged.
+  `onLayoutFailure` and `onDrawFailure` now go through `recover` too (`onDrawFailure` off the GL thread now posts the
+  heal instead of skipping it). `GlyphPoolGuardTest` 7 (+1: the counter text's layout-then-draw, a heal alone 6/6 frames
+  failing, `recover` 1/6; `recover(null, null)` only heals). Maven `-o -pl forge-gui-mobile -am test` (all module test
+  classes): exit 0, 105/105; desktop jar exit 0. No agent run (a unit test was enough, per the main thread).
 - **Saves:** nothing.
 
 ## Round 994: the engine to the 11.09 daily (upstream `7d0acc8aa92`) (2026-11-09)

@@ -1077,6 +1077,9 @@ public class CardRenderer {
                             + " (logged once a launch; the duel goes on)");
                     e.printStackTrace();
                 }
+                // TFR round 995 (follow-up 2): drop the static layout's broken runs, free the font cache's, heal the pool,
+                // so the failure does not come back every frame
+                forge.util.GlyphPoolGuard.recover(glyphLayout, font, "after counter/marker text not drawn");
             } finally {
                 if (color.a < 1) {
                     Gdx.gl.glDisable(GL_BLEND);
@@ -1104,6 +1107,7 @@ public class CardRenderer {
                         + " (logged once a launch; the duel goes on)");
                 e.printStackTrace();
             }
+            forge.util.GlyphPoolGuard.recover(glyphLayout, null, "after counter/marker text not measured"); // round 995
             return 0f;
         }
     }

@@ -179,8 +179,7 @@ public final class GlyphPoolGuard {
                     + "\", thread " + Thread.currentThread().getName() + " (logged once a launch)");
             e.printStackTrace();
         }
-        dropRuns(failed);
-        heal("after a failed measure");
+        recover(failed, null, "after a failed measure");
     }
 
     /**
@@ -189,14 +188,25 @@ public final class GlyphPoolGuard {
      * then empties that pool. On the GL thread only, where every draw runs.
      */
     public static void onDrawFailure(BitmapFont font) {
-        if (font == null || !isGlThread())
-            return;
-        try {
-            font.getCache().clear();
-        } catch (RuntimeException ignored) {
-            // a layout too broken to free: the heal below still empties the pool
+        recover(null, font, "after text not drawn");
+    }
+
+    /**
+     * The recovery after any caught libGDX text failure, for a caller that logs the failure itself (round 995 follow-up 2:
+     * CardRenderer's counter and marker tabs, rounds 816 and 846): {@code failed}, the caller's own reused layout, has its
+     * runs dropped; {@code font}'s cache is cleared on the GL thread (freeing the failed layout libGDX keeps); then the
+     * pool is healed. Either may be null.
+     */
+    public static void recover(GlyphLayout failed, BitmapFont font, String reason) {
+        dropRuns(failed);
+        if (font != null && isGlThread()) {
+            try {
+                font.getCache().clear();
+            } catch (RuntimeException ignored) {
+                // a layout too broken to free: the heal below still empties the pool
+            }
         }
-        heal("after text not drawn");
+        heal(reason);
     }
 
     /** Forgets a layout's runs without freeing them into the pool. */
