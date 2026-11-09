@@ -14580,8 +14580,17 @@ Round 769's bosses: `selectAI`, `bossAiFollowsSetting`, `Default/Hard/Hardest.ai
   forge-gui 25, forge-gui-mobile 78, forge-gui-desktop 2323 run, 0 failed, 6 skipped (`FlatMonteCarloLoopRunnerTest` 15
   including the Mikaeus/Triskelion kill, `LoopBreakerTest` 13). Before the loop-breaker change: 2321 run, that one
   failure. Then `-o -pl forge-gui-mobile-dev -am package -DskipTests`, exit 0 (the shipping jar, 14:56).
-- In-game: not yet - `locks\agent` was held (since 09:27, owner not running) when this was committed; the 50x smoke
-  test (new game, duels, a dungeon's hidden HUD, a shop) follows as round 994 (follow-up).
+- In-game (round 994 follow-up, after the commit): a test package of `6a256f70e6b` alone (a clean worktree, its own jar,
+  `build_standalone.py --full --out C:\CLAUDE\PROJECTS\TFR1\agent`; rounds 995-998 not in it); `forge.log` says
+  `Forge v.2.0.16-SNAPSHOT-11.09`. A new game (Normal, Blue Starter; the welcome page, the intro skipped, the Warden's
+  camp); three duels at 50x (`[TFR-Agent] duel speed set to 50x` each time), each with `[TFR-DeckGen] 1 enemy deck(s)
+  built off the GL thread in 2-4 ms` and the VS screen cleared after: lost to an Imp (reckless profile), beat a Cateran
+  Slaver (cautious, turn 6, 3 s) and a Barrow Skeleton, rewards collected; the Bandit Cave entered (`[TFR-Hud] entered a
+  dungeon ... HUD hidden`, restored on leaving); Shiv's Inner Sanctum shop opened with its cards and art, Carbonize
+  bought (gold 367 -> 267); a save to slot 42; quit through the menu. The session line: `duels=3 won=2 lost=1 ...
+  errors=0`; two `[TFR-Agent] /state failed` timeouts during world generation only (the client polling a busy GL
+  thread). Shots: `C:\CLAUDE\PROJECTS\TFR1\notes\r994\`. Not run: Android, portrait, a Deck Tester or Arena duel
+  (their decks skip the background build), an enemy holding a kill loop.
 
 ## Round 993: hover tips - TFR 2's tips ported, the world-map HUD, New Game and Settings (2026-11-09)
 
