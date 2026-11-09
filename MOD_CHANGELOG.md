@@ -14264,6 +14264,54 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 991: the old sets' pack prices, and the pack floor values slots at list price (2026-11-08)
+
+A player's shot (logs-1108c P3-13): a booster shop with seven packs at 1,187 and Legends at 59,375. The user approved
+repricing Legends, Alpha and Beta ("Yes, all three"), then chose to fix the floor's source ("A, fix the source").
+
+- **Cause.** `CardUtil.getBoosterPrice` reads a pack's set code from the price list (TFR has `usePriceListPrices`), and
+  the stock `cardprices.txt` ends with four collector-value rows from upstream #10158: `LEA`, `LEB`, `LEG` at 50000,
+  `FEM` at 200. 50000 x the town's 1.1875 = 59,375. Every other set falls back to 1000.
+- **New prices:** `LEG = 2000`, `LEA = 3000`, `LEB = 3000`; `FEM = 200` kept. What's inside, at TFR's list prices
+  with the restricted cards left out (a slot-by-slot average from the edition files): Legends 1,587 a pack (The
+  Tabernacle 8,000, Mana Drain 5,000, Karakas 2,500), Alpha 2,343 and Beta 2,361 (the dual lands 3,000, Channel 5,000,
+  Berserk 3,000, Dark Ritual 2,500). So a "rare old set" price: a bit above that value, and above a normal pack's 1000.
+- **The profit-loop check found a gap in round 932's floor.** The lowest shelf factor is **0.390**: the player's own
+  town (0.75) with a Market and the Merchant Guild (0.8), town reputation 20 (0.9), Haggler 3/3 (0.85), the Fortune
+  Coin (0.85). (The per-shop reputation is never written; an AI town as a color Partner is 0.569.) At 0.390, Legends
+  at 2000 shelved at 780, round 932's floor lifted it to 937, and its cards resold for 1,143 on Easy with the Appraiser:
+  +206 a pack. Alpha at 3000: 1,170 against 1,687. Round 932 valued slots at the flat rarity prices (50/150/300/500),
+  so any set whose cards the price list raises had the same gap (Arabian Nights at 1000: 541 against 603). And it left
+  out a classic save's town sell factor (x1.1 at town reputation 20), so even a plain set at the floor resold ~90 over
+  it there.
+- **The fix, `AdventurePlayer.expectedPackSellPrice`** (one caller, `RewardScene.BuyButton`; graph and Grep agree):
+  each slot at its set's average for that rarity, each card at what it would really sell for: its **list** price
+  (`CardUtil.getCardPrice` over the edition's `[cards]`, the restricted cards left out, as the pack generator does)
+  through `cardSellPrice`'s own steps - the sell factor, a classic save's town factor (1 in a research v2 game), the
+  Appraiser and the per-card roundings (`cardBaseSellPrice`'s arithmetic moved into a private
+  `baseSellPriceOfListPrice`, behavior unchanged). A RareMythic slot 7:1, an UncommonRare slot over both, a land at a
+  5-gold card. Still the set's average, never the pack's own cards. A set with no listed card keeps round 932's floor
+  in a v2 game. The slot math is in new `util/PackFloor`. (The first cut multiplied a list value by the factors; the
+  new test caught a classic-save Legends pack reselling at 1,262 against a 1,258 shelf, from the Appraiser's per-card
+  rounding.)
+- **Shelf prices after (Easy, full Appraiser).** Legends: 2,000 at a 1.0 factor (was 50,000), 1,143 at 0.390 in a v2
+  game and 1,263 in a classic save at town reputation 20 (was 19,500; with the new price and the old floor it would have
+  been 937). Alpha 3,000 / 1,688 (classic 1,862), Beta 3,000 / 1,701 (1,876), Arabian Nights 1,000 / 603 (667). A
+  normal set with no listed card (Theros): 1,000 at 1.0 and 923 at 0.390 in a v2 game, unchanged; 1,020 in a classic
+  save at town reputation 20 (was 1,000 and 923). Fallen Empires: 613 (v2), 677 (classic).
+- **Restricted list, every pack path checked:** shop packs (`cardPackShop`, both branches), Inn events (the block
+  resolver and `createRestrictedAwareBooster`), chests, perk rewards and the console all build through
+  `generateRestrictedAwareBoosterPack`/`UnOpenedProduct` with the restricted names, and every print sheet passes
+  `BoosterGenerator.applyExclusions`. The Power Nine, Time Vault and Sol Ring never come out of a pack; they still reach
+  the player as explicit card rewards (the High Roller's Club, a few enemy drops), which are not packs.
+- **Log:** `[TFR-PackFloor] <SET>: list value N (C a, U b, R c, M d), sells for about N (sell f, town t)`, once a set a
+  session; RewardScene's existing floor line shows a raised shelf.
+- **Test:** `PackFloorTest` (4 cases): reads the real price list, restricted list and edition files and asserts that no
+  pack (LEG, LEA, LEB, ARN, FEM, Theros, Magic 2014) shelves at 0.390 under its card-by-card resale, in a v2 game and in
+  a classic save; the old-set prices; a set with no listed card keeps round 932's 1,280 list value; a listed card
+  raises only its slot.
+- **Saves:** nothing stored; a pack on a shelf shows the new price at once.
+
 ## Round 990: dialogs after a minimized launch - the stage viewports kept in step with the window (2026-11-08)
 
 The user approved the fix for logs-1108b P2-1 ("Yes, build it"). A player's "freeze turning in the slime quest" was any

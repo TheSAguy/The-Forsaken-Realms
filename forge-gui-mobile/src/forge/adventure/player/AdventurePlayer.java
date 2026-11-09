@@ -3945,37 +3945,64 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
 
     /**
      * Round 932 (Fable P2-3, the user: a floor only where a pack really sells for a profit, never priced from its
-     * contents): what a pack of this set's booster template would sell for on average - its slots at CardUtil's rarity
-     * prices (Common 50, Uncommon 150, Rare 300, Mythic 500, a land 5; a "RareMythic" slot 1 in 8 mythic; any other
-     * slot as a common), times the difficulty's sell factor and the Appraiser. Never the pack's own cards, so the price
-     * says nothing about what is inside. 0 for a code with no template (a colored pack).
+     * contents): what a pack of this set's booster template would sell for on average - a "RareMythic" slot 1 in 8
+     * mythic, a land 5, any other slot as a common - times the difficulty's sell factor and the Appraiser. Never the
+     * pack's own cards, so the price says nothing about what is inside. 0 for a code with no template (a colored pack).
+     * Round 991 (logs-1108c P3-13, the user: "A, fix the source"): each slot at its set's average for that rarity, each
+     * card at what it would really sell for - its LIST price (CardUtil.getCardPrice) through cardSellPrice's own steps,
+     * the classic town factor and the roundings included - not the flat rarity price; the restricted cards left out
+     * (util/PackFloor). Alpha, Beta, Legends and Arabian Nights resold above
+     * round 932's floor at a deep discount (0.390 of the list price). A set with no listed card is unchanged.
      */
     public int expectedPackSellPrice(String editionCode) {
         forge.card.CardEdition edition = editionCode == null ? null : forge.model.FModel.getMagicDb().getEditions().get(editionCode);
         if (edition == null || !edition.hasBoosterTemplate())
             return 0;
-        float base = 0f;
-        for (org.apache.commons.lang3.tuple.Pair<String, Integer> slot : edition.getBoosterTemplate().getSlots()) {
-            String s = slot.getKey() == null ? "" : slot.getKey().toLowerCase(java.util.Locale.ROOT);
-            float each;
-            if (s.startsWith("raremythic"))
-                each = (7 * 300 + 500) / 8f;
-            else if (s.startsWith("uncommonrare"))
-                each = (150 + 300) / 2f;
-            else if (s.startsWith("mythic"))
-                each = 500;
-            else if (s.startsWith("rare"))
-                each = 300;
-            else if (s.startsWith("uncommon"))
-                each = 150;
-            else if (s.contains("land"))
-                each = 5;
-            else
-                each = 50;
-            base += each * slot.getValue();
+        // Each card at what it would sell for, through cardSellPrice's own steps and roundings (a non-foil card);
+        // the list prices beside it for the log.
+        float appraiser = forge.adventure.util.Ascendance.sellPriceFactor();
+        forge.adventure.util.PackFloor.SetPrices sells = new forge.adventure.util.PackFloor.SetPrices(list -> {
+            int base = baseSellPriceOfListPrice(list, false);
+            return appraiser == 1f ? base : Math.round(base * appraiser);
+        });
+        forge.adventure.util.PackFloor.SetPrices prices = new forge.adventure.util.PackFloor.SetPrices();
+        java.util.Set<String> restricted = CardUtil.getRestrictedCardNames();
+        java.util.List<forge.card.CardEdition.EditionEntry> cards = edition.getCards();
+        if (cards != null) {
+            for (forge.card.CardEdition.EditionEntry e : cards) {
+                if (e.rarity() == null || restricted.contains(e.name()))
+                    continue;
+                char r;
+                switch (e.rarity()) {
+                    case Common: r = 'C'; break;
+                    case Uncommon: r = 'U'; break;
+                    case Rare: r = 'R'; break;
+                    case MythicRare: r = 'M'; break;
+                    default: continue;
+                }
+                PaperCard card = forge.model.FModel.getMagicDb().getCommonCards().getCard(e.name(), editionCode);
+                if (card == null)
+                    continue;
+                int list = CardUtil.getCardPrice(card);
+                prices.add(r, list);
+                sells.add(r, list);
+            }
         }
-        return Math.round(base * difficultyData.sellFactor * forge.adventure.util.Ascendance.sellPriceFactor());
+        java.util.List<org.apache.commons.lang3.tuple.Pair<String, Integer>> slots = edition.getBoosterTemplate().getSlots();
+        float listValue = forge.adventure.util.PackFloor.packValue(slots, prices);
+        int sell = Math.round(forge.adventure.util.PackFloor.packValue(slots, sells));
+        float townSell = currentLocationChanges == null || forge.adventure.util.ResearchMeter.enabled(this)
+                ? 1f : 2.0f - currentLocationChanges.getTownPriceModifier();
+        if (packFloorLogged.add(editionCode))
+            System.out.println("[TFR-PackFloor] " + editionCode + ": list value " + Math.round(listValue)
+                    + " (C " + Math.round(prices.common()) + ", U " + Math.round(prices.uncommon()) + ", R "
+                    + Math.round(prices.rare()) + ", M " + Math.round(prices.mythic()) + "), sells for about " + sell
+                    + " (sell " + difficultyData.sellFactor + ", town " + townSell + ")");
+        return sell;
     }
+
+    /** Round 991: the set codes whose pack floor was logged this session (one [TFR-PackFloor] line a set). */
+    private static final java.util.Set<String> packFloorLogged = java.util.concurrent.ConcurrentHashMap.newKeySet();
 
     /** Round 548: the sell price before the Appraiser perk - the base the ante's Buy Back is priced from, so the perk
      *  never makes buying a card back dearer. */
@@ -3983,10 +4010,14 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
         if (card.hasNoSellValue()) {
             return 0;
         }
+        return baseSellPriceOfListPrice(CardUtil.getCardPrice(card), card.isFoil());
+    }
 
-        int basePrice = (int) (CardUtil.getCardPrice(card) * difficultyData.sellFactor);
+    /** Round 991: cardBaseSellPrice's arithmetic from a list price, shared with the pack floor (expectedPackSellPrice). */
+    private int baseSellPriceOfListPrice(int listPrice, boolean foil) {
+        int basePrice = (int) (listPrice * difficultyData.sellFactor);
 
-        if (card.isFoil()) {
+        if (foil) {
             basePrice += basePrice * 20 / 100;
         }
 

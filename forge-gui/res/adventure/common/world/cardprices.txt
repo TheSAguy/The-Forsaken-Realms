@@ -291,7 +291,7 @@ Oko, Thief of Crowns =1500
 Liliana of the Veil=800
 Liliana, Dreadhorde General =800
 
-LEA = 50000
-LEB = 50000
+LEA = 3000
+LEB = 3000
 FEM = 200
-LEG = 50000
+LEG = 2000

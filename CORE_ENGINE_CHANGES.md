@@ -35,6 +35,19 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 991 - the old sets' pack prices; the pack floor values slots at list price (logs-1108c P3-13)
+- **`forge-gui/res/adventure/common/world/cardprices.txt`** (STOCK) - `LEA` 50000 to 3000, `LEB` 50000 to 3000, `LEG`
+  50000 to 2000 (upstream #10158 priced these booster rows at collector value). `FEM = 200` kept. On an upstream merge
+  keep these three values, as round 895's card rows; every other row follows upstream.
+- **`forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java`** (STOCK) - `expectedPackSellPrice` (round 932's
+  method) values each slot at the set's average sell price (each card's list price through `cardSellPrice`'s steps)
+  through the new `util/PackFloor`, leaving out the restricted cards; new static `packFloorLogged` for the
+  `[TFR-PackFloor]` line. Its one caller is `RewardScene.BuyButton`. `cardBaseSellPrice`'s arithmetic moved into a new
+  private `baseSellPriceOfListPrice(int, boolean)` (same result); on an upstream change to `cardBaseSellPrice`, keep the
+  two in one place.
+- New TFR files: `forge-gui-mobile/src/forge/adventure/util/PackFloor.java`,
+  `forge-gui-mobile/test/forge/adventure/util/PackFloorTest.java`.
+
 ### Round 990 - stage viewports kept in step with the window (logs-1108b P2-1; an upstream bug too)
 Stock `GameHUD`, `MapStage` and `WorldStage` size their viewports once, in the `Stage` constructor, and `Forge.resize`
 reaches only the current scene; a launch at 0x0 left map dialogs empty and unclickable. Upstream has the same code.
