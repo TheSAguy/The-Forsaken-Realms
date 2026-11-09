@@ -14638,6 +14638,29 @@ previews (`cardTooltipAdj`) untouched. Rounds B (towns, shops, Inn), C (Ascendan
   exit 0, 6/6; desktop jar exit 0.
 - **Saves:** nothing stored in a save; the setting is in the profile's settings.json.
 
+**Round 993 (follow-up), 2026-11-09: the world-map HUD's tip box.** The agent shots showed every HUD tip but the
+minimap's drawn as a gold sliver about 10 px wide, its text spilling across the map with no dark background. The port had
+added a wrap-at-170 block to `TfrTips.build` that TFR 2's `Tfr2Tips.build` does not have. On the HUD's stage the clock's,
+gold's, Ascendance's and wood's lines run past 170 units, and a wrapping TextraLabel packs to almost zero width, so the
+frame was built around nothing. New Game and Settings never hit it, since their lines fit. The block is gone. The box
+takes the packed label's size (new `TfrTips.boxSize`), and the texts keep breaking their own lines with "\n", as TFR 2's
+do.
+
+- **Test:** `TfrTipsTest` 4 -> 6. `aWideTipKeepsItsBox` checks that a 470-unit HUD tip gets a box wider than its text.
+  `tipsBreakTheirOwnLines` checks that no line of `tips.json` runs past 125 characters (markup aside); the longest today
+  are `settings.reload` at 121 and `hud.gold` at 104. Maven `-o -pl forge-gui-mobile -am test
+  -Dtest=TfrTipsTest,TfrLabelsTest`: exit 0, 8/8.
+- **Agent-game shots** (`C:\CLAUDE\PROJECTS\TFR1\notes\r993\`):
+  - The bug as committed: `r993_hud_*_BUG_committed_build.png`.
+  - The fix: `r993_hud_*_fixed.png` (clock, Speed-Up, Ascendance, gold, wood).
+  - New Game following the difficulty box, and overruled both ways: `r993_newgame_*.png`.
+  - Settings rows: `r993_settings_*.png`.
+  - The cause and the patch: `FIX-hud-tip-box.md`.
+- **Round 992's agent shots** (`C:\CLAUDE\PROJECTS\TFR1\notes\r992\`): the Speed-Up "50x" tag, deck slots "N/40", and
+  Repair "[+Gold] 1600" on a cracked amulet.
+- **Checked by code and test only:** the Abandon confirm, the Armory "in N days" and the Job Board line. Each needs a
+  quest taken, a re-rolled Armory or a restored town before it shows, so none is shot.
+
 ## Round 992: visible help text - the tooltip audit's label list (2026-11-09)
 
 The user's request (2026-11-09): "TFR2 makes good use of "Tooltips" that pop-up ... Could we review TFR1 and see where we
@@ -14657,7 +14680,7 @@ first, before round 993's tips: items 1, 2, 3, 4, 6, 7 and 8; "Week 0" (5) stays
   layout put it (42 px wide in both `inventory.json` and `inventory_portrait.json`, too small for the price).
 - **Deck slots** (stock `DeckSelectScene`): each slot shows "Name  23/40" - `duelDeckSize` against `duelMinDeckSize`,
   red while under it - so an incomplete deck shows before round 983's warning on leaving.
-- **Armory Re-roll** (stock `RewardScene`, `PointOfInterestChanges`): while the 7-day cooldown runs the greyed button
+- **Armory Re-roll** (stock `RewardScene`, `PointOfInterestChanges`): while the 7-day cooldown runs the grayed button
   reads "Re-roll Inventory in 3 days" (new `PointOfInterestChanges.manualRerollDaysLeft`); ready, "Re-roll Inventory
   ([+Shards] 100)". The button and its confirm now put the icon first, per the resource rule ("for [+Shards] 100?").
 - **Job Board** (TFR's `TownRestoration.openJobBoardMenu`): under "The X Job Board." a line "[+Reputation] 2 - 4 of 6

@@ -46,4 +46,32 @@ public class TfrTipsTest {
         AssertJUnit.assertEquals("0.5", TfrTips.num(0.5));
         AssertJUnit.assertEquals("a [WHITE][+Gold]" + TfrTips.INK + " 5", TfrTips.ink("a [+Gold] 5"));
     }
+
+    /**
+     * Round 993 (follow-up): a wide HUD tip keeps its box. The wrap-at-170 block packed the label to a near-zero width
+     * and the frame was built around that (a gold sliver, the text spilling across the map); the box now always takes
+     * the packed label's own size.
+     */
+    @Test
+    public void aWideTipKeepsItsBox() {
+        float[] box = TfrTips.boxSize(470f, 36f); // hud.clock's three lines at [%60] on the world-map HUD
+        AssertJUnit.assertTrue("wider than its text", box[0] >= 470f);
+        AssertJUnit.assertTrue("taller than its text", box[1] >= 36f);
+        AssertJUnit.assertEquals(478f, box[0], 0.001f);
+        AssertJUnit.assertEquals(40f, box[1], 0.001f);
+    }
+
+    /** With no wrapping, every tip breaks its own lines ("\n"): no line runs past 125 characters, markup aside. */
+    @Test
+    public void tipsBreakTheirOwnLines() {
+        java.io.File f = new java.io.File("../forge-gui/res/adventure/The Forsaken Realms/" + TfrTips.FILE);
+        AssertJUnit.assertTrue(f.getAbsolutePath() + " not found", f.isFile());
+        com.badlogic.gdx.utils.JsonValue d = new com.badlogic.gdx.utils.JsonReader().parse(new com.badlogic.gdx.files.FileHandle(f));
+        int count = 0;
+        for (com.badlogic.gdx.utils.JsonValue v = d.child; v != null; v = v.next, count++)
+            for (String line : v.asString().split("\n"))
+                AssertJUnit.assertTrue(v.name + ": a " + line.length() + "-character line - break it with \\n",
+                        line.replaceAll("\\[[^\\]]*]", "").length() <= 125);
+        AssertJUnit.assertTrue("tips read", count > 20);
+    }
 }

@@ -441,7 +441,12 @@ public final class TfrTips {
         box.toFront();
     }
 
-    /** The gold-framed box of TFR 2's tips, its text [%60] on dark, wrapped at a third of the stage. */
+    /** The frame around a packed label: 4 units each side, 2 above and below - never narrower than its text. */
+    static float[] boxSize(float labelWidth, float labelHeight) {
+        return new float[]{labelWidth + 8, labelHeight + 4};
+    }
+
+    /** The gold-framed box of TFR 2's tips, its text [%60] on dark; its lines are the text's own ("\n"), unwrapped. */
     static Group build(String text) {
         if (white == null) {
             Pixmap pm = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
@@ -452,15 +457,10 @@ public final class TfrTips {
         }
         TextraLabel l = Controls.newTextraLabel("[%60]" + INK + text);
         l.pack();
-        float max = 170;
-        if (l.getWidth() > max) {
-            l.setWrap(true);
-            l.setWidth(max);
-            l.pack();
-            l.setWidth(max);
-            l.pack();
-        }
-        float w = l.getWidth() + 8, h = l.getHeight() + 4;
+        // Round 993 (follow-up): no wrapping - a wrapping TextraLabel packs to a near-zero width, so the HUD's wide tips
+        // drew as a gold sliver with their text spilling across the map. The texts break their own lines with "\n".
+        float[] size = boxSize(l.getWidth(), l.getHeight());
+        float w = size[0], h = size[1];
         Group g = new Group();
         Color gold = new Color(0.91f, 0.72f, 0.29f, 1f);
         float[][] parts = {{0, 0, w, h}, {0, 0, w, 1}, {0, h - 1, w, 1}, {0, 0, 1, h}, {w - 1, 0, 1, h}};
