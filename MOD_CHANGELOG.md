@@ -14385,7 +14385,22 @@ reviews, "Yes, add them". Seven items, each from its review: `C:\CLAUDE\PROJECTS
   With the fix: pass.
 - Maven `-o -pl forge-gui-mobile-dev -am package -Dtest=TrackerTest,GameEntityViewTest,DuelArtReleaseTest,EconomyLogTest,TfrHudTest`:
   exit 0; forge-game 6/6, forge-gui-mobile 12/12.
-- Agent game (`C:\CLAUDE\PROJECTS\TFR1\agent-r997`, items 4 and 5): in the follow-up entry; shots in `C:\CLAUDE\PROJECTS\TFR1\notes\r997\`.
+- **Agent game (round 997 follow-up)** - `C:\CLAUDE\PROJECTS\TFR1\agent-r997` (the 11.09 agent package, this round's jar,
+  slot 1, cheats, duels at 50x). Shots and log excerpts in `C:\CLAUDE\PROJECTS\TFR1\notes\r997\`.
+  - Item 4, a win in the Hunting Lodge (`inn_lodge_1`, Wolfkin Outcast #109): the console's `teleport to poi` sent the
+    instant the duel returned to the map answered "Not until the duel result is booked." (`[TFR-ResultWindow] the
+    console's teleport refused - the duel result for Wolfkin Outcast #109 is still pending`; `item4-run2-refused.png`).
+    The loot screen came up 3 s later; Done collected it (`[TFR-Payout] ... 38 gold`, the purse 238 -> 276); the same
+    teleport then went through (`item4-run2-teleport-after.png`). A lost duel there was refused the same way, and the
+    game's own defeat flow then took the player out (`item4-teleport-refused.png`).
+  - Item 5, five duels (two lost, three won; world map and dungeon): every return logged `[TFR-Memory] duel art freed on the
+    return to GameScene|TileMapScene: assets 331 -> 307`, `347 -> 320`, `352 -> 332`, `355 -> 333`, `336 -> 308`. The
+    wins' loot screens still drew their cards (`item4-win-loot-screen.png`).
+  - A test-only path seen on the way: the bridge's console sent a teleport while a loot screen was still open (the
+    client had crashed printing the screen's glyphs before pressing Done), and the loot was left behind. Players have no
+    console or rune button on a loot screen, so it is not player-facing; the rerun pressed Done first.
+  - Not run: the rune's shard refund on a refused teleport (the console call carries no item); items 6 and 7 in a game
+    (covered by `TrackerTest` and `EconomyLogTest`).
 - **Not tested here:** items 1-3 are Android paths (download, first-launch pause, exit teardown) - checked by reading
   the code; the next Android logs are the test (`[TFR-Assets] ... %`, no `FATAL`, `[TFR-Exit]`).
 
