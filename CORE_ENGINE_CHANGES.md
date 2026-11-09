@@ -35,6 +35,22 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 997 - seven small fixes from the log reviews
+- `forge-gui/src/main/java/forge/gui/download/GuiDownloadZipService.java` (STOCK): `download()` sets a 15 s connect and a
+  30 s read timeout before `connect()`, and logs `[TFR-Assets] <desc>: N%, X MB of Y MB in Z s` every 25% (every 50 MB
+  with no length) inside the read loop. **Merge watch** - a forge-gui file; upstream's own timeouts, if it ever adds
+  them, replace ours.
+- `forge-gui-mobile/src/forge/Forge.java` (STOCK): `dispose()` returns at once when `isDisposed` is already set, with one
+  `[TFR-Exit] dispose called again on <thread> - skipped` line (Android disposed twice at an exit: Main's
+  `triggerDispose` and libGDX's own `listener.dispose()`). Five lines at the top of the method.
+- `forge-game/src/main/java/forge/trackable/Tracker.java` (STOCK): `unfreeze()` copies `delayedPropChanges`, clears it,
+  then applies the copy (was: iterate, then clear) - a change queued during the replay threw
+  `ConcurrentModificationException`. New test `forge-game/src/test/java/forge/trackable/TrackerTest.java`. **Merge
+  watch** - a forge-game file; worth offering upstream.
+- `forge-gui-mobile/src/forge/adventure/stage/ConsoleCommandInterpreter.java`: `teleport to poi` asks
+  `MapStage.refusedForPendingResult` before `exitDungeon` and refunds a rune's shards (round 971's window, as round 982
+  did for `leave`).
+
 ### Round 996 - an Inn event's broken prize state repaired before it is read (logs-1109b P2-2)
 - `forge-gui-mobile/src/forge/adventure/data/AdventureEventData.java` (STOCK):
   - New private `readObject` (calls `defaultReadObject()` first, so the save format and `serialVersionUID = 1L` are

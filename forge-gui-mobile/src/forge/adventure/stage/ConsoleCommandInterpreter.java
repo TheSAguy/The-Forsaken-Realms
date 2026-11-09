@@ -246,6 +246,11 @@ public class ConsoleCommandInterpreter {
             // then reached MapStage.setWinner with no mob of that map - an NPE that closed the game. Not during a duel.
             if (Forge.getCurrentScene() instanceof forge.adventure.scene.DuelScene)
                 return "Not during a duel.";
+            // Round 997 (r127-test P3-1, the gap round 982 left): nor while a duel result is still being booked (round
+            // 971's window) - leaving then exited the map with the win counted and the loot screen never shown. The
+            // capital runes run this command, so a rune's shards come back.
+            if (MapStage.getInstance().isInMap() && MapStage.getInstance().refusedForPendingResult("the console's teleport"))
+                return "Not until the duel result is booked." + refundItemInUse("Not until the duel result is booked - the rune stays quiet. No shard spent.");
             if (MapStage.getInstance().isInMap())
                 MapStage.getInstance().exitDungeon(false, false);
 

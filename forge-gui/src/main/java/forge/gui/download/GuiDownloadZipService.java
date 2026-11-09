@@ -98,6 +98,10 @@ public class GuiDownloadZipService extends GuiDownloadService {
                 conn.setRequestProperty("User-Agent", GuiBase.getInterface().getUserAgent());
             }
 
+            // TFR round 997 (logs-1106 P3-1): a stalled transfer blocked the read for as long as the socket stayed open
+            // (9.7 minutes on one phone) and never reached the failure line. A stall now ends in it.
+            conn.setConnectTimeout(15_000);
+            conn.setReadTimeout(30_000);
             conn.connect();
 
             if (conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
@@ -124,6 +128,8 @@ public class GuiDownloadZipService extends GuiDownloadService {
                 int count;
                 long total = 0;
                 final byte[] data = new byte[1024];
+                final long startedAt = System.currentTimeMillis(); // TFR round 997: a progress line now and then
+                long nextLogAt = contentLength > 0 ? contentLength / 4 : 50L << 20;
 
                 while ((count = input.read(data)) != -1) {
                     if (cancel) {
@@ -134,6 +140,12 @@ public class GuiDownloadZipService extends GuiDownloadService {
                     if (progressBar != null)
                         progressBar.setValue((int) (100 * total / contentLength));
                     output.write(data, 0, count);
+                    if (total >= nextLogAt) {
+                        System.out.println("[TFR-Assets] " + desc + ": " + (contentLength > 0 ? (100 * total / contentLength) + "%, " : "")
+                                + (total >> 20) + " MB" + (contentLength > 0 ? " of " + (contentLength >> 20) + " MB" : "")
+                                + " in " + (System.currentTimeMillis() - startedAt) / 1000 + " s");
+                        nextLogAt += contentLength > 0 ? contentLength / 4 : 50L << 20;
+                    }
                 }
 
                 output.flush();

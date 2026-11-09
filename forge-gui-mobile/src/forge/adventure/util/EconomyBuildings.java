@@ -3150,23 +3150,27 @@ public class EconomyBuildings {
         addHalfButton(dialog, column, "Deposit " + step + " [+Gold]", player.getGold() >= step, () -> {
             ResourceLedger.run(ResourceLedger.Bucket.IGNORED, () -> player.takeGold(step));
             changes.addBankBalance(step);
+            EconomyLog.bank("deposit", step, changes.getBankBalance(), player); // round 997 (logs-1108 P3-8)
             refreshBankDialog(stage, changes, objectId);
         });
         addHalfButton(dialog, column, "Deposit All", player.getGold() > 0, () -> {
             int all = player.getGold();
             ResourceLedger.run(ResourceLedger.Bucket.IGNORED, () -> player.takeGold(all));
             changes.addBankBalance(all);
+            EconomyLog.bank("deposit all", all, changes.getBankBalance(), player); // round 997
             refreshBankDialog(stage, changes, objectId);
         });
         addHalfButton(dialog, column, "Withdraw " + step + " [+Gold]", changes.getBankBalance() >= step, () -> {
             changes.addBankBalance(-step);
             ResourceLedger.run(ResourceLedger.Bucket.IGNORED, () -> player.giveGold(step));
+            EconomyLog.bank("withdraw", -step, changes.getBankBalance(), player); // round 997
             refreshBankDialog(stage, changes, objectId);
         });
         addHalfButton(dialog, column, "Withdraw All", changes.getBankBalance() > 0, () -> {
             int all = changes.getBankBalance();
             changes.addBankBalance(-all);
             ResourceLedger.run(ResourceLedger.Bucket.IGNORED, () -> player.giveGold(all));
+            EconomyLog.bank("withdraw all", -all, changes.getBankBalance(), player); // round 997
             refreshBankDialog(stage, changes, objectId);
         });
         finishHalfButtonRow(dialog, column);
@@ -3317,6 +3321,8 @@ public class EconomyBuildings {
             } finally {
                 ResourceLedger.exit(tradeScope);
             }
+            EconomyLog.trade(verb, giveGold, giveShards, giveWood, giveStone, getGold, getShards, getWood, getStone,
+                    player); // round 997 (logs-1108 P3-8)
         }
     }
 

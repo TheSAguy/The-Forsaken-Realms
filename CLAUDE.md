@@ -53,7 +53,14 @@ finish; `EffectData`'s UID and `IncubateAi` kept ours). Round 995 (the End Turn 
 packs, then a three-slot prize table, crashed the Inn and left the champion unpaid. Stock `AdventureEventData` now
 repairs it before `getDescription` and `giveRewards` read it: packs read back from the table, else dealt again at the
 event's seed; the table grown to four slots; lost tiers rebuilt; a null tier or pack skipped. New `util/InnEventRepair`
-+ `InnEventRepairTest`, `[TFR-InnEvent]`. Cause not found; the agent repro is still to run). **1.28 log watch**: a
++ `InnEventRepairTest`, `[TFR-InnEvent]`. Cause not found; the agent repro is still to run). Round 997 (seven small fixes from the log reviews: the Android
+asset download has 15 s/30 s timeouts and a `[TFR-Assets] N%` line every 25%; a pause before the assets exist no longer
+prints `[TFR-Config] FATAL`; `Forge.dispose` runs once - Android disposed twice at an exit, `[TFR-Exit]`; the console's
+`teleport to poi` (the capital runes) keeps round 971's result window and refunds the rune, `leave` was round 982's;
+new `util/DuelArtRelease` frees a duel's card art on the first map after it, win or loss; stock `Tracker.unfreeze`
+copies and clears its queue first, the start-in-play CME; new `util/EconomyLog`, `[TFR-Trade]`/`[TFR-Bank]`, throttled;
+`TrackerTest`, `DuelArtReleaseTest`, `EconomyLogTest`). **1.28 log watch**: a `[TFR-Exit] dispose called again`
+line and whether Android's `CRASH_NATIVE` exits stop (round 997's guess at their cause); a
 `[TFR-InnEvent] loaded with a broken reward state` line (round 996's shape was on disk at load, with player data);
 upstream's FlatMC tuning for
 `Reckless.ai` and `Cautious.ai` (360 TFR enemies) - win ratios and duel times against them; a `[TFR-GlyphPool] ...

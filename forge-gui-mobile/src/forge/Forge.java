@@ -1146,6 +1146,13 @@ public class Forge implements ApplicationListener {
 
     @Override
     public void dispose() {
+        // TFR round 997 (logs-1106 P3-3, logs-1109b P3-16: CRASH_NATIVE 2-5 s after an Android exit's last line): run
+        // once. Android reached this twice - Main.exit()'s triggerDispose on the GL thread, then libGDX's own dispose as
+        // the finishing activity paused; or libGDX first, then Main.onDestroy's on the UI thread, which has no GL context.
+        if (isDisposed) {
+            System.out.println("[TFR-Exit] dispose called again on " + Thread.currentThread().getName() + " - skipped");
+            return;
+        }
         lifecycleClosing = true;
         forge.adventure.util.SupportPrompt.flush("exit"); // round 756
         forge.adventure.util.SessionLog.end("exit"); // round 777

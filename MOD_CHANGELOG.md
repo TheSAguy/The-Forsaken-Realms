@@ -14264,6 +14264,75 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 997: seven small fixes from the log reviews - a stalled download, an exit's double dispose, a teleport's lost loot (2026-11-09)
+
+The user: "I want everything in before 1.28. So please proceed with it", then, asked about the leftover P3s from the log
+reviews, "Yes, add them". Seven items, each from its review: `C:\CLAUDE\PROJECTS\TFR1\notes\logs-1106.md` P3-1 to P3-3,
+`C:\CLAUDE\PROJECTS\TFR1\notes\logs-1109b.md` P3-16, `C:\CLAUDE\PROJECTS\TFR1\notes\logs-1108.md` P3-8 and P3-10, and
+`C:\CLAUDE\PROJECTS\TFR1\notes\r127-test\report.md` P3-1 and P3-2.
+
+- **1. The Android asset download: timeouts and progress (logs-1106 P3-1). Fixed.** Stock `GuiDownloadZipService.download`
+  opened its connection with no timeouts, so a stalled transfer blocked the read for as long as the socket stayed open
+  (9.7 minutes on one phone, then the player closed the app) and never reached the `FAILED` line. Now a 15 s connect and
+  a 30 s read timeout: a stall throws into the existing catch, `download()` returns null, and `AssetsDownloader` logs its
+  `FAILED` line as for any other failure. A progress line every 25%: `[TFR-Assets] <desc>: 50%, 204 MB of 409 MB in 41 s`
+  (every 50 MB when the server sends no length). Desktop's other downloads (card pictures, skins) share the class; 30 s
+  of silence ends those too, which is the same failure path.
+- **2. A pause before the assets exist printed `[TFR-Config] FATAL` (logs-1106 P3-2). Fixed.** `SupportPrompt.flush`
+  tests `unsaved <= 0f` before `supportLink()`. Before any game nothing is counted, so `Config` is no longer built from
+  a `config.json` the first download hasn't written yet.
+- **3. `CRASH_NATIVE` at or near an Android exit (logs-1106 P3-3, logs-1109b P3-16). Guarded and logged; the cause is
+  not proven.** The read-only lookup found that `Forge.dispose()` ran twice on Android:
+  - the in-game Exit: `Main`'s `exit()` -> `triggerDispose` -> `Forge.dispose` on the GL thread, then `finish()`, and
+    libGDX's own `listener.dispose()` as the finishing activity pauses (`AndroidApplication.onPause` ->
+    `graphics.destroy()`);
+  - a system finish: libGDX's dispose first, then `Main.onDestroy` -> `triggerDispose` -> `Forge.dispose` again, on the
+    UI thread, which has no GL context.
+  The second pass re-ran `safeDispose` on MapStage, ScreenUtil, ShaderUtil, DiceOverlay, the world and SoundSystem. Every
+  crash in the reviews came 2-5 s after the log's last line, which fits a teardown. `Forge.dispose` now runs once:
+  a second call logs `[TFR-Exit] dispose called again on <thread> - skipped` and returns. Ruled out as the native
+  abort: `Assets.dispose` and `Graphics.dispose` (already run-once), `DiceOverlay` (no native physics), libGDX
+  `BufferUtils` (a second free throws a Java exception, not a native one), `Pixmap` (same). Not ruled out: a native
+  free inside a second `SoundSystem`, world or stage dispose, or libGDX/OpenAL's own teardown after ours. **The test is
+  the next Android logs:** a `[TFR-Exit]` line proves the second call; `CRASH_NATIVE` lines stopping after 1.28 would
+  say it was the cause.
+- **4. The console's teleport skipped round 971's result window (r127-test P3-1). Fixed; `leave` was already done.**
+  Round 982 gave the console's and the bridge's `leave` the result-window check. `teleport to poi` (the command the
+  capital runes run, so players reach it) still called `MapStage.exitDungeon` with only a "not during a duel" check: used
+  in a map in the moments after a won duel, it left with the win counted and the loot screen never shown. It now asks
+  `refusedForPendingResult("the console's teleport")` first, answers "Not until the duel result is booked." and refunds
+  a rune's shards (`[TFR-Rune] ... did nothing ... shard(s) refunded`). `teleport to X Y`, `teleport home` and
+  `teleport rally` only move the world-map position and never leave a map: no gap there.
+- **5. A lost duel's card art stayed loaded until the next win (r127-test P3-2). Fixed.** New `util/DuelArtRelease`,
+  called from `SessionLog.onScene` (both `Forge.switchScene` and `switchToLast` reach it - no `DuelScene` or `Forge`
+  edit): a `DuelScene` marks it, and the first world or dungeon map after it (`GameScene`, `TileMapScene`) posts
+  `ImageCache.unloadCardTextures(true)` to the next frame - round 965's call. Scenes between (an Inn bracket's event
+  scene) keep the mark. Win or loss: a win's loot screen comes after the map, loads only its own cards and frees them
+  again on close (round 965). `[TFR-Memory] duel art freed on the return to TileMapScene: assets A -> B`.
+  `DuelArtReleaseTest` (3).
+- **6. A stock `ConcurrentModificationException` in `Tracker.unfreeze` at a duel's start (logs-1108 P3-10). Fixed.**
+  `unfreeze` applied the queued view changes while iterating the queue, so a change queued during that loop (a nested
+  freeze and unfreeze, or another thread's set while frozen) threw and killed the game thread before turn 1. It now
+  copies the queue, clears it, then applies the copy; a change queued meanwhile waits for its own unfreeze instead of
+  being lost or throwing. Three lines in a stock file. `TrackerTest` (2): a nested freeze-queue-unfreeze from inside the
+  replay (through a `putObj` override, the first change's object lookup) - the old loop throws CME on its next step; all
+  three changes now land. The other test: queued changes wait for the last unfreeze.
+- **7. Unlogged Trader trades and bank moves (logs-1108 P3-8). Fixed.** New `util/EconomyLog`: `[TFR-Trade] Sell: gave
+  wood 5, got gold 80 (x3 in a row: gold +240, wood -15); purse gold=... shards=... wood=... stone=...` from
+  `EconomyBuildings.Trade.apply` (both exchange dialogs), and `[TFR-Bank] withdraw 1000, balance B (x2 in a row: purse
+  gold +2000); purse ...` from the Bank's four buttons. A run of the same action logs its first 3 and then every 25th
+  (the 154,080-gold purse was about 1,900 clicks), each line with the run's count and totals. `EconomyLogTest` (3).
+
+**Proof:**
+- `TrackerTest` run against the OLD `Tracker` (the fix taken out for one run): `testAChangeQueuedDuringTheReplayIsApplied`
+  failed with the players' exact trace, `ConcurrentModificationException at forge.trackable.Tracker.unfreeze(Tracker.java:67)`.
+  With the fix: pass.
+- Maven `-o -pl forge-gui-mobile-dev -am package -Dtest=TrackerTest,GameEntityViewTest,DuelArtReleaseTest,EconomyLogTest,TfrHudTest`:
+  exit 0; forge-game 6/6, forge-gui-mobile 12/12.
+- Agent game (`C:\CLAUDE\PROJECTS\TFR1\agent-r997`, items 4 and 5): in the follow-up entry; shots in `C:\CLAUDE\PROJECTS\TFR1\notes\r997\`.
+- **Not tested here:** items 1-3 are Android paths (download, first-launch pause, exit teardown) - checked by reading
+  the code; the next Android logs are the test (`[TFR-Assets] ... %`, no `FATAL`, `[TFR-Exit]`).
+
 ## Round 996: an Inn event's broken prize state is repaired, and the champion is paid (2026-11-09)
 
 The user, after the 11.09 log review: "Yes, queue both", then "I want everything in before 1.28." The finding is

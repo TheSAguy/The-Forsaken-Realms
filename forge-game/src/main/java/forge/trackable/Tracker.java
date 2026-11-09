@@ -64,10 +64,13 @@ public class Tracker {
             return;
         }
         //after being unfrozen, ensure all changes delayed during freeze are now applied
-        for (final DelayedPropChange change : delayedPropChanges) {
+        // TFR round 997: copy and clear first - a change queued while these apply (a nested freeze) threw
+        // ConcurrentModificationException at a duel's start; it now waits for its own unfreeze
+        final List<DelayedPropChange> changes = Lists.newArrayList(delayedPropChanges);
+        delayedPropChanges.clear();
+        for (final DelayedPropChange change : changes) {
             change.object.set(change.prop, change.value);
         }
-        delayedPropChanges.clear();
     }
 
     public void flush() {

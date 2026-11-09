@@ -133,7 +133,9 @@ public final class SupportPrompt {
     /** Writes the counted time to settings.json (Forge.pause()/dispose(), every five minutes played). */
     public static void flush(String why) {
         try {
-            if (supportLink() == null || unsaved <= 0f)
+            // Round 997 (logs-1106 P3-2): nothing counted first - a pause before the assets exist (the first download)
+            // built Config from a missing config.json and printed [TFR-Config] FATAL.
+            if (unsaved <= 0f || supportLink() == null)
                 return;
             unsaved = 0f;
             Config.instance().saveSettings();

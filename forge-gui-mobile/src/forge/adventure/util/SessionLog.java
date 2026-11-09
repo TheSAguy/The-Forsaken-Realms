@@ -340,6 +340,7 @@ public final class SessionLog {
         }
         if (scene instanceof forge.adventure.scene.GameScene)
             SpriteSweep.onWorldMap(); // round 969: unload enemy atlases nothing draws from any more
+        DuelArtRelease.onScene(scene); // round 997: the first map after a duel frees its card art, win or loss
         String label = scene == null ? "none" : scene.getClass().getSimpleName();
         if (scene instanceof TileMapScene && ((TileMapScene) scene).rootPoint != null)
             label += ":" + ((TileMapScene) scene).rootPoint.getDisplayName();
