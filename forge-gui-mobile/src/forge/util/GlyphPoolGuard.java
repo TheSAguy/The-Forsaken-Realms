@@ -6,6 +6,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
@@ -60,6 +61,8 @@ public final class GlyphPoolGuard {
     private static final AtomicInteger offThreadLayouts = new AtomicInteger();
     private static volatile boolean measureFailureReported;
     private static volatile Thread glThreadForTest;
+    /** Console {@code glyphpool poison N hold}: no heal until {@code glyphpool heal}, so a shot can show the damage. */
+    private static volatile boolean heldForTest;
 
     /** True on the GL thread (the thread {@code Forge.create} ran on), and wherever the GUI is not up (tests). */
     static boolean isGlThread() {
@@ -126,8 +129,9 @@ public final class GlyphPoolGuard {
             }
             return null;
         }
-        if (!resolve())
+        if (!resolve() || (heldForTest && !"console".equals(reason)))
             return null;
+        heldForTest = false;
         Report report = scan();
         runPool.clear();
         heals++;
@@ -161,18 +165,52 @@ public final class GlyphPoolGuard {
         }
     }
 
-    /** A caught failure inside libGDX's text layout while measuring: logged once a launch, then the pool is healed. */
-    public static void onLayoutFailure(String where, CharSequence text, Exception e) {
+    /**
+     * A caught failure inside libGDX's text layout while measuring: logged once a launch; the failed layout's runs are
+     * dropped, then the pool is healed. Round 995 (follow-up, the agent proof): a layout whose setText threw midway keeps
+     * the broken runs (a run twice, glyphs and advances out of step). Its next setText starts with reset(), which frees
+     * them into the pool again, so a heal alone left the same text failing every frame. Dropping them (to the garbage
+     * collector, never back to the pool) ends that.
+     */
+    public static void onLayoutFailure(String where, CharSequence text, Exception e, GlyphLayout failed) {
         if (!measureFailureReported) {
             measureFailureReported = true;
             System.err.println("[TFR-GlyphPool] text not measured in " + where + ": " + e + ", text \"" + text
                     + "\", thread " + Thread.currentThread().getName() + " (logged once a launch)");
             e.printStackTrace();
         }
+        dropRuns(failed);
         heal("after a failed measure");
     }
 
-    /** Console {@code glyphpool [state|heal|poison N]}; poison plants N duplicate runs (test only). */
+    /**
+     * A caught failure inside {@code BitmapFont.draw}: the font cache's failed layout is out of reach (libGDX keeps it in
+     * a private pool), so the cache is cleared, which frees it and its broken runs into the glyph run pool, and the heal
+     * then empties that pool. On the GL thread only, where every draw runs.
+     */
+    public static void onDrawFailure(BitmapFont font) {
+        if (font == null || !isGlThread())
+            return;
+        try {
+            font.getCache().clear();
+        } catch (RuntimeException ignored) {
+            // a layout too broken to free: the heal below still empties the pool
+        }
+        heal("after text not drawn");
+    }
+
+    /** Forgets a layout's runs without freeing them into the pool. */
+    static void dropRuns(GlyphLayout layout) {
+        if (layout == null)
+            return;
+        layout.runs.clear();
+        layout.colors.clear();
+        layout.glyphCount = 0;
+        layout.width = 0;
+        layout.height = 0;
+    }
+
+    /** Console {@code glyphpool [state|heal|poison N [hold]]}; poison plants N duplicate runs (test only). */
     public static String console(String[] args) {
         String op = args.length > 0 ? args[0].toLowerCase() : "state";
         if (!isGlThread())
@@ -190,13 +228,16 @@ public final class GlyphPoolGuard {
                     } catch (NumberFormatException ignored) {
                     }
                 }
+                boolean hold = args.length > 2 && "hold".equalsIgnoreCase(args[2]);
                 for (int i = 0; i < n; i++) {
                     GlyphLayout.GlyphRun run = new GlyphLayout.GlyphRun();
                     runPool.free(run);
                     runPool.free(run);
                 }
-                System.err.println("[TFR-GlyphPool] console: planted " + n + " duplicate runs (a test of round 995's heal)");
-                return "glyphpool: planted " + n + " duplicate runs; " + scan();
+                heldForTest = hold;
+                System.err.println("[TFR-GlyphPool] console: planted " + n + " duplicate runs (a test of round 995's heal)"
+                        + (hold ? "; heals held until \"glyphpool heal\"" : ""));
+                return "glyphpool: planted " + n + " duplicate runs" + (hold ? ", heals held" : "") + "; " + scan();
             }
             default:
                 return "glyphpool: " + scan() + "; heals " + heals + ", damaged " + damagedHeals
@@ -232,5 +273,6 @@ public final class GlyphPoolGuard {
         offThreadLayouts.set(0);
         measureFailureReported = false;
         glThreadForTest = null;
+        heldForTest = false;
     }
 }

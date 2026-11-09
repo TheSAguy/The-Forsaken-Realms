@@ -136,6 +136,85 @@ public class GlyphPoolGuardTest {
         AssertJUnit.assertEquals("[End x=86.0 y=0.0][Turn x=81.0 y=-20.0]", describe(layout));
     }
 
+    /** The agent proof's find: FSkinFont's reused measure layout kept failing every frame after the pool was healed. */
+    private static int failingFrames(boolean passTheFailedLayout) {
+        BitmapFont font = headlessFont();
+        GlyphLayout measure = new GlyphLayout(); // FSkinFont's thread-local measure layout, reused every frame
+        Pool<GlyphLayout.GlyphRun> pool = GlyphPoolGuard.runPoolForTest();
+        for (int i = 0; i < 8; i++) {
+            GlyphLayout.GlyphRun run = new GlyphLayout.GlyphRun();
+            pool.free(run);
+            pool.free(run);
+        }
+        int failed = 0;
+        for (int frame = 0; frame < 6; frame++) {
+            try {
+                measure.setText(font, "Eyes of Gitaxias", Color.WHITE, 60, Align.left, true);
+            } catch (RuntimeException e) {
+                failed++;
+                if (passTheFailedLayout)
+                    GlyphPoolGuard.onLayoutFailure("test", "Eyes of Gitaxias", e, measure);
+                else
+                    GlyphPoolGuard.heal("test"); // the committed round's behavior: the pool only
+            }
+        }
+        return failed;
+    }
+
+    @Test
+    public void aFailedLayoutIsDroppedSoItDoesNotPoisonThePoolEveryFrame() {
+        PrintStream err = System.err;
+        System.setErr(new PrintStream(new ByteArrayOutputStream(), true));
+        try {
+            AssertJUnit.assertEquals("a heal alone: the wrapped card name fails every frame", 6, failingFrames(false));
+            reset();
+            AssertJUnit.assertEquals("its runs dropped: only the poisoned frame fails", 1, failingFrames(true));
+        } finally {
+            System.setErr(err);
+        }
+    }
+
+    /** The same for BitmapFont.draw: its cache clears, then lays the text out again, every frame. */
+    private static int failingDrawFrames(boolean freeTheCache) {
+        BitmapFont font = headlessFont();
+        Pool<GlyphLayout.GlyphRun> pool = GlyphPoolGuard.runPoolForTest();
+        for (int i = 0; i < 8; i++) {
+            GlyphLayout.GlyphRun run = new GlyphLayout.GlyphRun();
+            pool.free(run);
+            pool.free(run);
+        }
+        int failed = 0;
+        for (int frame = 0; frame < 6; frame++) {
+            try {
+                font.getCache().clear(); // BitmapFont.draw's first step
+                font.getCache().addText("Jace, Reality Sculptor", 0, 0, 60, Align.left, true);
+            } catch (RuntimeException e) {
+                failed++;
+                if (freeTheCache)
+                    GlyphPoolGuard.onDrawFailure(font);
+                else
+                    GlyphPoolGuard.heal("test");
+            }
+        }
+        return failed;
+    }
+
+    @Test
+    public void aFailedDrawIsFreedAndHealedSoItRecovers() {
+        PrintStream err = System.err, out = System.out;
+        System.setErr(new PrintStream(new ByteArrayOutputStream(), true));
+        System.setOut(new PrintStream(new ByteArrayOutputStream(), true));
+        try {
+            AssertJUnit.assertEquals("a heal alone: the card name fails every frame", 6, failingDrawFrames(false));
+            reset();
+            AssertJUnit.assertEquals("the cache freed and healed: only the poisoned frame fails", 1,
+                    failingDrawFrames(true));
+        } finally {
+            System.setErr(err);
+            System.setOut(out);
+        }
+    }
+
     @Test
     public void aCleanPoolHealsSilentlyAfterTheFirstLine() {
         PrintStream out = System.out, err = System.err;

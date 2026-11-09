@@ -94,6 +94,9 @@ md` already gets updated after every change.
   `GlyphPoolGuard.onLayoutFailure(...)` before the stock fallback; `import forge.util.GlyphPoolGuard`.
 - `forge-gui-mobile/src/forge/adventure/stage/ConsoleCommandInterpreter.java` (STOCK): one `registerCommand` line,
   `glyphpool`.
+- Follow-up: `FSkinFont`'s three measure catches pass the thread-local layout (`onLayoutFailure(where, str, e,
+  glyphLayoutThreadLocal.get())`, its broken runs dropped); `FSkinFont.draw` wraps `font.draw` in `try { } catch
+  (RuntimeException e) { GlyphPoolGuard.onDrawFailure(font); throw e; }` (the font cache cleared, then a heal).
 - New TFR-only: `forge-gui-mobile/src/forge/util/GlyphPoolGuard.java`, `forge-gui-mobile/test/forge/util/GlyphPoolGuardTest.java`.
   It reads libGDX's private `GlyphLayout.glyphRunPool` and `Pool.freeObjects` by reflection: on a libGDX update, check
   both still exist (the guard logs `[TFR-GlyphPool] guard off` and does nothing if not; `GlyphPoolGuardTest` fails).

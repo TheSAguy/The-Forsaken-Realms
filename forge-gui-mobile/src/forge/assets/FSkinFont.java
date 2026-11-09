@@ -202,7 +202,7 @@ public class FSkinFont {
 
             outBounds.set(layout.width, font.getData().capHeight);
         } catch (Exception e) {
-            GlyphPoolGuard.onLayoutFailure("FSkinFont.getBounds", str, e); // TFR round 995: was swallowed silently
+            GlyphPoolGuard.onLayoutFailure("FSkinFont.getBounds", str, e, glyphLayoutThreadLocal.get()); // TFR round 995: was swallowed silently
             // shouldn't be but lets have fallback approximation
             outBounds.set((end - start) * (font.getData().capHeight * 0.6f), font.getData().capHeight);
         }
@@ -227,7 +227,7 @@ public class FSkinFont {
 
             outBounds.set(layout.width, layout.height);
         } catch (Exception e) {
-            GlyphPoolGuard.onLayoutFailure("FSkinFont.getMultiLineBounds", str, e); // TFR round 995
+            GlyphPoolGuard.onLayoutFailure("FSkinFont.getMultiLineBounds", str, e, glyphLayoutThreadLocal.get()); // TFR round 995
             // shouldn't be but lets have fallback approximation
             outBounds.set(font.getData().capHeight * 10f, font.getData().capHeight);
         }
@@ -255,7 +255,7 @@ public class FSkinFont {
 
             outBounds.set(layout.width, layout.height);
         } catch (Exception e) {
-            GlyphPoolGuard.onLayoutFailure("FSkinFont.getWrappedBounds", str, e); // TFR round 995
+            GlyphPoolGuard.onLayoutFailure("FSkinFont.getWrappedBounds", str, e, glyphLayoutThreadLocal.get()); // TFR round 995
             // shouldn't be but lets have fallback approximation
             outBounds.set(Math.min(wrapWidth, font.getData().capHeight * 10f), font.getData().capHeight * 2f);
         }
@@ -283,7 +283,12 @@ public class FSkinFont {
         updateScale();
         GlyphPoolGuard.checkThread("FSkinFont.draw"); // TFR round 995
         font.setColor(color);
-        font.draw(batch, text, x, y, w, horzAlignment, wrap);
+        try {
+            font.draw(batch, text, x, y, w, horzAlignment, wrap);
+        } catch (RuntimeException e) {
+            GlyphPoolGuard.onDrawFailure(font); // TFR round 995 (follow-up): free the failed layout, then heal
+            throw e; // Graphics.drawFittedText logs it, as before
+        }
     }
 
     //update scale of font if needed

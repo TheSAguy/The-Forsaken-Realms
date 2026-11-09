@@ -14506,6 +14506,29 @@ exactly "End\nTurn" (`FButton.draw:416`, round 908's `[TFR-Render] text not draw
   round's window.
 - Callers (code graph): `FSkinFont.getBounds` 30, `getMultiLineBounds` 13, `getWrappedBounds` 2, `FSkinFont.draw` 2,
   `Graphics.drawText` 92, `fitText`/`drawFittedText` 2 each; no signature or return value changed.
+- **Follow-up: the agent proof, and a gap it found** (`C:\CLAUDE\PROJECTS\TFR1\agent-r995`, this round's jar, slot 1,
+  cheats, a Goblin Fighter duel at the bridge's 50x start speed, autobattle off so the seat shows End Turn; shots, log
+  excerpts and `README.md` in `C:\CLAUDE\PROJECTS\TFR1\notes\r995\`).
+  - Run 1 (8c62a6f7ffd): `glyphpool poison 8` -> caught `IndexOutOfBoundsException` at `GlyphLayout.setText:230` on hand
+    card names, and the guard healed in the same frame: `[TFR-GlyphPool] after text not drawn: 15 free, 5 duplicates, 0
+    nulls - cleared`. **But the heal count then climbed about 50 a second with a clean pool:** FSkinFont's reused
+    thread-local measure layout kept the broken runs from its failed `setText`, and its next `setText` starts with
+    `reset()`, which freed them into the pool again - "Eyes of Gitaxias" failed every frame for the rest of the launch.
+    Invisible on screen, so a player log would show one "text not measured" line and nothing else. Headless: with a heal
+    alone the wrapped card name fails 6 of 6 frames, through the measure layout and through the font cache's draw alike.
+  - **The fix:** `onLayoutFailure` takes the failed layout and drops its runs (to the garbage collector, never back to the
+    pool) before healing; `FSkinFont.draw` catches a failure, clears the font's `BitmapFontCache` (which frees its
+    unreachable failed layout and broken runs into the pool) and heals (`GlyphPoolGuard.onDrawFailure`), then rethrows so
+    `Graphics.drawFittedText` logs it as before. Both paths: 1 of 6 frames fails (the poisoned one).
+  - Run 2 (the fix): after `glyphpool heal` the heal count stays put; 8 turn-start heals later, all clean; no off-GL-thread
+    layout in either run. `glyphpool poison N hold` (new, a test cheat) holds heals until `glyphpool heal`, for shots.
+  - **The smear did not reproduce in the game.** End Turn was identical clean, with 8 pairs held, with 16 pairs held through
+    the AI's turn, and healed (`r995-end-turn-crops-4x.png`): the planted pairs sat under the runs each layout frees and
+    takes back (the pool is last-in, first-out), and the one layout taking a pair each frame was not on screen. The
+    three-copy photo stays an inference; the headless test shows the mechanism on "End
+Turn".
+  - Tests: `GlyphPoolGuardTest` 6 (+2: the measure and draw cycles, heal alone 6/6 frames failing vs. 1/6 fixed). Maven
+    `-o -pl forge-gui-mobile -am test` (all module test classes): exit 0, 104/104; desktop jar exit 0.
 - **Saves:** nothing.
 
 ## Round 994: the engine to the 11.09 daily (upstream `7d0acc8aa92`) (2026-11-09)
