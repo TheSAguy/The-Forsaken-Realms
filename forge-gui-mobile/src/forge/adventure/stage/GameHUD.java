@@ -121,6 +121,8 @@ public class GameHUD extends Stage {
     // multi-day attack cadence) for testing - remove once those features don't need frequent
     // manual speed-up during testing.
     private final CheckBox speedCheckBox;
+    /** TFR round 992: "50x" beside Speed-Up while it is on (ConfigData.tfrHelpLabels). */
+    private final com.github.tommyettinger.textra.TextraLabel speedTag;
     private final ResourceDisplayActor resourceDisplayActor;
     private final forge.adventure.util.AscendanceDisplayActor ascendanceDisplayActor; // round 493
     private final TextraButton worldStandingsActor;
@@ -208,6 +210,9 @@ public class GameHUD extends Stage {
                 WorldStage.getInstance().setFastTimeEnabled(((CheckBox) actor).isChecked());
             }
         });
+        speedTag = Controls.newTextraLabel(forge.adventure.util.TfrLabels.speedTag(Config.instance().getTuningData().speedUpMultiplier)); // TFR round 992
+        speedTag.pack();
+        speedTag.setVisible(false);
         waitCheckBox = Controls.newCheckBox(Forge.getLocalizer().getMessage("lblWait"));
         waitCheckBox.setPosition(timeOfDayActor.getX() + 2, speedCheckBox.getY() - waitCheckBox.getHeight() - 2);
         waitCheckBox.addListener(new ChangeListener() {
@@ -399,6 +404,7 @@ public class GameHUD extends Stage {
         mapGroup.addActor(timeOfDayActor);
         mapGroup.addActor(waitCheckBox);
         mapGroup.addActor(speedCheckBox);
+        mapGroup.addActor(speedTag); // TFR round 992
         ui.addActor(mapGroup);
         ui.addActor(notificationPane);
         //move touchpad here so z-index is over notificationPane and we can still move the player
@@ -1127,6 +1133,11 @@ public class GameHUD extends Stage {
         // its tick survived the load that reset the flag and the box stayed ticked over a clock
         // running at normal speed - the display disagreeing with the game either way is the bug.
         syncCheckBox(speedCheckBox, WorldStage.getInstance().isFastTimeEnabled());
+        // TFR round 992: the multiplier beside the box while it is ticked.
+        speedTag.setVisible(showWaitToggle && speedCheckBox.isChecked() && forge.adventure.util.TfrLabels.on());
+        if (speedTag.isVisible())
+            speedTag.setPosition(speedCheckBox.getX() + speedCheckBox.getPrefWidth() + 3,
+                    speedCheckBox.getY() + (speedCheckBox.getHeight() - speedTag.getHeight()) / 2);
     }
 
     /** Show {@code value} without firing the box's own ChangeListener back at WorldStage. */

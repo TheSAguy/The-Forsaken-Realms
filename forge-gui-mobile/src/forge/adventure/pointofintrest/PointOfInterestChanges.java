@@ -514,6 +514,11 @@ public class PointOfInterestChanges implements SaveFileContent  {
         return lastDay == null || currentDay - lastDay >= 7;
     }
 
+    /** TFR round 992: days until the Armory's manual reroll is back (0: ready), for the button's "in N days". */
+    public int manualRerollDaysLeft(int objectID, int currentDay) {
+        return forge.adventure.util.TfrLabels.daysLeft(shopManualRerollLastDay.get(objectID), currentDay, 7);
+    }
+
     /** Armory-only manual reroll (2026-08-15: simplified back to just stamping the cooldown clock
      *  - no longer feeds the weekly-surcharge counter above, since the Armory no longer uses it). */
     public void manuallyRerollShop(int objectID, int currentDay) {

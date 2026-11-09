@@ -506,8 +506,8 @@ public class RewardScene extends UIScene {
         int cost = EconomyBuildings.scaledCost(EconomyBuildings.ARMORY_REROLL_SHARD_COST);
         if (AdventurePlayer.current().getShards() < cost)
             return;
-        showDialog(createGenericDialog("", "Re-roll this Armory's inventory for " + cost
-                        + " [+Shards]?\nSeparate from the automatic weekly refresh.",
+        showDialog(createGenericDialog("", "Re-roll this Armory's inventory for [+Shards] " + cost // TFR round 992: icon first
+                        + "?\nSeparate from the automatic weekly refresh.",
                 Forge.getLocalizer().getMessage("lblYes"), Forge.getLocalizer().getMessage("lblNo"), () -> {
                     removeDialog();
                     AdventurePlayer.current().takeShards(cost);
@@ -541,9 +541,11 @@ public class RewardScene extends UIScene {
             return;
         int day = WorldSave.getCurrentSave().getWorld().getCurrentDay();
         int cost = EconomyBuildings.scaledCost(EconomyBuildings.ARMORY_REROLL_SHARD_COST);
-        rerollButton.setText("[%80]Re-roll Inventory (" + cost + " [+Shards])");
         boolean canAfford = AdventurePlayer.current().getShards() >= cost;
         boolean offCooldown = changes.canManuallyRerollShop(shopActor.getObjectId(), day);
+        // TFR round 992: while it waits, the button says when it comes back ("in 3 days"); the price icon first.
+        int daysLeft = changes.manualRerollDaysLeft(shopActor.getObjectId(), day);
+        rerollButton.setText(forge.adventure.util.TfrLabels.armoryReroll(cost, daysLeft));
         rerollButton.setDisabled(!canAfford || !offCooldown);
     }
 

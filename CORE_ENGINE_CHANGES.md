@@ -35,6 +35,21 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 992 - visible help text (the tooltip audit's label list)
+- `forge-gui-mobile/src/forge/adventure/data/ConfigData.java` (STOCK): `tfrHelpLabels` (false).
+- `forge-gui-mobile/src/forge/adventure/scene/QuestLogScene.java` (STOCK): the Abandon confirm's text goes through
+  `TfrLabels.abandonConfirm(quest, stock)` (the stock `lblAbandonQuestConfirm` line, then the reputation cost).
+- `forge-gui-mobile/src/forge/adventure/scene/DeckSelectScene.java` (STOCK): `addDeckButton` and `updateDeckButton` set the
+  slot text through a new private `slotText(slot)` ("Name  N/40").
+- `forge-gui-mobile/src/forge/adventure/scene/InventoryScene.java` (STOCK): the constructor keeps the Repair button's stock
+  text, center and width; selecting a cracked item sets "[+ToolBox] Repair [+Gold] N" and widens the button around its center.
+- `forge-gui-mobile/src/forge/adventure/scene/RewardScene.java` (STOCK): `refreshRerollButton` takes its text from
+  `TfrLabels.armoryReroll(cost, daysLeft)`; the Armory re-roll confirm puts `[+Shards]` before the number.
+- `forge-gui-mobile/src/forge/adventure/pointofintrest/PointOfInterestChanges.java` (STOCK): new `manualRerollDaysLeft`.
+- `forge-gui-mobile/src/forge/adventure/stage/GameHUD.java` (STOCK): a `speedTag` label ("50x") built after the Speed-Up
+  box, added to `mapGroup` after it, shown and placed in the per-frame sync next to `syncCheckBox(speedCheckBox, ...)`.
+- New TFR-only: `util/TfrLabels.java`, `test/.../util/TfrLabelsTest.java`.
+
 ### Round 991 - the old sets' pack prices; the pack floor values slots at list price (logs-1108c P3-13)
 - **`forge-gui/res/adventure/common/world/cardprices.txt`** (STOCK) - `LEA` 50000 to 3000, `LEB` 50000 to 3000, `LEG`
   50000 to 2000 (upstream #10158 priced these booster rows at collector value). `FEM = 200` kept. On an upstream merge

@@ -147,9 +147,16 @@ public class DeckSelectScene extends UIScene {
 
     private void updateDeckButton(int index) {
         if (!buttons.containsKey(index)) addDeckButton(index);
-        buttons.get(index).setText(Current.player().getDeck(index).getName());
+        buttons.get(index).setText(slotText(index)); // TFR round 992: "N/40"
         buttons.get(index).getTextraLabel().layout();
         buttons.get(index).layout();
+    }
+
+    /** TFR round 992: the slot's deck name, then its card count against the duel minimum (red while under it). */
+    private static String slotText(int slot) {
+        AdventurePlayer p = Current.player();
+        forge.deck.Deck d = p.getDeck(slot);
+        return forge.adventure.util.TfrLabels.deckSlot(d.getName(), p.duelDeckSize(d), p.duelMinDeckSize());
     }
 
     private void showRenameDialog() {
@@ -195,7 +202,7 @@ public class DeckSelectScene extends UIScene {
             }
         });
 
-        button.setText(Current.player().getDeck(i).getName());
+        button.setText(slotText(i)); // TFR round 992: "N/40"
         Label label = Controls.newLabel(name);
         layout.add(label).pad(2);
         layout.add(button).fill(true, false).expand(true, false).align(Align.left).expandX().pad(2);

@@ -45,6 +45,8 @@ public class InventoryScene extends UIScene {
     Button selected;
     Button deleteButton;
     TextraButton repairButton;
+    private String repairStockText; // TFR round 992: the button's own text, and where it sat, for the priced label
+    private float repairCenterX, repairStockWidth;
     // Sell equipment (user spec 2026-08-23): 25% of ItemData.cost, same "% of the purchase-price
     // field" idea InventoryScene already uses for repair (initialCost = data.cost * 0.4f, see
     // repair() below) - no equipment-specific sellFactor exists anywhere in this codebase to
@@ -139,6 +141,9 @@ public class InventoryScene extends UIScene {
         ui.onButtonPress("return", this::done);
         leave = ui.findActor("return");
         repairButton = ui.findActor("repair");
+        repairStockText = repairButton.getText().toString(); // TFR round 992
+        repairCenterX = repairButton.getX() + repairButton.getWidth() / 2;
+        repairStockWidth = repairButton.getWidth();
         ui.onButtonPress("repair", this::repair);
         ui.onButtonPress("delete", this::showConfirm);
         ui.onButtonPress("equip", this::equip);
@@ -663,6 +668,14 @@ public class InventoryScene extends UIScene {
                 }
             }
             repairButton.setVisible(data.isCracked);
+            if (data.isCracked && forge.adventure.util.TfrLabels.on()) { // TFR round 992: "[+ToolBox] Repair [+Gold] N"
+                repairButton.setText(forge.adventure.util.TfrLabels.repairButton(repairStockText, repairCost(data)));
+                repairButton.getTextraLabel().layout();
+                float w = Math.max(repairStockWidth, repairButton.getTextraLabel().getPrefWidth() + 8);
+                repairButton.setWidth(w);
+                repairButton.setX(Math.max(2, repairCenterX - w / 2));
+                repairButton.layout();
+            }
             // Greyed out when unaffordable (2026-08-26 user request: "apply this logic to all
             // buy/upgrade/re-roll buttons") - repair() already re-checks this itself and shows a
             // "not enough credits" dialog instead of repairing, but nothing previously reflected

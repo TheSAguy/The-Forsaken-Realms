@@ -14264,6 +14264,43 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 992: visible help text - the tooltip audit's label list (2026-11-09)
+
+The user's request (2026-11-09): "TFR2 makes good use of "Tooltips" that pop-up ... Could we review TFR1 and see where we
+could add these." The audit (`C:\CLAUDE\PROJECTS\TFR1\notes\tooltips\tooltip-audit.md`) found spots a hover tip can't
+fix - Android has no mouse, and a player who doesn't know to hover never sees one - and the user approved its label list
+first, before round 993's tips: items 1, 2, 3, 4, 6, 7 and 8; "Week 0" (5) stays.
+
+- **Abandon Quest** (stock `QuestLogScene`): the confirm adds what failing costs. Abandoning plays the quest's failure
+  dialog (`AdventureQuestController.abandon` -> `fail()` -> `showQuestDialogs`), so the cost is read from that quest's
+  own `failureDialog`: the most reputation any way through it takes (`TfrLabels.failureReputation`: its actions plus the
+  worst option, all the way down). "Abandon Quest?\nIt counts as failing the quest: [+Reputation] -2 in the town that
+  gave it." ("with the town it names" when the loss carries a `POIReference`); "It counts as failing the quest." when it
+  takes none. `quests.json` today: 39 failure actions at -1, 47 at -2, one each at -3 and -5. The stock
+  `lblAbandonQuestConfirm` text is kept as the first line, so en-US is not touched.
+- **Repair** (stock `InventoryScene`): a cracked item's button reads "[+ToolBox] Repair [+Gold] N", the same
+  `repairCost` (40% of the item's cost, times Mechanic) the confirm charges. The button grows to fit, centered where the
+  layout put it (42 px wide in both `inventory.json` and `inventory_portrait.json`, too small for the price).
+- **Deck slots** (stock `DeckSelectScene`): each slot shows "Name  23/40" - `duelDeckSize` against `duelMinDeckSize`,
+  red while under it - so an incomplete deck shows before round 983's warning on leaving.
+- **Armory Re-roll** (stock `RewardScene`, `PointOfInterestChanges`): while the 7-day cooldown runs the greyed button
+  reads "Re-roll Inventory in 3 days" (new `PointOfInterestChanges.manualRerollDaysLeft`); ready, "Re-roll Inventory
+  ([+Shards] 100)". The button and its confirm now put the icon first, per the resource rule ("for [+Shards] 100?").
+- **Job Board** (TFR's `TownRestoration.openJobBoardMenu`): under "The X Job Board." a line "[+Reputation] 2 - 4 of 6
+  buildings" (the town's reputation, `countBuiltBuildings`, `maxBuildableBuildings`) - before, only a refused build said it.
+- **Speed-Up** (stock `GameHUD`): a gold "50x" beside the box while it is ticked, from `TuningData.speedUpMultiplier`.
+- **Not done: ability buttons showing the item's name** (label 7). The buttons are 45x35 with the rune, the shard icon
+  and the cost; no item name fits ("Yin-Yang Rune" alone is wider). Round 993's hover tip names the item instead
+  (desktop only).
+- **Gate:** new `ConfigData.tfrHelpLabels` (false), on in the TFR `config.json`; stock planes keep the stock text. New
+  `util/TfrLabels` holds the texts.
+- **Log:** `[TFR-Labels] abandon confirm for "<quest>": reputation N`, `[TFR-Labels] job board: reputation N, B of M
+  buildings`.
+- **Test:** `TfrLabelsTest` (2): the failure dialog's worst path (nested options, gains ignored) and the days left.
+  Maven `-o -pl forge-gui-mobile -am test -Dtest=TfrLabelsTest`: exit 0, 2/2; desktop jar exit 0. Agent-game shots:
+  `C:\CLAUDE\PROJECTS\TFR1\notes\r992\` (see the follow-up note if they came after this commit).
+- **Saves:** nothing stored.
+
 ## Round 991: the old sets' pack prices, and the pack floor values slots at list price (2026-11-08)
 
 A player's shot (logs-1108c P3-13): a booster shop with seven packs at 1,187 and Legends at 59,375. The user approved

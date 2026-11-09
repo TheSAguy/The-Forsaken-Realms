@@ -233,5 +233,9 @@ public class ConfigData {
     // the color shard of the nearest AI color town or capital (AdventureEventData.nearestAiColor). False = neutral
     // towns' Inns keep unlocked + neutral.
     public boolean innNeutralNearestColor = false;
+    // Round 992 (the tooltip audit's label list): visible text where a hover tip can't reach - the Abandon Quest confirm
+    // names its reputation cost, Repair its price, deck slots their card count, a greyed Armory Re-roll its days left, and
+    // the Speed-Up box its multiplier while on. False = stock text.
+    public boolean tfrHelpLabels = false;
 
 }

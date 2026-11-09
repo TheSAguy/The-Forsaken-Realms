@@ -192,7 +192,8 @@ public class QuestLogScene extends UIScene {
         abandonQuestButton.clearListeners();
         abandonQuestButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
-                Dialog confirm = createGenericDialog("", Forge.getLocalizer().getMessage("lblAbandonQuestConfirm"),Forge.getLocalizer().getMessage("lblYes"),Forge.getLocalizer().getMessage("lblNo"), () -> abandonQuest(quest), null);
+                Dialog confirm = createGenericDialog("", forge.adventure.util.TfrLabels.abandonConfirm(quest, Forge.getLocalizer().getMessage("lblAbandonQuestConfirm")), // TFR round 992
+                        Forge.getLocalizer().getMessage("lblYes"),Forge.getLocalizer().getMessage("lblNo"), () -> abandonQuest(quest), null);
                 showDialog(confirm);
             }
         });

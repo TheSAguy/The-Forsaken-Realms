@@ -1016,6 +1016,19 @@ public class TownRestoration {
      * exists (only one allowed; the Capitol's own board never shows it - its data name IS the
      * capitol).
      */
+    /**
+     * Round 992 (the tooltip audit's label 6): the town's reputation and its building slots under the board's title,
+     * "[+Reputation] 2 - 4 of 6 buildings", shown always, not only when a build is refused.
+     */
+    static String jobBoardStanding(MapStage stage) {
+        PointOfInterestChanges changes = stage == null ? null : stage.getChanges();
+        if (changes == null)
+            return "";
+        int rep = changes.getMapReputation(), built = countBuiltBuildings(changes), max = maxBuildableBuildings(changes);
+        System.out.println("[TFR-Labels] job board: reputation " + rep + ", " + built + " of " + max + " buildings");
+        return "\n" + ResourceGlyphs.reputation() + " " + rep + " - " + built + " of " + max + " buildings";
+    }
+
     public static void openJobBoardMenu(MapStage stage, Runnable openQuestBoard) {
         PointOfInterest point = TileMapScene.instance().rootPoint;
         com.badlogic.gdx.scenes.scene2d.ui.Dialog dialog = stage.getDialog();
@@ -1023,7 +1036,7 @@ public class TownRestoration {
         dialog.getButtonTable().clear();
         dialog.clearListeners();
         com.github.tommyettinger.textra.TypingLabel label = Controls.newTypingLabel(
-                "The " + (point != null ? point.getDisplayName() : "town") + " Job Board.");
+                "The " + (point != null ? point.getDisplayName() : "town") + " Job Board." + jobBoardStanding(stage));
         label.setWrap(true);
         label.skipToTheEnd();
         dialog.getContentTable().add(label).width(250f).row();

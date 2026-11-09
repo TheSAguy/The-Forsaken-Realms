@@ -39,11 +39,14 @@ logs a stale viewport; `[TFR-Viewport]`; `StageViewportsTest`; an upstream bug t
 repriced - stock `cardprices.txt` `LEG` 2000, `LEA`/`LEB` 3000, were upstream's 50,000 collector rows; `FEM` 200 kept -
 and round 932's pack floor (`AdventurePlayer.expectedPackSellPrice`) values each slot at its set's average sell price
 from the price list, restricted cards out, a classic save's town factor in, so no pack shelves under its resale even at
-the lowest factor 0.390: new `util/PackFloor` + `PackFloorTest`, `[TFR-PackFloor]` - logs-1108c P3-13).
+the lowest factor 0.390: new `util/PackFloor` + `PackFloorTest`, `[TFR-PackFloor]` - logs-1108c P3-13) and round 992 (the tooltip audit's visible labels, behind `tfrHelpLabels`: the Abandon Quest confirm names its
+failure dialog's reputation cost, Repair shows "[+Gold] N", deck slots "N/40", a waiting Armory Re-roll "in N days",
+the Job Board its reputation and building slots, Speed-Up a "50x" tag; ability names left to round 993's tip - new
+`util/TfrLabels` + `TfrLabelsTest`, `[TFR-Labels]`).
 Engine = the 11.05 daily (round 978, upstream `1e8c35fca3e`; round 769's R1-R4 still
 keep TFR's synchronous auto save, eager shops, Inn events and place entry; bosses keep the player's AI setting through
 `bossAiFollowsSetting`); next merge from upstream after `1e8c35fca3e` (its first commit is `f62f804806c`, #12695, five AI files and `MagicStack`); BASE_INSTALL is that daily, so packages need no
-`--allow-base-mismatch`. Next version: 1.28 / 12800. Next free round: 992. The agent profile's window is
+`--allow-base-mismatch`. Next version: 1.28 / 12800. Next free round: 993. The agent profile's window is
 1280x720 - at 3840x2160 it covered the screen, got minimized, and a minimized game stops (the bridge times out, shots
 come back 1x1). Agent games keep their own LOCALAPPDATA cache (round 860). Log sharing (round 698) posts to Discord
 through a webhook kept OUT of git in `C:\TFR\secrets\discord_log_webhook.txt` - never commit it; the packager and
