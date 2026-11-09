@@ -24,6 +24,7 @@ import forge.gui.FThreads;
 import forge.gui.GuiBase;
 import forge.localinstance.properties.ForgeConstants;
 import forge.util.FileUtil;
+import forge.util.GlyphPoolGuard;
 import forge.util.Lang;
 import forge.util.LineReader;
 import forge.util.TextBounds;
@@ -193,13 +194,15 @@ public class FSkinFont {
             return;
         }
         updateScale();
+        GlyphPoolGuard.checkThread("FSkinFont.getBounds"); // TFR round 995
 
         try {
             GlyphLayout layout = glyphLayoutThreadLocal.get();
             layout.setText(font, str, start, end, font.getColor(), 0, Align.left, false, null);
 
             outBounds.set(layout.width, font.getData().capHeight);
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            GlyphPoolGuard.onLayoutFailure("FSkinFont.getBounds", str, e); // TFR round 995: was swallowed silently
             // shouldn't be but lets have fallback approximation
             outBounds.set((end - start) * (font.getData().capHeight * 0.6f), font.getData().capHeight);
         }
@@ -216,13 +219,15 @@ public class FSkinFont {
             return;
         }
         updateScale();
+        GlyphPoolGuard.checkThread("FSkinFont.getMultiLineBounds"); // TFR round 995
 
         try {
             GlyphLayout layout = glyphLayoutThreadLocal.get();
             layout.setText(font, str, 0, str.length(), font.getColor(), 0, Align.left, false, null);
 
             outBounds.set(layout.width, layout.height);
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            GlyphPoolGuard.onLayoutFailure("FSkinFont.getMultiLineBounds", str, e); // TFR round 995
             // shouldn't be but lets have fallback approximation
             outBounds.set(font.getData().capHeight * 10f, font.getData().capHeight);
         }
@@ -242,13 +247,15 @@ public class FSkinFont {
         }
         updateScale();
         if (wrapWidth <= 0) wrapWidth = Integer.MAX_VALUE;
+        GlyphPoolGuard.checkThread("FSkinFont.getWrappedBounds"); // TFR round 995
 
         try {
             GlyphLayout layout = glyphLayoutThreadLocal.get();
             layout.setText(font, str, 0, str.length(), font.getColor(), wrapWidth, Align.left, true, null);
 
             outBounds.set(layout.width, layout.height);
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            GlyphPoolGuard.onLayoutFailure("FSkinFont.getWrappedBounds", str, e); // TFR round 995
             // shouldn't be but lets have fallback approximation
             outBounds.set(Math.min(wrapWidth, font.getData().capHeight * 10f), font.getData().capHeight * 2f);
         }
@@ -274,6 +281,7 @@ public class FSkinFont {
 
     public void draw(Batch batch, String text, Color color, float x, float y, float w, boolean wrap, int horzAlignment) {
         updateScale();
+        GlyphPoolGuard.checkThread("FSkinFont.draw"); // TFR round 995
         font.setColor(color);
         font.draw(batch, text, x, y, w, horzAlignment, wrap);
     }

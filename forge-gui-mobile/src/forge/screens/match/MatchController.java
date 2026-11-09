@@ -417,6 +417,9 @@ public class MatchController extends NetworkGuiGame {
 
     @Override
     public void updateTurn(final PlayerView player) {
+        // TFR round 995 (logs-1109b P2-1): runs on the GL thread once a turn (FControlGameEventHandler.processEvents);
+        // a duplicate or null left in libGDX's glyph run pool by an off-thread layout breaks text until it is cleared
+        forge.util.GlyphPoolGuard.heal("turn start");
     }
 
     @Override

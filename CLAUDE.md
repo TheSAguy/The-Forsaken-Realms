@@ -49,12 +49,14 @@ world-map HUD (`util/TfrHudTips`, ability buttons included), New Game and Settin
 difficulty box); mouse only; console `tips`, `[TFR-Tips]`; `TfrTipsTest`; rounds B-D to come) and round 994 (the engine
 to the 11.09 daily, below; enemy decks built off the GL thread while the VS screen stays up, `[TFR-DeckGen]`; the loop
 breaker's AI count starts over when an opponent loses life, with a 300-use backstop, so upstream's FlatMC kill loops
-finish; `EffectData`'s UID and `IncubateAi` kept ours). **1.28 log watch**: upstream's FlatMC tuning for `Reckless.ai`
-and `Cautious.ai` (360 TFR enemies) - win ratios and duel times against them.
+finish; `EffectData`'s UID and `IncubateAi` kept ours). Round 995 (the End Turn "twitch", logs-1109b P2-1: new `forge.util.GlyphPoolGuard` empties libGDX's static glyph run pool on the GL thread at each turn's start and after a caught text failure, counting the nulls and duplicate runs an off-thread layout leaves; `FSkinFont` logs its first off-GL-thread layout with the stack and no longer swallows a failed measure silently; `[TFR-GlyphPool]`, console `glyphpool`; `GlyphPoolGuardTest` proves a duplicate run breaks the End Turn caption until healed). **1.28 log watch**: upstream's FlatMC tuning for
+`Reckless.ai` and `Cautious.ai` (360 TFR enemies) - win ratios and duel times against them; a `[TFR-GlyphPool] ...
+duplicates` line (round 995's mechanism, with player data) and `text laid out off the GL thread` (the caller to move
+onto the GL thread).
 Engine = the 11.09 daily (round 994, upstream `7d0acc8aa92`; round 769's R1-R4 still
 keep TFR's synchronous auto save, eager shops, Inn events and place entry; bosses keep the player's AI setting through
 `bossAiFollowsSetting`); next merge from upstream after `7d0acc8aa92` (its first commit is `b3802f9255a`, #12773, hidden-zone ChangeZone in APNAP order); BASE_INSTALL is that daily, so packages need no
-`--allow-base-mismatch`. Next version: 1.28 / 12800. Next free round: 997 (995 and 996 handed out). The agent profile's window is
+`--allow-base-mismatch`. Next version: 1.28 / 12800. Next free round: 1002 (995-1001 handed out). The agent profile's window is
 1280x720 - at 3840x2160 it covered the screen, got minimized, and a minimized game stops (the bridge times out, shots
 come back 1x1). Agent games keep their own LOCALAPPDATA cache (round 860). Log sharing (round 698) posts to Discord
 through a webhook kept OUT of git in `C:\TFR\secrets\discord_log_webhook.txt` - never commit it; the packager and

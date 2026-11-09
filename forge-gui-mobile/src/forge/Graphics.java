@@ -2186,6 +2186,7 @@ public class Graphics implements Disposable {
                 textFitFailureReported = true;
                 reportTextFailure("measured", text, e);
             }
+            forge.util.GlyphPoolGuard.heal("after text not measured"); // TFR round 995 (logs-1109b P2-1)
             // shouldn't be here but force English on CJK Error
             Forge.setForcedEnglishonCJKMissing();
             return false;
@@ -2231,6 +2232,7 @@ public class Graphics implements Disposable {
                 textDrawFailureReported = true;
                 reportTextFailure("drawn", text, e);
             }
+            forge.util.GlyphPoolGuard.heal("after text not drawn"); // TFR round 995 (logs-1109b P2-1)
             // shouldn't be here but force English on CJK Error
             Forge.setForcedEnglishonCJKMissing();
         } finally {

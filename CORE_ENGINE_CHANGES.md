@@ -35,6 +35,21 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 995 - libGDX's glyph run pool healed each turn, off-GL-thread layouts named (logs-1109b P2-1)
+- `forge-gui-mobile/src/forge/screens/match/MatchController.java` (STOCK): `updateTurn`'s empty body calls
+  `forge.util.GlyphPoolGuard.heal("turn start")`.
+- `forge-gui-mobile/src/forge/Graphics.java` (STOCK): `fitText`'s and `drawFittedText`'s catches (round 908) call
+  `GlyphPoolGuard.heal(...)` after `reportTextFailure`.
+- `forge-gui-mobile/src/forge/assets/FSkinFont.java` (STOCK): `getBounds(str, start, end, out)`, `getMultiLineBounds(str,
+  out)`, `getWrappedBounds(str, w, out)` and `draw` call `GlyphPoolGuard.checkThread(...)` before laying out; the three
+  measure catches (stock `catch (Exception ignored)`) become `catch (Exception e)` with
+  `GlyphPoolGuard.onLayoutFailure(...)` before the stock fallback; `import forge.util.GlyphPoolGuard`.
+- `forge-gui-mobile/src/forge/adventure/stage/ConsoleCommandInterpreter.java` (STOCK): one `registerCommand` line,
+  `glyphpool`.
+- New TFR-only: `forge-gui-mobile/src/forge/util/GlyphPoolGuard.java`, `forge-gui-mobile/test/forge/util/GlyphPoolGuardTest.java`.
+  It reads libGDX's private `GlyphLayout.glyphRunPool` and `Pool.freeObjects` by reflection: on a libGDX update, check
+  both still exist (the guard logs `[TFR-GlyphPool] guard off` and does nothing if not; `GlyphPoolGuardTest` fails).
+
 ### Round 994 - the engine to the 11.09 daily (upstream `7d0acc8aa92`)
 - `forge-gui-mobile/src/forge/adventure/data/EffectData.java` (STOCK): upstream pinned its own `serialVersionUID`
   (`-1350202758899129612L`); **ours stays `-5573686949131910962L`** (round 90) - upstream's value would empty every TFR

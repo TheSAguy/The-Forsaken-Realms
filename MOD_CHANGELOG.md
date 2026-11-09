@@ -14264,6 +14264,57 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 995: the End Turn "twitch" - libGDX's text pool healed each turn, and the off-thread caller named (2026-11-09)
+
+A player, gnomedoom, on Discord: "End turn is twitching out on me", with a photo of the button's second line drawn
+three times (left, center, right). The user: "Can you please look into this", then "Yes, queue both". The review is
+`C:\CLAUDE\PROJECTS\TFR1\notes\logs-1109b.md` P2-1: libGDX 1.14.2's `GlyphLayout` takes every text's runs from one
+static, unsynchronized pool (`glyphRunPool`); text laid out off the GL thread races the GL thread's layouts and leaves a
+null or the same `GlyphRun` twice in the free list. The same player, and an Android player, hit the caught NPE on
+exactly "End\nTurn" (`FButton.draw:416`, round 908's `[TFR-Render] text not drawn`). A restart was the only cure.
+
+- **New `forge.util.GlyphPoolGuard`.** Reads `GlyphLayout.glyphRunPool` and `Pool.freeObjects` once by reflection,
+  read-only. `heal(reason)` counts the free list's nulls and identity duplicates and empties it with the public
+  `Pool.clear()` (libGDX makes new runs on demand; `clear()` skips nulls safely). It runs on the GL thread only; from
+  any other thread it is posted there with `Gdx.app.postRunnable`, once until it runs, so a heal never races a layout
+  itself. If reflection fails (a future libGDX), one `guard off` line and nothing else. Android keeps the names
+  (`proguard.cfg` has `-dontobfuscate`).
+- **When it heals:** at each turn's start in a match (`MatchController.updateTurn`, which `FControlGameEventHandler`'s
+  `processEvents` runs on the GL thread once per `GameEventTurnBegan`; `updatePhase`, the review's pick, runs every
+  phase), after either of round 908's catches in `Graphics` (`fitText`, `drawFittedText`), and after a failed measure in
+  `FSkinFont`. A broken caption now lasts until the next turn at most, not the whole launch.
+- **`FSkinFont`'s three measure methods swallowed layout failures silently** (`catch (Exception ignored)`, stock), so the
+  measure side of this fault never reached a log. They now log once a launch (`[TFR-GlyphPool] text not measured in
+  FSkinFont.getBounds: <e>, text "...", thread T`) with the stack, then heal. Same fallback bounds as before.
+- **The second thread, named:** `FSkinFont.getBounds/getMultiLineBounds/getWrappedBounds/draw` check the thread before
+  laying out (one comparison: `GuiBase.getInterface().isGuiThread()`, the GL thread `Forge.create` already records - no
+  `Forge.java` edit). The first off-GL-thread layout of a launch logs `[TFR-GlyphPool] text laid out off the GL thread:
+  <thread> in <method>` with its stack; later ones are counted. `TextRenderer` measures and draws only through these, so
+  it needed no edit.
+- **Log:** `[TFR-GlyphPool] guard on: first heal at turn start, N free, 0 duplicates, 0 nulls - cleared` once a launch;
+  a damaged pool `[TFR-GlyphPool] <reason>: N free, D duplicates, Z nulls - cleared (damaged pool K this launch, logged at
+  1, 2, 4, 8...; off-GL-thread layouts so far: M)`. The next player log with a damaged line proves the mechanism with
+  player data; the off-thread line names the caller for the real fix.
+- **Console:** `glyphpool [state|heal|poison N]`. `poison N` plants N duplicate runs (a test cheat), for the agent shots.
+- **Proof (headless):** `GlyphPoolGuardTest` (4) builds a `BitmapFont` with no texture (a region given, `load()`
+  overridden) and lays out "End\nTurn" centered in 200 px: clean, `[End x=86 y=0][Turn x=81 y=-20]`. One run planted
+  twice on top of the pool: both lines get the SAME run object and the caption is wrong ("EndTurn" twice at one spot), on
+  every later layout too - freeing the layout puts the run back twice, so libGDX never recovers. `heal` reports 1
+  duplicate, clears, and the caption is right again. A planted null throws the players' exact NPE
+  (`Cannot assign field "x" because "run" is null`); a null is one-shot (the failed layout pops it), and one the heal
+  finds first is dropped. A clean pool heals silently after the one `guard on` line. Off-thread layouts are logged once
+  and counted; a heal off the GL thread leaves the pool alone. Maven `-o -pl forge-gui-mobile -am test` (all 17 module test classes): exit 0, 89/89; desktop jar `-pl forge-gui-mobile-dev -am package -DskipTests` exit 0.
+- **Not proven:** that the photo's three positions come from exactly this. The duplicate mechanism breaks a centered
+  two-line caption and keeps it broken, which fits; which layouts share the run frame to frame decides where "Turn"
+  lands. The heal guards the NPE either way.
+- **What it won't do:** stop a race still running. If the off-thread line names a caller that runs every frame, moving
+  that call onto the GL thread is the follow-up.
+- **Not touched:** `CardRenderer`'s own static `GlyphLayout` (rounds 816/846) - it draws on the GL thread; outside this
+  round's window.
+- Callers (code graph): `FSkinFont.getBounds` 30, `getMultiLineBounds` 13, `getWrappedBounds` 2, `FSkinFont.draw` 2,
+  `Graphics.drawText` 92, `fitText`/`drawFittedText` 2 each; no signature or return value changed.
+- **Saves:** nothing.
+
 ## Round 994: the engine to the 11.09 daily (upstream `7d0acc8aa92`) (2026-11-09)
 
 The user: "Once done with the logs. Let's update the engine: E:\GAMES\Forge_2" (the 11.09 daily installed as

@@ -1306,6 +1306,7 @@ public class ConsoleCommandInterpreter {
         registerCommand(new String[]{"spritesweep"}, forge.adventure.util.SpriteSweep::console); // round 969
         registerCommand(new String[]{"hud"}, forge.adventure.util.TfrHud::console); // round 989: hud [state|toggle|hide|show]
         registerCommand(new String[]{"tips"}, forge.adventure.util.TfrTips::console); // round 993: tips [state|auto|on|off|hover TAG|hover off|list]
+        registerCommand(new String[]{"glyphpool"}, forge.util.GlyphPoolGuard::console); // round 995: glyphpool [state|heal|poison N] (poison: a test)
         // Round 974: "crash render|frame|oom|input" - a forced error on the world map, to test the crash paths (a test cheat).
         registerCommand(new String[]{"crash"}, s -> forge.Adventure.armCrashTest(s.length > 0 ? s[0] : ""));
         registerCommand(new String[]{"custom"}, forge.adventure.util.CustomDifficulty::console); // round 822: custom difficulty
