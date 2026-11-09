@@ -14525,8 +14525,8 @@ exactly "End\nTurn" (`FButton.draw:416`, round 908's `[TFR-Render] text not draw
   - **The smear did not reproduce in the game.** End Turn was identical clean, with 8 pairs held, with 16 pairs held through
     the AI's turn, and healed (`r995-end-turn-crops-4x.png`): the planted pairs sat under the runs each layout frees and
     takes back (the pool is last-in, first-out), and the one layout taking a pair each frame was not on screen. The
-    three-copy photo stays an inference; the headless test shows the mechanism on "End
-Turn".
+    three-copy photo stays an inference; the headless test shows the mechanism on the End Turn
+    caption.
   - Tests: `GlyphPoolGuardTest` 6 (+2: the measure and draw cycles, heal alone 6/6 frames failing vs. 1/6 fixed). Maven
     `-o -pl forge-gui-mobile -am test` (all module test classes): exit 0, 104/104; desktop jar exit 0.
 - **Saves:** nothing.
