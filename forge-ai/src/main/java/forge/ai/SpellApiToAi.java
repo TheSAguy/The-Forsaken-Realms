@@ -158,6 +158,7 @@ public enum SpellApiToAi {
             .put(ApiType.PutSticker, PutStickerAi.class)
             .put(ApiType.Radiation, AlwaysPlayAi.class)
             .put(ApiType.RearrangeTopOfLibrary, RearrangeTopOfLibraryAi.class)
+            .put(ApiType.Recruit, RecruitAi.class) // TFR round 998: upstream has no AI for Recruit (logs-1109 P3-14)
             .put(ApiType.Regenerate, RegenerateAi.class)
             .put(ApiType.Regeneration, AlwaysPlayAi.class)
             .put(ApiType.RemoveCounter, CountersRemoveAi.class)

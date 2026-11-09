@@ -35,6 +35,22 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 998 - Recruit AI, the cost-SVar fallback line, the undo memory figure
+- `forge-ai/src/main/java/forge/ai/SpellApiToAi.java` (STOCK): one map line, `.put(ApiType.Recruit, RecruitAi.class)`
+  (after `RearrangeTopOfLibrary`). Before it Recruit fell back to `CannotPlayAi`.
+- New `forge-ai/src/main/java/forge/ai/ability/RecruitAi.java` (stock-style, no TFR code or log lines, so it can go
+  upstream as it is) and the test `forge-gui-desktop/src/test/java/forge/ai/ability/RecruitAiTest.java` (its
+  `setFlatMonteCarloOverride(false)` line is TFR's, as in round 984's test).
+- `forge-game/src/main/java/forge/game/ability/AbilityUtils.java` (STOCK), `calculateAmount`: the "SVar '%s' not found in
+  ability, fallback to Card" print moved after `card.getSVar(amount)` and runs only when the card supplied a value.
+  Test: `forge-gui-desktop/src/test/java/forge/game/ability/CostSVarFallbackTest.java`.
+- `forge-game/src/main/java/forge/game/undo/UndoManager.java`: round 898's `snapshotObjects()` replaced by two read-only
+  methods, `retainedUndoBytes()` (wraps the private `retainedBytes()`) and `undoDeltaEntries()` (sum of
+  `GameMemento.deltaSize()`), for `[TFR-Memory]` (`util/MemoryWatch`). No behavior change.
+- **At a merge:** if upstream maps Recruit itself, take theirs and delete `RecruitAi` (keep the test if it passes). If
+  upstream reworks the fallback print, keep only the rule "no fallback line for a value the card does not have either".
+  If upstream renames `retainedBytes()`/`deltaSize()`, point the two TFR methods at the new names.
+
 ### Round 997 - seven small fixes from the log reviews
 - `forge-gui/src/main/java/forge/gui/download/GuiDownloadZipService.java` (STOCK): `download()` sets a 15 s connect and a
   30 s read timeout before `connect()`, and logs `[TFR-Assets] <desc>: N%, X MB of Y MB in Z s` every 25% (every 50 MB

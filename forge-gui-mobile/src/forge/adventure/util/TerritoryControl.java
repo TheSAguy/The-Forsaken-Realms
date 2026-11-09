@@ -2742,6 +2742,19 @@ public class TerritoryControl {
         pendingCapitolDefenseWaitLogged = false;
     }
 
+    /** Round 998: the mage waiting at the Capitol, or null - WorldStage.save() writes it (CapitolDefenseSave). */
+    public static EnemySprite pendingCapitolDefenseMage() {
+        return pendingCapitolDefenseMage;
+    }
+
+    /** Round 998: a waiting mage read back from a save (WorldStage.load(), after clearCache() dropped any old one). */
+    public static void restorePendingCapitolDefense(EnemySprite mage) {
+        pendingCapitolDefenseMage = mage;
+        pendingCapitolDefenseWaitLogged = false;
+        System.out.println("[TFR-CapitolDefense] restored from the save: " + mage.territoryColor + "'s "
+                + mage.getData().getName() + " waits at the Capitol - the forced duel is queued again");
+    }
+
     // Round 356: a queued Capitol duel held back by a dialog is logged once, not every frame it waits.
     private static boolean pendingCapitolDefenseWaitLogged;
 

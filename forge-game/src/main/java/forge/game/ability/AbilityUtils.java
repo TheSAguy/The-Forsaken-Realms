@@ -404,10 +404,13 @@ public class AbilityUtils {
             svarval = ability.getSVar(amount);
         }
         if (StringUtils.isBlank(svarval)) {
-            if ((ability != null) && (ability instanceof SpellAbility) && !(ability instanceof SpellPermanent)) {
+            svarval = card.getSVar(amount);
+            // TFR round 998: only when the card really supplies it. An unpaid cost value (Relic Amulet's
+            // CostCountersRemoved, read by the AI before payment) is on neither and is 0 below, as designed;
+            // printing a "fallback" for it filled one player's log with 299 lines.
+            if (!StringUtils.isBlank(svarval) && (ability instanceof SpellAbility) && !(ability instanceof SpellPermanent)) {
                 System.err.printf("SVar '%s' not found in ability, fallback to Card (%s). Ability is (%s)%n", amount, card.getName(), ability);
             }
-            svarval = card.getSVar(amount);
         }
 
         if (StringUtils.isBlank(svarval)) {

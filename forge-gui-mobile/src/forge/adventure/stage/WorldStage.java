@@ -3369,6 +3369,24 @@ public class WorldStage extends GameStage implements SaveFileContent {
             } catch (Exception e) {
                 System.err.println("[TFR-RoamGuard] resolving an interrupted guard fight failed: " + e);
             }
+            // Round 998: the mage that waited at the Capitol (or was in its duel) when the save was taken - see save().
+            // Its own try, like the guard fight's above. A save from before this round has no keys: none pending.
+            try {
+                CapitolDefenseSave.Pending capitol = CapitolDefenseSave.read(data, WorldData::getEnemy);
+                if (capitol != null) {
+                    EnemySprite mage = new EnemySprite(capitol.data);
+                    mage.territoryColor = capitol.color;
+                    for (PointOfInterest poi : WorldSave.getCurrentSave().getWorld().getAllPointOfInterest()) {
+                        if (TownRestoration.CAPITOL_POI_NAME.equals(poi.getData().name)) {
+                            mage.territoryTarget = poi;
+                            break;
+                        }
+                    }
+                    TerritoryControl.restorePendingCapitolDefense(mage);
+                }
+            } catch (Exception e) {
+                System.err.println("[TFR-CapitolDefense] restoring the waiting Capitol mage failed: " + e);
+            }
             globalTimer = data.readFloat("globalTimer");
         } catch (Exception e) {
 
@@ -3536,6 +3554,18 @@ public class WorldStage extends GameStage implements SaveFileContent {
         data.storeObject("openingMages", openingMages);
         data.storeObject("pillageTowns", pillageTowns);
         data.storeObject("territoryTargetIds", territoryTargetIds);
+        // Round 998 (Fable 2026-11-02 P1-2's last note): the mage waiting at the Capitol lived only in a static field,
+        // so a save and quit while it waited lost the attack. Its duel's own autosave (startForcedCapitolDuel) is taken
+        // after the mage left the queue, so the mage in a running Capitol duel is written too: a quit mid-duel brings the
+        // duel back on load instead of erasing it. load() queues it again (CapitolDefenseSave).
+        EnemySprite capitolMage = TerritoryControl.pendingCapitolDefenseMage();
+        if (capitolMage == null && currentMobIsCapitolDefense)
+            capitolMage = currentMob;
+        if (capitolMage != null && capitolMage.getData() != null) {
+            String rawName = capitolMage.getData().name;
+            CapitolDefenseSave.write(data, forge.adventure.util.EnemyTiers.saveName(capitolMage.getData(),
+                    rawName != null && !rawName.isEmpty() ? rawName : capitolMage.getData().getName()), capitolMage.territoryColor);
+        }
         data.store("globalTimer", globalTimer);
         data.storeObject("noticeLog", GameHUD.getInstance().exportNoticeLog()); // round 711: the notice log (load() restores it)
         return data;

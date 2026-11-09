@@ -154,8 +154,15 @@ public final class UndoManager {
     }
     public synchronized int depth() { return Math.max(0, stack.size() - 1); }
 
-    /** TFR (round 898): objects held by the kept snapshots, for the [TFR-Memory] log line. */
-    public synchronized int snapshotObjects() { int n = 0; for (Entry e : stack) n += e.memento().objectCount(); return n; }
+    /**
+     * TFR (round 898, round 998): what the undo history pins, for the [TFR-Memory] log line - the same estimate the
+     * history is budgeted by (the recorder's copy of the current state plus every reverse delta). Round 898 summed
+     * each step's objectCount(), which after the compact deltas (#12753) counts the whole game once per step.
+     */
+    public long retainedUndoBytes() { return retainedBytes(); }
+
+    /** TFR (round 998): entries in the kept reverse deltas, for the [TFR-Memory] log line. */
+    public synchronized int undoDeltaEntries() { int n = 0; for (Entry e : stack) n += e.memento().deltaSize(); return n; }
 
     /** True if {@code p} is the player whose actions are currently recorded (or nobody is recorded yet). */
     public synchronized boolean isOwner(Player p) { return owner == null || owner == p; }

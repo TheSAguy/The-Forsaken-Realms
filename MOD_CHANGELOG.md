@@ -14264,6 +14264,62 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 998: a waiting Capitol duel survives a save, an AI for Recruit, Relic Amulet's log noise, the undo memory line (2026-11-09)
+
+The user, before 1.28: "I'd like to finish-up anything outstanding before releasing 1.28." The main thread's sweep left
+four open ends: Fable's 2026-11-02 review (P1-2's last note), `notes/logs-1109.md` P3-14 and P3-15, and round 994's
+merge note on `[TFR-Memory]`.
+
+- **A pending Capitol-defense mage is no longer lost on save/load** (new `util/CapitolDefenseSave`, `WorldStage.save`/
+  `load`, `TerritoryControl.pendingCapitolDefenseMage()`/`restorePendingCapitolDefense`):
+  - The mage waiting at the Capitol for its forced duel lived only in the static `pendingCapitolDefenseMage`. A save and
+    quit while it waited (a dialog, a pause, a place or a duel result holds it back) lost the attack: the duel never came.
+  - `WorldStage.save()` writes `capitolDefenseMage` (`EnemyTiers.saveName`, so a tiered mage keeps its tier) and
+    `capitolDefenseColor`. `load()` builds the sprite after `clearCache()`, points it at the Capitol, and queues it again;
+    `GameStage.act` fires the duel at the next safe moment on the world map, as before (round 931's gate).
+  - The mage of a **running** Capitol duel is written too. `startForcedCapitolDuel`'s own autosave runs after the mage
+    left the queue, so a quit mid-duel used to erase the attack; now the load brings the duel back. ReloadJab still
+    judges the quit as a loss plus a reload (Notoriety), as for any duel. The alternative, scoring the quit as the
+    Capitol lost, was not taken: it ends the run on a crash.
+  - An old save has neither key: none pending. A saved name that no longer resolves is dropped with a
+    `[TFR-CapitolDefense]` line, as the roaming enemies' `[TFR-RoamLoad]` does. A restore logs `[TFR-CapitolDefense]
+    restored from the save: <color>'s <mage> waits at the Capitol - the forced duel is queued again`.
+- **An AI for Recruit** (stock `SpellApiToAi`, new `ai/ability/RecruitAi`; logs-1109 P3-14):
+  - Upstream has no entry (checked at the merged `7d0acc8aa92` and at `upstream/master` fetched 11-09 23:00), so Recruit
+    fell back to `CannotPlayAi`. The 10 Recruit cards' mandatory triggers and saga chapter resolved anyway, but the AI
+    never cast **Sound the Trumpets**: its Recruit sub-ability refused the whole counterspell.
+  - `RecruitAi`: a sub-ability and an optional trigger always play, unless the draw would come from an empty library;
+    a mandatory one always resolves; an activated one (no card has one) waits for main 2 or the opponent's end step like
+    `IncubateAi`.
+- **Relic Amulet's 299 log lines** (stock `AbilityUtils.calculateAmount`; logs-1109 P3-15):
+  - Not a TFR script. The TFR item only puts the stock card on the battlefield, and the card's
+    `SVar:X:SVar$CostCountersRemoved` is right (10 stock cards share it): the cost payment sets the value on the ability.
+  - The cause: read before a payment (the AI weighing the ability), the lookup printed "SVar ... not found in ability,
+    fallback to Card" although the card has no such SVar either, and the very next branch returns 0 for an unpaid
+    `Cost*` value, as designed. The line now prints only when the card really supplies the value; a value missing from
+    both still gets the stock "not defined in Card" warning (unless it is an unpaid cost).
+- **`[TFR-Memory]`'s undo figure** (stock `UndoManager`, `util/MemoryWatch`): round 898's `undoObjects=` summed each
+  step's `objectCount()`, the size of the whole game graph each memento describes, so it counted the game once per kept
+  step while upstream's deltas (#12603, and #12753's compact form since round 994) hold only what changed. Replaced by `undoKB=` (the estimate the history is budgeted by: the
+  recorder's copy of the current state plus every reverse delta, upstream's private `retainedBytes()`) and
+  `undoDeltas=` (entries in the kept deltas). Same `key=value` format.
+- **Tests**:
+  - `CapitolDefenseSaveTest` (5): a waiting mage through Java serialization, a tiered one keeps its tier, an old save is
+    none pending, nothing written when none waits, an unresolvable name dropped.
+  - `RecruitAiTest` (4): the map entry, Sound the Trumpets' sub-ability no longer refuses, no recruit from an empty
+    library (a mandatory one still resolves), the AI counters a Lightning Bolt aimed at it with Sound the Trumpets.
+  - `CostSVarFallbackTest` (3): Relic Amulet before payment is 0 with no line, after payment deals the counters
+    removed, a missing script value still warns. Run against the stock `AbilityUtils`, the first fails with the
+    player's exact line ("SVar 'CostCountersRemoved' not found in ability, fallback to Card (Relic Amulet)").
+  - Maven `-o -pl forge-gui-mobile,forge-gui-desktop -am test -Dtest=RecruitAiTest,CostSVarFallbackTest,
+    CapitolDefenseSaveTest,IncubateEmpowerAiTest`: exit 0, 5/5 and 14/14. Desktop jar `-o -pl forge-gui-mobile-dev -am
+    package -DskipTests`: exit 0.
+- **Agent check**: not in this commit. A test copy (`agent-r998`) loads a save with a planted waiting mage
+  (`PlantCapitolMage`) once the agent window comes round; its result follows as "Round 998 (follow-up)" if it finds
+  anything.
+- **Not done**: no console command to send a mage to the Capitol (round 995 held the console file); the planting tool
+  covers the test.
+
 ## Round 997: seven small fixes from the log reviews - a stalled download, an exit's double dispose, a teleport's lost loot (2026-11-09)
 
 The user: "I want everything in before 1.28. So please proceed with it", then, asked about the leftover P3s from the log

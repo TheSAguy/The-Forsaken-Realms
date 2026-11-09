@@ -59,7 +59,12 @@ prints `[TFR-Config] FATAL`; `Forge.dispose` runs once - Android disposed twice 
 `teleport to poi` (the capital runes) keeps round 971's result window and refunds the rune, `leave` was round 982's;
 new `util/DuelArtRelease` frees a duel's card art on the first map after it, win or loss; stock `Tracker.unfreeze`
 copies and clears its queue first, the start-in-play CME; new `util/EconomyLog`, `[TFR-Trade]`/`[TFR-Bank]`, throttled;
-`TrackerTest`, `DuelArtReleaseTest`, `EconomyLogTest`). **1.28 log watch**: a `[TFR-Exit] dispose called again`
+`TrackerTest`, `DuelArtReleaseTest`, `EconomyLogTest`). Round 998 (four open ends: a mage waiting at the Capitol, or
+in its duel, is written to the save and queued again on load - new `util/CapitolDefenseSave` + test, old saves none
+pending, `dev-tools/save-editing/PlantCapitolMage.java` for agent checks; new `RecruitAi` in stock `SpellApiToAi` (the
+AI now casts Sound the Trumpets; upstream has none); stock `AbilityUtils` prints its "fallback to Card" line only when
+the card has the value - Relic Amulet's 299 lines; `[TFR-Memory]`'s `undoObjects=` became `undoKB=`/`undoDeltas=` from
+`UndoManager`'s own retained estimate; `RecruitAiTest`, `CostSVarFallbackTest`). **1.28 log watch**: a `[TFR-Exit] dispose called again`
 line and whether Android's `CRASH_NATIVE` exits stop (round 997's guess at their cause); a
 `[TFR-InnEvent] loaded with a broken reward state` line (round 996's shape was on disk at load, with player data);
 upstream's FlatMC tuning for

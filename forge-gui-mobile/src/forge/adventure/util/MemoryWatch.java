@@ -156,7 +156,8 @@ public final class MemoryWatch {
             }
             UndoManager undo = game.getUndoManager();
             return "game=" + (game.isGameOver() ? "over" : "live") + " turn=" + game.getPhaseHandler().getTurn() + " cards=" + cards + " battlefield=" + battlefield
-                    + " logEntries=" + game.getGameLog().size() + " undo=" + undo.depth() + " undoObjects=" + undo.snapshotObjects();
+                    + " logEntries=" + game.getGameLog().size() + " undo=" + undo.depth()
+                    + " undoKB=" + (undo.retainedUndoBytes() >> 10) + " undoDeltas=" + undo.undoDeltaEntries(); // round 998
         } catch (Throwable t) { // another thread changed the game under us, or the heap is full
             return "game=? (" + t.getClass().getSimpleName() + ")";
         }
