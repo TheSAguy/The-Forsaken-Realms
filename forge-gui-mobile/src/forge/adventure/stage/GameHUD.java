@@ -487,6 +487,11 @@ public class GameHUD extends Stage {
         avatarGroup.addActor(avatar);
         avatarGroup.addActor(avatarborder);
         ui.addActor(avatarGroup);
+        // TFR round 993: the HUD's hover tips (TfrTips regions; nothing on a plane without ConfigData.tfrTooltips)
+        forge.adventure.util.TfrHudTips.register(miniMap, timeOfDayActor, speedCheckBox, waitCheckBox, resourceDisplayActor,
+                ascendanceDisplayActor, avatar, money, shards, lifePoints, treasureMapsButton, worldStandingsActor,
+                noticeLogButton, logbookActor, bookmarkActor, openMapActor, deckActor, inventoryActor, menuActor,
+                exitToWorldMapActor);
     }
 
     private void openMap() {
@@ -1018,6 +1023,7 @@ public class GameHUD extends Stage {
                 AdventureQuestController.instance().updateItemUsed(data);
             }, "menu");
             abilityButtonMap.add(button);
+            forge.adventure.util.TfrHudTips.ability(button, data); // TFR round 993: its item's name and effect on hover
         }
     }
 

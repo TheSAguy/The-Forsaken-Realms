@@ -1047,6 +1047,7 @@ public class Forge implements ApplicationListener {
         if (screen == null) {
             if (isMobileAdventureMode) {
                 Adventure.crashTestAt("frame"); // TFR round 974: the console's "crash frame", outside every catch
+                forge.adventure.util.TfrTips.frame(); // TFR round 993: the hover tip under the mouse, before the scene draws
                 // render adventure
                 Adventure.getInstance().render(delta);
             }

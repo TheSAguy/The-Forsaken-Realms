@@ -105,6 +105,10 @@ public class SettingData {
     // sort function. Cards found/Alphabetically/Research time"): the Research Lab's "Sort:" box - "found", "az" or
     // "days" (ResearchScene.SORT_KEYS); null reads as "found".
     public String researchSort;
+    // Round 993 (the user, 2026-11-09: "add an option to disable them ... on by default for Easy and Normal and off for
+    // Hard and Insane"): "Auto", "On" or "Off" for the hover tips (util/TfrTips). Auto = on for Easy and Normal, off for
+    // Hard and Insane (a custom difficulty counts as its preset). One global value, not per save; null reads as Auto.
+    public String tfrTooltips = "Auto";
     // Preserve explicitly stored global choices from the original background settings.
     public Boolean enableExtraBattleBackgrounds;
     public HashMap<String, Boolean> extraBattleBackgroundsByPlane = new HashMap<>();

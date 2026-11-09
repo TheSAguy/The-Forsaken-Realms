@@ -39,6 +39,8 @@ import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
  */
 public class SettingsScene extends UIScene {
     private final Table settingGroup;
+    /** TFR round 993: the "Show tooltips" box, kept in step with New Game's button on entry. */
+    private SelectBox<String> tfrTipsBox;
     TextraButton backButton;
     TextraButton newPlane;
     ScrollPane scrollPane;
@@ -350,13 +352,35 @@ public class SettingsScene extends UIScene {
                 System.out.println("[TFR-LandDrops] Settings: land drops cell " + (show ? "on" : "off") + " - from the next duel");
             }
         });
-        addSettingField(localizer.getMessage("lblFogOfWar"), Config.instance().getSettingData().fogOfWarEnabled, new ChangeListener() {
+        // TFR round 993: "Show tooltips: Auto / On / Off" - one global value (TfrTips); Auto = on for Easy and Normal,
+        // off for Hard and Insane. Only on a plane with ConfigData.tfrTooltips.
+        if (forge.adventure.util.TfrTips.enabled()) {
+            SelectBox<String> tipsBox = Controls.newComboBox(forge.adventure.util.TfrTips.MODES, forge.adventure.util.TfrTips.mode(), o -> {
+                String picked = o == null ? forge.adventure.util.TfrTips.AUTO : o.toString();
+                if (!picked.equals(forge.adventure.util.TfrTips.mode()))
+                    forge.adventure.util.TfrTips.set(picked, "Settings");
+                return null;
+            });
+            tipsBox.setName("tfrTooltips");
+            tfrTipsBox = tipsBox;
+            addLabel(localizer.getMessageorUseDefault("lblShowTooltips", "Show tooltips"));
+            settingGroup.add(tipsBox).align(Align.right).pad(2);
+            forge.adventure.util.TfrTips.row(this, tipsBox, "settings.tooltips");
+        }
+        CheckBox fogBox = addSettingField(localizer.getMessage("lblFogOfWar"), Config.instance().getSettingData().fogOfWarEnabled, new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Config.instance().getSettingData().fogOfWarEnabled = ((CheckBox) actor).isChecked();
                 Config.instance().saveSettings();
             }
         });
+        // TFR round 993: hover tips on the rules rows (the tooltip audit's spots 32 and 55-58)
+        forge.adventure.util.TfrTips.row(this, fogBox, "settings.fog");
+        forge.adventure.util.TfrTips.row(this, ascendanceBox, "settings.leveling");
+        forge.adventure.util.TfrTips.row(this, notorietyBox, "settings.notoriety");
+        forge.adventure.util.TfrTips.row(this, reloadBox, "settings.reload");
+        forge.adventure.util.TfrTips.region(this, difficultyLabel, "settings.difficulty");
+        forge.adventure.util.TfrTips.region(this, difficultyEdit, "settings.difficulty");
         String off = localizer.getMessage("lblOff");
         String planeDefault = localizer.getMessage("lblPlaneDefault");
         String customSource = localizer.getMessage("lblCustomSource");
@@ -732,6 +756,8 @@ public class SettingsScene extends UIScene {
     /** Round 825: the rows show what the running save plays with (its own rules, else the profile's). */
     @Override
     public void enter() {
+        if (tfrTipsBox != null) // TFR round 993: New Game's button may have changed the value
+            tfrTipsBox.setSelected(forge.adventure.util.TfrTips.mode());
         refreshingRules = true;
         // named for the agent bridge (its click finds an unlabeled check box by name)
         if (ascendanceBox != null)

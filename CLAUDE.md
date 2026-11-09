@@ -42,11 +42,15 @@ from the price list, restricted cards out, a classic save's town factor in, so n
 the lowest factor 0.390: new `util/PackFloor` + `PackFloorTest`, `[TFR-PackFloor]` - logs-1108c P3-13) and round 992 (the tooltip audit's visible labels, behind `tfrHelpLabels`: the Abandon Quest confirm names its
 failure dialog's reputation cost, Repair shows "[+Gold] N", deck slots "N/40", a waiting Armory Re-roll "in N days",
 the Job Board its reputation and building slots, Speed-Up a "50x" tag; ability names left to round 993's tip - new
-`util/TfrLabels` + `TfrLabelsTest`, `[TFR-Labels]`).
+`util/TfrLabels` + `TfrLabelsTest`, `[TFR-Labels]`) and round 993 (hover tips: TFR 2's `Tfr2Tips` ported as `util/TfrTips` - region tips polled from
+`Forge.render`, the gold-framed box, texts in the plane's `config tables/tips.json` with `{tuning.FIELD}` fills - on the
+world-map HUD (`util/TfrHudTips`, ability buttons included), New Game and Settings; "Show tooltips: Auto / On / Off"
+(`SettingData.tfrTooltips`, global, Auto = on for Easy/Normal, off for Hard/Insane, New Game's button follows the
+difficulty box); mouse only; console `tips`, `[TFR-Tips]`; `TfrTipsTest`; rounds B-D to come).
 Engine = the 11.05 daily (round 978, upstream `1e8c35fca3e`; round 769's R1-R4 still
 keep TFR's synchronous auto save, eager shops, Inn events and place entry; bosses keep the player's AI setting through
 `bossAiFollowsSetting`); next merge from upstream after `1e8c35fca3e` (its first commit is `f62f804806c`, #12695, five AI files and `MagicStack`); BASE_INSTALL is that daily, so packages need no
-`--allow-base-mismatch`. Next version: 1.28 / 12800. Next free round: 993. The agent profile's window is
+`--allow-base-mismatch`. Next version: 1.28 / 12800. Next free round: 994. The agent profile's window is
 1280x720 - at 3840x2160 it covered the screen, got minimized, and a minimized game stops (the bridge times out, shots
 come back 1x1). Agent games keep their own LOCALAPPDATA cache (round 860). Log sharing (round 698) posts to Discord
 through a webhook kept OUT of git in `C:\TFR\secrets\discord_log_webhook.txt` - never commit it; the packager and

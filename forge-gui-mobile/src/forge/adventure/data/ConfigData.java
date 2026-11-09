@@ -237,5 +237,8 @@ public class ConfigData {
     // names its reputation cost, Repair its price, deck slots their card count, a greyed Armory Re-roll its days left, and
     // the Speed-Up box its multiplier while on. False = stock text.
     public boolean tfrHelpLabels = false;
+    // Round 993: hover tips (util/TfrTips, TFR 2's Tfr2Tips ported) on the world-map HUD, New Game and Settings, and the
+    // "Show tooltips: Auto / On / Off" setting (SettingData.tfrTooltips). False = no tips and no setting row (stock).
+    public boolean tfrTooltips = false;
 
 }

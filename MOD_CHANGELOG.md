@@ -14264,6 +14264,61 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 993: hover tips - TFR 2's tips ported, the world-map HUD, New Game and Settings (2026-11-09)
+
+The user's request (2026-11-09): "TFR2 makes good use of "Tooltips" that pop-up. Mosely over buttons/ but other spots
+also ... Also, add an option to disable them in Settings/New game difficulty settings. Maybe have them on by default for
+Easy and Normal and off for Hard and Insane." The audit (`C:\CLAUDE\PROJECTS\TFR1\notes\tooltips\tooltip-audit.md`) is
+the plan; this is its round A. The user's decisions: mouse-only tips for now (no Android long-press); "Show tooltips:
+Auto / On / Off", one global value, default Auto; Auto follows the New Game difficulty box live; no per-save field; card
+previews (`cardTooltipAdj`) untouched. Rounds B (towns, shops, Inn), C (Ascendance, quests, journal, character) and D
+(map tokens, custom difficulty) follow.
+
+- **The port, `util/TfrTips`** (from TFR 2's `Tfr2Tips`): a place registers a *region* - its actor (weakly held), the
+  scene it shows in (null = the world map or a town map, where the HUD shows), an optional part of the actor (fractions,
+  for the wood and stone rows of one panel), a tag and a text supplier - so a stock widget gets its tip from one call,
+  with no listener in its own file. `TfrTips.frame()`, called each adventure frame from `Forge.render` before the scene
+  draws, finds the region under the mouse (skipping a hidden actor, another scene's, one a Dialog covers, and the HUD's while a world-map or town dialog holds the input) and shows
+  TFR 2's gold-framed box: dark fill, 1 px gold frame, `[%60]` warm off-white text, wrapped at 170 px. Above the actor,
+  below when the top has no room, beside it at the right edge, by the mouse over a tall actor (the minimap), always
+  inside the stage. No delay (TFR 2's). The text is asked as the tip shows and twice a second while it shows.
+- **Texts in one data file**, the plane's `config tables/tips.json`, keyed by tag. `{tuning.FIELD}` is any settings.json
+  field of the running game's effective table (reflection on `TuningData`, so a custom difficulty's per-save copy shows
+  too); named values (`difficulty`, `lossPct`, `lossMin`, `woodWeek`, `stoneWeek`, `mapPieces`, `digShards`,
+  `digRadius`, `reloadForgive`, `reloadCap`) are read where the game reads them (`TuningData.defeatGoldLoss*For`,
+  `TreasureHunt`, `ReloadJab`). A name nothing knows shows "?" and logs once. Each `[+Glyph]` keeps its own colors on
+  the ink.
+- **The setting.** `SettingData.tfrTooltips` ("Auto"/"On"/"Off", default "Auto"; anything else reads as Auto).
+  `TfrTips.resolve(mode, difficulty)`: On and Off decide; Auto is off for "Hard" and "Insane" and on for anything else -
+  a custom difficulty keeps its preset's `DifficultyData.name`, so it counts as that preset - and on with no game
+  running. On the New Game screen Auto reads the difficulty box (`TfrTips.followNewGame`), so it follows the box live.
+  `on()` is asked every frame, so a tip already up goes the frame the setting turns it off.
+  - **Settings:** a "Show tooltips" box (Auto / On / Off) before Fog of War, only on a plane with the flag.
+  - **New Game:** a "Tooltips: Auto (on)" button under Advanced..., cycling Auto, On, Off; its words follow the
+    difficulty box ("Auto (off)" on Hard). It changes the same global value - the tip says "One setting for every game".
+- **The tips** (the audit's round A list):
+  - World-map HUD (spots 1-15, `util/TfrHudTips`): Speed-Up, Wait, the clock, the Ascendance panel, the wood and
+    stone rows, the portrait, the minimap, the treasure maps button, gold (the lost-duel share and minimum of the
+    running difficulty), shards, life, Info, Log, the logbook, bookmark, zoom, deck, inventory, menu, exit; and each
+    ability (rune) button: the item's name, its effect, "Costs [+Shards] N a use", where it works - round 992's label 7,
+    which did not fit on the button.
+  - New Game: the colors row (spot 30), the starting sets (31), the three "?" buttons ("Click for details."),
+    Advanced..., the tooltips button.
+  - Settings: "I won't cheat by loading after a loss" (32), Leveling (55), Disable Notoriety (56), the difficulty line
+    and Edit... (57), Fog of War (58), Show tooltips.
+- **Mouse only:** `under()` returns nothing on Android (`GuiBase.isAndroid()`), as TFR 2's; round 992's labels cover the
+  worst spots for touch.
+- **Gate:** `ConfigData.tfrTooltips` (false), on in the TFR `config.json`; a stock plane has no tips and no row.
+- **Console:** `tips [state|auto|on|off|hover TAG|hover off|list]`. `hover TAG` shows that region's tip as if the mouse
+  were over it, until `hover off` - how the agent shots are taken. `list` prints the tags on show.
+- **Log:** `[TFR-Tips] at startup: tooltips Auto (Normal): on`, `[TFR-Tips] tooltips Auto (Hard): off` when the
+  resolved state changes, `[TFR-Tips] Settings: tooltips Off (was Auto) - for every game`, `[TFR-Tips] tip TAG: text`
+  each time a tip shows, `[TFR-Tips] config tables/tips.json: N tips`, `[TFR-Tips] the HUD's tips registered`.
+- **Test:** `TfrTipsTest` (4): Auto on Easy/Normal/no game and off on Hard/Insane, On and Off overruling both ways, the
+  labels and the cycle, the text helpers. Maven `-o -pl forge-gui-mobile -am test -Dtest=TfrTipsTest,TfrLabelsTest`:
+  exit 0, 6/6; desktop jar exit 0.
+- **Saves:** nothing stored in a save; the setting is in the profile's settings.json.
+
 ## Round 992: visible help text - the tooltip audit's label list (2026-11-09)
 
 The user's request (2026-11-09): "TFR2 makes good use of "Tooltips" that pop-up ... Could we review TFR1 and see where we

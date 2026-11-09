@@ -303,6 +303,53 @@ public class NewGameScene extends MenuScene {
                 showModeHelp();
             }
         });
+        addTooltipsButton(); // TFR round 993
+    }
+
+    /** TFR round 993: the "Tooltips: Auto (on)" button under Advanced..., cycling Auto, On, Off (TfrTips' one global
+     *  value); Auto follows the difficulty box live. Plus the screen's hover tips (the tooltip audit's spots 30-31 and the
+     *  "?" buttons). Only on a plane with ConfigData.tfrTooltips. */
+    private com.github.tommyettinger.textra.TextraButton tooltipsButton;
+
+    private void addTooltipsButton() {
+        if (!forge.adventure.util.TfrTips.enabled())
+            return;
+        forge.adventure.util.TfrTips.followNewGame(this,
+                () -> Config.instance().getConfigData().difficulties[difficulty.getCurrentIndex()].name);
+        Actor advanced = ui.findActor("advanced");
+        Actor anchor = advanced != null ? advanced : ui.findActor("start");
+        tooltipsButton = Controls.newTextButton("", () -> {
+            forge.adventure.util.TfrTips.set(forge.adventure.util.TfrTips.next(forge.adventure.util.TfrTips.mode()), "New Game");
+            refreshTooltipsButton();
+        });
+        tooltipsButton.setName("tooltips");
+        float h = 22;
+        tooltipsButton.setBounds(anchor.getX(), Math.max(2, anchor.getY() - h - 4), anchor.getWidth(), h);
+        ui.addActor(tooltipsButton);
+        refreshTooltipsButton();
+        difficulty.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                refreshTooltipsButton();
+            }
+        });
+        forge.adventure.util.TfrTips.region(this, tooltipsButton, "newGame.tooltips");
+        forge.adventure.util.TfrTips.region(this, colorLabel, "newGame.colors");
+        forge.adventure.util.TfrTips.region(this, colorId, "newGame.colors");
+        forge.adventure.util.TfrTips.region(this, ui.findActor("startingSetsL"), "newGame.startingSets");
+        forge.adventure.util.TfrTips.region(this, startingSets, "newGame.startingSets");
+        forge.adventure.util.TfrTips.region(this, difficultyHelp, "newGame.help");
+        forge.adventure.util.TfrTips.region(this, raceHelp, "newGame.help");
+        forge.adventure.util.TfrTips.region(this, modeHelp, "newGame.help");
+        forge.adventure.util.TfrTips.region(this, advanced, "newGame.advanced");
+    }
+
+    private void refreshTooltipsButton() {
+        if (tooltipsButton == null)
+            return;
+        tooltipsButton.setText("[%80]Tooltips: " + forge.adventure.util.TfrTips.label(forge.adventure.util.TfrTips.mode(),
+                Config.instance().getConfigData().difficulties[difficulty.getCurrentIndex()].name));
+        tooltipsButton.layout();
     }
 
     // class field
@@ -813,6 +860,7 @@ public class NewGameScene extends MenuScene {
     @Override
     public void enter() {
         updateAvatar();
+        refreshTooltipsButton(); // TFR round 993: Settings may have changed it
         refreshDifficultyLabels(); // round 823: a started game took the pending changes
         if (Forge.createNewAdventureMap) {
             takeStartingSets(); // round 873

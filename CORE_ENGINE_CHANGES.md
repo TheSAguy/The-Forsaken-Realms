@@ -35,6 +35,25 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 993 - hover tips (TFR 2's Tfr2Tips ported) and "Show tooltips: Auto / On / Off"
+- `forge-gui-mobile/src/forge/Forge.java` (STOCK): `render()` calls `TfrTips.frame()` in the adventure branch, right after
+  round 974's `crashTestAt("frame")` and before `Adventure.getInstance().render(delta)`.
+- `forge-gui-mobile/src/forge/adventure/data/ConfigData.java` (STOCK): `tfrTooltips` (false).
+- `forge-gui-mobile/src/forge/adventure/data/SettingData.java` (STOCK): `public String tfrTooltips = "Auto";` (the global
+  setting; not save-bound - SettingData is the profile's settings.json).
+- `forge-gui-mobile/src/forge/adventure/stage/GameHUD.java` (STOCK): one `TfrHudTips.register(...)` call at the end of the
+  constructor (the HUD actors it names), and `TfrHudTips.ability(button, data)` after `abilityButtonMap.add(button)` in
+  `setAbilityButton`.
+- `forge-gui-mobile/src/forge/adventure/scene/SettingsScene.java` (STOCK): a "Show tooltips" SelectBox (Auto/On/Off) before
+  the Fog of War row, kept in a new `tfrTipsBox` field and re-selected in `enter()`; the Fog of War box is now kept in a
+  local `fogBox`; `TfrTips.row/region` calls for the Fog, Leveling, Notoriety, reload and difficulty rows.
+- `forge-gui-mobile/src/forge/adventure/scene/NewGameScene.java` (STOCK): the constructor ends with `addTooltipsButton()` (a
+  "Tooltips: Auto (on)" TextraButton under Advanced..., cycling Auto/On/Off, refreshed by a second difficulty
+  ChangeListener and in `enter()`), `TfrTips.followNewGame`, and the screen's region tips.
+- `forge-gui-mobile/src/forge/adventure/stage/ConsoleCommandInterpreter.java` (STOCK): `tips` command (`TfrTips::console`).
+- New TFR-only: `util/TfrTips.java`, `util/TfrHudTips.java`, `test/.../util/TfrTipsTest.java`; the plane's
+  `config tables/tips.json`.
+
 ### Round 992 - visible help text (the tooltip audit's label list)
 - `forge-gui-mobile/src/forge/adventure/data/ConfigData.java` (STOCK): `tfrHelpLabels` (false).
 - `forge-gui-mobile/src/forge/adventure/scene/QuestLogScene.java` (STOCK): the Abandon confirm's text goes through

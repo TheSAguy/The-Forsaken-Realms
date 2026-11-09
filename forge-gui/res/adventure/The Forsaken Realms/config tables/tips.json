@@ -1,0 +1,48 @@
+// Round 993: the hover tips' texts (util/TfrTips), keyed by tag. "\n" starts a new line.
+// {name} is filled when the tip shows: {tuning.FIELD} is any settings.json field of the running game; the other names
+// are listed in TfrTips.number (difficulty, lossPct, lossMin, woodWeek, stoneWeek, mapPieces, digShards, digRadius,
+// reloadForgive, reloadCap). A call site may fill its own ({name}, {cost}, {effect}, {where} on hud.ability).
+// Amounts use the resource icons, icon first: "[+Gold] {lossMin}".
+{
+  // ---- the world-map HUD
+  "hud.speedUp": "Speed-Up: time runs {tuning.speedUpMultiplier}x faster while you walk or Wait.\nEnemies spawn faster too; you don't walk faster.",
+  "hud.wait": "Wait: let time pass while you stand still.\nMoving cancels it. With Speed-Up on, it skips ahead fast.",
+  "hud.clock": "Time passes only while you walk or Wait on the world map.\nEvery 7th day the week turns: mines pay and guards draw their pay.\nNight (18:00-06:00): Black and Red foes are tougher, White and Green weaker.",
+  "hud.ascendance": "Ascendance: your level. Win duels, quests and towns for Power.\nThe bar is Power to the next level.\nA \"!\" means a reward to pick: click the panel.",
+  "hud.wood": "[+Wood] Wood: building material.\nFrom map piles and Lumber Mills ([+Wood] {woodWeek} a week).\nSpent restoring towns and building.",
+  "hud.stone": "[+Stone] Stone: building material.\nFrom map piles and Stone Mines ([+Stone] {stoneWeek} a week).\nSpent restoring towns and building.",
+  "hud.avatar": "Click: a see-through HUD.\nDouble-click: hide or show the HUD.",
+  "hud.minimap": "The minimap. A colored dot: a mage marching on a town.\nGold: a legend. A big dot: the Wrath hunting you.",
+  "hud.treasureMaps": "Treasure maps: obelisks give a map piece; {mapPieces} pieces make a map.\nDig with the Spade ([+Shards] {digShards}) within {digRadius} tiles of the X.",
+  "hud.gold": "[+Gold] Gold buys cards, buildings and guards.\nA lost duel costs {lossPct}% of it on {difficulty}, at least [+Gold] {lossMin} (no minimum in your first week).",
+  "hud.shards": "[+Shards] Shards: the rarer currency.\nResearch, item abilities, digging and re-rolls.",
+  "hud.life": "Your life: what you start each duel with.",
+  "hud.info": "World standings: the towns each color holds, your reputation with every color, and how the realm works.",
+  "hud.log": "The log: your latest notices and Power gains.",
+  "hud.logbook": "Quests and the journal.",
+  "hud.bookmark": "Mark this place on the world map.\nLocked while an enemy chases you.",
+  "hud.zoom": "The world map, zoomed out.",
+  "hud.deck": "Your decks.",
+  "hud.inventory": "Your items and gear.",
+  "hud.menu": "Save, load, settings and quit.",
+  "hud.exit": "Leave this place for the world map.\nLocked while an enemy chases you.",
+  "hud.ability": "{name}{effect}\nCosts [+Shards] {cost} a use. {where}",
+  "hud.abilityWorldMap": "World map only.",
+  "hud.abilityInPlaces": "In towns, caves and dungeons only.",
+  "hud.abilityAnywhere": "Works anywhere.",
+
+  // ---- New Game
+  "newGame.tooltips": "Hover tips like this one.\nAuto: on for Easy and Normal, off for Hard and Insane.\nOn or Off: always. One setting for every game.",
+  "newGame.colors": "Your starter deck's colors.\nThey start at [+Reputation] +10, their allies at +5, their enemies at -10.",
+  "newGame.startingSets": "Pick which of your race's sets you start with.\nA gold lock: open from day 1. Gray: research it later.",
+  "newGame.help": "Click for details.",
+  "newGame.advanced": "Custom difficulty: change the game's rules one by one.\nSome lock once the game starts.",
+
+  // ---- Settings
+  "settings.tooltips": "Hover tips like this one.\nAuto: on for Easy and Normal, off for Hard and Insane.\nOn or Off: always. One setting for every game.",
+  "settings.fog": "Off: the whole map is revealed.",
+  "settings.leveling": "Ascendance leveling. Off: no Power or levels, and no limit on worn main items.\nEach save keeps its own.",
+  "settings.notoriety": "Every {tuning.notorietyWinsPerLevel} wins gives foes a Wall; a loss takes {tuning.notorietyLossPenalty} off.\nChecked: no Walls or stronger foes. The score still counts.",
+  "settings.reload": "Checked: reloading to undo a lost duel makes enemies tougher on Hard and Insane (+1 life a reload, at most +{reloadCap}).\nEvery {reloadForgive} honest losses forgive one.",
+  "settings.difficulty": "This save's difficulty.\nEdit... changes the rules you can change mid-game."
+}
