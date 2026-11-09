@@ -49,7 +49,13 @@ world-map HUD (`util/TfrHudTips`, ability buttons included), New Game and Settin
 difficulty box); mouse only; console `tips`, `[TFR-Tips]`; `TfrTipsTest`; rounds B-D to come) and round 994 (the engine
 to the 11.09 daily, below; enemy decks built off the GL thread while the VS screen stays up, `[TFR-DeckGen]`; the loop
 breaker's AI count starts over when an opponent loses life, with a 300-use backstop, so upstream's FlatMC kill loops
-finish; `EffectData`'s UID and `IncubateAi` kept ours). Round 995 (the End Turn "twitch", logs-1109b P2-1: new `forge.util.GlyphPoolGuard` empties libGDX's static glyph run pool on the GL thread at each turn's start and after a caught text failure, counting the nulls and duplicate runs an off-thread layout leaves; `FSkinFont` logs its first off-GL-thread layout with the stack and no longer swallows a failed measure silently; `[TFR-GlyphPool]`, console `glyphpool`; `GlyphPoolGuardTest` proves a duplicate run breaks the End Turn caption until healed). **1.28 log watch**: upstream's FlatMC tuning for
+finish; `EffectData`'s UID and `IncubateAi` kept ours). Round 995 (the End Turn "twitch", logs-1109b P2-1: new `forge.util.GlyphPoolGuard` empties libGDX's static glyph run pool on the GL thread at each turn's start and after a caught text failure, counting the nulls and duplicate runs an off-thread layout leaves; `FSkinFont` logs its first off-GL-thread layout with the stack and no longer swallows a failed measure silently; `[TFR-GlyphPool]`, console `glyphpool`; `GlyphPoolGuardTest` proves a duplicate run breaks the End Turn caption until healed). Round 996 (an Inn event's broken prize state, logs-1109b P2-2: a saved Draft with no reward
+packs, then a three-slot prize table, crashed the Inn and left the champion unpaid. Stock `AdventureEventData` now
+repairs it before `getDescription` and `giveRewards` read it: packs read back from the table, else dealt again at the
+event's seed; the table grown to four slots; lost tiers rebuilt; a null tier or pack skipped. New `util/InnEventRepair`
++ `InnEventRepairTest`, `[TFR-InnEvent]`. Cause not found; the agent repro is still to run). **1.28 log watch**: a
+`[TFR-InnEvent] loaded with a broken reward state` line (round 996's shape was on disk at load, with player data);
+upstream's FlatMC tuning for
 `Reckless.ai` and `Cautious.ai` (360 TFR enemies) - win ratios and duel times against them; a `[TFR-GlyphPool] ...
 duplicates` line (round 995's mechanism, with player data) and `text laid out off the GL thread` (the caller to move
 onto the GL thread).

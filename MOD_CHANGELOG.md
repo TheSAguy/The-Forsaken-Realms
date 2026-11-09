@@ -14264,6 +14264,59 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 996: an Inn event's broken prize state is repaired, and the champion is paid (2026-11-09)
+
+The user, after the 11.09 log review: "Yes, queue both", then "I want everything in before 1.28." The finding is
+`notes/logs-1109b.md` P2-2. Player e97e1d23 (Windows, 1.27) force-closed the game during an Inn Draft final. On the
+next launch, opening the Inn threw an NPE: `"this.rewardPacks" is null` at `AdventureEventData.getDescription`
+<- `EventScene.<init>` <- `InnScene.startEvent`. On the launch after that, collecting the prize threw
+`ArrayIndexOutOfBoundsException: Index 3 out of bounds for length 3` at `giveRewards` <- `EventScene.advance`. The
+champion's prize was never paid.
+
+- **The guard** (stock `AdventureEventData`, new `util/InnEventRepair`):
+  - `repairRewardState(where)` runs at the top of `getDescription` and `giveRewards`, for Draft, Sealed and Jumpstart.
+    It does nothing when the state is whole. Otherwise:
+    - Missing reward packs are read back from the prize table first: the constructors put the same `Deck` objects in
+      tiers 0 and 1. Failing that, they are dealt again at the event's own seed (`openingRandom("reward packs")`, as a
+      reload deals its draft packs). Failing that, the text names the event's set.
+    - A short table is grown to four slots with `Arrays.copyOf`, so `giveRewards` can write the champion's slot 3.
+    - A lost tier 0-2 is rebuilt the way the setup methods build it.
+  - Every repair logs `[TFR-InnEvent] reward state repaired: <what> (<where>; was <shape>; format=, status=,
+    rewards.length=, rewardPacks null=, wins=, block=, inn=, event seed=)`.
+  - A Draft or Sealed event with no `rewardDeck` pays a copy of the registered deck instead of throwing; this also logs.
+  - The rewards loop goes through `InnEventRepair.payingTiers` and skips a null tier, pack, item list or reward list.
+  - `getDescription` names every pack through `InnEventRepair.packLabel`. The Draft prize line now lists packs 1 and 2
+    for 1+ wins and pack 0 for 0 wins, the packs each record actually pays and the order Sealed already used. Stock
+    named pack 0 for 1+ wins and pack 2 for 0 wins.
+  - The copy constructor (no callers) clones `rewards` null-safely and copies `rewardPacks`.
+- **Telemetry for the cause**: a private `readObject` (it calls `defaultReadObject()` first, and the UID stays `1L`, so
+  saves are unchanged) logs `[TFR-InnEvent] loaded with a broken reward state: ...` when the save itself holds the
+  broken shape. The next player log that has it tells load-time corruption from in-memory corruption.
+- **Every other read checked**: `EventScene.coinRewardWinThreshold` already skips null tiers and lists. No other
+  class reads `rewards[...]` or the reward packs.
+- **Cause: not found.** Ruled out by reading the code and git history:
+  - Every constructor in every version builds four slots. Draft and Sealed always deal three packs, and
+    `createEvent` drops an event whose block is null before anyone sees it.
+  - Nothing in 1.27 or HEAD builds a three-slot `AdventureEventReward[]`, and nothing resizes `rewards`.
+  - The copy constructor has no callers.
+  - `InnScene.initLocalEvent`'s re-roll, week-turnover, pool-stamp and restore paths, `replaceLocalEvent` and the
+    console's `set event` all build fresh, whole events.
+  - `PlayerStatistic.completedEvents` and `AdventureEventController.finalizeEvent` do not reshape an event.
+  - There is no save on pause or exit. `autoSaveAsync` has no callers. ReloadJab and `DuelHeartbeat` write their own
+    files, not the save.
+  - Round 987's `giveRewards` code is not in 1.27. The save was 1.27-only (a new game that day, one build).
+  - **Open**: the player's last logged autosave (2080 KB) was written before the Draft was dealt, yet the next launch
+    loaded a 2078 KB `auto.sav` holding the event mid-final. No log line shows that save being written. forge.log is
+    buffered and loses its tail on a kill, so this may be a lost line. The new load-time line answers it next time.
+- **Test**: `InnEventRepairTest`, 7 tests. It covers the player's two shapes named in the log, packs read back from the
+  table and labeled in payout order, a generic booster when no pack is left, a champion paid from a three-slot table
+  (both remaining packs, the drafted deck and the coin at 3 wins), a lost tier rebuilt, missing tiers skipped, and a
+  null table. `AdventureEventData` cannot load without the card database (its static set filters), so the test runs
+  the same `InnEventRepair` calls `getDescription` and `giveRewards` make.
+  - Maven `-o -pl forge-gui-mobile -am test -Dtest=InnEventRepairTest`: exit 0, 7/7.
+  - Desktop jar `-o -pl forge-gui-mobile-dev -am package -DskipTests`: exit 0.
+- **Agent repro**: not in this commit. The agent window is queued behind rounds 993-995, and the repro needs this build packaged. Its result follows as "Round 996 (follow-up)".
+
 ## Round 995: the End Turn "twitch" - libGDX's text pool healed each turn, and the off-thread caller named (2026-11-09)
 
 A player, gnomedoom, on Discord: "End turn is twitching out on me", with a photo of the button's second line drawn

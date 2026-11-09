@@ -35,6 +35,22 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 996 - an Inn event's broken prize state repaired before it is read (logs-1109b P2-2)
+- `forge-gui-mobile/src/forge/adventure/data/AdventureEventData.java` (STOCK):
+  - New private `readObject` (calls `defaultReadObject()` first, so the save format and `serialVersionUID = 1L` are
+    unchanged) logs `[TFR-InnEvent] loaded with a broken reward state` when the loaded prize state is broken.
+  - New `repairRewardState(where)`, `usesRewardPacks()`, `shapeText()`, `regenerateRewardPacks()` and `packFallback(i)`
+    below `openingRandom`. `getDescription` and `giveRewards` call `repairRewardState` first.
+  - `getDescription`'s three Draft pack names and Sealed's three go through `InnEventRepair.packLabel(...)` instead of
+    `rewardPacks[i].getComment()`. The Draft line now lists packs 1 and 2 for 1+ wins and pack 0 for 0 wins, the order
+    they pay and the order Sealed already used.
+  - `giveRewards`: a null `rewardDeck` for Draft or Sealed becomes a copy of `registeredDeck`. The rewards loop runs
+    over `InnEventRepair.payingTiers(rewards, wins)` and skips a null pack, item list or reward list.
+  - The copy constructor (no callers) clones `rewards` null-safely and now copies `rewardPacks`.
+  - On a merge: if upstream reworks `giveRewards`, `getDescription` or the reward setup, keep the two
+    `repairRewardState` calls at the top and the null-safe loop. If upstream adds its own `readObject`, merge ours into it.
+- New TFR files (not stock): `util/InnEventRepair.java`, `test/.../InnEventRepairTest.java`.
+
 ### Round 995 - libGDX's glyph run pool healed each turn, off-GL-thread layouts named (logs-1109b P2-1)
 - `forge-gui-mobile/src/forge/screens/match/MatchController.java` (STOCK): `updateTurn`'s empty body calls
   `forge.util.GlyphPoolGuard.heal("turn start")`.

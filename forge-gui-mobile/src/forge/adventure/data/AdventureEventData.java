@@ -12,6 +12,7 @@ import forge.adventure.util.AdventureOverrides;
 import forge.adventure.util.CardUtil;
 import forge.adventure.util.Config;
 import forge.adventure.util.Current;
+import forge.adventure.util.InnEventRepair;
 import forge.adventure.util.Reward;
 import forge.adventure.util.SeededRolls;
 import forge.card.CardEdition;
@@ -89,7 +90,9 @@ public class AdventureEventData implements Serializable {
         participants = other.participants.clone();
         rounds = other.rounds;
         eventRules = other.eventRules;
-        rewards = other.rewards.clone();
+        // TFR round 996: null-safe, and the reward packs come along (stock left them null - getDescription's NPE)
+        rewards = other.rewards == null ? null : other.rewards.clone();
+        rewardPacks = other.rewardPacks == null ? null : other.rewardPacks.clone();
         eventOrigin = other.eventOrigin;
         sourceID = other.sourceID;
         eventSeed = other.eventSeed;
@@ -196,6 +199,110 @@ public class AdventureEventData implements Serializable {
         System.out.println("[TFR-Seed] Inn " + format + " " + what + " (" + cardBlockName + ", " + sourceID + ", event seed "
                 + (eventSeed != 0 ? eventSeed : "0 - built from the event") + "): seed " + seed);
         return new Random(seed);
+    }
+
+    /** TFR round 996 (notes/logs-1109b.md P2-2): a saved event whose prize state comes back broken is named in the log at
+     *  load, so the next player log shows whether the broken shape was on disk. Repaired where it is read, below. */
+    @Serial
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        try {
+            String broken = InnEventRepair.brokenShape(rewards, rewardPacks, usesRewardPacks());
+            if (broken != null && format != null)
+                System.out.println("[TFR-InnEvent] loaded with a broken reward state: " + broken + " (" + shapeText() + ")");
+        } catch (Throwable ignored) {
+            // a log line must never fail a load
+        }
+    }
+
+    /** Draft and Sealed read three reward packs; Jumpstart has none by design. */
+    private boolean usesRewardPacks() {
+        return format == AdventureEventController.EventFormat.Draft || format == AdventureEventController.EventFormat.Sealed;
+    }
+
+    private String shapeText() {
+        return "format=" + format + ", status=" + eventStatus + ", rewards.length=" + (rewards == null ? "null" : rewards.length)
+                + ", rewardPacks null=" + (rewardPacks == null) + ", wins=" + matchesWon + "-" + matchesLost
+                + ", block=" + cardBlockName + ", inn=" + sourceID + ", event seed=" + eventSeed;
+    }
+
+    /**
+     * TFR round 996 (notes/logs-1109b.md P2-2): a player's saved Inn Draft came back with no reward packs (the Inn's
+     * description threw an NPE) and then with a three-slot prize table (the champion's prize threw writing slot 3, and was
+     * never paid). No constructor builds either shape and the cause was not found, so the state is checked and repaired
+     * before it is read: the packs read back from the prize table (the constructors put the same decks there), else dealt
+     * again from the event's seed; the table grown to four slots; a lost tier rebuilt. Logs each repair.
+     * @return true when something was repaired
+     */
+    boolean repairRewardState(String where) {
+        if (format != AdventureEventController.EventFormat.Draft && format != AdventureEventController.EventFormat.Sealed
+                && format != AdventureEventController.EventFormat.Jumpstart)
+            return false;
+        String broken = InnEventRepair.brokenShape(rewards, rewardPacks, usesRewardPacks());
+        if (broken == null)
+            return false;
+        String shape = shapeText();
+        List<String> done = new ArrayList<>();
+        if (usesRewardPacks() && !InnEventRepair.packsWhole(rewardPacks)) {
+            Deck[] packs = InnEventRepair.packsFromTiers(rewards);
+            if (packs != null) {
+                done.add("reward packs read back from the prize table");
+            } else {
+                packs = regenerateRewardPacks();
+                done.add(packs != null ? "reward packs dealt again from the event seed"
+                        : "no reward packs - the text names a generic booster");
+            }
+            if (packs != null)
+                rewardPacks = packs;
+        }
+        AdventureEventReward[] grown = InnEventRepair.grown(rewards);
+        if (grown != rewards) {
+            done.add("prize table grown from " + (rewards == null ? "null" : rewards.length) + " to " + grown.length + " slots");
+            rewards = grown;
+        }
+        for (int i = 0; i < InnEventRepair.TIERS; i++) {
+            if (rewards[i] != null)
+                continue;
+            if (format == AdventureEventController.EventFormat.Jumpstart) {
+                AdventureEventReward[] kept = rewards;
+                setupJumpstartRewards();
+                AdventureEventReward stock = rewards[i];
+                rewards = kept;
+                rewards[i] = stock;
+            } else {
+                rewards[i] = InnEventRepair.packTier(i, rewardPacks,
+                        format == AdventureEventController.EventFormat.Sealed ? "Silver Challenge Coin" : "Challenge Coin");
+            }
+            done.add("prize tier " + i + " rebuilt");
+        }
+        System.out.println("[TFR-InnEvent] reward state repaired: " + String.join("; ", done) + " (" + where + "; was "
+                + broken + "; " + shape + ")");
+        return true;
+    }
+
+    /** Round 996: the three reward packs dealt again at this event's own seed, as a reload deals its draft packs; null
+     *  when the block cannot be read back. */
+    private Deck[] regenerateRewardPacks() {
+        if (getCardBlock() == null)
+            return null;
+        Random placeholder = MyRandom.getRandom();
+        try {
+            MyRandom.setRandom(openingRandom("reward packs"));
+            Deck[] packs = getRewardPacks(InnEventRepair.PACKS);
+            return InnEventRepair.packsWhole(packs) ? packs : null;
+        } catch (RuntimeException e) {
+            System.out.println("[TFR-InnEvent] reward packs could not be dealt again: " + e);
+            return null;
+        } finally {
+            MyRandom.setRandom(placeholder);
+        }
+    }
+
+    /** Round 996: the name a reward pack goes by in the description when the pack itself is gone. */
+    private String packFallback(int i) {
+        if (packConfiguration != null && packConfiguration.length > 0 && packConfiguration[i % packConfiguration.length] != null)
+            return packConfiguration[i % packConfiguration.length];
+        return cardBlockName;
     }
 
     public CardBlock getCardBlock() {
@@ -1093,6 +1200,13 @@ public class AdventureEventData implements Serializable {
         boolean firstAward = eventStatus != AdventureEventController.EventStatus.Awarded; // round 369
         int wins = matchesWon;
         Array<Reward> ret = new Array<>();
+        repairRewardState("prize"); // TFR round 996: a three-slot table threw writing slot 3 and the champion went unpaid
+        if (rewardDeck == null && registeredDeck != null && (format == AdventureEventController.EventFormat.Draft
+                || format == AdventureEventController.EventFormat.Sealed)) {
+            rewardDeck = new Deck(registeredDeck); // round 996: stripBasicLands below takes the lands back out
+            System.out.println("[TFR-InnEvent] reward state repaired: no reward deck - the registered deck pays instead ("
+                    + shapeText() + ")");
+        }
 
         //Todo: this should be automatic... "somehow"
 
@@ -1130,25 +1244,25 @@ public class AdventureEventData implements Serializable {
 
         //end todo
 
-        for (AdventureEventReward r : rewards) {
-            if (r.minWins > wins || r.maxWins < wins) {
-                continue;
-            }
-            for (Deck pack : r.cardRewards) {
+        // TFR round 996: a missing tier, pack or list is skipped rather than thrown on
+        for (AdventureEventReward r : InnEventRepair.payingTiers(rewards, wins)) {
+            for (Deck pack : r.cardRewards == null ? new Deck[0] : r.cardRewards) {
+                if (pack == null)
+                    continue;
                 RewardData data = new RewardData();
                 data.type = "cardPack";
                 data.count = 1;
                 data.cardPack = pack;
                 ret.addAll(data.generate(false, true, r.isNoSell));
             }
-            for (String item : (r.itemRewards)) {
+            for (String item : r.itemRewards == null ? new String[0] : r.itemRewards) {
                 RewardData data = new RewardData();
                 data.type = "item";
                 data.count = 1;
                 data.itemName = item;
                 ret.addAll(data.generate(false, true));
             }
-            for (RewardData data : r.rewards) {
+            for (RewardData data : r.rewards == null ? new RewardData[0] : r.rewards) {
                 ret.addAll(data.generate(false, true));
             }
         }
@@ -1247,6 +1361,7 @@ public class AdventureEventData implements Serializable {
 
     public String getDescription(PointOfInterestChanges changes) {
         Localizer localizer = Forge.getLocalizer();
+        repairRewardState("description"); // TFR round 996: a saved Draft with no reward packs threw an NPE here
         // TFR round 987: every entry fee through Ascendance.innFee (town price x Tournament Regular), as EventScene charges it.
         if (format == AdventureEventController.EventFormat.Draft) {
             description = localizer.getMessage("advEventTypeBoosterDraft");
@@ -1266,7 +1381,11 @@ public class AdventureEventData implements Serializable {
                     description += "\n";
                 }
             }
-            description += String.format("Prizes\nChampion: Keep drafted deck\n2+ round wins: Challenge Coin \n1+ round wins: %s Booster, %s Booster\n0 round wins: %s Booster", rewardPacks[0].getComment(), rewardPacks[1].getComment(), rewardPacks[2].getComment());
+            description += String.format("Prizes\nChampion: Keep drafted deck\n2+ round wins: Challenge Coin \n1+ round wins: %s Booster, %s Booster\n0 round wins: %s Booster",
+                    // TFR round 996: a missing pack names the event's set; and the packs in the order they pay, as Sealed
+                    // lists them (stock named pack 0 for 1+ wins and pack 2 for 0 wins)
+                    InnEventRepair.packLabel(rewardPacks, 1, packFallback(1)), InnEventRepair.packLabel(rewardPacks, 2, packFallback(2)),
+                    InnEventRepair.packLabel(rewardPacks, 0, packFallback(0)));
         } else if (format == AdventureEventController.EventFormat.Jumpstart) {
             description = "Event Type: Jumpstart\n";
             description += "Block: " + getCardBlock() + "\n";
@@ -1306,8 +1425,10 @@ public class AdventureEventData implements Serializable {
             description += "Prizes\n";
             description += localizer.getMessage("advSealedChampionPrize", packConfiguration.length);
             description += "2+ wins: Silver Challenge Coin\n";
-            description += String.format("1+ wins: %s Booster, %s Booster\n", rewardPacks[1].getComment(), rewardPacks[2].getComment());
-            description += String.format("0 wins: %s Booster", rewardPacks[0].getComment());
+            // TFR round 996: a missing pack names the event's set
+            description += String.format("1+ wins: %s Booster, %s Booster\n", InnEventRepair.packLabel(rewardPacks, 1, packFallback(1)),
+                    InnEventRepair.packLabel(rewardPacks, 2, packFallback(2)));
+            description += String.format("0 wins: %s Booster", InnEventRepair.packLabel(rewardPacks, 0, packFallback(0)));
         }
         return description;
     }
