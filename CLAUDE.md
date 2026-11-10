@@ -75,7 +75,7 @@ onto the GL thread).
 Engine = the 11.09 daily (round 994, upstream `7d0acc8aa92`; round 769's R1-R4 still
 keep TFR's synchronous auto save, eager shops, Inn events and place entry; bosses keep the player's AI setting through
 `bossAiFollowsSetting`); next merge from upstream after `7d0acc8aa92` (its first commit is `b3802f9255a`, #12773, hidden-zone ChangeZone in APNAP order); BASE_INSTALL is that daily, so packages need no
-`--allow-base-mismatch`. Next version: 1.28 / 12800 - round 1002 set it (`modVersion` 1.28 / 11.09, versionCode 12800, `RELEASE_NOTES_v1.28.md` with a "Clearer buttons" placeholder, GUIDE What's New 1.28, FAQ v1.28 `EDITED` {1, 3, 23}, a ready-for-the-tag STATE in `docs/tfr/releases.md`); its RC is next. Next free round: 1003 (995-1002 handed out). The agent profile's window is
+`--allow-base-mismatch`. Next version: 1.28 / 12800 - round 1002 set it (`modVersion` 1.28 / 11.09, versionCode 12800, `RELEASE_NOTES_v1.28.md` with a "Clearer buttons" placeholder, GUIDE What's New 1.28, FAQ v1.28 `EDITED` {1, 3, 23}, a ready-for-the-tag STATE in `docs/tfr/releases.md`); its RC (from `f1f97f4cf2c`, in `C:\CLAUDE\PROJECTS\TFR1\release\v1.28`) is built and tested, all pass - the publish session tags it. Next free round: 1003 (995-1002 handed out). The agent profile's window is
 1280x720 - at 3840x2160 it covered the screen, got minimized, and a minimized game stops (the bridge times out, shots
 come back 1x1). Agent games keep their own LOCALAPPDATA cache (round 860). Log sharing (round 698) posts to Discord
 through a webhook kept OUT of git in `C:\TFR\secrets\discord_log_webhook.txt` - never commit it; the packager and

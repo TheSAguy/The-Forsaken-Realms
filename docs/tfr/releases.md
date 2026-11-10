@@ -135,14 +135,22 @@ and the private project names were checked absent from the unpushed history and 
 packaged from the tag commit (`PACKAGE_OK.txt` verified). No itch.io upload by the session; the user posts the zip and
 APK. NOTHING is unreleased. Next version: 1.28 / 12800. Next merge from upstream after `1e8c35fca3e`.
 
-## STATE 2026-11-09: **v1.28 "Perks & Pointers" READY FOR THE TAG** (round 1002; the RC is built and tested next)
+## STATE 2026-11-09: **v1.28 "Perks & Pointers" READY FOR THE TAG** (round 1002; RC built and tested 17:07-17:51 PST)
 Rounds 981-1001 on top of v1.27. Engine = the 11.09 daily (upstream `7d0acc8aa92`, round 994) on the matching
 BASE_INSTALL. `modVersion` 1.28 / `modVersionDate` 11.09 (the RC's build day; reset it if the RC is built later),
-Android `tfr.version` 1.28 / versionCode 12800. Assets to come in `C:\CLAUDE\PROJECTS\TFR1\release\v1.28` (the round
-1002 follow-up fills in sizes and bytes):
-- `The-Forsaken-Realms-v1.28.zip` - MB;
-- `forsaken-realms-1.28-signed-aligned.apk` - MB (com.thesaguy.forsakenrealms, versionCode 12800, signer EE:60:39:25);
-- `assets.zip` - MB (one `mvn` run in `C:\TFR-build` via R:; carries `log_share.txt`).
+Android `tfr.version` 1.28 / versionCode 12800. Assets in `C:\CLAUDE\PROJECTS\TFR1\release\v1.28`, built from `f1f97f4cf2c`
+(round 1001's follow-up; the round 1002 follow-up after it is docs only):
+- `The-Forsaken-Realms-v1.28.zip` 519.1 MB (519,107,645 bytes; SHA-256 `db9ee65c4293...`);
+- `forsaken-realms-1.28-signed-aligned.apk` 16.0 MB (16,011,116 bytes; SHA-256 `6b53552eda13...`;
+  com.thesaguy.forsakenrealms, versionCode 12800, signer EE:60:39:25);
+- `assets.zip` 429.7 MB (429,743,025 bytes; SHA-256 `f0448230597f...`; build.txt pair 2026-11-10 01:07:55, one `mvn`
+  run in `C:\TFR-build` via R:; carries `log_share.txt`, no `pc_*.ogg`). Round 792's prompts ("430MB" / "16MB")
+  still fit, so unchanged.
+
+RC test (`C:\CLAUDE\PROJECTS\TFR1\notes\release-1.28-rc-checklist.md`): all pass - the desktop zip fresh (1.28 on
+screen, a new game, 5 duels at 50x, a tip, a shop, the hidden HUD in a dungeon, save/load, a 1.27 save, `errors=0`); the
+signed APK over 1.27 on LDPlayer (assets, 1.28 on screen, log sharing No, a new game, save/load); the Android 50x duel
+on a test-only autopilot build of the same commit (a human seat has no speed button).
 
 Notes = `RELEASE_NOTES_v1.28.md` (the user's text of 2026-11-09, title "The Forsaken Realms 1.28: Perks & Pointers",
 1.27's Android section; the "Clearer buttons" bullet waits for the user's text). GUIDE What's New 1.28 above "Coming

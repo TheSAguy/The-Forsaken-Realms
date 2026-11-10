@@ -14291,6 +14291,13 @@ the RC build and its test, waits for the main thread's "RC window open". Nothing
 - **Outside the repo:** `C:\CLAUDE\PROJECTS\TFR1\notes\release-1.28-posts.md` (the Discord announcement with the
   release link and the Export Logs ask; the replies to gnomedoom - End Turn, round 995 - and to fabbdf70 - the
   minimized-launch "freeze", round 990, and the Legends price, round 991).
+- **Follow-up: the RC** (2026-11-09 17:07-17:51 PST, from `f1f97f4cf2c`, the tree clean): Android `mvn` exit 0 in
+  4:52, desktop jar exit 0, packager `--zip --out release\v1.28\pkg` exit 0 (live untouched; the main thread packaged it
+  from the same commit). `The-Forsaken-Realms-v1.28.zip` 519,107,645, `forsaken-realms-1.28-signed-aligned.apk`
+  16,011,116 (12800, EE:60:39:25), `assets.zip` 429,743,025 (stamp pair 2026-11-10 01:07:55); sizes and hashes in
+  `docs/tfr/releases.md`. Tested per `C:\CLAUDE\PROJECTS\TFR1\notes\release-1.28-rc-checklist.md`, all pass: the
+  zip fresh on desktop (5 duels at 50x, `errors=0`, a 1.27 save loads), the signed APK over 1.27 on LDPlayer; the
+  Android 50x duel on a test-only autopilot build of the same commit, never committed.
 
 ## Round 1001: hover tips on the world map's tokens and the custom difficulty rows (2026-11-09)
 
