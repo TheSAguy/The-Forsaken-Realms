@@ -134,3 +134,18 @@ Notes = `RELEASE_NOTES_v1.27.md` (title "The Forsaken Realms v1.27 — Bounties 
 and the private project names were checked absent from the unpushed history and the tree before the push. Live was
 packaged from the tag commit (`PACKAGE_OK.txt` verified). No itch.io upload by the session; the user posts the zip and
 APK. NOTHING is unreleased. Next version: 1.28 / 12800. Next merge from upstream after `1e8c35fca3e`.
+
+## STATE 2026-11-09: **v1.28 "Perks & Pointers" READY FOR THE TAG** (round 1002; the RC is built and tested next)
+Rounds 981-1001 on top of v1.27. Engine = the 11.09 daily (upstream `7d0acc8aa92`, round 994) on the matching
+BASE_INSTALL. `modVersion` 1.28 / `modVersionDate` 11.09 (the RC's build day; reset it if the RC is built later),
+Android `tfr.version` 1.28 / versionCode 12800. Assets to come in `C:\CLAUDE\PROJECTS\TFR1\release\v1.28` (the round
+1002 follow-up fills in sizes and bytes):
+- `The-Forsaken-Realms-v1.28.zip` - MB;
+- `forsaken-realms-1.28-signed-aligned.apk` - MB (com.thesaguy.forsakenrealms, versionCode 12800, signer EE:60:39:25);
+- `assets.zip` - MB (one `mvn` run in `C:\TFR-build` via R:; carries `log_share.txt`).
+
+Notes = `RELEASE_NOTES_v1.28.md` (the user's text of 2026-11-09, title "The Forsaken Realms 1.28: Perks & Pointers",
+1.27's Android section; the "Clearer buttons" bullet waits for the user's text). GUIDE What's New 1.28 above "Coming
+from 1.26?". The Discord FAQ says v1.28 (`EDITED` {1, 3, 23}, nothing new; paste list `notes/faq-1.28-edits.md`;
+artifact v16 at release). Posts: `notes/release-1.28-posts.md`. The publish session tags, pushes, publishes and
+replaces this block with the RELEASED one.

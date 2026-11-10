@@ -1,15 +1,16 @@
 """The Discord FAQ: (topic, short label, message). Each message must stay under Discord's 2,000 characters."""
 
 # The released version the FAQ describes; build_page.py shows it in the page header. One line to change per release.
-FAQ_VERSION = "v1.27"
+FAQ_VERSION = "v1.28"
 
 # What this version changed, by message number: EDITED are edited in place in Discord, ADDED are new topics. Support
 # is always the last message: new topics go before it, and the user reposts Support at the end of the channel.
 # build_page.py tags them. Reset both at the next release.
 # 1.28 (round 980 reset them after 1.27; v1.27's own set was {1, 7, 9, 13}, none ADDED): round 986 edits 3 (the three
 # loot perks: Bounty Hunter, Legend Slayer, Treasure Seeker; "About 38 perks"); round 987 edits 3 again (the two town
-# perks: Tournament Regular, Guild Favorite; "About 40 perks").
-EDITED = {3}
+# perks: Tournament Regular, Guild Favorite; "About 40 perks"); round 1002 edits 1 (the header's version) and 23 (round
+# 994's loop breaker: the count starts over while you lose life, 300 at most).
+EDITED = {1, 3, 23}
 ADDED = set()
 
 M = []
@@ -458,7 +459,7 @@ M.append(("Achievements, enemy plates, loops and duel settings", "Achievements &
 **A:** Hold **Alt** (touch: the Units button; controller: R3). A plate over every enemy on screen shows its rank. Fought another rank of its kind? You see its deck colors too. Fought this exact rank? Also the life it would start with now, in orange when it's above normal.
 
 **Q: My duel is stuck in an endless loop. What now?**
-**A:** The AI can't repeat the same ability more than 25 times in a turn, and a trigger that comes back 25 times with nobody acting and nobody losing life ends the game in a draw. A combo that drains or burns runs to the end. So does a big batch of triggers resolving one by one, as long as it's under about 1,000 at once: one that size (200 tokens with five "gain life when a creature enters" cards out) is still a draw. The AI accepts the duel menu's **Offer Draw** while a trigger loop is running (10+ repeats) or once it has had to stop repeating one of its own abilities that turn - never in an ordinary duel. A draw is nothing won or lost: no ante, no gold, no notoriety.
+**A:** The AI can't repeat the same ability more than 25 times in a turn while you lose no life (300 at most), and a trigger that comes back 25 times with nobody acting and nobody losing life ends the game in a draw. A combo that drains or burns runs to the end. So does a big batch of triggers resolving one by one, as long as it's under about 1,000 at once: one that size (200 tokens with five "gain life when a creature enters" cards out) is still a draw. The AI accepts the duel menu's **Offer Draw** while a trigger loop is running (10+ repeats) or once it has had to stop repeating one of its own abilities that turn - never in an ordinary duel. A draw is nothing won or lost: no ante, no gold, no notoriety.
 
 **Q: Which duel settings are worth knowing?**
 - **Show land drops in duels** (off by default): lands played this turn out of lands allowed, under each player's counts.

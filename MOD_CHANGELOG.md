@@ -14264,6 +14264,34 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 1002: the version is 1.28, with its release notes, guide, FAQ and posts (2026-11-09)
+
+Part 1 of the 1.28 release the user called ("I want everything in before 1.28"; the notes: "Let's just do this:"; then
+"We're good to release once you've done your testing"), written while the tooltip rounds 1000 and 1001 finish. Part 2,
+the RC build and its test, waits for the main thread's "RC window open". Nothing is built, packaged, tagged or pushed.
+
+- **Version** (as round 979 did): the plane's `config.json` `modVersion` 1.28 and `modVersionDate` 11.09 (the RC's
+  build day; the follow-up resets it if the RC is built later); `forge-gui-android/pom.xml` `<tfr.version>` 1.28 and
+  `<manifestVersionCode>` 12800. A grep for `1.27`/`12700` found no other live spot.
+- **`RELEASE_NOTES_v1.28.md`**: the user's approved text word for word
+  (`C:\CLAUDE\PROJECTS\TFR1\notes\release-1.28-notes-draft.md`), title "The Forsaken Realms 1.28: Perks & Pointers",
+  plus 1.27's Android section with the 1.28 APK name. The empty "Clearer buttons" bullet carries a placeholder until the
+  user's text arrives. The line check against rounds 981-1001 went to the main thread (nothing reworded here).
+- **GUIDE:** "What's New in 1.28" above 1.27's list (now "Coming from 1.26?"), linked to Ascendance, the Bounty,
+  legends, treasures, Inn tournaments and quests; it lists round 992's labels under "Clearer buttons" and marks the
+  tooltips PC-only (mouse only, round 993). Also the 11.09 build line and the footer v1.28 as of 2026-11-09.
+  `GUIDE.html` regenerated (`guide_html.py --check` OK).
+- **Discord FAQ** (`dev-tools/discord_faq/messages.py`): `FAQ_VERSION` "v1.28"; message 23's loop answer takes round
+  994's rule (the AI's 25-use limit counts while you lose no life, 300 at most; 1,988 characters). `EDITED` = {1, 3, 23}
+  (3 from rounds 986-987); nothing ADDED, so Support stays last. Paste list
+  `C:\CLAUDE\PROJECTS\TFR1\notes\faq-1.28-edits.md`, copy page `C:\CLAUDE\PROJECTS\TFR1\notes\faq-1.28.html`; the
+  artifact is republished at release (v16).
+- **Ledger:** `docs/tfr/releases.md` gets a v1.28 "ready for the tag" STATE block; the follow-up fills in the asset
+  sizes, and the publish session replaces it with the released block.
+- **Outside the repo:** `C:\CLAUDE\PROJECTS\TFR1\notes\release-1.28-posts.md` (the Discord announcement with the
+  release link and the Export Logs ask; the replies to gnomedoom - End Turn, round 995 - and to fabbdf70 - the
+  minimized-launch "freeze", round 990, and the Legends price, round 991).
+
 ## Round 999: hover tips in towns, shops, the Spellsmith, the Shard Trader and the Inn (2026-11-09)
 
 The tooltip audit's round B (`C:\CLAUDE\PROJECTS\TFR1\notes\tooltips\tooltip-audit.md`, spots 16-22 and 37-46). The

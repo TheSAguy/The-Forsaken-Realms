@@ -11,7 +11,7 @@ are in the [FAQ](#faq) at the end.
 ## Table of Contents
 
 1. [Introduction](#introduction)
-2. [What's New in 1.27](#whats-new-in-127)
+2. [What's New in 1.28](#whats-new-in-128)
 3. [Starting Out](#starting-out)
 4. [Changes from the Base Game](#changes-from-the-base-game)
 5. [Early Game Advice](#early-game-advice)
@@ -41,10 +41,34 @@ the early game is meant to be a fight.
 *Windows, macOS and Linux launchers all ship (Windows is the tested one), and every release includes an Android
 version - playable, but it gets far less testing than the desktop builds.*
 
-## What's New in 1.27
+## What's New in 1.28
 
-The short version for returning players. Each item links to where the guide covers it in full. Everything in 1.27 works
+The short version for returning players. Each item links to where the guide covers it in full. Everything in 1.28 works
 on your current save.
+
+- **Five new Ascendance perks:** Bounty Hunter (a bigger [Bounty](#enemies-that-adapt-to-you)), Legend Slayer (your
+  first win over each [legend](#legends) pays its whole card list and a mythic), Treasure Seeker (more map pieces, and
+  [treasures](#lost-treasure-hunts) pay twice), Tournament Regular (cheaper [Inn tournaments](#inn-tournaments), and a
+  3-0 run pays a rare) and Guild Favorite (side [quests](#quests) pay more and last longer). Every perk icon is
+  repainted. See [Ascendance - Your Level](#ascendance---your-level).
+- **Tooltips (PC):** hover over a button or HUD item for a short explanation - the world map, New Game, Settings,
+  towns, shops, the Inn, Ascendance, quests, the journal and map tokens. Settings > Show tooltips: Auto shows them on
+  Easy and Normal and hides them on Hard and Insane.
+- **Clearer buttons:** Repair shows its price, deck slots show "23/40" (red while under the minimum), the Armory's
+  Re-roll says how many days are left, the Job Board shows your reputation and buildings, Abandon Quest names the
+  reputation it costs, and Speed-Up shows "50x" while it is on.
+- **Caves and dungeons start with the HUD hidden:** double-tap your avatar to show it. The world map keeps your own
+  choice.
+- **Old-set boosters:** Legends, Alpha and Beta packs are priced like a rare old set (2,000 to 3,000 before your town's
+  prices) instead of about 59,000, and no pack can be sold back for a profit.
+- **Fixes:** the "twitching" End Turn caption, an Inn Draft whose prize was never paid, blank map dialogs after a
+  minimized launch (the "quest freeze"), a waiting Capitol attack lost at a save, a deck under the minimum (it now warns
+  and sits out its duels), F4 after taking loot while chased, save pictures showing the menu, and several Android
+  download, memory and exit fixes.
+- **A smarter AI:** enemies play their Incubate, Empower and Recruit cards, a combo that is killing you finishes its
+  turn, and the engine moves to Forge's 11.09 build.
+
+Coming from 1.26? This is what 1.27 added. Everything in 1.27 works on your current save.
 
 - **The Bounty:** beat an enemy that started with Notoriety Walls, its own Notoriety card, streak Wastes or help
   tokens and the win pays up to 30% more gold and resources. Hold Alt to see it on the enemy's plate. See
@@ -69,7 +93,7 @@ on your current save.
 - **Also:** big token boards no longer run phones out of memory, long sessions stop piling up memory, an Android crash
   outside a duel closes with a message instead of freezing, Settings' Restart saves first, a declined Job Board offer
   no longer resets its dungeon, the chest's traveling artificer never copies a banned card such as Sol Ring, the clean
-  font reaches checkboxes, lists and dialog titles, and the engine moves to Forge's 11.05 build.
+  font reaches checkboxes, lists and dialog titles, and the engine moved to Forge's 11.05 build.
 
 Coming from 1.25? This is what 1.26 added. The Doppelganger and the starting-set choice need a new game; everything
 else works on your current save.
@@ -2404,7 +2428,7 @@ game built on the Forge rules engine.
 ### How do I update the game to the latest version of Forge?
 
 You can't, and you don't need to. Each release is pinned to one tested Forge build, named in its release
-notes - this version runs on Forge 2.0.16 (the 11.05 build). Forge's own updater is switched off on purpose,
+notes - this version runs on Forge 2.0.16 (the 11.09 build). Forge's own updater is switched off on purpose,
 because a different engine underneath can break your world. Engine updates come to you with new Forsaken
 Realms releases.
 
@@ -2432,7 +2456,7 @@ session (grab it before restarting, or pick the matching dated file). Screenshot
 
 ---
 
-*This guide covers The Forsaken Realms v1.27, as of 2026-11-05. See `MOD_CHANGELOG.md` in the
+*This guide covers The Forsaken Realms v1.28, as of 2026-11-09. See `MOD_CHANGELOG.md` in the
 repository for the full history of how the game got here, if you're curious.*
 
 ## Support & Community
