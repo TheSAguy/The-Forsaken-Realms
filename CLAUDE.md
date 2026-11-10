@@ -53,7 +53,8 @@ finish; `EffectData`'s UID and `IncubateAi` kept ours). Round 995 (the End Turn 
 packs, then a three-slot prize table, crashed the Inn and left the champion unpaid. Stock `AdventureEventData` now
 repairs it before `getDescription` and `giveRewards` read it: packs read back from the table, else dealt again at the
 event's seed; the table grown to four slots; lost tiers rebuilt; a null tier or pack skipped. New `util/InnEventRepair`
-+ `InnEventRepairTest`, `[TFR-InnEvent]`. Cause not found; the agent repro is still to run). Round 997 (seven small fixes from the log reviews: the Android
++ `InnEventRepairTest`, `[TFR-InnEvent]`. Cause not found; the agent repro (a kill mid-final, a reload, a collect) did not reproduce it: an Inn event is saved
+only when a map is entered mid-event, and it loads back whole). Round 997 (seven small fixes from the log reviews: the Android
 asset download has 15 s/30 s timeouts and a `[TFR-Assets] N%` line every 25%; a pause before the assets exist no longer
 prints `[TFR-Config] FATAL`; `Forge.dispose` runs once - Android disposed twice at an exit, `[TFR-Exit]`; the console's
 `teleport to poi` (the capital runes) keeps round 971's result window and refunds the rune, `leave` was round 982's;

@@ -14455,7 +14455,30 @@ champion's prize was never paid.
   the same `InnEventRepair` calls `getDescription` and `giveRewards` make.
   - Maven `-o -pl forge-gui-mobile -am test -Dtest=InnEventRepairTest`: exit 0, 7/7.
   - Desktop jar `-o -pl forge-gui-mobile-dev -am package -DskipTests`: exit 0.
-- **Agent repro**: not in this commit. The agent window is queued behind rounds 993-995, and the repro needs this build packaged. Its result follows as "Round 996 (follow-up)".
+- **Agent repro (Round 996 follow-up): not reproduced.** Run on a test copy (`agent-r996`, profile copied) with the
+  `067f7a50445` jar and duels at 50x. A scratch console command `r996 autodraft [strong]` was compiled ahead of the jar
+  only, never committed. It drafts the player's picks the way the AI drafts (CardRanker), builds the deck
+  (BoosterDeckBuilder), then does what `completeDraft` does; `strong` registers 24 Lightning Bolt and 16 Mountain so the
+  bracket can be won, and the drafted deck stays the prize. The test town was Eloren Vale, a wasteland town marked
+  restored with `set mapflag townRestored 1`, since ring cities have no Inn.
+  - **Run 1** (M10 Draft): won rounds 1 and 2, then killed the game on turn 2 of the final. Continue loaded the last
+    autosave, written when the town was entered before the event was set up. The event and its 3000 gold entry were
+    gone, and the Inn dealt a fresh, whole IKO Draft. No save is written during an Inn event: the autosave fires on
+    entering a map, not on leaving one, and not at a round's start.
+  - **Run 2** (IKO Draft): the player lost round 1 (the Bolt deck too) and the AI rounds ran. The player left the town
+    and walked back in, so the autosave (16:17:13) held the event mid-bracket. The game was killed at 16:17:27,
+    relaunched and continued. The Inn showed the event intact at round 3 with its standings, and the description
+    rendered. Round 3 ran, and Collect Rewards paid 0 wins' one pack.
+  - **Neither run logged** `[TFR-InnEvent] loaded with a broken reward state` or `reward state repaired`, and no
+    session threw an exception. A save written mid-event loads back whole.
+  - **What this narrows**: the player's save could only have held their event mid-final if it was written mid-event:
+    a map entered between rounds (as in run 2) or a manual save. That save's line was lost with the log's tail on the
+    kill. The shape (no packs, three slots) is still unexplained, and the load-time line will show it next time.
+  - **Not covered**: a champion's collect after a reload (the player lost round 1 in run 2). The guard's paths for the
+    broken shape are covered by `InnEventRepairTest`, not by the game.
+  - **Shots** (`notes/r996/`): `04-final-in-progress` (run 1, the killed final); `06-after-relaunch-inn` (run 1, the
+    event gone after the reload); `08-run2-relaunched-event-intact`; `09-run2-collected-after-reload`;
+    `05-baseline-0wins-rewards` (a 0-win collect before any reload).
 
 ## Round 995: the End Turn "twitch" - libGDX's text pool healed each turn, and the off-thread caller named (2026-11-09)
 
