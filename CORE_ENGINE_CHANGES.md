@@ -35,6 +35,14 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 1011 - long names fit the VS screen (util/VsNameFit)
+- `forge-gui-mobile/src/forge/screens/TransitionScreen.java` (STOCK, already TFR-edited): in `drawBackground`'s VS
+  branch, the landscape and portrait name draws (`layout.setText` + `g.drawText` of `playerAvatarName` and
+  `enemyDisplayName`) are replaced by `VsNameFit.fit(...)` + `.draw(...)`, and both landscape record lines subtract
+  `recordDrop` (the extra height of a two-line name). One import. A name that fits draws exactly as stock. On a merge:
+  if upstream reworks the VS layout, keep its positions and re-apply the fit around its name draws.
+- New file: `forge-gui-mobile/src/forge/adventure/util/VsNameFit.java`.
+
 ### Round 1008 - the Android update waits on return from the installer instead of exiting (logs-1110b P3-21)
 - `forge-gui-mobile/src/forge/assets/AssetsDownloader.java` (STOCK, already TFR-edited): in `checkForUpdates`, the
   stock `openFile(installer)` + `Forge.isMobileAdventureMode = Forge.advStartup` + `Forge.exitAnimation(false)` +

@@ -13,6 +13,7 @@ import forge.adventure.scene.ArenaScene;
 import forge.adventure.util.Config;
 import forge.adventure.util.Controls;
 import forge.adventure.util.Current;
+import forge.adventure.util.VsNameFit;
 import forge.animation.ForgeAnimation;
 import forge.assets.FSkin;
 import forge.assets.FSkinImage;
@@ -284,18 +285,24 @@ public class TransitionScreen extends FContainer {
                     float playerAvatarX = (screenW / 4 - scale / 2) * percentage;
                     float playerAvatarY = centerY - scale / 2;
                     g.drawImage(playerAvatar, playerAvatarX, playerAvatarY, scale, scale);
-                    layout.setText(font, playerAvatarName);
-                    g.drawText(playerAvatarName, font, screenW / 4 - layout.width / 2, playerAvatarY - layout.height, Color.WHITE, percentage);
+                    // TFR round 1011: each name fits its half of the screen (VsNameFit: smaller, or two lines); the
+                    // records drop below a two-line name. A name that fits draws exactly as before.
+                    float capB = font.getCapHeight();
+                    float namePad = screenW * 0.02f;
+                    float nameRoom = playerAvatarY - capB * 2.5f - namePad;
+                    VsNameFit p1Name = VsNameFit.fit(font, layout, playerAvatarName, screenW / 2 - namePad * 2, nameRoom);
+                    VsNameFit p2Name = VsNameFit.fit(font, layout, enemyDisplayName, screenW / 2 - namePad * 2, nameRoom);
+                    float recordDrop = Math.max(p1Name.extraBelow(), p2Name.extraBelow());
+                    p1Name.draw(g, font, layout, screenW / 4, playerAvatarY - capB, Color.WHITE, percentage);
                     layout.setText(font, p1Record);
-                    g.drawText(p1Record, font, screenW / 4 - layout.width / 2, playerAvatarY - layout.height * 2.5f, Color.WHITE, percentage);
+                    g.drawText(p1Record, font, screenW / 4 - layout.width / 2, playerAvatarY - layout.height * 2.5f - recordDrop, Color.WHITE, percentage);
                     //enemy
                     float enemyAvatarX = screenW - screenW / 4 - (scale / 2 * percentage);
                     float enemyAvatarY = centerY - scale / 2;
                     g.drawImage(enemyAvatar, enemyAvatarX, enemyAvatarY, scale, scale);
-                    layout.setText(font, enemyDisplayName);
-                    g.drawText(enemyDisplayName, font, screenW - screenW / 4 - layout.width / 2, enemyAvatarY - layout.height, Color.WHITE, percentage);
+                    p2Name.draw(g, font, layout, screenW - screenW / 4, enemyAvatarY - capB, Color.WHITE, percentage);
                     layout.setText(font, p2Record);
-                    g.drawText(p2Record, font, screenW - screenW / 4 - layout.width / 2, enemyAvatarY - layout.height * 2.5f, Color.WHITE, percentage);
+                    g.drawText(p2Record, font, screenW - screenW / 4 - layout.width / 2, enemyAvatarY - layout.height * 2.5f - recordDrop, Color.WHITE, percentage);
                     //vs
                     float vsScale = (screenW / 3.2f);
                     g.drawHueShift(vsTexture, centerX - vsScale / 2, centerY - vsScale / 2, vsScale, vsScale, percentage * 4);
@@ -312,10 +319,17 @@ public class TransitionScreen extends FContainer {
                     float vsScale = (screenW / 3.2f);
                     g.drawHueShift(vsTexture, centerY - vsScale / 2, centerX - vsScale / 2, vsScale, vsScale, percentage * 4);
                     //names
-                    layout.setText(font, enemyDisplayName);
-                    g.drawText(enemyDisplayName, font, centerY - layout.width / 2, screenW - scale / 4, Color.WHITE, percentage);
-                    layout.setText(font, playerAvatarName);
-                    g.drawText(playerAvatarName, font, centerY - layout.width / 2, 0 + scale / 4, Color.WHITE, percentage);
+                    // TFR round 1011: each name fits the screen's width (VsNameFit). A one-line name keeps its top; a
+                    // two-line one keeps the one-line bottom and grows up - to the screen's top for the enemy, to the
+                    // bottom of the player's portrait for the player.
+                    float capB = font.getCapHeight();
+                    float nameW = screenH * 0.92f;
+                    float enemyTop = screenW - scale / 4, enemyBottom = enemyTop - capB;
+                    VsNameFit p2Name = VsNameFit.fit(font, layout, enemyDisplayName, nameW, screenW * 0.99f - enemyBottom);
+                    p2Name.draw(g, font, layout, centerY, Math.max(enemyTop, enemyBottom + p2Name.blockHeight()), Color.WHITE, percentage);
+                    float playerTop = scale / 4, playerBottom = playerTop - capB;
+                    VsNameFit p1Name = VsNameFit.fit(font, layout, playerAvatarName, nameW, scale / 3 - screenW * 0.005f - playerBottom);
+                    p1Name.draw(g, font, layout, centerY, Math.max(playerTop, playerBottom + p1Name.blockHeight()), Color.WHITE, percentage);
                 }
                 //reset bitmapfont
                 Controls.getBitmapFont("default");

@@ -14264,6 +14264,43 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 1011: long enemy names fit the VS screen (2026-11-10)
+
+The user: "Yes, fix it", of an Art sub-thread's 1280x720 shot where "Archangel of the Gilded Dawn (Archmage)" ran off
+the right edge of the VS screen before a duel as "Archangel of the Gilded Dawn (Arc".
+
+- **The cause:** stock `TransitionScreen` draws both names with one fixed font scale (`10 / aspect`), centered under
+  each portrait, with no width check. At 1280x720 half the window holds about 24 characters; at 1920x1080 about 36, so
+  the bug only showed at 1280. Round 135's rank suffix ("(Archmage)", round 707's "(Archmage Boss)") is TFR's, but the
+  overflow is stock: even "Goblin Worker (Apprentice)" reached the edge. In portrait (540x960) the 41-character names
+  overflowed both sides.
+- **The fix:** new `forge-gui-mobile/src/forge/adventure/util/VsNameFit.java` fits each name to its space:
+  - A name that fits draws exactly as before (same size, same place).
+  - One that needs at most a quarter off shrinks on one line.
+  - Longer ones go on two lines, split before the rank "(...)" when that split is within 1.3x of the most even split,
+    else at the most even space, and shrink until the wider line fits the width and both lines fit the height. Whichever
+    of one line or two draws bigger wins. Names are never cut.
+  - Landscape: each name gets its half of the screen less a 2% pad on each side; under a two-line name both "W - L"
+    records drop by the extra height (the same for both, so they stay level) and stay above the bottom edge.
+  - Portrait: 92% of the width; a two-line name keeps the one-line bottom and grows up (the enemy to the screen's top,
+    the player to the bottom of their portrait).
+- **Longest names in `The Forsaken Realms/world/enemies.json`:** "Seraph of the Burning Brand (Archmage Boss)" (43
+  characters), "Thought Invoker of Shandalar (Apprentice)" (41), Walter, Arzakon (41). Every one now fits.
+- **Log:** `[TFR-VsName] "<name>": 2 lines at 70% (1148 px into 497 px, 90 px tall)` once per name and size, only when
+  the name did not fit.
+- **Files:** `forge-gui-mobile/src/forge/screens/TransitionScreen.java` (STOCK; `CORE_ENGINE_CHANGES.md`),
+  `forge-gui-mobile/src/forge/adventure/util/VsNameFit.java` (new). No data change, no save change.
+- **Checked:** Maven `-o -q -pl forge-gui-mobile -am compile -DskipTests`: exit 0. Agent game (cheats, the two classes
+  compiled against the agent jar and put ahead of it, save slot 4, nothing saved, every duel settled at 50x), shots in
+  `C:\CLAUDE\PROJECTS\TFR1\notes\r1011\` (`before\`, `after\`; `L_` 1280x720, `P_` 540x960; side by side in
+  `compare_landscape.png` and `compare_portrait.png`):
+  - Seraph of the Burning Brand (Archmage Boss): landscape and portrait 2 lines at 70%, the records below.
+  - Thought Invoker of Shandalar (Apprentice): 2 lines at 68%.
+  - Goblin Worker (Apprentice), the short name: portrait 1 line at 76%; landscape 1 line, just inside the edge.
+  - The player's "Pictal" is unchanged in every shot.
+- **Not checked in the game:** 1920x1080 (names that fit there take the unchanged path), and an Inn tournament's VS
+  screen (the same drawing code).
+
 ## Round 1010: ten more round-179 enemies get real animation loops (2026-11-10)
 
 The user: "Yes, batch them", then "Yes, install all 10". This is an Art main thread round, the batch after round 1009's
