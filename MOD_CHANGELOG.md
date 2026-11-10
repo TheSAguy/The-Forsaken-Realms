@@ -14264,6 +14264,29 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 1009: the Talonborn Harpy's animations are real loops (2026-11-10)
+
+The user: "Can you look at the animation for this creature. I think it might be off", then "Yes, install A". This is
+an Art main thread round. The art is commit 6cdc9e4fb84.
+
+- **The bug:** round 179 imported `Harpy-sprite-sheet-full.png`, and that source is a collection of separate poses
+  of one 3D harpy, not animation cycles. The importer took source row 1 as Idle, row 2 as Walk and row 3 as Attack.
+  - So each loop jumped between unrelated poses: the facing and camera angle changed every frame.
+  - Walk frames 5 and 6 tumbled upside down.
+- **The fix:** only `sprites/enemy/tfr/talonborn_harpy.png` changes. The atlas, the 131x162 cells, the frame counts
+  (5/6/6), the 0.1706 scale and the Avatar region are unchanged.
+  - The frames are re-cut from the same source. Every frame faces right, uses one 0.244 downscale and is anchored on
+    the torso.
+  - **Idle** is a hover flap. **Walk** is a full wing stroke: up, back, level, down, down, recover. **Attack** is a
+    wind-up with the talons raised, a lunge held for 2 frames, a reach, then recovery.
+- **Avatar:** the region is pixel-identical, and `bake_avatars.py --audit` reports 0 problems. No bake output changed.
+- **CREDITS:** no change, since the source is the same.
+- **Previews and build scripts:** `C:\CLAUDE\PROJECTS\ART\notes\tfr1_harpy_anim\` (`step8_build.py` writes the
+  sheet).
+- **Found, not fixed:** 10 other round-179 imports are pose collections too. They are listed in
+  `C:\CLAUDE\PROJECTS\ART\notes\tfr1_harpy_anim\scan\scan_round179.txt`. Mawjaw Drake, Furhorn Wyvern,
+  Overlord of Black Pinions, Astral Wyrm and Inferno Drake also ship Idle and Walk as the same frames.
+
 ## Round 1008: the Android update no longer quits when the player comes back from the installer (2026-11-10)
 
 The user: "Yes, fix it", approving `C:\CLAUDE\PROJECTS\TFR1\notes\logs-1110b.md` P3-21 (the cause behind P3-19's
