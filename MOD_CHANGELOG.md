@@ -14292,6 +14292,46 @@ the RC build and its test, waits for the main thread's "RC window open". Nothing
   release link and the Export Logs ask; the replies to gnomedoom - End Turn, round 995 - and to fabbdf70 - the
   minimized-launch "freeze", round 990, and the Legends price, round 991).
 
+## Round 1000: hover tips on Ascendance, the quest log, the journal, the character sheet, standings, inventory, research (2026-11-09)
+
+The tooltip audit's round C (`C:\CLAUDE\PROJECTS\TFR1\notes\tooltips\tooltip-audit.md`, spots 23-28 and 47-52, with
+some low ones that had room). Round 993's system and setting are unchanged.
+
+- **New `util/TfrScreenTips`**, round 999's pattern: one call per screen, every text a `tips.json` key.
+- **Ascendance (map dialogs):** the status dialog's Power row (where Power comes from, with `{asc.bossFactor}` and
+  `{asc.legendFactor}`), its main items row (which slots count, more as you level) and its companions row; the
+  level-up's Re-roll (its live cost; once per level, or the Gambler's count). `AscendanceUI.addRow` returns its label.
+  New `TfrTips.MAP_DIALOG` scene: the world or a town map with a dialog up (the HUD's null scene stands down under a
+  dialog). The first agent pass registered the status rows against the scene showing at the time and missed them.
+- **New fills in `TfrTips.number`:** `{asc.FIELD}` is any `ascendance.json` field of the running game
+  (`Ascendance.data()`, reflection, as `{tuning.FIELD}`); `{streakWins}` is the difficulty's win-streak count
+  (`TuningData.winStreakWinsFor`).
+- **The quest log:** Abandon (counts as failing - round 992's confirm names the cost), Track, a quest's name while it
+  shows a time limit (side quests fail, story quests never expire), and a roaming legend's row.
+- **The journal:** an entry's streak pip (the wins in a row it took on this difficulty, the Wastes it now starts with),
+  the Bronze Coin it holds, and each land filter pip.
+- **The character sheet:** the Notoriety line (+1 a win, `notorietyLossPenalty` a loss, a level every
+  `notorietyWinsPerLevel`: Walls, and a Bounty; no tip where the line is blank) and the achievements/records toggle
+  (its tip follows the view).
+- **World standings:** each color's Status cell - the card-shop price change and the attack weight, read live from
+  `ColorReputation.getShopPriceMultiplier`/`getPlayerTownAttackWeight` for that color ("as often as usual" at x1, not
+  "x1 as often"), plus a line for Partner (the
+  free Inn life) and War (barred towns, tolls, no Inn heal).
+- **Inventory:** the treasure maps and gear sets buttons, registered in `enter()`: the scene is built before the
+  plane's config loads, so a constructor call finds tips off. **Research Lab:** the found-card window's Sell, Sacrifice
+  (`researchSacrificeFactor`) and Sell all over `KEEP_COPIES`; the "Hide untouched" box (no tip on an old save's "Hide
+  partial").
+- **Left out:** the perk choices print their own numbers (the audit's call); Inventory Repair has round 992's label;
+  Inventory Sell and the Research button are low and not added.
+- **Test:** `TfrTipsTest` 9 -> 11: `round1000KeysExist`, `ascendanceFillsExist` (every `{asc.FIELD}` in `tips.json`
+  is a real `AscendanceData` field). Maven `-o -pl forge-gui-mobile -am test -Dtest=TfrTipsTest,TfrLabelsTest`: exit
+  0, 13/13.
+- **Agent-game shots** (`C:\CLAUDE\PROJECTS\TFR1\notes\r1000\`, forced hover): the level-up Re-roll, the status
+  dialog's Power and main items rows, Track, Notoriety, a journal land pip, a Neutral standings cell. Every box is whole.
+- **Checked by code only:** the streak pip and Bronze Coin (no streak or coin in the test save), a timed side quest,
+  legends, the inventory buttons (no map piece or gear set yet, so they are hidden), the Research Lab window, the
+  achievements toggle (not on this layout).
+
 ## Round 999: hover tips in towns, shops, the Spellsmith, the Shard Trader and the Inn (2026-11-09)
 
 The tooltip audit's round B (`C:\CLAUDE\PROJECTS\TFR1\notes\tooltips\tooltip-audit.md`, spots 16-22 and 37-46). The

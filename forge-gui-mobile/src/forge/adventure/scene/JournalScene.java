@@ -32,6 +32,7 @@ import forge.adventure.stage.MapStage;
 import forge.adventure.util.Config;
 import forge.adventure.util.Controls;
 import forge.adventure.util.Current;
+import forge.adventure.util.TfrScreenTips;
 import forge.adventure.util.EnemyAvatars;
 import forge.adventure.util.Paths;
 import forge.adventure.util.RealmJournal;
@@ -403,6 +404,7 @@ public class JournalScene extends UIScene {
                 rebuild();
             }
         });
+        TfrScreenTips.journalLand(this, button, name); // round 1000
         return button;
     }
 
@@ -456,11 +458,15 @@ public class JournalScene extends UIScene {
         text.add(facts(e)).left();
         row.add(text).left().expandX().fillX();
         Actor streak = streakMark(e);
-        if (streak != null)
+        if (streak != null) {
             row.add(streak).padRight(5f);
+            TfrScreenTips.journalStreak(this, streak, Current.player().winStreakCards(e.name).length); // round 1000
+        }
         Actor coin = coin(e);
-        if (coin != null)
+        if (coin != null) {
             row.add(coin).size(10f).padRight(2f);
+            TfrScreenTips.journalCoin(this, coin); // round 1000
+        }
         row.add(label("[%70]" + e.wins + " - " + e.losses)).right().padRight(landscape ? 6f : 8f);
         row.addListener(new ClickListener() {
             @Override

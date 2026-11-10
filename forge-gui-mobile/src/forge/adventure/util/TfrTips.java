@@ -229,6 +229,11 @@ public final class TfrTips {
                 Object v = f.get(t);
                 return v instanceof Number ? num(((Number) v).doubleValue()) : String.valueOf(v);
             }
+            if (name.startsWith("asc.")) { // round 1000: an ascendance.json (AscendanceData) field of the running game
+                java.lang.reflect.Field f = forge.adventure.data.AscendanceData.class.getField(name.substring(4));
+                Object v = f.get(Ascendance.data());
+                return v instanceof Number ? num(((Number) v).doubleValue()) : String.valueOf(v);
+            }
             String diff = difficultyNow() == null ? "Normal" : difficultyNow();
             switch (name) {
                 case "difficulty":
@@ -251,6 +256,8 @@ public final class TfrTips {
                     return num(ReloadJab.HONEST_PER_FORGIVE);
                 case "reloadCap":
                     return num(ReloadJab.MAX_LIFE_BONUS);
+                case "streakWins": // round 1000: the wins in a row the difficulty's streak needs
+                    return num(t.winStreakWinsFor(diff));
                 default:
                     return null;
             }
@@ -349,7 +356,13 @@ public final class TfrTips {
         return false;
     }
 
+    /** Round 1000: a region's scene for a map dialog's widget (the Ascendance dialogs) - the world or a town map, while
+     *  the dialog holds the input (the HUD's null scene stands down then). */
+    public static final Object MAP_DIALOG = new Object();
+
     private static boolean sceneShows(Region r, Object scene) {
+        if (r.scene == MAP_DIALOG)
+            return scene instanceof forge.adventure.scene.GameScene || scene instanceof forge.adventure.scene.TileMapScene;
         if (r.scene != null)
             return r.scene == scene;
         // the HUD's regions: the world map or a town map, and no map dialog (an NPC, a pickup) holding the input

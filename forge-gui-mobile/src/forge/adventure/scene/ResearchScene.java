@@ -128,6 +128,8 @@ public class ResearchScene extends UIScene {
         });
         hidePartialCheckBox = Controls.newCheckBox("Hide partial"); // round 764: "Hide untouched" in a v2 game (enter())
         hidePartialCheckBox.setChecked(false);
+        forge.adventure.util.TfrScreenTips.researchHide(this, hidePartialCheckBox, // round 1000
+                () -> String.valueOf(hidePartialCheckBox.getLabel().getText()));
         hidePartialCheckBox.getLabel().setColor(Color.BLACK);
         hidePartialCheckBox.addListener(new ChangeListener() {
             @Override
@@ -1068,10 +1070,12 @@ public class ResearchScene extends UIScene {
             afterFoundAct(Collections.singletonList(pc.getEdition()));
         });
         dialog.button(foundSacrifice);
+        forge.adventure.util.TfrScreenTips.research(this, foundSell, foundSacrifice, null); // round 1000
         // Round 766 follow-up: "Sell all over 4" (copies over 4 of every card, never a deck's or a favorite's), on a Ready
         // set too. Round 817: of the cards shown; disabled when none of them has more than 4.
         foundOverFour = Controls.newTextButton("Sell all over " + ResearchMeter.KEEP_COPIES, this::confirmOverFour);
         dialog.button(foundOverFour);
+        forge.adventure.util.TfrScreenTips.research(this, null, null, foundOverFour); // round 1000
         if (!landscape) // round 817: five controls overran the 246-px portrait window
             dialog.getButtonTable().row();
         CheckBox allBox = Controls.newCheckBox("All spare copies");

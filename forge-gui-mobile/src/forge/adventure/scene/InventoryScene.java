@@ -885,6 +885,8 @@ public class InventoryScene extends UIScene {
 
     @Override
     public void enter() {
+        // TFR round 1000: hover tips - here, not in the constructor: the scene is built before the plane's config loads
+        forge.adventure.util.TfrScreenTips.inventory(this, treasureMapsButton, setsButton);
         selectedSlot = null;
         for (Button slot : equipmentSlots.values()) {
             removeSlotBorder(slot);

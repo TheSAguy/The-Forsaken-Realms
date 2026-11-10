@@ -35,6 +35,19 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 1000 - hover tips on Ascendance, the quest log, the journal, the character sheet, standings, inventory, research (the tooltip audit's round C)
+- `forge-gui-mobile/src/forge/adventure/scene/QuestLogScene.java` (STOCK): the constructor calls
+  `TfrScreenTips.questButtons(this, abandonQuestButton, trackButton)`; `buildList` calls `TfrScreenTips.questName` on
+  each quest's name label and `TfrScreenTips.legend` on each legend row; `loadDetailsPane` calls `questName` on the
+  detail title.
+- `forge-gui-mobile/src/forge/adventure/scene/PlayerStatisticScene.java` (STOCK): the constructor calls
+  `TfrScreenTips.character(this, loss, toggleAward)` (the Notoriety line and the achievements toggle).
+- `forge-gui-mobile/src/forge/adventure/scene/InventoryScene.java` (STOCK): the constructor calls
+  `TfrScreenTips.inventory(this, treasureMapsButton, setsButton)` before the inventory table is built.
+- New TFR-only: `util/TfrScreenTips.java`. TFR-only edits: `AscendanceUI` (`addRow` returns its label; the status rows'
+  and the level-up Re-roll's tips), `JournalScene`, `WorldStandingsScene`, `ResearchScene`; `TfrTips.number` reads
+  `{asc.FIELD}` (AscendanceData) and `{streakWins}`; `tips.json`; `TfrTipsTest`.
+
 ### Round 999 - hover tips in towns, shops, the Spellsmith, the Shard Trader and the Inn (the tooltip audit's round B)
 - `forge-gui-mobile/src/forge/adventure/scene/RewardScene.java` (STOCK): the constructor ends with one
   `TfrPlaceTips.shop(...)` call (Restock, Armory Re-roll, Buy Blueprint, Re-assign Shop Type, Upgrade Armory, Manage

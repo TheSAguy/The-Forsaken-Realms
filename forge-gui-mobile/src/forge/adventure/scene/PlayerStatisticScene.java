@@ -105,6 +105,7 @@ public class PlayerStatisticScene extends UIScene {
 
         back = ui.findActor("return");
         toggleAward = ui.findActor("toggleAward");
+        forge.adventure.util.TfrScreenTips.character(this, loss, toggleAward); // TFR round 1000: hover tips
         headerAchievements = Controls.newTextraLabel("[%110]" + Forge.getLocalizer().getMessage("lblAchievements"));
         headerAvatar = Controls.newTextraLabel("[%110]" + Forge.getLocalizer().getMessage("lblAvatar"));
         headerName = Controls.newTextraLabel("[%110]" + Forge.getLocalizer().getMessage("lblName"));

@@ -99,6 +99,30 @@ public class TfrTipsTest {
                 "town.specialtyLocked", "town.specialtyChange", "town.realm");
     }
 
+    /** Round 1000 (round C): Ascendance, the quest log, the journal, the character sheet, standings, inventory, research. */
+    @Test
+    public void round1000KeysExist() {
+        assertKeys("asc.power", "asc.mainItems", "asc.companions", "asc.reroll", "asc.rerollOnce", "asc.rerollMany",
+                "quest.abandon", "quest.track", "quest.daysLeft", "quest.legend", "journal.streak", "journal.coin",
+                "journal.land", "character.notoriety", "character.toRecords", "character.toAchievements",
+                "standings.status", "standings.attack", "standings.attackUsual", "standings.cheaper", "standings.pricier",
+                "standings.samePrice", "standings.partner",
+                "standings.war", "inventory.maps", "inventory.sets", "research.sell", "research.sacrifice",
+                "research.overFour", "research.hideUntouched");
+    }
+
+    /** Every {asc.FIELD} a tip names is a real AscendanceData field (a typo would show "?"). */
+    @Test
+    public void ascendanceFillsExist() throws Exception {
+        java.util.regex.Matcher m = java.util.regex.Pattern.compile("\\{asc\\.(\\w+)}").matcher(tips().toJson(com.badlogic.gdx.utils.JsonWriter.OutputType.json));
+        int n = 0;
+        while (m.find()) {
+            forge.adventure.data.AscendanceData.class.getField(m.group(1));
+            n++;
+        }
+        AssertJUnit.assertTrue("asc fills found", n > 0);
+    }
+
     /**
      * The resource-icon rule (the user's standing rule): an amount is "[+Gold] 50", never "50 gold" - and no tip writes
      * a bare amount after a resource word either ("gold 50"). Numbers come from {fills}, so a digit before a resource

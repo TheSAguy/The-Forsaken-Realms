@@ -1,7 +1,7 @@
 // Round 993: the hover tips' texts (util/TfrTips), keyed by tag. "\n" starts a new line.
 // {name} is filled when the tip shows: {tuning.FIELD} is any settings.json field of the running game; the other names
 // are listed in TfrTips.number (difficulty, lossPct, lossMin, woodWeek, stoneWeek, mapPieces, digShards, digRadius,
-// reloadForgive, reloadCap). A call site may fill its own ({name}, {cost}, {effect}, {where} on hud.ability).
+// reloadForgive, reloadCap, streakWins); {asc.FIELD} is any ascendance.json field (round 1000). A call site may fill its own ({name}, {cost}, {effect}, {where} on hud.ability).
 // Amounts use the resource icons, icon first: "[+Gold] {lossMin}".
 {
   // ---- the world-map HUD
@@ -90,5 +90,47 @@
   "town.specialtyChoose": "A specialty gives this town one lasting bonus. The first pick is free.\nA change later costs [+Gold] {fee} and locks it for {tuning.specialtyChangeLockDays} days.",
   "town.specialtyLocked": "Changed recently: it can change again in {days} days.\nEach change locks it for {tuning.specialtyChangeLockDays} days.",
   "town.specialtyChange": "Change this town's specialty for [+Gold] {fee}.\nThe new one is locked for {tuning.specialtyChangeLockDays} days.",
-  "town.realm": "Every {every} towns you hold at once earns a realm boon: pick 1 of 3.\nLosing towns never takes a boon away."
+  "town.realm": "Every {every} towns you hold at once earns a realm boon: pick 1 of 3.\nLosing towns never takes a boon away.",
+
+  // ---- round 1000: Ascendance ({cost}, {per}, {n})
+  "asc.power": "Power: win duels (stronger foes pay more; bosses x{asc.bossFactor}, legends x{asc.legendFactor}),\nfinish quests, clear caves and dungeons, restore and take towns.",
+  "asc.mainItems": "Main items: gear worn at the Neck, Body, either Hand, Boots, Legs and Head.\nYou may wear more of them as you level.",
+  "asc.companions": "Companions: items that start a creature in play in your duels.\nYou may carry more of them as you level.",
+  "asc.reroll": "Re-roll: a new set of choices for this level, [+Shards] {cost}.\n{per}",
+  "asc.rerollOnce": "Once per level.",
+  "asc.rerollMany": "{n} times per level (Gambler).",
+
+  // ---- the quest log
+  "quest.abandon": "Abandon: it counts as failing the quest,\nwith whatever failing it costs (the confirm says).",
+  "quest.track": "Track: a tracked quest's way shows on the map. Untrack hides it.",
+  "quest.daysLeft": "Side quests fail when their time runs out.\nStory quests never expire.",
+  "quest.legend": "A legend roams for a few days, then moves on.\nThe gold dots on the map mark where they are.",
+
+  // ---- the journal ({cards}, {land})
+  "journal.streak": "You have beaten it {streakWins} times in a row on {difficulty}:\nit now starts its duels with {cards} Wastes in play, until it beats you.",
+  "journal.coin": "It holds your Bronze Coin. Beat it to win the coin back.",
+  "journal.land": "Show only the creatures of the {land} lands.",
+
+  // ---- the character sheet
+  "character.notoriety": "Notoriety: +1 a win, -{tuning.notorietyLossPenalty} a loss.\nEvery {tuning.notorietyWinsPerLevel} is a level: enemies start with Walls, and beating them pays a Bounty.",
+  "character.toRecords": "Show your record against each enemy.",
+  "character.toAchievements": "Show your achievements.",
+
+  // ---- the world standings ({status}, {prices}, {attack}, {pct})
+  "standings.status": "{status}: {prices}\n{attack}",
+  "standings.attack": "Your towns are attacked by this color x{factor} as often.",
+  "standings.attackUsual": "Your towns are attacked by this color as often as usual.",
+  "standings.cheaper": "card shops in this color's towns are {pct}% cheaper.",
+  "standings.pricier": "card shops in this color's towns cost {pct}% more.",
+  "standings.samePrice": "card shop prices as usual in this color's towns.",
+  "standings.partner": "A Partner's Inn gives you extra life free when you enter.",
+  "standings.war": "At War: its towns bar you, its capitals charge a toll, and its Inns won't heal you.",
+
+  // ---- the inventory and the Research Lab ({keep})
+  "inventory.maps": "Your treasure maps: the pieces found so far, region by region.",
+  "inventory.sets": "Gear sets: the bonuses for wearing matching pieces.",
+  "research.sell": "Sell: gold for the card, and it counts toward its set's research.",
+  "research.sacrifice": "Sacrifice: counts x{tuning.researchSacrificeFactor} toward its set's research, but pays no gold.",
+  "research.overFour": "Sells every copy over {keep} of the cards shown.\nNever a card in a deck or a favorite.",
+  "research.hideUntouched": "Hide the sets you haven't given any cards to."
 }

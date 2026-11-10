@@ -79,6 +79,7 @@ public final class AscendanceUI {
             Gdx.app.postRunnable(AscendanceUI::openChoice);
         });
         reroll.setDisabled(!open || WorldSave.getCurrentSave().getPlayer().getShards() < cost);
+        TfrScreenTips.ascendanceReroll(reroll); // round 1000
         dialog.getButtonTable().add(reroll).width(width() / 2f).padTop(4f).padRight(4f);
         dialog.getButtonTable().add(Controls.newTextButton("Not now", stage::hideDialog)).width(width() / 2f).padTop(4f).row();
         dialog.setKeepWithinStage(true);
@@ -118,12 +119,13 @@ public final class AscendanceUI {
         int[] progress = Ascendance.progress();
         String title = Ascendance.title();
         addRow(dialog, "[GOLD]Ascendance " + Ascendance.level() + "[]" + (title.isEmpty() ? "" : " - " + title));
-        addRow(dialog, "[%85]" + Ascendance.ICON + " Power " + progress[0] + " / " + progress[1] + " to the next level"); // round 517
+        TypingLabel powerRow = addRow(dialog, "[%85]" + Ascendance.ICON + " Power " + progress[0] + " / " + progress[1] + " to the next level"); // round 517
         int next = Ascendance.nextMainSlotLevel();
-        addRow(dialog, "[%85]" + Ascendance.mainItemsLabel(player) + (next > 0 ? " - one more at Ascendance " + next : ""));
+        TypingLabel mainRow = addRow(dialog, "[%85]" + Ascendance.mainItemsLabel(player) + (next > 0 ? " - one more at Ascendance " + next : ""));
         int nextCompanion = Ascendance.nextCompanionLevel(); // round 502
-        addRow(dialog, "[%85]" + Ascendance.companionsLabel(player)
+        TypingLabel companionRow = addRow(dialog, "[%85]" + Ascendance.companionsLabel(player)
                 + (nextCompanion > 0 ? " - one more at Ascendance " + nextCompanion : ""));
+        TfrScreenTips.ascendanceStatus(powerRow, mainRow, companionRow); // round 1000
         // Round 513 (the user: "Not sure why 'Spoilsman' is showing here. We can remove since it's on the Level sheet"):
         // the lasting picks' line is gone - the Level sheet lists every pick by the level it came at.
         dialog.getButtonTable().add(Controls.newTextButton("Level sheet", () -> { // round 496
@@ -272,10 +274,11 @@ public final class AscendanceUI {
         return dialog;
     }
 
-    private static void addRow(Dialog dialog, String text) {
+    private static TypingLabel addRow(Dialog dialog, String text) {
         TypingLabel label = Controls.newTypingLabel(text);
         label.setWrap(true);
         label.skipToTheEnd();
         dialog.getContentTable().add(label).width(width()).row();
+        return label; // round 1000: for its hover tip
     }
 }

@@ -380,6 +380,7 @@ public class WorldStandingsScene extends UIScene {
                     // WHITE tint preserves the markup; Neutral rows carry no tag and stay plain.
                     statusLabel.setColor(colorTag.isEmpty() ? Color.BLACK : Color.WHITE);
                     statusLabel.skipToTheEnd();
+                    forge.adventure.util.TfrScreenTips.standingStatus(this, statusLabel, colorKey); // round 1000
                     standingsList.add(statusLabel).align(Align.left).padBottom(6);
                 } else {
                     standingsList.add();

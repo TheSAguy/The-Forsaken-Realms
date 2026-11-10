@@ -41,6 +41,7 @@ public class QuestLogScene extends UIScene {
         backToListButton = Controls.newTextButton("Quest List");
         ui.onButtonPress("return", QuestLogScene.this::back);
         ui.onButtonPress("status", QuestLogScene.this::status);
+        forge.adventure.util.TfrScreenTips.questButtons(this, abandonQuestButton, trackButton); // TFR round 1000: hover tips
         backToListButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 buildList();
@@ -115,6 +116,7 @@ public class QuestLogScene extends UIScene {
             TypingLabel nameLabel = Controls.newTypingLabel(headerCode + quest.getName() + QuestExpiry.questLogSuffix(quest));
             nameLabel.skipToTheEnd();
             nameLabel.setWrap(true);
+            forge.adventure.util.TfrScreenTips.questName(this, nameLabel, quest); // TFR round 1000: its time limit
             scrollContainer.add(nameLabel).align(Align.left).expandX();
             Button details = Controls.newTextButton(Forge.getLocalizer().getMessage("lblDetails"));
             details.addListener(new ClickListener() {
@@ -138,6 +140,7 @@ public class QuestLogScene extends UIScene {
                     + " - " + WorldStage.getInstance().directionFromPlayer(legend) + when);
             legendLabel.skipToTheEnd();
             legendLabel.setWrap(true);
+            forge.adventure.util.TfrScreenTips.legend(this, legendLabel); // TFR round 1000
             scrollContainer.add(legendLabel).align(Align.left).expandX();
             scrollContainer.add(); // no Details - a sighting has no quest behind it
             scrollContainer.row().padTop(5);
@@ -202,6 +205,7 @@ public class QuestLogScene extends UIScene {
         dNameLabel.skipToTheEnd();
         dNameLabel.setWrap(true);
         dNameLabel.setColor(Color.BLACK);
+        forge.adventure.util.TfrScreenTips.questName(this, dNameLabel, quest); // TFR round 1000: its time limit
 
         detailScrollContainer.add(dNameLabel).align(Align.left).expandX().padLeft(10);
 
