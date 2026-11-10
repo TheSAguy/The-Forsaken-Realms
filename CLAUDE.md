@@ -13,10 +13,12 @@ versionCode 12800, `RELEASE_NOTES_v1.28.md`, GUIDE's What's New in 1.28, the Dis
 reset by round 1003). Unreleased, for 1.29: round 1004 (the mana-pool tab switches on the GL thread, the
 glyph-pool race's cause; `[TFR-Update]` lines on the Android update path); round 1005 ("The War Begins": five pages at
 the first attack on a player town, once per run via the `warIntroShown` world flag, once on load for an older save that
-holds a town, reopened from World Standings' "The War"; GUIDE's What's New in 1.29 started, the Capitol surge line cut). Engine = the 11.09 daily (round 994, upstream `7d0acc8aa92`; round 769's R1-R4 still
+holds a town, reopened from World Standings' "The War"; GUIDE's What's New in 1.29 started, the Capitol surge line cut);
+round 1006 (World Standings' Reputation and Balance dialogs fit a 1280x720 window: `util/DialogFit.fitToStage` scrolls a
+shown dialog's body only when the window is taller than the screen). Engine = the 11.09 daily (round 994, upstream `7d0acc8aa92`; round 769's R1-R4 still
 keep TFR's synchronous auto save, eager shops, Inn events and place entry; bosses keep the player's AI setting through
 `bossAiFollowsSetting`); next merge from upstream after `7d0acc8aa92` (its first commit is `b3802f9255a`, #12773, hidden-zone ChangeZone in APNAP order); BASE_INSTALL is that daily, so packages need no
-`--allow-base-mismatch`. Next version: 1.29 / 12900. Next free round: 1006. The agent profile's window is
+`--allow-base-mismatch`. Next version: 1.29 / 12900. Next free round: 1007. The agent profile's window is
 1280x720 - at 3840x2160 it covered the screen, got minimized, and a minimized game stops (the bridge times out, shots
 come back 1x1). Agent games keep their own LOCALAPPDATA cache (round 860). Log sharing (round 698) posts to Discord
 through a webhook kept OUT of git in `C:\TFR\secrets\discord_log_webhook.txt` - never commit it; the packager and

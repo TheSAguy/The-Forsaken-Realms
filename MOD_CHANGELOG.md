@@ -14264,6 +14264,40 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 1006: World Standings' Reputation and Balance dialogs fit the screen (2026-11-10)
+
+The user: "Yes, fix it", to round 1005's note that World Standings' Reputation info dialog runs taller than the
+1280x720 window (its title and first line cut off at the top). For 1.29.
+
+- **Cause.** `Dialog.show()` packs the window to its content with no cap, and the stage is 480x270 in landscape. The
+  Reputation table packed to 285 px and the Balance Sheet to 318 px, so both ran off the top. Portrait (270x480) held
+  both already. The War pages (round 1005) fit in both orientations, Status and Mod Details are scenes of their own
+  (`PlayerStatisticScene`, `InfoTextScene`), so none of those changed.
+- **Fix: `util/DialogFit.fitToStage(dialog)`** (new, TFR-only), called right after a dialog is shown. It measures the
+  window against its own stage; only when the window is taller than the screen (less 6 px top and bottom) does it move
+  the content rows, with their widths, pads, spacing, spans and row breaks, into a ScrollPane just tall enough to bring
+  the window back on screen, then re-centers it. A dialog that fits is untouched. It runs after show, not before like
+  `EconomyBuildings.makeContentScrollable`, so the real stage size is known in either orientation and the scene's
+  keyboard selection, gathered at show, never sees the pane. The pane draws the skin's vertical slider track and knob
+  (`thinwindow`, `scroll2`) as its scroll bar: the stock "nobg" style draws none, and nothing would say the text goes
+  on. Mouse-wheel focus goes to the pane, and back to it whenever the dialog takes it again (round 160's hand-off).
+- **Callers:** `WorldStandingsScene.showInfoDialog` (Reputation) and both `BalanceSheet.open` paths (World Standings,
+  and the Bank and Exchange through `MapStage`). The text is unchanged.
+- **Log:** `[TFR-Dialog] fit to the screen: N row(s) into a Hpx scroll pane (window Wpx, screen Spx)`.
+- **Files:** `forge-gui-mobile/src/forge/adventure/util/DialogFit.java` (new), `scene/WorldStandingsScene.java`,
+  `util/BalanceSheet.java`. No stock engine file, so no `CORE_ENGINE_CHANGES.md` entry.
+- **Checked:** Maven `-o -pl forge-gui-mobile -am compile -DskipTests`: exit 0. Agent game (cheats, this round's three
+  classes compiled against the agent's round-1005 jar and put ahead of it; save slot 4, nothing saved), shots in
+  `C:\CLAUDE\PROJECTS\TFR1\notes\r1006\` (`before\`, `after\`; `L_` landscape 1280x720, `P_` portrait 540x960):
+  - Landscape: Reputation and Balance open with their titles and first lines on screen, a scroll bar at the right, and
+    scroll to the last line with the mouse wheel (`L_reputation_scrolled.png`, `L_balance_scrolled.png`); the standings
+    screen clean after closing. Log: the two `[TFR-Dialog]` lines (285 px and 318 px windows into 211 px panes), no
+    exceptions.
+  - Portrait: both dialogs unchanged (they fit, so no pane, no log line).
+  - The War pages 1-5: before and after in landscape, before in portrait; unchanged code.
+- **Not checked in the game:** the Balance Sheet from the Bank or Exchange (`MapStage` path; the same call after
+  `stage.showDialog()`).
+
 ## Round 1005: "The War Begins" - what "under attack" means, how to defend, how a run ends (2026-11-10)
 
 A player on Discord ("Days of Love Nights of War"): "Is there anyway we could get a guide on how fighting the other

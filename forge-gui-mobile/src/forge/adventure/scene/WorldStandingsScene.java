@@ -93,6 +93,9 @@ public class WorldStandingsScene extends UIScene {
         label.skipToTheEnd();
         dialog.getContentTable().add(label).width(Forge.isLandscapeMode() ? 400f : 240f).row(); // round 100: portrait fit
         showDialog(dialog);
+        // Round 1006: the Reputation table ran taller than the 270px screen, cutting off its title and first line;
+        // a body that is too tall now scrolls.
+        forge.adventure.util.DialogFit.fitToStage(dialog);
     }
 
     private void showReputationInfo() {

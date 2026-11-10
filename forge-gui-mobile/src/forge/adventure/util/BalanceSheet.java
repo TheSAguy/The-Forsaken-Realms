@@ -93,6 +93,7 @@ public class BalanceSheet {
         EconomyBuildings.finishHalfButtonRow(dialog, column);
         dialog.setKeepWithinStage(true);
         stage.showDialog();
+        DialogFit.fitToStage(dialog); // round 1006: the same sheet from the Bank and the Exchange
     }
 
     public static void open(UIScene scene) {
@@ -111,6 +112,7 @@ public class BalanceSheet {
         EconomyBuildings.finishHalfButtonRow(dialog, column);
         dialog.setKeepWithinStage(true);
         scene.showDialog(dialog);
+        DialogFit.fitToStage(dialog); // round 1006: taller than the 270px screen at a 1280x720 window
     }
 
     /** Greyed out rather than hidden until a week has actually rolled, so the player can see the
