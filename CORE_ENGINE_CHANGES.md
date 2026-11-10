@@ -35,6 +35,18 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 1004 - the mana-pool tab switches on the GL thread (logs-1110 P2-3), `[TFR-Update]` lines (P3-19)
+- `forge-gui-mobile/src/forge/screens/match/MatchController.java` (STOCK): `showManaPool` and `hideManaPool` keep their
+  stock bodies, each wrapped whole in `FThreads.invokeInEdtLater(() -> { ... })`, plus a comment above them; each body
+  starts with a null check on the player's panel (return early; hide also removes the `zonesToRestore` entry). On a merge:
+  if upstream changes either body, re-apply its new body inside the wrapper; keep both on `invokeInEdtLater` (not
+  `NowOrLater`), so show and hide share one queue. Worth offering upstream: the stock code re-lays out the match screen
+  on the game thread.
+- `forge-gui-mobile/src/forge/assets/AssetsDownloader.java` (STOCK, already TFR-edited): `checkForUpdates` prints
+  `[TFR-Update]` lines (the check, the prompt, the answer, the APK download start/finish/failure, the installer hand-off,
+  the catch and the no-internet branch). The confirm dialog moved into a new private `askToUpdate(installed, offered,
+  message)`, same dialog and arguments. Nothing else changed.
+
 ### Round 1001 - hover tips on the world map's tokens and the custom difficulty rows (the tooltip audit's round D)
 - `forge-gui-mobile/src/forge/adventure/stage/PointOfInterestMapSprite.java` (STOCK): `aiGuardDots(changes)` is public
   (was private), for the guard's hover tip (`TfrMapTips`). Nothing else changed.

@@ -498,28 +498,44 @@ public class MatchController extends NetworkGuiGame {
     public void showCombat() {
     }
 
+    // TFR round 1004 (logs-1110 P2-3): InputPayMana calls show/hide on the game thread, and setSelectedTab re-lays out
+    // the whole match screen, measuring text through libGDX's unsynchronized glyph pool while the GL thread draws (the
+    // End Turn smear, logs-1109b P2-1). Both bodies run on the GL thread, and zonesToRestore is touched there only.
+    // Both always post (never "now"): hide often comes from the GL thread (InputSyncronizedBase.stop after a click), and
+    // running it at once could put it ahead of a show the game thread had just queued. One queue keeps show before hide.
     @Override
     public void showManaPool(final PlayerView player) {
-        final VPlayerPanel playerPanel = view.getPlayerPanel(player);
-        final InfoTab selectedTab = playerPanel.getSelectedTab(), manaPoolTab = playerPanel.getManaPoolTab();
-        if (!manaPoolTab.equals(selectedTab)) {
-            //if mana pool was selected previously, we don't need to switch back to anything
-            zonesToRestore.put(player, selectedTab);
-        }
-        playerPanel.setSelectedTab(manaPoolTab);
+        FThreads.invokeInEdtLater(() -> {
+            final VPlayerPanel playerPanel = view == null ? null : view.getPlayerPanel(player);
+            if (playerPanel == null) {
+                return; // the match screen changed before this ran
+            }
+            final InfoTab selectedTab = playerPanel.getSelectedTab(), manaPoolTab = playerPanel.getManaPoolTab();
+            if (!manaPoolTab.equals(selectedTab)) {
+                //if mana pool was selected previously, we don't need to switch back to anything
+                zonesToRestore.put(player, selectedTab);
+            }
+            playerPanel.setSelectedTab(manaPoolTab);
+        });
     }
 
     @Override
     public void hideManaPool(final PlayerView player) {
-        final VPlayerPanel playerPanel = view.getPlayerPanel(player);
-        // value may be null so explicit containsKey call is necessary
-        final boolean doRestore = zonesToRestore.containsKey(player);
-        final InfoTab zoneToRestore = zonesToRestore.remove(player);
-        if (!playerPanel.getManaPoolTab().equals(playerPanel.getSelectedTab()) || !doRestore) {
-            return; //if player switched away from mana pool already, don't change anything
-        }
+        FThreads.invokeInEdtLater(() -> {
+            final VPlayerPanel playerPanel = view == null ? null : view.getPlayerPanel(player);
+            if (playerPanel == null) {
+                zonesToRestore.remove(player);
+                return; // the match screen changed before this ran
+            }
+            // value may be null so explicit containsKey call is necessary
+            final boolean doRestore = zonesToRestore.containsKey(player);
+            final InfoTab zoneToRestore = zonesToRestore.remove(player);
+            if (!playerPanel.getManaPoolTab().equals(playerPanel.getSelectedTab()) || !doRestore) {
+                return; //if player switched away from mana pool already, don't change anything
+            }
 
-        playerPanel.setSelectedTab(zoneToRestore);
+            playerPanel.setSelectedTab(zoneToRestore);
+        });
     }
 
     @Override

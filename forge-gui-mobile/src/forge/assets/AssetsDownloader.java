@@ -242,6 +242,10 @@ public class AssetsDownloader {
                     verifyUpdatable = !StringUtils.isEmpty(version) && isRemoteNewer(version, versionString);
                 }
 
+                // TFR round 1004 (logs-1110 P3-19): the Android update path printed nothing until the assets download
+                // after an install, so a player stuck on the old version left no trace. One [TFR-Update] line per step.
+                System.out.println("[TFR-Update] check: installed v" + versionString + ", latest release "
+                        + (releaseTag.isEmpty() ? "unknown (no tag read)" : releaseTag) + ", newer=" + verifyUpdatable);
                 if (verifyUpdatable) {
                     Forge.getSplashScreen().prepareForDialogs();
 
@@ -257,10 +261,21 @@ public class AssetsDownloader {
                     if (!isSnapshots && releaseTag.isEmpty()) {
                         if (!GuiBase.isAndroid())
                             run(runnable);
-                    } else if (SOptionPane.showConfirmDialog(message, "New Version Available", "Update Now", "Update Later", true, true)) {
+                    } else if (askToUpdate(versionString, version, message)) {
+                        System.out.println("[TFR-Update] APK download started: " + installerURL);
+                        final long downloadStart = System.currentTimeMillis();
                         String installer = new GuiDownloadZipService("", "update", installerURL,
                                 Forge.getDeviceAdapter().getDownloadsDir(), null, Forge.getSplashScreen().getProgressBar()).download(filename);
+                        final long downloadSeconds = (System.currentTimeMillis() - downloadStart) / 1000;
+                        if (installer == null) {
+                            // the service logs the cause just before: the HTTP status ([TFR-Assets]) or the exception
+                            System.out.println("[TFR-Update] APK download FAILED after " + downloadSeconds
+                                    + " s (cause logged just above)");
+                        }
                         if (installer != null) {
+                            System.out.println("[TFR-Update] APK downloaded in " + downloadSeconds + " s ("
+                                    + new File(installer).length() / 1024 + " KB): " + installer);
+                            System.out.println("[TFR-Update] handing the APK to Android's package installer; the game exits");
                             Forge.getDeviceAdapter().openFile(installer);
                             Forge.isMobileAdventureMode = Forge.advStartup;
                             Forge.exitAnimation(false);
@@ -283,6 +298,7 @@ public class AssetsDownloader {
                     }
                 }
             } catch (Exception e) {
+                System.out.println("[TFR-Update] update check or install FAILED: " + e); // TFR round 1004
                 e.printStackTrace();
                 if (!GuiBase.isAndroid()) {
                     run(runnable);
@@ -290,6 +306,7 @@ public class AssetsDownloader {
                 }
             }
         } else {
+            System.out.println("[TFR-Update] no internet connection; update check skipped"); // TFR round 1004
             if (!GuiBase.isAndroid()) {
                 run(runnable);
                 return;
@@ -515,6 +532,17 @@ public class AssetsDownloader {
                 + " MB)");
         assets.extract(zip);
         System.out.println("[TFR-Assets] unzipped " + assets.getFilesExtracted() + " files");
+    }
+
+    /**
+     * TFR round 1004: the "New Version Available" prompt, with a [TFR-Update] line before it (a player who leaves the
+     * app while it is up still leaves that one) and one for the answer.
+     */
+    private static boolean askToUpdate(String installed, String offered, String message) {
+        System.out.println("[TFR-Update] prompt shown: v" + installed + " -> v" + offered);
+        final boolean updateNow = SOptionPane.showConfirmDialog(message, "New Version Available", "Update Now", "Update Later", true, true);
+        System.out.println("[TFR-Update] answer: " + (updateNow ? "Update Now" : "Update Later"));
+        return updateNow;
     }
 
     private static void run(Runnable toRun) {

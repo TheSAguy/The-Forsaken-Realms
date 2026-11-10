@@ -14264,6 +14264,59 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 1004: the mana-pool tab switches on the GL thread, and the Android update path is logged (2026-11-10)
+
+The user: "Yes, start 1004", approving the review `C:\CLAUDE\PROJECTS\TFR1\notes\logs-1110.md` P2-3 and P3-19. For
+1.29; 1.28's round 995 guard already contains the damage, so there is no 1.28.1.
+
+- **P2-3, the cause of the glyph-pool race.** The first 1.28 player log (049ef672) named round 995's off-thread caller:
+  `MatchController.showManaPool`, called from `InputPayMana`'s constructor on the game thread, ran
+  `VPlayerPanel.setSelectedTab`, which revalidates the whole `MatchScreen`. In the compact (landscape) layout `doLayout`
+  measures every phase name (`VUnifiedPhase.getPreferredWidth`) through libGDX's unsynchronized glyph run pool while the
+  GL thread draws: gnomedoom's End Turn smear (`logs-1109b` P2-1). `hideManaPool` (from `InputPayMana.onStop`) did the
+  same. **Fix:** both bodies are unchanged and run whole on the GL thread through `FThreads.invokeInEdtLater`, so
+  `zonesToRestore` (a plain map) is touched there only. Both always post, never "now": `onStop` often runs on the GL
+  thread (`InputSyncronizedBase.stop` after a click), and running hide at once could put it ahead of a show the game
+  thread had just queued, leaving the mana tab open. One queue keeps show before hide. The tab switches one frame later.
+  Because the body now runs a frame later, each returns early when the player has no panel (the match screen replaced in
+  between), where it would have thrown on the GL thread; hide also drops that player's `zonesToRestore` entry.
+  `VPlayerPanel.setSelectedTab` is untouched; round 995's guard stays.
+- **When it fires:** only when a payment starts with mana already floating (`wasFloatingMana`), not on every payment as
+  the review read it. Common anyway: tap a land, then cast.
+- **Callers checked** (code graph + grep): `showManaPool` 1 (`InputPayMana.<init>`), `hideManaPool` 1
+  (`InputPayMana.onStop`, via `InputSyncronizedBase.stop`); `ProtocolGuiGame` relays both over the network. Nothing reads
+  the tab state after either call: the constructor ends there, auto-pay (`Auto`) and paying from the pool go through
+  the input's own handlers, and the AI never builds an `InputPayMana` (its payment is `ComputerUtilMana`).
+- **Other game-thread callers into the match screen, checked:** `FControlGameEventHandler.processEvents` (updateCards,
+  lives, shards, mana pool, zones, phase, turn, stack, player control, `openZones` for exile) runs through
+  `invokeInEdtLater`; `setSelection`, `clearSelectableCards`, the draw offer and the revealed cards already post; input
+  prompts and buttons are shown through `InputProxy`'s `invokeInEdtLater`. `InputAttack` and
+  `PlayerControllerHuman:3008` call `updateCards` directly, which reaches `CardAreaPanel.updateCard` (no text layout).
+  No other caller of the same few-line pattern was found, so nothing else changed. The guard's counter covers the rest:
+  a whole duel on the fixed build counted 0 off-GL-thread layouts.
+- **P3-19, `[TFR-Update]` lines in `AssetsDownloader.checkForUpdates`** (the Android in-app update, the only platform
+  that reaches it): `check: installed vX, latest release tfr-vY, newer=B`; `prompt shown: vX -> vY` (before the dialog,
+  so a player who leaves the app while it is up still leaves a line); `answer: Update Now|Update Later`; `APK download
+  started: <url>`; `APK downloaded in S s (N KB): <file>` or `APK download FAILED after S s (cause logged just above)`
+  (the service's own `[TFR-Assets] HTTP n` line or `Logger.error` exception comes first); `handing the APK to Android's
+  package installer; the game exits`; `update check or install FAILED: <e>`; `no internet connection; update check
+  skipped`. Works from the 1.28 -> 1.29 update on. Not run on a phone this round.
+- **Proof (agent game, `C:\CLAUDE\PROJECTS\TFR1\agent`, cheats, the 1280x720 landscape window, so the compact layout;
+  autobattle off so the seat pays its own mana; taps sent as window messages):**
+  - Before (the 1.28 agent jar): tap an Island, start Elusive Spellfist. The mana tab opened, Cancel restored the hand
+    tab, and the log has `[TFR-GlyphPool] text laid out off the GL thread: Game-0 in FSkinFont.getBounds` with the exact
+    stack of 049ef672 (`VUnifiedPhase.getPreferredWidth:106` <- `MatchScreen.doLayout:434` <- ... <-
+    `VPlayerPanel.setSelectedTab:466` <- `MatchController.showManaPool:509` <- `InputPayMana.<init>:63`).
+    `glyphpool state`: `off-GL-thread layouts 15` from that one payment.
+  - After (`forge-gui-mobile\target\classes` ahead of the jar): floating-mana payments paid from the pool, with Auto,
+    and cancelled. Each opened the mana tab and restored the hand tab afterwards. A 15-turn hand-played duel, a 25-turn
+    auto-battle duel at 50x, then (the final `invokeInEdtLater` code) a cancel, a payment and a 12-turn auto-battle duel
+    at 50x, won: no off-GL line in either log, `glyphpool state` `off-GL-thread layouts 0` at each end. The hand-played
+    seat has no speed button, so those two hand-played duels ran at normal speed. Shots and log lines:
+    `C:\Users\User\AppData\Local\Claude-Data\claude_pzs8sxrjxfjjc\side-session-notes\local_d467e991-dd17-48bc-8d3c-f322b86f431a\round-1004\`.
+  - No unit test: the change is a thread hop inside `MatchController`, which needs the live match screen; the agent
+    game is the test. Maven `-o -pl forge-gui-mobile-dev -am package -DskipTests`: exit 0.
+
 ## Round 1003: 1.28 released (2026-11-09)
 
 - **Published** 2026-11-10 01:55:53 UTC (11.09 Pacific) on the user's call ("We're good to release once you've done your
