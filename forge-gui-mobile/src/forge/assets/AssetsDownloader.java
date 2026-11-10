@@ -255,6 +255,8 @@ public class AssetsDownloader {
                     if (!Forge.getDeviceAdapter().isConnectedToWifi()) {
                         message += " If so, you may want to connect to wifi first. The download is around " + (GuiBase.isAndroid() ? apkSize : packageSize) + ".";
                     }
+                    if (GuiBase.isAndroid())
+                        message += "\n\n" + KEEP_ON_SCREEN; // TFR round 1008 (logs-1110b P3-21)
                     if (isSnapshots) // this is for snaps initial info
                         message += Forge.getDeviceAdapter().getLatestChanges(GITHUB_COMMITS_ATOM, buildTimeStamp, snapsTimestamp);
                     //failed to grab latest github tag
@@ -275,20 +277,21 @@ public class AssetsDownloader {
                         if (installer != null) {
                             System.out.println("[TFR-Update] APK downloaded in " + downloadSeconds + " s ("
                                     + new File(installer).length() / 1024 + " KB): " + installer);
-                            System.out.println("[TFR-Update] handing the APK to Android's package installer; the game exits");
-                            Forge.getDeviceAdapter().openFile(installer);
-                            Forge.isMobileAdventureMode = Forge.advStartup;
-                            Forge.exitAnimation(false);
-                            return;
-                        }
-                        switch (SOptionPane.showOptionDialog("Could not download update. " +
-                                "Press OK to proceed without update.", "Update Failed", null, ImmutableList.of("Ok"))) {
-                            default:
-                                if (!GuiBase.isAndroid()) {
-                                    run(runnable);
-                                    return;
-                                }
-                                break;
+                            // TFR round 1008 (logs-1110b P3-21): stock opened the installer and then queued
+                            // Forge.exitAnimation(false), which ran the moment the game was next on screen - so a
+                            // player who came back without installing watched the game close and had to download the
+                            // APK again. Android kills this process itself when the package is replaced
+                            // (killDueToPackageUpdate), so the exit is not needed for a successful install. Now the
+                            // game waits; on Keep Playing it falls through to the load below, exactly as Update Later.
+                            waitOutInstaller(installer, versionString, version);
+                        } else {
+                            SOptionPane.showOptionDialog("Could not download update. " +
+                                    "Press OK to proceed without update.\n\n" + KEEP_ON_SCREEN_FAILED,
+                                    "Update Failed", null, ImmutableList.of("Ok"));
+                            if (!GuiBase.isAndroid()) {
+                                run(runnable);
+                                return;
+                            }
                         }
                     }
                 } else {
@@ -543,6 +546,94 @@ public class AssetsDownloader {
         final boolean updateNow = SOptionPane.showConfirmDialog(message, "New Version Available", "Update Now", "Update Later", true, true);
         System.out.println("[TFR-Update] answer: " + (updateNow ? "Update Now" : "Update Later"));
         return updateNow;
+    }
+
+    // ---- TFR round 1008 (logs-1110b P3-21): the installer hand-off waits for the player instead of exiting ----
+
+    /** Added to the update prompt: on 4fb442f9 a download was cut when the player left the app while it ran. */
+    static final String KEEP_ON_SCREEN = "Keep the game on screen until Android's installer opens; "
+            + "leaving it can stop the download. Then tap Update there.";
+    /** Added to "Update Failed". */
+    static final String KEEP_ON_SCREEN_FAILED = "If you left the game during the download, Android may have stopped it. "
+            + "Next time, keep the game on screen until the installer opens.";
+    static final String OPEN_INSTALLER_AGAIN = "Open Installer Again";
+    static final String KEEP_PLAYING = "Keep Playing";
+
+    enum InstallerReturn { REOPEN, KEEP_PLAYING }
+
+    /** Set (System.currentTimeMillis) while the installer has the APK and the game waits; 0 otherwise. */
+    private static volatile long installerHandOffAt = 0L;
+
+    /**
+     * The buttons on the "back from the installer" dialog. Keep Playing is always LAST: FOptionPane maps Back/Escape to
+     * the last button, so a player who presses Back keeps playing rather than reopening the installer. Without the APK
+     * (deleted from Downloads meanwhile) there is nothing to reopen.
+     */
+    static List<String> installerReturnOptions(boolean apkPresent) {
+        return apkPresent ? ImmutableList.of(OPEN_INSTALLER_AGAIN, KEEP_PLAYING) : ImmutableList.of(KEEP_PLAYING);
+    }
+
+    /** What the dialog's answer means. Anything but the reopen button (a closed dialog's -1 included) keeps playing. */
+    static InstallerReturn installerReturnAction(int choice, List<String> options) {
+        if (choice >= 0 && choice < options.size() && OPEN_INSTALLER_AGAIN.equals(options.get(choice)))
+            return InstallerReturn.REOPEN;
+        return InstallerReturn.KEEP_PLAYING;
+    }
+
+    /** The dialog that is waiting on screen when the player comes back from Android's installer. */
+    static String installerReturnMessage(String installed, String offered, boolean opened, boolean apkPresent) {
+        String m = opened
+                ? "Android's installer should be open now. Tap Update there to install v" + offered + ".\n\n"
+                  + "Came back here without installing?"
+                : "Android's installer did not open.";
+        if (apkPresent)
+            m += " Tap " + OPEN_INSTALLER_AGAIN + " to use the update already downloaded (no second download), or "
+                    + KEEP_PLAYING + " to play v" + installed + " for now.";
+        else
+            m += " The downloaded update is gone, so tap " + KEEP_PLAYING + " to play v" + installed + " for now; "
+                    + "the update is offered again at the next launch.";
+        return m;
+    }
+
+    /**
+     * Hands the APK to Android's installer and waits on a dialog until the player either installs (Android kills this
+     * process to replace the package, so this method never returns) or comes back and taps Keep Playing (it returns,
+     * and the caller carries on loading v{installed}). Open Installer Again re-opens the same file: no second download.
+     */
+    private static void waitOutInstaller(String apk, String installed, String offered) {
+        for (int attempt = 1; ; attempt++) {
+            installerHandOffAt = System.currentTimeMillis();
+            final boolean opened = Forge.getDeviceAdapter().openFile(apk);
+            System.out.println("[TFR-Update] handing the APK to Android's package installer (try " + attempt + "): "
+                    + (opened ? "installer opened; the game waits for the player" : "openFile FAILED"));
+            final boolean apkPresent = new File(apk).isFile();
+            final List<String> options = installerReturnOptions(apkPresent);
+            final int choice = SOptionPane.showOptionDialog(installerReturnMessage(installed, offered, opened, apkPresent),
+                    "Update to v" + offered, null, options, 0);
+            final long seconds = (System.currentTimeMillis() - installerHandOffAt) / 1000;
+            installerHandOffAt = 0L;
+            final InstallerReturn action = installerReturnAction(choice, options);
+            System.out.println("[TFR-Update] back from the installer without an install after " + seconds + " s (try "
+                    + attempt + "): " + (choice >= 0 && choice < options.size() ? options.get(choice)
+                    : "closed (" + choice + ")") + " -> " + action
+                    + (apkPresent ? "" : " (the APK is no longer at " + apk + ")"));
+            if (action == InstallerReturn.KEEP_PLAYING) {
+                System.out.println("[TFR-Update] keep playing v" + installed + "; the load continues");
+                return;
+            }
+        }
+    }
+
+    /**
+     * Forge.resume() hook: one line when the game comes back on screen while the installer has the APK. Android
+     * gives no callback for "the installer closed without installing", so this line plus the dialog's answer is how
+     * the log tells a back-out from an install (an install kills the process: no line).
+     */
+    public static void onAppResumed() {
+        final long at = installerHandOffAt;
+        if (at != 0L)
+            System.out.println("[TFR-Update] the game is back on screen " + (System.currentTimeMillis() - at) / 1000
+                    + " s after the installer hand-off; the choice dialog is waiting");
     }
 
     private static void run(Runnable toRun) {

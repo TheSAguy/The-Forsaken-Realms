@@ -14264,6 +14264,61 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 1008: the Android update no longer quits when the player comes back from the installer (2026-11-10)
+
+The user: "Yes, fix it", approving `C:\CLAUDE\PROJECTS\TFR1\notes\logs-1110b.md` P3-21 (the cause behind P3-19's
+"several tries"). For 1.29. The 1.28 app runs the 1.28 -> 1.29 update, so it helps from 1.29 -> 1.30 on.
+
+- **The bug:** after the APK download, `AssetsDownloader.checkForUpdates` handed it to Android's installer and queued
+  `Forge.exitAnimation(false)`. That exit ran on the next frame the game drew. So a player who backed out of the
+  installer, or left it without installing, came back to a game that closed itself (`EXIT_SELF`). They had to relaunch,
+  answer the prompt, download the APK again and reopen the installer: 2-5 launches on 4fb442f9, f7323119, 66f23a82
+  and 465855fc.
+- **The fix:** after the hand-off the game waits on a dialog, "Update to vX". It reads: "Android's installer should be
+  open now. Tap Update there to install vX. Came back here without installing?" It has two buttons:
+  - **Open Installer Again:** re-opens the same downloaded file, with no second download. The dialog comes back after
+    each return.
+  - **Keep Playing:** returns, and the load carries on exactly as Update Later does. It's the last button, so Android's
+    Back picks it (FOptionPane maps Back to the last button).
+  - If the APK was deleted meanwhile, only Keep Playing is offered.
+  - **A successful install needs no exit:** Android force-stops the app during `installPackageLI` while it waits. Seen
+    on the emulator, and as `killDueToPackageUpdate` in players' logs.
+  - **Why stock exited:** upstream gives no reason. The pair predates the 2024 "add mobile updater" rework, and the
+    exit only ever ran on the path where it hurt.
+- **Keep the game on screen:** the update prompt (Android only) adds "Keep the game on screen until Android's installer
+  opens; leaving it can stop the download. Then tap Update there." "Update Failed" adds that leaving the game may have
+  stopped the download (4fb442f9's cut download).
+- **`[TFR-Update]` lines** (round 1004's are kept, except its "the game exits" hand-off line, which is replaced):
+  - `handing the APK to Android's package installer (try N): installer opened; the game waits for the player` (or
+    `openFile FAILED`);
+  - `the game is back on screen S s after the installer hand-off; the choice dialog is waiting`, from a one-line hook
+    at the end of `Forge.resume()`;
+  - `back from the installer without an install after S s (try N): <button> -> REOPEN|KEEP_PLAYING`;
+  - `keep playing vX; the load continues`.
+  - An install kills the process, so it logs no return line. The next version's first launch shows it.
+- **Files:**
+  - `forge-gui-mobile/src/forge/assets/AssetsDownloader.java`: `waitOutInstaller`, `onAppResumed` and the
+    package-private helpers `installerReturnOptions`, `installerReturnAction` and `installerReturnMessage`.
+  - `forge-gui-mobile/src/forge/Forge.java`: the one-line `resume()` hook.
+  - New test: `forge-gui-mobile/test/forge/assets/AssetsDownloaderInstallerReturnTest.java`.
+- **Proof** (`C:\CLAUDE\PROJECTS\TFR1\notes\r1008\report.md`, with shots and logcats):
+  - **Unit test:** 5 of 5 pass (Maven exit 0).
+  - **LDPlayer instance 1 (Android 14):** a signed test APK built in the `C:\TFR-build` clone with a test-only
+    versionName 1.27 / versionCode 12700, never committed. It took the real tfr-v1.28 APK from GitHub. Then:
+    - Cancel in the installer: back on screen, the dialog waits, no `Disposing`, no `EXIT_SELF`.
+    - Open Installer Again: try 2, no second download.
+    - Cancel, then Keep Playing: the splash went on loading, then the start screen, then Continue loaded a save into the
+      world, all in the same process.
+    - A fresh launch, then Update Now, Cancel, Open Installer Again, Update: `Killing ... due to installPackageLI`, and
+      12800 installed.
+  - **Instance 1 was restored** to the 1.28 release with its matched assets and its saves.
+- **Not proven:**
+  - Android's "Install unknown apps" detour: the emulator allows it by default.
+  - The final wording: the run showed Android's button reads UPDATE on an update, so after the run "tap Install"
+    became "tap Update there". The unit test covers that text.
+  - A download cut by leaving the app.
+  - Real phones.
+
 ## Round 1007: pixel icons on the dialog buttons (2026-11-10)
 
 The user, through the Art main thread: "Can we now do a full review of TFR1's buttons/menus and let's populate them with

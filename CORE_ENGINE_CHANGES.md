@@ -35,6 +35,20 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 1008 - the Android update waits on return from the installer instead of exiting (logs-1110b P3-21)
+- `forge-gui-mobile/src/forge/assets/AssetsDownloader.java` (STOCK, already TFR-edited): in `checkForUpdates`, the
+  stock `openFile(installer)` + `Forge.isMobileAdventureMode = Forge.advStartup` + `Forge.exitAnimation(false)` +
+  `return` after a downloaded APK is replaced by a call to the new private `waitOutInstaller(apk, installed, offered)`,
+  and the "Update Failed" `switch` became a plain call (same dialog, one more sentence) in an `else`. On Keep Playing the
+  method returns and the code falls through to the Android asset check, the same path as Update Later. The update
+  prompt gains one sentence on Android (`KEEP_ON_SCREEN`). New package-private helpers and constants for the unit test
+  (`installerReturnOptions`, `installerReturnAction`, `installerReturnMessage`, `InstallerReturn`, the four strings),
+  the `installerHandOffAt` field and the public `onAppResumed()` hook. On a merge: if upstream changes the APK hand-off
+  block, keep `waitOutInstaller` in place of its exit.
+- `forge-gui-mobile/src/forge/Forge.java` (STOCK): `resume()` calls `forge.assets.AssetsDownloader.onAppResumed()` as its
+  last line (one `[TFR-Update]` line when the game comes back while the installer has the APK; nothing otherwise).
+- New test: `forge-gui-mobile/test/forge/assets/AssetsDownloaderInstallerReturnTest.java`.
+
 ### Round 1007 - pixel icons on the dialog buttons (util/TfrButtonIcons)
 - `forge-gui-mobile/src/forge/toolbox/FButton.java` (STOCK, already TFR-edited):
   - **Fields:** new `icon`, `iconSize` and `iconGap` after `cornerFitFont`.

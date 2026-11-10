@@ -17,10 +17,13 @@ holds a town, reopened from World Standings' "The War"; GUIDE's What's New in 1.
 round 1006 (World Standings' Reputation and Balance dialogs fit a 1280x720 window: `util/DialogFit.fitToStage` scrolls a
 shown dialog's body only when the window is taller than the screen); round 1007 (pixel icons on the dialog buttons: `util/TfrButtonIcons`, one label-to-icon map,
 `sprites/button_icons.atlas` (8 of TFR 2's icons + Build and Quest done), the MapDialog hook, the war gates, the Job Board
-and the Card Lost row through a new optional icon on Forge's `FButton`; `[TFR-ButtonIcons]` lines). Engine = the 11.09 daily (round 994, upstream `7d0acc8aa92`; round 769's R1-R4 still
+and the Card Lost row through a new optional icon on Forge's `FButton`; `[TFR-ButtonIcons]` lines); round 1008 (Android's
+update no longer quits on the return from the installer: a waiting "Open Installer Again / Keep Playing" dialog in
+`AssetsDownloader.waitOutInstaller`, a keep-on-screen line in the prompt, `[TFR-Update]` lines for the return and the
+choice; proven on LDPlayer, `C:\CLAUDE\PROJECTS\TFR1\notes\r1008\report.md`). Engine = the 11.09 daily (round 994, upstream `7d0acc8aa92`; round 769's R1-R4 still
 keep TFR's synchronous auto save, eager shops, Inn events and place entry; bosses keep the player's AI setting through
 `bossAiFollowsSetting`); next merge from upstream after `7d0acc8aa92` (its first commit is `b3802f9255a`, #12773, hidden-zone ChangeZone in APNAP order); BASE_INSTALL is that daily, so packages need no
-`--allow-base-mismatch`. Next version: 1.29 / 12900. Next free round: 1008. The agent profile's window is
+`--allow-base-mismatch`. Next version: 1.29 / 12900. Next free round: 1009. The agent profile's window is
 1280x720 - at 3840x2160 it covered the screen, got minimized, and a minimized game stops (the bridge times out, shots
 come back 1x1). Agent games keep their own LOCALAPPDATA cache (round 860). Log sharing (round 698) posts to Discord
 through a webhook kept OUT of git in `C:\TFR\secrets\discord_log_webhook.txt` - never commit it; the packager and

@@ -1142,6 +1142,7 @@ public class Forge implements ApplicationListener {
             MatchController.getHostedMatch().resume();
         }
         forge.adventure.util.StageViewports.syncToWindow("on resume"); // TFR round 990, as in resize()
+        forge.assets.AssetsDownloader.onAppResumed(); // TFR round 1008: a line when back from the update installer
     }
 
     @Override
