@@ -14357,9 +14357,13 @@ merge note on `[TFR-Memory]`.
   - Maven `-o -pl forge-gui-mobile,forge-gui-desktop -am test -Dtest=RecruitAiTest,CostSVarFallbackTest,
     CapitolDefenseSaveTest,IncubateEmpowerAiTest`: exit 0, 5/5 and 14/14. Desktop jar `-o -pl forge-gui-mobile-dev -am
     package -DskipTests`: exit 0.
-- **Agent check**: not in this commit. A test copy (`agent-r998`) loads a save with a planted waiting mage
-  (`PlantCapitolMage`) once the agent window comes round; its result follows as "Round 998 (follow-up)" if it finds
-  anything.
+- **Agent check (follow-up, passed)**: test copy `agent-r998` with the packaged agent jar (built 15:14, round 998 in
+  it); slot 42 planted with `PlantCapitolMage "Court Mage" red` (dry run first, `.precapitol1.bak`). On load:
+  `[TFR-CapitolDefense] restored from the save: red's Court Mage waits at the Capitol - the forced duel is queued
+  again`, then at once `the forced duel starts: red's Court Mage` on the world map; the duel ran at 50x, the AI's seat
+  lost, and "Your Capitol has fallen!" came up - the whole Capitol path from a restored mage. The autosave
+  `startForcedCapitolDuel` took at the duel's start holds `capitolDefenseMage=Court Mage`, so a quit mid-duel brings it
+  back. Shots and the log excerpt in `notes/r998/` (outside the repo); the test copy recycled.
 - **Not done**: no console command to send a mage to the Capitol (round 995 held the console file); the planting tool
   covers the test.
 
