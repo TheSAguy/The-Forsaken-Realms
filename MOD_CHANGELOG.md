@@ -14334,6 +14334,18 @@ last of the four. The user: "I want everything in before 1.28."
 - **Checked by code only:** an AI town's single guard (none had risen in the test world on day 1), the obelisk and the
   X mark, the player's roaming guards (left out: they are characters on the move, not tokens).
 
+**Round 1001 (follow-up), 2026-11-09: tips keep clear of the gold and shard readouts.** The main thread's review of round
+999's shots: the Inn's Re-roll tip covered the gold readout at the right (only "40" of the gold showed). `TfrTips.place`
+now checks a screen's `playerGold` and `playerShards` readouts after placing a box: a box that would cover one moves to
+its left, or above it when there is no room. The named label is the hidden placeholder that `Controls.AccountingLabel`
+draws over, so its bounds are used and its parent's visibility decides. A first try that checked the label's own
+visibility skipped it and changed nothing (the agent shot showed the same overlap). The box still sits above the
+hovered button, as every tip does.
+
+- **Test:** Maven `-o -pl forge-gui-mobile -am test -Dtest=TfrTipsTest,TfrLabelsTest`: exit 0, 15/15.
+- **Agent shot:** `C:\CLAUDE\PROJECTS\TFR1\notes\r999\r999_inn.reroll_followup.png` - the Re-roll tip left of the
+  readout, "19340" whole.
+
 ## Round 1000: hover tips on Ascendance, the quest log, the journal, the character sheet, standings, inventory, research (2026-11-09)
 
 The tooltip audit's round C (`C:\CLAUDE\PROJECTS\TFR1\notes\tooltips\tooltip-audit.md`, spots 23-28 and 47-52, with

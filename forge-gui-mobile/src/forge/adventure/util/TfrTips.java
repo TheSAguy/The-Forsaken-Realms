@@ -627,8 +627,29 @@ public final class TfrTips {
             x = lo.x - w - 4;
             y = (lo.y + hi.y) / 2 - h / 2;
         }
-        g.setPosition(Math.round(Math.max(2, Math.min(sw - w - 2, x))), Math.round(Math.max(2, Math.min(sh - h - 2, y))));
+        x = Math.max(2, Math.min(sw - w - 2, x));
+        y = Math.max(2, Math.min(sh - h - 2, y));
+        // Round 1001 (follow-up): a screen's gold and shard readouts stay readable - a box that would cover one moves
+        // to its left, or above it when there is no room (the Inn's Re-roll tip hid the gold).
+        for (String name : READOUTS) {
+            Actor r = a.getStage().getRoot().findActor(name);
+            // the named label is the hidden placeholder of Controls.AccountingLabel (which draws the amount in its place):
+            // its bounds are the readout's, so its parent's visibility is the one that counts
+            if (r == null || r.getParent() == null || !showing(r.getParent()) || r == a || a.isDescendantOf(r))
+                continue;
+            Vector2 rlo = r.localToStageCoordinates(new Vector2(0, 0)), rhi = r.localToStageCoordinates(new Vector2(r.getWidth(), r.getHeight()));
+            if (x < rhi.x + 2 && x + w > rlo.x - 2 && y < rhi.y + 2 && y + h > rlo.y - 2) {
+                if (rlo.x - w - 4 >= 2)
+                    x = rlo.x - w - 4;
+                else
+                    y = Math.min(sh - h - 2, rhi.y + 4);
+            }
+        }
+        g.setPosition(Math.round(x), Math.round(y));
     }
+
+    /** The UI scenes' resource readouts (ui json names) a tip must not cover. */
+    private static final String[] READOUTS = {"playerGold", "playerShards"};
 
     // ------------------------------------------------------------------ console: tips ...
 
