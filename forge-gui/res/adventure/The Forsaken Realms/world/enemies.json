@@ -153866,7 +153866,7 @@
             "BiomeWhite"
         ],
         "tier": "Rare",
-        "scale": 0.1429
+        "scale": 0.1672
     },
     {
         "name": "Shellback Ankylosaur",
@@ -154106,7 +154106,7 @@
             "BiomeWhite"
         ],
         "tier": "Mythic",
-        "scale": 0.1321
+        "scale": 0.1673
     },
     {
         "name": "Blazeplate Orc",
@@ -154274,7 +154274,7 @@
             "BiomeRed"
         ],
         "tier": "Mythic",
-        "scale": 0.1494
+        "scale": 0.1757
     },
     {
         "name": "Azure Headsman",
@@ -155081,7 +155081,7 @@
             "BiomeBlack"
         ],
         "tier": "Mythic",
-        "scale": 0.1483
+        "scale": 0.1755
     },
     {
         "name": "Overlord of Black Pinions",
@@ -155166,7 +155166,7 @@
             "BiomeRed"
         ],
         "tier": "Mythic",
-        "scale": 0.1202
+        "scale": 0.1635
     },
     {
         "name": "Devil Empress",

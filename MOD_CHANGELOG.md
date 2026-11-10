@@ -14264,6 +14264,44 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 1010: ten more round-179 enemies get real animation loops (2026-11-10)
+
+The user: "Yes, batch them", then "Yes, install all 10". This is an Art main thread round, the batch after round 1009's
+harpy, found by the same scan (`C:\CLAUDE\PROJECTS\ART\notes\tfr1_harpy_anim\scan\scan_round179.txt`).
+
+- **The bug:** round 179 imported these 10 from pose-collection sheets: a pose catalog of one 3D model, not
+  animation cycles.
+  - Their Idle, Walk and Attack rows jumped between unrelated poses, facings and camera angles.
+  - Mawjaw Drake, Furhorn Wyvern, Overlord of Black Pinions, Astral Wyrm and Inferno Drake shipped Idle and Walk as
+    the same frames.
+  - The ten: Mawjaw Drake, Furhorn Wyvern, Umbral Dragon, Verdant Wyrm, Skyreef Shark, Dawnblade Angel, Overlord of
+    Black Pinions, Astral Wyrm, Archangel of the Gilded Dawn and Inferno Drake.
+- **The fix:** each sheet's Idle, Walk and Attack are rebuilt from the creature's own source poses.
+  - Every frame faces right, with left-facing poses mirrored.
+  - Each animation uses one downscale, at most 1.25x the creature's shared one. The Overlord uses a single scale
+    across all three, so it doesn't pop in size between loops.
+  - A steady torso anchor, with each loop resting on the cell bottom.
+  - Idle is a hover and Walk is a flight stroke wherever the poses allow, so the 5 shared-frame enemies now have 2
+    different loops.
+- **Unchanged:** the atlases, cells, frame counts, Avatar, and the Hit and Death rows (byte-identical). Only the 10
+  PNGs change.
+- **Scale:** five sheets came out smaller in their cells because tall and wide poses share one scale. Their
+  `world/enemies.json` `scale` is raised to restore the old median on-map height, checked against the old sheet in a
+  map mock.
+
+  | Enemy | Old scale | New scale |
+  |---|---|---|
+  | Archangel of the Gilded Dawn | 0.1321 | 0.1673 |
+  | Umbral Dragon | 0.1483 | 0.1755 |
+  | Dawnblade Angel | 0.1429 | 0.1672 |
+  | Overlord of Black Pinions | 0.1202 | 0.1635 |
+  | Astral Wyrm | 0.1494 | 0.1757 |
+- **Avatar:** `bake_avatars.py --audit` reports 0 problems. No bake output changed.
+- **CREDITS:** no change, since the sources are the same.
+- **Magma Dragon is left out.** By eye, its sheet is one camera's flap, not a pose collection.
+- **Previews, picks and build scripts:** `C:\CLAUDE\PROJECTS\ART\notes\tfr1_harpy_anim\batch\` (`picks.py`,
+  `build_batch.py`, `set_scales.py`).
+
 ## Round 1009: the Talonborn Harpy's animations are real loops (2026-11-10)
 
 The user: "Can you look at the animation for this creature. I think it might be off", then "Yes, install A". This is
