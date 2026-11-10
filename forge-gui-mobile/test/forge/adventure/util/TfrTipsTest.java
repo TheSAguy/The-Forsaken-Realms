@@ -111,6 +111,24 @@ public class TfrTipsTest {
                 "research.overFour", "research.hideUntouched");
     }
 
+    /** Round 1001 (round D): the world-map tokens' and the custom difficulty screen's keys. */
+    @Test
+    public void round1001KeysExist() {
+        assertKeys("map.guard", "map.guardCapital", "map.ruin", "map.obelisk", "map.xmark", "map.pile", "map.mystery",
+                "map.chest", "custom.basic", "custom.expert", "custom.changedOnly", "custom.reset");
+    }
+
+    /** Round 1001: a knob's own tooltip (no "\n" of its own) is broken at spaces, no line past the limit, nothing lost. */
+    @Test
+    public void plainTextWraps() {
+        String t = "Enemy life: every enemy's starting life is multiplied by this. [GOLD]Higher[] is harder, and a boss counts too.";
+        String w = TfrTips.wrap(t, 40);
+        for (String line : w.split("\n"))
+            AssertJUnit.assertTrue(line + " is " + line.length(), line.replaceAll("\\[[^\\]]*]", "").length() <= 40);
+        AssertJUnit.assertEquals(t, w.replace('\n', ' '));
+        AssertJUnit.assertEquals("short", TfrTips.wrap("short", 40));
+    }
+
     /** Every {asc.FIELD} a tip names is a real AscendanceData field (a typo would show "?"). */
     @Test
     public void ascendanceFillsExist() throws Exception {

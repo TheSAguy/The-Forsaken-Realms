@@ -317,8 +317,8 @@ public class PointOfInterestMapSprite extends MapSprite {
         batch.setColor(pr, pg, pb, pa);
     }
 
-    /** Tier names of the AI guard dots for this POI, or null when it shows none. */
-    private String[] aiGuardDots(PointOfInterestChanges changes) {
+    /** Tier names of the AI guard dots for this POI, or null when it shows none. TFR round 1001: public, for the hover tip. */
+    public String[] aiGuardDots(PointOfInterestChanges changes) {
         forge.adventure.data.PointOfInterestData data = pointOfInterest.getData();
         if (data == null || forge.adventure.util.ColorReputation.colorOfTown(data) == null)
             return null; // not an AI color town/capital (Waste/ruined/neutral, Spawn, player Capitol)

@@ -35,6 +35,14 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 1001 - hover tips on the world map's tokens and the custom difficulty rows (the tooltip audit's round D)
+- `forge-gui-mobile/src/forge/adventure/stage/PointOfInterestMapSprite.java` (STOCK): `aiGuardDots(changes)` is public
+  (was private), for the guard's hover tip (`TfrMapTips`). Nothing else changed.
+- New TFR-only: `util/TfrMapTips.java`. TFR-only edits: `TfrTips` (the world-map probe `pollMap`, `plain`/`wrap`,
+  `insideScrollers`, the console's `tips at`), `ResourceSpawns` (`OTHER_PICKUP_BONUS`, `MYSTERY_AMBUSH_CHANCE`,
+  `MYSTERY_BLUEPRINT_CHANCE` package-visible), `TreasureHunt` (`OBELISK_DAYS` package-visible), `CustomDifficultyScene`
+  (the knob, level, changed-only and reset tips; `helpNote`); `tips.json`; `TfrTipsTest`.
+
 ### Round 1000 - hover tips on Ascendance, the quest log, the journal, the character sheet, standings, inventory, research (the tooltip audit's round C)
 - `forge-gui-mobile/src/forge/adventure/scene/QuestLogScene.java` (STOCK): the constructor calls
   `TfrScreenTips.questButtons(this, abandonQuestButton, trackButton)`; `buildList` calls `TfrScreenTips.questName` on

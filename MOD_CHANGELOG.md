@@ -14292,6 +14292,48 @@ the RC build and its test, waits for the main thread's "RC window open". Nothing
   release link and the Export Logs ask; the replies to gnomedoom - End Turn, round 995 - and to fabbdf70 - the
   minimized-launch "freeze", round 990, and the Legends price, round 991).
 
+## Round 1001: hover tips on the world map's tokens and the custom difficulty rows (2026-11-09)
+
+The tooltip audit's round D (`C:\CLAUDE\PROJECTS\TFR1\notes\tooltips\tooltip-audit.md`, spots 33-35, 53-54 and 59), the
+last of the four. The user: "I want everything in before 1.28."
+
+- **World-map tokens: new `util/TfrMapTips`.** The world map has hundreds of tokens that come and go daily, so they are
+  not regions. When no region is under the mouse, `TfrTips` asks `TfrMapTips.at` for the token there (only on the
+  world map, with no dialog holding the input and no HUD panel or button under the mouse) and draws its usual box on
+  the HUD's stage, above the token. The audit proposed TfrPlates; the tip box was chosen instead, so these follow the
+  tooltip setting, are mouse only, and look like every other tip.
+  - An AI town's guard dots: the guard's rank (`PointOfInterestMapSprite.aiGuardDots`, public now), "you duel it
+    before you can take the town", and its rise every `aiTownGuardDaysPerLevel` days. A capital: its two Archmages.
+  - A ruined town: restore it at its Job Board.
+  - An obelisk: a map piece; it moves on every `TreasureHunt.OBELISK_DAYS`.
+  - A treasure's X: dig with the Spade (`DIG_SHARDS`, `DIG_RADIUS`); its guardian rises.
+  - The pickups (`World.getResourceSpawns`): a pile shows its resource icon and amount (the rolled value plus
+    `OTHER_PICKUP_BONUS`, as the pickup pays it before Prospector) and the days until it fades; the Mystery diamond its
+    blueprint and ambush chances; the chest its event. The three constants are package-visible now, so the tips read
+    the ones the pickup uses.
+  - A token the player can't see right now (fog) has no tip, as it has no sprite. The X marks show through fog, as
+    they are drawn.
+- **Custom difficulty (`CustomDifficultyScene`):** each knob's own `tooltip` from `custom_difficulty.json` shows on
+  hover as on a click, with the same "when it applies" note (new `helpNote`, shared by the help line); Basic, Expert,
+  Changed only and the "<" reset (back to the preset's value). A knob's tooltip has no line breaks, so the new
+  `TfrTips.plain(text, 90)` breaks it at spaces (the box never wraps).
+- **`TfrTips` fixes found on the way:**
+  - A list's row scrolled out of its ScrollPane's view no longer answers the mouse (`insideScrollers`). It sat under
+    the help line and the buttons below the list, and the custom difficulty screen showed a hidden knob's tip there.
+  - A HUD-sized plain group (the HUD's layout root) does not count as "a HUD panel under the mouse", so it does not
+    silence the map tips. The first real HUD hit is logged once.
+- **Console:** `tips at X Y` / `tips at off` - a pretend mouse in screen pixels, so the agent (which has no mouse) can
+  run the real hit tests, not only the forced `tips hover TAG`. `tips list` on the world map adds the tokens on screen.
+- **Test:** `TfrTipsTest` 11 -> 13: `round1001KeysExist`, `plainTextWraps` (no line past the limit, nothing lost).
+  Maven `-o -pl forge-gui-mobile -am test -Dtest=TfrTipsTest,TfrLabelsTest`: exit 0, 15/15.
+- **Agent-game shots** (`C:\CLAUDE\PROJECTS\TFR1\notes\r1001\`): a shard pile, the Mystery diamond, a chest, a ruined
+  town, a capital's guards (forced hover); a custom difficulty knob (wrapped) and Expert. Through the real hit test
+  with `tips at`: the ruined town under the pretend mouse (`r1001_at_ruin.png`) and the HUD's wood row winning over the
+  map (`r1001_at_hudwood.png`); empty ground showed nothing; with tooltips Off the ruin showed nothing, and Auto
+  brought it back.
+- **Checked by code only:** an AI town's single guard (none had risen in the test world on day 1), the obelisk and the
+  X mark, the player's roaming guards (left out: they are characters on the move, not tokens).
+
 ## Round 1000: hover tips on Ascendance, the quest log, the journal, the character sheet, standings, inventory, research (2026-11-09)
 
 The tooltip audit's round C (`C:\CLAUDE\PROJECTS\TFR1\notes\tooltips\tooltip-audit.md`, spots 23-28 and 47-52, with

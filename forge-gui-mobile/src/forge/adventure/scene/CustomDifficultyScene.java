@@ -219,6 +219,10 @@ public class CustomDifficultyScene extends UIScene {
             }
         });
         bar.add(changedBox).padRight(3);
+        // round 1001: hover tips (TfrTips; tips.json)
+        forge.adventure.util.TfrTips.region(this, basicButton, "custom.basic");
+        forge.adventure.util.TfrTips.region(this, expertButton, "custom.expert");
+        forge.adventure.util.TfrTips.region(this, changedBox, "custom.changedOnly");
         bar.add(Controls.newTextraLabel("[%85]Changed only")).left().expandX();
         content.add(bar).left().growX().padBottom(4).row();
 
@@ -960,6 +964,9 @@ public class CustomDifficultyScene extends UIScene {
                 showHelp(k);
             }
         });
+        // round 1001: the knob's own tooltip on hover too, as a click shows it in the help line
+        forge.adventure.util.TfrTips.region(this, name, "custom.knob", () -> forge.adventure.util.TfrTips.plain(k.label + ": "
+                + k.tooltip + " " + helpNote(k), 90));
         r.add(name).left().width(landscape ? 160 : 100).padLeft(3).expandX();
 
         if (locked(k)) {
@@ -994,6 +1001,8 @@ public class CustomDifficultyScene extends UIScene {
                 refill();
             });
             reset.setName("reset:" + k.id);
+            forge.adventure.util.TfrTips.region(this, reset, "custom.reset", // round 1001
+                    () -> forge.adventure.util.TfrTips.text("custom.reset", "preset", presetName()));
             r.add(reset).width(button).height(button).padLeft(landscape ? 6 : 4).padRight(3);
         } else {
             r.add().width(button + (landscape ? 9 : 7));
@@ -1053,11 +1062,13 @@ public class CustomDifficultyScene extends UIScene {
     }
 
     private void showHelp(Knob k) {
-        help.setText("[%85][GOLD]" + k.label + ":[WHITE] " + k.tooltip
-                + (locked(k) ? " [LIGHT_GRAY](New game only.)"
-                : midGame ? " [LIGHT_GRAY](On Done.)"
-                : newGamePlus ? " [LIGHT_GRAY](For the new run.)"
-                : k.isNewGameOnly() ? " [LIGHT_GRAY](New game only.)" : " [LIGHT_GRAY](Can be changed later in Settings.)"));
+        help.setText("[%85][GOLD]" + k.label + ":[WHITE] " + k.tooltip + " [LIGHT_GRAY]" + helpNote(k));
+    }
+
+    /** When a change to k applies (round 1001: shared by the help line and the hover tip). */
+    private String helpNote(Knob k) {
+        return locked(k) ? "(New game only.)" : midGame ? "(On Done.)" : newGamePlus ? "(For the new run.)"
+                : k.isNewGameOnly() ? "(New game only.)" : "(Can be changed later in Settings.)";
     }
 
     private static com.badlogic.gdx.scenes.scene2d.utils.Drawable tint() {

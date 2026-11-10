@@ -382,13 +382,16 @@ public final class TfrTips {
             if (a == null || !sceneShows(r, scene) || a.getStage() == null || !showing(a))
                 continue;
             if (forced != null) {
-                if (forced.equals(r.tag))
+                // round 1001: a row scrolled out of its list's view is not the one a scripted look means
+                if (forced.equals(r.tag) && insideScrollers(a, a.localToStageCoordinates(new Vector2(a.getWidth() / 2, a.getHeight() / 2))))
                     return r;
                 continue;
             }
-            if (!mouse)
+            if (!mouse && fakeMouse == null)
                 return null;
-            Vector2 m = a.getStage().screenToStageCoordinates(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
+            Vector2 m = a.getStage().screenToStageCoordinates(mouse());
+            if (!insideScrollers(a, m)) // round 1001: a list's row scrolled out of view still lies under other widgets
+                continue;
             Vector2 l = a.stageToLocalCoordinates(new Vector2(m));
             float x0 = r.part == null ? 0 : r.part[0] * a.getWidth(), y0 = r.part == null ? 0 : r.part[1] * a.getHeight();
             float w = r.part == null ? a.getWidth() : r.part[2] * a.getWidth(), h = r.part == null ? a.getHeight() : r.part[3] * a.getHeight();
@@ -398,12 +401,129 @@ public final class TfrTips {
         return null;
     }
 
+    /** Round 1001: the stage point lies inside every ScrollPane a sits in (its visible part), so a is not clipped there. */
+    private static boolean insideScrollers(Actor a, Vector2 stagePoint) {
+        for (Actor x = a.getParent(); x != null; x = x.getParent())
+            if (x instanceof com.badlogic.gdx.scenes.scene2d.ui.ScrollPane) {
+                Vector2 l = x.stageToLocalCoordinates(new Vector2(stagePoint));
+                if (l.x < 0 || l.y < 0 || l.x > x.getWidth() || l.y > x.getHeight())
+                    return false;
+            }
+        return true;
+    }
+
+    /** Round 1001: "tips at X Y" - a pretend mouse (screen pixels, y down) for the agent, which has no real one; null: the real. */
+    private static int[] fakeMouse;
+
+    /** The mouse in screen pixels: the real one, or "tips at"'s. */
+    private static Vector2 mouse() {
+        return fakeMouse != null ? new Vector2(fakeMouse[0], fakeMouse[1]) : new Vector2(Gdx.input.getX(), Gdx.input.getY());
+    }
+
     private static void hideBox() {
         if (box != null)
             box.remove();
         box = null;
         boxFor = null;
         boxText = null;
+        mapKey = null;
+    }
+
+    /** Round 1001: the map token whose tip shows (TfrMapTips.Hit.key), or null. */
+    private static String mapKey;
+    private static boolean loggedHudHit;
+
+    /**
+     * Round 1001: no region under the mouse - a world-map token's tip (TfrMapTips), drawn on the HUD's stage above the
+     * token. Only on the world map with no dialog holding the input and nothing of the HUD under the mouse. False: none.
+     */
+    private static boolean pollMap() {
+        if (!(Forge.getCurrentScene() instanceof forge.adventure.scene.GameScene))
+            return false;
+        forge.adventure.stage.WorldStage ws = forge.adventure.stage.WorldStage.getInstance();
+        if (ws.isDialogOnlyInput())
+            return false;
+        com.badlogic.gdx.scenes.scene2d.Stage hud = forge.adventure.stage.GameHUD.getInstance();
+        TfrMapTips.Hit h;
+        if (forced != null) {
+            h = forced.startsWith("map.") ? TfrMapTips.first(forced) : null;
+        } else {
+            if (forge.gui.GuiBase.isAndroid() && fakeMouse == null)
+                return false;
+            Vector2 hm = hud.screenToStageCoordinates(mouse());
+            Actor over = hud.hit(hm.x, hm.y, true);
+            // a plain group as big as the screen (the HUD's layout root) is not a panel: the map shows through it
+            if (over != null && over instanceof Group && !(over instanceof com.badlogic.gdx.scenes.scene2d.ui.Button)
+                    && !(over instanceof com.badlogic.gdx.scenes.scene2d.ui.Table && ((com.badlogic.gdx.scenes.scene2d.ui.Table) over).getBackground() != null)
+                    && over.getWidth() >= hud.getWidth() * 0.9f && over.getHeight() >= hud.getHeight() * 0.9f)
+                over = null;
+            if (over != null) { // a HUD panel or button under the mouse: the map under it has no tip
+                if (!loggedHudHit) {
+                    loggedHudHit = true;
+                    System.out.println("[TFR-Tips] map tips stand down over the HUD (first: " + over.getClass().getSimpleName()
+                            + (over.getName() == null ? "" : " " + over.getName()) + ")");
+                }
+                return false;
+            }
+            Vector2 w = ws.screenToStageCoordinates(mouse());
+            h = TfrMapTips.at(w.x, w.y);
+        }
+        if (h == null)
+            return false;
+        boxAge += Gdx.graphics.getDeltaTime();
+        boolean same = h.key.equals(mapKey);
+        String t = same && boxAge < 0.5f ? boxText : h.text.get();
+        if (t == null || t.isEmpty())
+            return false;
+        if (!same || !t.equals(boxText) || box == null || box.getStage() != hud) {
+            hideBox();
+            mapKey = h.key;
+            boxText = t;
+            box = build(t);
+            hud.addActor(box);
+            if (!same)
+                System.out.println("[TFR-Tips] tip " + h.tag + ": " + t.replaceAll("\\[[^\\]]*]", "").replace('\n', ' '));
+        }
+        if (boxAge >= 0.5f)
+            boxAge = 0;
+        // the token's top middle and bottom, world -> screen -> the HUD's stage
+        Vector2 top = hud.screenToStageCoordinates(ws.stageToScreenCoordinates(new Vector2(h.x + h.w / 2, h.y + h.h)));
+        Vector2 bottom = hud.screenToStageCoordinates(ws.stageToScreenCoordinates(new Vector2(h.x + h.w / 2, h.y)));
+        float sw = hud.getWidth(), sh = hud.getHeight(), bw = box.getWidth(), bh = box.getHeight();
+        float x = top.x - bw / 2, y = top.y + 3 + bh <= sh - 2 ? top.y + 3 : bottom.y - bh - 3;
+        box.setPosition(Math.round(Math.max(2, Math.min(sw - bw - 2, x))), Math.round(Math.max(2, Math.min(sh - bh - 2, y))));
+        box.toFront();
+        return true;
+    }
+
+    /**
+     * Round 1001: a text from outside tips.json (a custom difficulty knob's own tooltip) as a tip: broken into lines of
+     * at most max characters (markup aside) at spaces, since the box never wraps, and its glyphs inked.
+     */
+    public static String plain(String text, int max) {
+        return text == null ? null : ink(wrap(text, max));
+    }
+
+    static String wrap(String text, int max) {
+        StringBuilder out = new StringBuilder();
+        for (String para : text.split("\n", -1)) {
+            if (out.length() > 0)
+                out.append('\n');
+            int len = 0;
+            for (String word : para.split(" ")) {
+                int wl = word.replaceAll("\\[[^\\]]*]", "").length();
+                if (len > 0 && len + 1 + wl > max) {
+                    out.append('\n');
+                    len = 0;
+                } else if (len > 0) {
+                    out.append(' ');
+                    len++;
+                }
+                out.append(word);
+                len += wl;
+            }
+        }
+        return out.toString();
     }
 
     private static boolean logged;
@@ -429,7 +549,8 @@ public final class TfrTips {
         Region r = on() ? under() : null;
         Actor a = r == null ? null : r.actor.get();
         if (a == null) {
-            hideBox();
+            if (!(on() && pollMap())) // round 1001: else a world-map token's tip
+                hideBox();
             return;
         }
         boxAge += Gdx.graphics.getDeltaTime();
@@ -499,7 +620,7 @@ public final class TfrTips {
         float x = (lo.x + hi.x) / 2 - w / 2, y = hi.y + 3 + h <= sh - 2 ? hi.y + 3 : lo.y - h - 3;
         if (hi.y - lo.y > sh * 0.25f) {   // a tall actor (the minimap): by the mouse, or near its top for a scripted look
             Vector2 m = forced != null ? new Vector2(lo.x + 12 + w / 2, hi.y - 30)
-                    : a.getStage().screenToStageCoordinates(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
+                    : a.getStage().screenToStageCoordinates(mouse());
             x = m.x - w / 2;
             y = m.y + 8 + h <= sh - 2 ? m.y + 8 : m.y - h - 8;
         } else if (hi.x > sw - 60 && lo.x > w + 6) {   // at the right edge (the HUD's resource column): left of it
@@ -527,6 +648,18 @@ public final class TfrTips {
                 forced = s.length > 1 && !s[1].equalsIgnoreCase("off") ? s[1] : null;
                 System.out.println("[TFR-Tips] hover " + (forced == null ? "off: the mouse decides" : forced + " (forced)"));
                 return forced == null ? "hover off" : "hover " + forced;
+            case "at": // round 1001: tips at X Y | tips at off - the real hit tests with a pretend mouse
+                if (s.length > 2) {
+                    try {
+                        fakeMouse = new int[]{Integer.parseInt(s[1]), Integer.parseInt(s[2])};
+                    } catch (NumberFormatException e) {
+                        return "tips at X Y (screen pixels) | tips at off";
+                    }
+                } else {
+                    fakeMouse = null;
+                }
+                System.out.println("[TFR-Tips] at " + (fakeMouse == null ? "off: the real mouse" : fakeMouse[0] + "," + fakeMouse[1] + " (pretend mouse)"));
+                return fakeMouse == null ? "at off" : "at " + fakeMouse[0] + "," + fakeMouse[1];
             case "list": {
                 StringBuilder b = new StringBuilder();
                 Object scene = Forge.getCurrentScene();
@@ -535,6 +668,10 @@ public final class TfrTips {
                     if (a != null && sceneShows(r, scene) && a.getStage() != null && showing(a) && b.indexOf(" " + r.tag + " ") < 0)
                         b.append(' ').append(r.tag).append(' ');
                 }
+                if (scene instanceof forge.adventure.scene.GameScene) // round 1001: the map tokens on screen
+                    for (TfrMapTips.Hit h : TfrMapTips.tokens())
+                        if (b.indexOf(" " + h.tag + " ") < 0 && TfrMapTips.first(h.tag) != null)
+                            b.append(' ').append(h.tag).append(' ');
                 String line = "tips on show:" + b.toString().replaceAll("\\s+", " ");
                 System.out.println("[TFR-Tips] " + line);
                 return line;
@@ -542,12 +679,12 @@ public final class TfrTips {
             case "state":
                 break;
             default:
-                return "tips [state|auto|on|off|hover TAG|hover off|list]";
+                return "tips [state|auto|on|off|hover TAG|hover off|at X Y|at off|list]";
         }
         String diff = difficultyNow();
         String line = "tooltips " + describe(mode(), diff, enabled() && resolve(mode(), diff))
                 + (enabled() ? "" : " (not on this plane)") + (forced == null ? "" : ", hover forced: " + forced)
-                + (box != null && boxFor != null ? ", showing " + boxFor.tag : "");
+                + (box != null && boxFor != null ? ", showing " + boxFor.tag : "") + (box != null && mapKey != null ? ", showing " + mapKey : "");
         System.out.println("[TFR-Tips] state: " + line);
         return line;
     }

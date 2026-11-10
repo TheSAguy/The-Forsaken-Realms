@@ -50,7 +50,7 @@ public class ResourceSpawns {
     // Round 656 (the user: "For all overworld resource spawns - Wood, Stone and Shards. Please add 15 to the base value. I
     // want them to feel rewarding"): added to the rolled 2-10 when one is PICKED UP, so the spawns already lying on the map
     // pay it too - 17-25, before Prospector. Gold keeps its 5-100.
-    private static final int OTHER_PICKUP_BONUS = 15;
+    static final int OTHER_PICKUP_BONUS = 15; // round 1001: package-visible for the pile's hover tip (TfrMapTips)
     private static final int POI_CLEARANCE_TILES = 3; // don't spawn on/right next to a town/dungeon icon
     private static final int PLACEMENT_ATTEMPTS = 200; // per spawn - plenty for a mostly-open map
     private static final int NEAR_START_RADIUS_TILES = 12; // the guaranteed new-game spawn lands within this of the start
@@ -70,12 +70,12 @@ public class ResourceSpawns {
     // established. Deliberately its own type rather than folded into Mystery's own resolution -
     // the user asked for it as a visibly distinct chest icon on the map, not a Mystery sub-case.
     public static final int TYPE_GOLD = 0, TYPE_SHARDS = 1, TYPE_WOOD = 2, TYPE_STONE = 3, TYPE_MYSTERY = 4, TYPE_CHEST = 5;
-    private static final float MYSTERY_AMBUSH_CHANCE = 0.05f;
+    static final float MYSTERY_AMBUSH_CHANCE = 0.05f; // round 1001: read by the Mystery's hover tip
     // Shop blueprint from a Mystery pickup (user spec 2026-08-30). Deliberately generous at 25%:
     // the AI-shop Buy Blueprint button is the real acquisition route, so a drop is only ever
     // filling in a type the player has not happened to walk past. Self-disabling once every type
     // is known - see grantRandomBlueprint().
-    private static final float MYSTERY_BLUEPRINT_CHANCE = 0.25f;
+    static final float MYSTERY_BLUEPRINT_CHANCE = 0.25f; // round 1001: read by the Mystery's hover tip
     // Round 239 (user: "On the Diamond Resource spawn we've added. Add a possible outcome +3 life for next
     // duel"). Rolled after the ambush and the blueprint, before the plain resources. It is a BLESSING -
     // the one-duel effect slot DuelScene already applies at the start of the next duel and clears after it,

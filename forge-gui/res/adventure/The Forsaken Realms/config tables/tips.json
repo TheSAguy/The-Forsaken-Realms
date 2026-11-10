@@ -132,5 +132,21 @@
   "research.sell": "Sell: gold for the card, and it counts toward its set's research.",
   "research.sacrifice": "Sacrifice: counts x{tuning.researchSacrificeFactor} toward its set's research, but pays no gold.",
   "research.overFour": "Sells every copy over {keep} of the cards shown.\nNever a card in a deck or a favorite.",
-  "research.hideUntouched": "Hide the sets you haven't given any cards to."
+  "research.hideUntouched": "Hide the sets you haven't given any cards to.",
+
+  // ---- round 1001: world-map tokens (TfrMapTips; {town}, {rank}, {n}, {days}, {res}, {blueprint}, {ambush})
+  "map.guard": "{town}'s guard: {rank}. You duel it before you can take the town.\nIt rises one rank every {tuning.aiTownGuardDaysPerLevel} days its color holds the town.",
+  "map.guardCapital": "{town}'s guards: {n} {rank}s. You duel them before you can take the capital.",
+  "map.ruin": "{town}: a ruined town.\nRestore it at its Job Board and make it yours.",
+  "map.obelisk": "Obelisk: walk onto it for a treasure-map piece.\nIt moves on every {days} days.",
+  "map.xmark": "Your treasure lies here. Dig with the Spade ([+Shards] {digShards}) within {digRadius} tiles.\nIts guardian rises when you dig.",
+  "map.pile": "{res} {n}: walk over it to pick it up.\nIt fades in {days} days.",
+  "map.mystery": "Mystery: a resource, a blueprint ({blueprint}%) or extra life for your next duel.\nOr an ambush ({ambush}%). It fades in {days} days.",
+  "map.chest": "Chest: a random event when you open it - treasure, a merchant or a fight.\nIt fades in {days} days.",
+
+  // ---- custom difficulty (the knobs' own tooltips are custom_difficulty.json's; {preset})
+  "custom.basic": "Basic: the rules most players change.",
+  "custom.expert": "Expert: every rule, the fine-tuning ones too.",
+  "custom.changedOnly": "Show only the rules you changed.",
+  "custom.reset": "Back to {preset}'s value."
 }

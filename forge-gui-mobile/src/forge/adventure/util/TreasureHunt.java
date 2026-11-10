@@ -76,7 +76,7 @@ public final class TreasureHunt {
     public static final int FRAGMENTS = 9;
     public static final int PIECE_TILES = 10;
     public static final int CROP_TILES = PIECE_TILES * 3;
-    private static final int OBELISK_DAYS = 7;
+    static final int OBELISK_DAYS = 7; // round 1001: read by the obelisk's hover tip
     // The user: "The player will need to dig within a certain radius of the hidden treasure to trigger a find" - 2 tiles
     // (a 5x5 patch): the map shows the X from the first piece, so the radius is the slack for placing it on the land.
     public static final int DIG_RADIUS = 2;
