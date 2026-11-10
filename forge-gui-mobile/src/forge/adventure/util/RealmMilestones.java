@@ -419,16 +419,19 @@ public final class RealmMilestones {
         if (s == null || !enabled() || !heldTownHere(stage))
             return;
         if (!currentOffer(s).isEmpty()) {
-            dialog.getButtonTable().add(Controls.newTextButton("Realm boon (" + s.waiting.get(0) + " towns): choose", () -> {
+            TextraButton choose = Controls.newTextButton("Realm boon (" + s.waiting.get(0) + " towns): choose", () -> {
                 stage.hideDialog();
                 showChoice(stage, s, "job board", null);
-            })).width(240f).row();
+            });
+            TfrPlaceTips.realm(choose, every()); // round 999
+            dialog.getButtonTable().add(choose).width(240f).row();
             return;
         }
         int held = TownRestoration.countPlayerTowns();
         TextraButton info = Controls.newTextButton("[%85]Realm: " + held + " towns" + (s.peak > held ? " (most " + s.peak
                 + ")" : "") + " - next boon at " + (s.reached + 1) * every(), () -> {});
         info.setDisabled(true);
+        TfrPlaceTips.realm(info, every()); // round 999
         dialog.getButtonTable().add(info).width(240f).row();
     }
 

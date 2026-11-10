@@ -65,7 +65,7 @@ in its duel, is written to the save and queued again on load - new `util/Capitol
 pending, `dev-tools/save-editing/PlantCapitolMage.java` for agent checks; new `RecruitAi` in stock `SpellApiToAi` (the
 AI now casts Sound the Trumpets; upstream has none); stock `AbilityUtils` prints its "fallback to Card" line only when
 the card has the value - Relic Amulet's 299 lines; `[TFR-Memory]`'s `undoObjects=` became `undoKB=`/`undoDeltas=` from
-`UndoManager`'s own retained estimate; `RecruitAiTest`, `CostSVarFallbackTest`). **1.28 log watch**: a `[TFR-Exit] dispose called again`
+`UndoManager`'s own retained estimate; `RecruitAiTest`, `CostSVarFallbackTest`). Round 999 (hover tips, the tooltip audit's round B: towns' Job Board - restore, Capitol, specialty, realm - shops, the Spellsmith with its named price multipliers, the Shard Trader and the Inn; new `util/TfrPlaceTips`, hooks in stock `RewardScene`, `SpellSmithScene`, `ShardTraderScene`, `InnScene`, `MenuScene`, `MapDialog`; `TfrTipsTest` 9). **1.28 log watch**: a `[TFR-Exit] dispose called again`
 line and whether Android's `CRASH_NATIVE` exits stop (round 997's guess at their cause); a
 `[TFR-InnEvent] loaded with a broken reward state` line (round 996's shape was on disk at load, with player data);
 upstream's FlatMC tuning for

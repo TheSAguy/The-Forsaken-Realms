@@ -843,7 +843,7 @@ public class TownRestoration {
         // the first BUILDINGS_PER_REPUTATION build slots become available immediately, before the
         // player has done anything else to earn standing with this specific town.
         DialogData.ActionData addRep = new DialogData.ActionData();
-        addRep.addMapReputation = 1;
+        addRep.addMapReputation = RESTORE_REPUTATION;
         yes.action = new DialogData.ActionData[]{
                 EconomyBuildings.spendCostAction(fee[0], fee[1], 0, 0),
                 setFlagAction(TOWN_RESTORED_FLAG),
@@ -918,6 +918,8 @@ public class TownRestoration {
     // a building immediately frees its slot back up (destroyBuilding() removes its shopRebuilt_
     // flag), independent of reputation - the two mechanics don't interact.
     public static final int BUILDINGS_PER_REPUTATION = 3;
+    /** The town reputation a restore gives (round 999 named it, for its hover tip). */
+    public static final int RESTORE_REPUTATION = 1;
 
     /** How many of this town's shop/building slots are currently built/restored - every one of
      *  them, plain shop or gated building or economy building alike, sets a "shopRebuilt_&lt;id&gt;"
@@ -1056,6 +1058,7 @@ public class TownRestoration {
             com.github.tommyettinger.textra.TextraButton elsewhere = Controls.newTextButton(
                     "Upgrade to Capitol (only at Orazca)", () -> {});
             elsewhere.setDisabled(true);
+            TfrPlaceTips.capitol(elsewhere, "orazca", countPlayerTowns(), CAPITOL_TOWNS_REQUIRED); // round 999
             dialog.getButtonTable().add(elsewhere).width(240f).row();
         }
         if (!isCapitolItself && !capitolExists() && seatIsHere) {
@@ -1064,6 +1067,7 @@ public class TownRestoration {
                 com.github.tommyettinger.textra.TextraButton needMore = Controls.newTextButton(
                         "Upgrade to Capitol (" + owned + "/" + CAPITOL_TOWNS_REQUIRED + " towns)", () -> {});
                 needMore.setDisabled(true);
+                TfrPlaceTips.capitol(needMore, "towns", owned, CAPITOL_TOWNS_REQUIRED); // round 999
                 dialog.getButtonTable().add(needMore).width(240f).row();
             } else {
                 // Multi-resource cost (2026-08-12 user table, wood/stone halved 2026-08-21: 1000
@@ -1077,6 +1081,7 @@ public class TownRestoration {
                         });
                 upgrade.setDisabled(!EconomyBuildings.canAffordCost(CAPITOL_COST_GOLD,
                         CAPITOL_COST_WOOD, CAPITOL_COST_STONE, CAPITOL_COST_SHARDS));
+                TfrPlaceTips.capitol(upgrade, "upgrade", owned, CAPITOL_TOWNS_REQUIRED); // round 999
                 dialog.getButtonTable().add(upgrade).width(240f).row();
             }
         }

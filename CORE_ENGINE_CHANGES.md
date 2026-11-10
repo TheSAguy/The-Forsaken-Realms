@@ -35,6 +35,26 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 999 - hover tips in towns, shops, the Spellsmith, the Shard Trader and the Inn (the tooltip audit's round B)
+- `forge-gui-mobile/src/forge/adventure/scene/RewardScene.java` (STOCK): the constructor ends with one
+  `TfrPlaceTips.shop(...)` call (Restock, Armory Re-roll, Buy Blueprint, Re-assign Shop Type, Upgrade Armory, Manage
+  Guards, Storage, Destroy; `restockPriceNow` and the Armory re-roll cost as suppliers); `BuyButton`'s constructor calls
+  `TfrPlaceTips.price(RewardScene.this, this)` after `updateOwned()`.
+- `forge-gui-mobile/src/forge/adventure/scene/SpellSmithScene.java` (STOCK): the price multipliers are named constants
+  (`EDITION_MULT` 4, `COLOR_MULT` 2.5, `COLOR_MAX` 6, `RARITY_MULT` {1.5, 2.5, 4, 5.5}, `COST_MULT` 2.5, `SHARD_SHARE`
+  0.2) and the price math uses them (same values as upstream's literals - on a merge, keep the constants and take any
+  upstream value change into them); the constructor ends with `TfrPlaceTips.spellsmith(...)`.
+- `forge-gui-mobile/src/forge/adventure/scene/ShardTraderScene.java` (STOCK): the constructor ends with
+  `TfrPlaceTips.shardTrader(...)`.
+- `forge-gui-mobile/src/forge/adventure/scene/InnScene.java` (STOCK): the constructor ends with `TfrPlaceTips.inn(...)`.
+- `forge-gui-mobile/src/forge/adventure/scene/MenuScene.java` (STOCK): `loadDialog` calls
+  `TfrPlaceTips.menuOption(this, B, option.name)` after each option button's `setWrap` (an Inn event's "Spend N" entry
+  options get the fee tip; every other menu nothing).
+- `forge-gui-mobile/src/forge/adventure/util/MapDialog.java` (STOCK): the option loop calls
+  `TfrPlaceTips.mapOption(B, option.name)` after `setWrap` (the "Restore town" option gets its tip).
+- New TFR-only: `util/TfrPlaceTips.java`. TFR-only edits: `TownRestoration` (`RESTORE_REPUTATION`, the Capitol
+  button's three states), `TownSpecialties` and `RealmMilestones` (their Job Board rows); `tips.json`; `TfrTipsTest`.
+
 ### Round 998 - Recruit AI, the cost-SVar fallback line, the undo memory figure
 - `forge-ai/src/main/java/forge/ai/SpellApiToAi.java` (STOCK): one map line, `.put(ApiType.Recruit, RecruitAi.class)`
   (after `RearrangeTopOfLibrary`). Before it Recruit fell back to `CannotPlayAi`.

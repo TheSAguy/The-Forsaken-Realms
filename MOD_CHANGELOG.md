@@ -14264,6 +14264,49 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 999: hover tips in towns, shops, the Spellsmith, the Shard Trader and the Inn (2026-11-09)
+
+The tooltip audit's round B (`C:\CLAUDE\PROJECTS\TFR1\notes\tooltips\tooltip-audit.md`, spots 16-22 and 37-46). The
+user: "I want everything in before 1.28. So please proceed with it." Round 993's system (`util/TfrTips`), its setting
+and its box are unchanged; this round only registers places.
+
+- **New `util/TfrPlaceTips`**: each screen hands its widgets over in one call; every text is a `tips.json` key, with its
+  numbers filled where the game reads them - the tuning table (`{tuning.FIELD}`), the screen's own live price, or a
+  named constant - never written into the text.
+- **Shops (`RewardScene`):** Restock (the price it charges now, the weekly +1, the Market town's free restock), the
+  Armory's Re-roll Inventory (its live cost; once a week), Buy Blueprint (the standing each tier needs), Re-assign Shop
+  Type, Upgrade Armory, Manage Guards, Storage, Destroy, and the price under every card or item (what makes it, the
+  sell-back floor, Haggler's share when the player has it).
+- **The Shard Trader:** buy and sell, with the amounts and the difficulty's sell rate (`shardSellRatio`).
+- **The Spellsmith:** the set, color, rarity and mana-value filters with the price multiplier each applies, and the two
+  pulls (paid before the reveal when `spellsmithPaysFirst`; the shard price's share of the gold price). The
+  multipliers were literals in stock `SpellSmithScene`'s price math; they are named constants now (same values), and
+  the price math and the tips read the same ones.
+- **The Inn:** Temporary Hit Points - one text per state (buyable, Barred at War, Blessed at Partner, Closed in a
+  ruin), read from the button's word; Re-roll (`innTournamentRerollShardCost`); Sell; and an event's "Spend N" entry
+  options (the town's prices and Tournament Regular's factor when the player has it), through stock `MenuScene`.
+- **Towns (the Job Board):** the restore offer (the reputation it gives and its building slots, through stock
+  `MapDialog`; the +1 is `TownRestoration.RESTORE_REPUTATION` now), Upgrade to Capitol in its three states (too few
+  towns, only at Orazca, the upgrade; the mage warning only with `capitolBuiltSendsMages`), the specialty row (free
+  pick, locked, paid change: the fee as the button shows it and `specialtyChangeLockDays`) and the realm line
+  (`milestoneEveryTowns`).
+- A tip inside a map dialog names the town map as its scene: the HUD's null scene stands down while a dialog holds the
+  input.
+- **Left out, with reasons:**
+  - The specialty choice list's buttons already print each effect, so they get no tip.
+  - Inn Temporary Hit Points' "+2" is a literal in stock `AdventurePlayer.potionOfFalseLife`, outside this round's files,
+    so the tip says "extra life" without the number.
+  - The Armory screen's own Sell (a low spot) is not in round B's list.
+- **Test:** `TfrTipsTest` 6 -> 9: `round999KeysExist` (every key the code asks for is in `tips.json`),
+  `amountsUseTheIcons` (no tip writes "50 gold" or "{n} wood": an amount always follows its icon),
+  `spellsmithMultipliers`. Maven `-o -pl forge-gui-mobile -am test -Dtest=TfrTipsTest,TfrLabelsTest`: exit 0, 11/11.
+- **Agent-game shots** (`C:\CLAUDE\PROJECTS\TFR1\notes\r999\`, a test copy with this round's classes ahead of the jar;
+  forced hover): the restore offer, the Capitol and realm rows, Restock and a card price, three Spellsmith tips, Shard
+  Trader Sell, the Inn's Temporary Hit Points and Re-roll. Every box is drawn whole. The log has a `[TFR-Tips] tip`
+  line for each and no `no value for` line.
+- **Checked by code only:** the Armory, Blueprint, Re-assign and Upgrade buttons, the specialty row, the Inn's
+  Barred/Blessed/Closed states and the event entry fee.
+
 ## Round 998: a waiting Capitol duel survives a save, an AI for Recruit, Relic Amulet's log noise, the undo memory line (2026-11-09)
 
 The user, before 1.28: "I'd like to finish-up anything outstanding before releasing 1.28." The main thread's sweep left

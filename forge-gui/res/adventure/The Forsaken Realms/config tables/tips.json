@@ -44,5 +44,51 @@
   "settings.leveling": "Ascendance leveling. Off: no Power or levels, and no limit on worn main items.\nEach save keeps its own.",
   "settings.notoriety": "Every {tuning.notorietyWinsPerLevel} wins gives foes a Wall; a loss takes {tuning.notorietyLossPenalty} off.\nChecked: no Walls or stronger foes. The score still counts.",
   "settings.reload": "Checked: reloading to undo a lost duel makes enemies tougher on Hard and Insane (+1 life a reload, at most +{reloadCap}).\nEvery {reloadForgive} honest losses forgive one.",
-  "settings.difficulty": "This save's difficulty.\nEdit... changes the rules you can change mid-game."
+  "settings.difficulty": "This save's difficulty.\nEdit... changes the rules you can change mid-game.",
+
+  // ---- round 999: shops (call-site fills: {price}, {cost}, {haggler}, {pct})
+  "shop.restock": "Restock: new stock for this shop, [+Shards] {price} now.\nEach restock here this week costs one more; the count resets when the week turns.\nA Market town's first restock each week is free.",
+  "shop.armoryReroll": "Re-roll Inventory: new Armory stock now, for [+Shards] {cost}.\nOnce a week. The Armory also refreshes on its own each week.",
+  "shop.blueprint": "Buy Blueprint: learn this shop type, so you can build it in your own towns.\nThe town's color must like you: Neutral for Common, Happy for Uncommon,\nPartner for Rare and Mythic.",
+  "shop.shopType": "Re-assign Shop Type: rebuild this shop as another type.\nYou pay the new type's price, less half of this shop's gold value.",
+  "shop.upgradeArmory": "Upgrade to a Level 2 Armory.\nIt unlocks Manage Guards: hire guards that roam out to defend your towns.",
+  "shop.manageGuards": "Hire guards that roam out to defend your towns, and see the ones you have.",
+  "shop.storage": "Storage: keep items here, out of your inventory.",
+  "shop.destroy": "Destroy this building. Nothing is refunded.",
+  "shop.price": "The price: the card's value, this town's prices and its color's standing with you.{haggler}\nNever less than the card sells back for.",
+  "shop.haggler": "\nHaggler takes {pct}% off.",
+
+  // ---- the Shard Trader ({n}, {gold}, {pct})
+  "shardTrader.buy": "Buy [+Shards] {n} for [+Gold] {gold}: the same on every difficulty.",
+  "shardTrader.sell": "Sell [+Shards] {n} for [+Gold] {gold}.\nThe rate depends on the difficulty: on {difficulty} you get {pct}% of what they cost to buy.",
+
+  // ---- the Spellsmith ({mult}, {two}, {max}, {common} ...; {pct})
+  "smith.edition": "Pick a set: only its cards can come.\nPrice x{mult}.",
+  "smith.color": "Pick colors: only cards of these colors can come.\nPrice x{mult} for one color, x{two} for two, at most x{max}.",
+  "smith.rarity": "Pick a rarity: only cards of it can come.\nPrice x{common} Common, x{uncommon} Uncommon, x{rare} Rare, x{mythic} Mythic.",
+  "smith.cost": "Pick a mana value range: only cards in it can come.\nPrice x{mult}.",
+  "smith.pull": "Pull: a random card from the pool, for this price.\nYou see it before you take it.",
+  "smith.pullPaid": "Pull: a random card from the pool, for this price.\nPaid before the reveal: the card is yours, there is no decline.",
+  "smith.shards": "In [+Shards] it costs {pct}% of the [+Gold] price.",
+
+  // ---- the Inn ({regular}, {factor})
+  "inn.tempHp": "Temporary Hit Points: extra life above your maximum, until you lose it.\nOnly at full life. The price follows your win record and this town's prices.",
+  "inn.tempHpBarred": "Barred: this town's color is at War with you, so its Inn won't serve you.",
+  "inn.tempHpBlessed": "Blessed: this town's color is your Partner.\nYou got the extra life free on entering town.",
+  "inn.tempHpClosed": "Closed: a ruined town's Inn runs tournaments only.",
+  "inn.reroll": "Re-roll: a new card pool for this tournament, [+Shards] {tuning.innTournamentRerollShardCost}.\nOnly before you join it.",
+  "inn.sell": "Sell the cards you marked for Auto-Sell in the deck editor.",
+  "inn.entryFee": "The entry fee: the event's own fee, times this town's prices.{regular}",
+  "inn.regular": "\nTournament Regular: fees x{factor}.",
+
+  // ---- towns: the Job Board ({rep}, {slots}; {need}, {have}; {fee}, {days}; {every})
+  "town.restore": "Restore: this town becomes yours, at [+Reputation] {rep} here ({slots} building slots).\nIts land grows each week. The fee rises every {tuning.restoreFeeStepTowns} towns you hold.",
+  "town.capitol": "The Capitol: your seat of power.\nGuards, the Bank, the Temple, the Teleporter hub and rare shops.{mages}",
+  "town.capitolMages": "\nWarning: when it rises, every rival color sends a mage at once.",
+  "town.capitolTowns": "Needs {need} towns of yours ({have} now).",
+  "town.capitolOrazca": "Only Orazca, the ruin at the center of the map, can become your Capitol.",
+  "town.specialtyChoose": "A specialty gives this town one lasting bonus. The first pick is free.\nA change later costs [+Gold] {fee} and locks it for {tuning.specialtyChangeLockDays} days.",
+  "town.specialtyLocked": "Changed recently: it can change again in {days} days.\nEach change locks it for {tuning.specialtyChangeLockDays} days.",
+  "town.specialtyChange": "Change this town's specialty for [+Gold] {fee}.\nThe new one is locked for {tuning.specialtyChangeLockDays} days.",
+  "town.realm": "Every {every} towns you hold at once earns a realm boon: pick 1 of 3.\nLosing towns never takes a boon away."
 }

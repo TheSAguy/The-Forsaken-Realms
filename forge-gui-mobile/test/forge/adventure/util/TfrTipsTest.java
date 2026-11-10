@@ -74,4 +74,54 @@ public class TfrTipsTest {
                         line.replaceAll("\\[[^\\]]*]", "").length() <= 125);
         AssertJUnit.assertTrue("tips read", count > 20);
     }
+
+    static com.badlogic.gdx.utils.JsonValue tips() {
+        java.io.File f = new java.io.File("../forge-gui/res/adventure/The Forsaken Realms/" + TfrTips.FILE);
+        return new com.badlogic.gdx.utils.JsonReader().parse(new com.badlogic.gdx.files.FileHandle(f));
+    }
+
+    /** Every key a round's code asks for is in tips.json (a missing one shows no tip at all). */
+    static void assertKeys(String... keys) {
+        com.badlogic.gdx.utils.JsonValue d = tips();
+        for (String k : keys)
+            AssertJUnit.assertTrue("tips.json has no \"" + k + "\"", d.has(k));
+    }
+
+    /** Round 999 (round B): the towns', shops', Spellsmith's, Shard Trader's and Inn's keys (TfrPlaceTips). */
+    @Test
+    public void round999KeysExist() {
+        assertKeys("shop.restock", "shop.armoryReroll", "shop.blueprint", "shop.shopType", "shop.upgradeArmory",
+                "shop.manageGuards", "shop.storage", "shop.destroy", "shop.price", "shop.haggler", "shardTrader.buy",
+                "shardTrader.sell", "smith.edition", "smith.color", "smith.rarity", "smith.cost", "smith.pull",
+                "smith.pullPaid", "smith.shards", "inn.tempHp", "inn.tempHpBarred", "inn.tempHpBlessed", "inn.tempHpClosed",
+                "inn.reroll", "inn.sell", "inn.entryFee", "inn.regular", "town.restore", "town.capitol",
+                "town.capitolMages", "town.capitolTowns", "town.capitolOrazca", "town.specialtyChoose",
+                "town.specialtyLocked", "town.specialtyChange", "town.realm");
+    }
+
+    /**
+     * The resource-icon rule (the user's standing rule): an amount is "[+Gold] 50", never "50 gold" - and no tip writes
+     * a bare amount after a resource word either ("gold 50"). Numbers come from {fills}, so a digit before a resource
+     * word can only be a literal someone typed.
+     */
+    @Test
+    public void amountsUseTheIcons() {
+        java.util.regex.Pattern bare = java.util.regex.Pattern.compile(
+                "(?i)(\\d+|\\{[\\w.]+})\\s*(gold|shards?|wood|stone|reputation)\\b");
+        for (com.badlogic.gdx.utils.JsonValue v = tips().child; v != null; v = v.next) {
+            String t = v.asString().replaceAll("\\[\\+\\w+]", "");
+            AssertJUnit.assertFalse(v.name + ": an amount without its icon: " + v.asString(), bare.matcher(t).find());
+        }
+    }
+
+    /** The Spellsmith's tips read the multipliers its price uses (round 999 named them; the price math uses the same). */
+    @Test
+    public void spellsmithMultipliers() {
+        AssertJUnit.assertEquals("4", TfrTips.num(forge.adventure.scene.SpellSmithScene.EDITION_MULT));
+        AssertJUnit.assertEquals("2.5", TfrTips.num(forge.adventure.scene.SpellSmithScene.COLOR_MULT));
+        AssertJUnit.assertEquals("5", TfrTips.num(Math.min(2 * forge.adventure.scene.SpellSmithScene.COLOR_MULT,
+                forge.adventure.scene.SpellSmithScene.COLOR_MAX)));
+        AssertJUnit.assertEquals("5.5", TfrTips.num(forge.adventure.scene.SpellSmithScene.RARITY_MULT[3]));
+        AssertJUnit.assertEquals("20", TfrTips.num(Math.round(forge.adventure.scene.SpellSmithScene.SHARD_SHARE * 100f)));
+    }
 }

@@ -57,6 +57,10 @@ public class SpellSmithScene extends UIScene {
     private int cost_high = 9999;
     //Other
     private final float basePrice = 125f;
+    // TFR round 999: the price multipliers named, so the hover tips say the numbers the price uses (were literals below)
+    public static final float EDITION_MULT = 4.0f, COLOR_MULT = 2.5f, COLOR_MAX = 6.0f, COST_MULT = 2.5f, SHARD_SHARE = 0.2f;
+    /** Common, Uncommon, Rare, Mythic. */
+    public static final float[] RARITY_MULT = {1.5f, 2.5f, 4.0f, 5.5f};
     private int currentPrice = 0;
     private int lockedPrice = 0;
 
@@ -145,6 +149,10 @@ public class SpellSmithScene extends UIScene {
             reset();
             filterResults();
         });
+        // TFR round 999: hover tips on the filters (each with its price multiplier) and the pulls (TfrPlaceTips; tips.json)
+        forge.adventure.util.TfrPlaceTips.spellsmith(this, editionList, colorButtons.values(), rarityButtons.values(),
+                costButtons.values(), pullUsingGold, pullUsingShards, EDITION_MULT, COLOR_MULT, COLOR_MAX, RARITY_MULT,
+                COST_MULT, SHARD_SHARE);
     }
 
     private void reset() {
@@ -449,33 +457,33 @@ public class SpellSmithScene extends UIScene {
         }).collect(Collectors.toList());
         //Stream method is very fast, might not be necessary to precache anything.
         if (!edition.isEmpty())
-            totalCost *= 4.0f; //Edition select cost multiplier. This is a huge factor, so it's most expensive.
+            totalCost *= EDITION_MULT; //Edition select cost multiplier. This is a huge factor, so it's most expensive.
         if (colorFilter.size() > 0)
-            totalCost *= Math.min(colorFilter.size() * 2.5f, 6.0f); //Color filter cost multiplier.
+            totalCost *= Math.min(colorFilter.size() * COLOR_MULT, COLOR_MAX); //Color filter cost multiplier.
         if (!rarity.isEmpty()) { //Rarity cost multiplier.
             switch (rarity) {
                 case "C":
-                    totalCost *= 1.5f;
+                    totalCost *= RARITY_MULT[0];
                     break;
                 case "U":
-                    totalCost *= 2.5f;
+                    totalCost *= RARITY_MULT[1];
                     break;
                 case "R":
-                    totalCost *= 4.0f;
+                    totalCost *= RARITY_MULT[2];
                     break;
                 case "M":
-                    totalCost *= 5.5f;
+                    totalCost *= RARITY_MULT[3];
                     break;
                 default:
                     break;
             }
         }
-        if (cost_low > -1) totalCost *= 2.5f; //And CMC cost multiplier.
+        if (cost_low > -1) totalCost *= COST_MULT; //And CMC cost multiplier.
 
         cardPool = StreamUtil.stream(P).collect(Collectors.toList());
         poolSize.setText(((cardPool.size() > 0 ? "[/][FOREST]" : "[/][RED]")) + cardPool.size() + " possible card" + (cardPool.size() > 1 ? "s" : ""));
         currentPrice = (int) totalCost;
-        currentShardPrice = (int) (totalCost * 0.2f); //Intentionally rounding up via the cast to int
+        currentShardPrice = (int) (totalCost * SHARD_SHARE); //Intentionally rounding up via the cast to int
         pullUsingGold.setText("[+Pull][+goldcoin] "+ currentPrice);
         pullUsingShards.setText("[+Pull][+shards]" + currentShardPrice);
         pullUsingGold.setDisabled(!(cardPool.size() > 0) || Current.player().getGold() < totalCost);

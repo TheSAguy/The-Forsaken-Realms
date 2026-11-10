@@ -74,6 +74,7 @@ public class InnScene extends UIScene {
 
         reroll = ui.findActor("reroll");
         ui.onButtonPress("reroll", InnScene.this::promptRerollEvent);
+        forge.adventure.util.TfrPlaceTips.inn(this, tempHitPointCost, sell, reroll); // TFR round 999: hover tips
     }
 
 

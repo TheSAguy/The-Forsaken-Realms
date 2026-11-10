@@ -47,6 +47,9 @@ public class ShardTraderScene extends UIScene {
         playerGold = Controls.newAccountingLabel(ui.findActor("playerGold"), false);
         playerShards = Controls.newAccountingLabel(ui.findActor("playerShards"),true);
         leaveIcon = ui.findActor("leaveIcon");
+        // TFR round 999: hover tips on the trades, with their amounts (TfrPlaceTips; tips.json)
+        forge.adventure.util.TfrPlaceTips.shardTrader(this, buyShardsCost, sellShardsQuantity, () -> shardsToBuy,
+                () -> shardCost, () -> shardsToSell, () -> shardPrice);
     }
 
     public void done() {

@@ -161,6 +161,7 @@ public class MenuScene extends UIScene {
                         }
                     });
                     B.getTextraLabel().setWrap(true); //We want this to wrap in case it's a wordy choice.
+                    forge.adventure.util.TfrPlaceTips.menuOption(this, B, option.name); // TFR round 999: an Inn entry fee's tip
                     buttons.add(B);
                     B.setVisible(false);
                     D.getButtonTable().add(B).width(width - 10); //The button table also returns a Cell when adding.

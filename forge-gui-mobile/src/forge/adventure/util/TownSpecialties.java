@@ -337,10 +337,12 @@ public final class TownSpecialties {
             return;
         Specialty current = of(changes);
         if (current == null) {
-            dialog.getButtonTable().add(Controls.newTextButton("Choose a specialty (free)", () -> {
+            TextraButton choose = Controls.newTextButton("Choose a specialty (free)", () -> {
                 stage.hideDialog();
                 showChoice(stage, poi, changes, false, "job board", null);
-            })).width(240f).row();
+            });
+            TfrPlaceTips.specialty(choose, "choose", changeFeeGold(), 0); // round 999
+            dialog.getButtonTable().add(choose).width(240f).row();
             return;
         }
         int locked = lockDaysLeft(changes);
@@ -348,6 +350,7 @@ public final class TownSpecialties {
             TextraButton lockedButton = Controls.newTextButton("[%85]" + current.label + " - change in " + locked
                     + (locked == 1 ? " day" : " days"), () -> {});
             lockedButton.setDisabled(true);
+            TfrPlaceTips.specialty(lockedButton, "locked", changeFeeGold(), locked); // round 999
             dialog.getButtonTable().add(lockedButton).width(240f).row();
             return;
         }
@@ -358,6 +361,7 @@ public final class TownSpecialties {
             showChoice(stage, poi, changes, true, "job board", null);
         });
         change.setDisabled(!EconomyBuildings.canAffordCost(gold, 0, 0, 0));
+        TfrPlaceTips.specialty(change, "change", gold, 0); // round 999
         dialog.getButtonTable().add(change).width(240f).row();
     }
 

@@ -497,6 +497,7 @@ public class MapDialog {
                         });
                     }
                     B.getTextraLabel().setWrap(true); //We want this to wrap in case it's a wordy choice.
+                    forge.adventure.util.TfrPlaceTips.mapOption(B, option.name); // TFR round 999: the restore offer's tip
                     buttons.add(B);
                     B.setVisible(false);
                     optionHost.add(B).width(WIDTH - 10); //The button table also returns a Cell when adding.

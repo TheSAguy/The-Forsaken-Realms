@@ -178,6 +178,10 @@ public class RewardScene extends UIScene {
         storageButton.setVisible(false);
         ui.addActor(storageButton);
         origDrawable = getBGDrawable(); // round 385 (09.30 merge): upstream keeps the page background for enter()
+        // TFR round 999: hover tips on the shop's buttons (TfrPlaceTips; tips.json)
+        forge.adventure.util.TfrPlaceTips.shop(this, restockButton, rerollButton, buyBlueprintButton, shopTypeRerollButton,
+                upgradeButton, guardsButton, storageButton, destroyButton, this::restockPriceNow,
+                () -> EconomyBuildings.scaledCost(EconomyBuildings.ARMORY_REROLL_SHARD_COST));
     }
 
     /**
@@ -1490,6 +1494,7 @@ public class RewardScene extends UIScene {
             }
             setText("[+GoldCoin] " + price);
             updateOwned();
+            forge.adventure.util.TfrPlaceTips.price(RewardScene.this, this); // TFR round 999: what makes the price
             addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
