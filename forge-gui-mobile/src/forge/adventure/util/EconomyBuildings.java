@@ -3520,6 +3520,7 @@ public class EconomyBuildings {
             TextraButton upgrade = Controls.newTextButton(upgradeLabel,
                     canUpgrade ? () -> openUpgradeToExchangeConfirmDialog(stage, objectId) : () -> {});
             upgrade.setDisabled(!canUpgrade);
+            TfrButtonIcons.decorate("a Capitol building", upgrade, upgradeLabel); // TFR round 1007: the button icon
             dialog.getButtonTable().add(upgrade).colspan(2).width(240f).row();
         }
         TextraButton destroy = Controls.newTextButton("Destroy Building", () ->

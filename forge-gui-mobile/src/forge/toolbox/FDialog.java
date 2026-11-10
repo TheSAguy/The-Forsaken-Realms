@@ -189,6 +189,15 @@ public abstract class FDialog extends FOverlay {
         }
     }
 
+    /** TFR round 1007 (button icons): button index's icon (FButton.setIcon), set before the dialog is shown;
+     *  fitButtons then sizes the row with it. */
+    public void setButtonIcon(int index, com.badlogic.gdx.graphics.g2d.TextureRegion icon, float size, float gap) {
+        FButton button = getButton(index);
+        if (button != null) {
+            button.setIcon(icon, size, gap);
+        }
+    }
+
     @Override
     public boolean preventInputBehindOverlay() {
         return revealPercent > 0; //prevent input behind overlay unless completely hidden

@@ -32,6 +32,9 @@ public class FButton extends FDisplayObject implements IButton {
     private String text;
     private FSkinFont font;
     private FSkinFont cornerFitFont; // TFR round 853: the font getCornerFitWidth sized a widened corner for
+    // TFR round 1007 (button icons): an optional icon left of the label, the pair centered (setIcon; the Card Lost row)
+    private com.badlogic.gdx.graphics.g2d.TextureRegion icon;
+    private float iconSize, iconGap;
     private FSkinColor foreColor = getDefaultForeColor();
     private boolean toggled = false;
     private boolean pressed = false;
@@ -100,6 +103,18 @@ public class FButton extends FDisplayObject implements IButton {
     }
     public void setFont(FSkinFont font0) {
         font = font0;
+    }
+
+    /** TFR round 1007 (button icons): icon0 drawn left of the label, the pair centered; size and gap in screen pixels.
+     *  null clears it. The widths below (getCornerFitWidth, getAutoSizeBounds) make room for it. */
+    public void setIcon(com.badlogic.gdx.graphics.g2d.TextureRegion icon0, float size, float gap) {
+        icon = icon0;
+        iconSize = size;
+        iconGap = gap;
+    }
+
+    private float iconRoom() { // TFR round 1007
+        return icon == null ? 0 : iconSize + iconGap;
     }
 
     @Override
@@ -199,7 +214,10 @@ public class FButton extends FDisplayObject implements IButton {
      *  sized here (in a wider box Forge's fit would grow it back to the full height). */
     public float getCornerFitWidth(float minWidth) {
         cornerFitFont = null;
-        if (StringUtils.isEmpty(text) || (!text.contains(" ") && !text.contains("\n"))) { return minWidth; }
+        if (StringUtils.isEmpty(text)) { return minWidth; }
+        if (!text.contains(" ") && !text.contains("\n")) { // TFR round 1007: a one-word label with an icon still needs its room
+            return icon == null ? minWidth : Math.max(minWidth, (font.getMultiLineBounds(text).width + iconRoom() + PADDING) / 0.75f + 2);
+        }
         String label = text.contains("\n") ? text : text.replaceFirst(" ", "\n");
         float boxHeight = getHeight() * 0.75f * 0.8f;
         FSkinFont fitFont = font;
@@ -208,7 +226,7 @@ public class FButton extends FDisplayObject implements IButton {
             fitFont = fitFont.shrink();
             bounds = fitFont.getMultiLineBounds(label);
         }
-        float fitWidth = (bounds.width + PADDING) / 0.75f + 2;
+        float fitWidth = (bounds.width + iconRoom() + PADDING) / 0.75f + 2; // TFR round 1007: + the icon
         if (fitWidth <= minWidth) { return minWidth; }
         cornerFitFont = fitFont;
         return fitWidth;
@@ -230,6 +248,7 @@ public class FButton extends FDisplayObject implements IButton {
         }
 
         autoSizeBounds.height = 3 * font.getCapHeight();
+        autoSizeBounds.width += iconRoom(); // TFR round 1007: + the icon
 
         return autoSizeBounds;
     }
@@ -409,6 +428,20 @@ public class FButton extends FDisplayObject implements IButton {
             if (corner == Corner.BottomLeft || corner == Corner.BottomRight) {
                 if (!displayText.contains("\n")) // TFR round 396: a label with its own line break keeps it
                     displayText = displayText.replaceFirst(" ", "\n"); //allow second word to wrap if corner button
+            }
+            if (icon != null) { // TFR round 1007: the icon left of the label, the pair centered in the text box
+                FSkinFont f = cornerFitFont != null ? cornerFitFont : font;
+                float tw = 0; // the widest line, a {Gold} symbol counted as one line-height square
+                for (String line : displayText.split("\n")) {
+                    String bare = line.replaceAll("\\{[^}]*\\}", "");
+                    int symbols = (line.length() - line.replace("{", "").length());
+                    tw = Math.max(tw, f.getBounds(bare).width + symbols * f.getLineHeight());
+                }
+                tw = Math.min(tw, w - iconRoom());
+                float gx = x + (w - tw - iconRoom()) / 2;
+                g.drawImage(icon, gx, y + (h - iconSize) / 2, iconSize, iconSize);
+                x = gx + iconRoom() - iconGap / 2; // half the gap as slack each side, so a near miss never wraps
+                w = tw + iconGap;
             }
             if (displayText.contains("{")) // TFR round 881: a label with a {Gold} symbol
                 symbolText().drawText(g, displayText, cornerFitFont != null ? cornerFitFont : font, foreColor, x, y, w, h, y, h, false, Align.center, true);

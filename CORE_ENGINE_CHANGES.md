@@ -35,6 +35,37 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 1007 - pixel icons on the dialog buttons (util/TfrButtonIcons)
+- `forge-gui-mobile/src/forge/toolbox/FButton.java` (STOCK, already TFR-edited):
+  - **Fields:** new `icon`, `iconSize` and `iconGap` after `cornerFitFont`.
+  - **New methods:** `setIcon(TextureRegion, size, gap)` and the private `iconRoom()`, both after `setFont`.
+  - **`getCornerFitWidth`:** returns minWidth early only for an empty label. A one-word label returns minWidth when it
+    has no icon, else its width plus the icon. The fit width adds `iconRoom()`.
+  - **`getAutoSizeBounds`:** the width adds `iconRoom()`.
+  - **`draw()`:** right after the corner label split, when an icon is set, it draws the icon left of the text and moves
+    the text box beside it. A `{...}` symbol is measured as one line-height square.
+
+  All of it is inert when no icon is set. On a merge, re-apply the block in `draw()` just before the final `drawText`
+  calls; the frosted path is untouched (Frost is off in adventure mode).
+- `forge-gui-mobile/src/forge/toolbox/FDialog.java` (STOCK, already TFR-edited): new public
+  `setButtonIcon(index, TextureRegion, size, gap)` after `setButtonEnabled`, delegating to `getButton(index).setIcon`.
+- `forge-gui-mobile/src/forge/adventure/scene/DuelScene.java` (STOCK): `showAnteCardPopup` calls
+  `TfrButtonIcons.anteRow(popup, title, buttons)` just before `FThreads.invokeInEdtNowOrLater(popup::show)`.
+- `forge-gui-mobile/src/forge/adventure/util/MapDialog.java` (STOCK): the option loop calls
+  `TfrButtonIcons.decorate("a map dialog", B, name, WIDTH - 18)` after `setWrap(true)`; the pinned last option does the
+  same after its `setWrap(true)`.
+- `forge-gui-mobile/src/forge/adventure/stage/WorldStage.java` (STOCK): one-line swaps, each
+  `Controls.newTextButton(...)` wrapped in `TfrButtonIcons.decorate(where, button, label)` or followed by a
+  `decorate` call:
+  - the bonfire kit's Rebuild;
+  - `showEntryBarredDialog` (Attack, Leave);
+  - `showCastleLockedDialog` (Leave);
+  - `showCapitalTollDialog` (Pay, Attack (two Archmages), the cooldown button, Leave);
+  - `showLegendaryWarningDialog` (Enter, Turn Back).
+- New TFR-only: `util/TfrButtonIcons.java`, `sprites/button_icons.atlas/png`, `dev-tools/item_icons/pack_button_icons.py`
+  and its cells. TFR-only edits: `TownRestoration` (the Job Board's buttons), `EconomyBuildings` (a Capitol building's
+  upgrade button).
+
 ### Round 1005 - "The War Begins" pop-up (util/WarIntro)
 - `forge-gui-mobile/src/forge/adventure/world/World.java` (STOCK, already TFR-edited): fields `warIntroShown`,
   `warIntroOldSave` with getters/setters after `setOpeningWaveSent`; `load` reads them through `WarIntro.readState`

@@ -14264,6 +14264,81 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 1007: pixel icons on the dialog buttons (2026-11-10)
+
+The user, through the Art main thread: "Can we now do a full review of TFR1's buttons/menus and let's populate them with
+icons. Good with creating needed ones with ChatGPT," then "Yes, install." The audit is in the Art project's notes,
+`notes\tfr1_menu_icons\AUDIT.md`.
+- **Reused from TFR 2:** eight of TFR 2's dialog icons.
+- **New:** two TFR 1 icons, picked from two ChatGPT sheets: T2 A, the hammer over stone blocks, for Build; T1 A, the
+  star medal on a red V ribbon, for Quest done.
+- **Already there, unchanged:** the glyph icons TFR 1 had before (the HUD bar, the loot screen's `[+OK]`, the Arena's
+  `[+OK]`/`[+Exit]`, every cost glyph, shop restock, Repair, the Inn's heal).
+
+- **Layout A:** the icon left of the label, the pair centered. The box is 12 stage units: 32 px art at 720p and 1440p,
+  48 px at 1080p and 4K (TFR 2's rule, `TfrButtonIcons.big`).
+- **The atlas:** `sprites/button_icons.atlas/png` in the plane, Nearest, packed by
+  `dev-tools/item_icons/pack_button_icons.py` from `dev-tools/item_icons/button_icons/` (it reads every region back).
+  It holds 10 regions at 32 and 48 px: `enter` (the gate), `attack` (the crossed swords), `leave` (the boot), `orders`
+  (the sealed scroll), `withdraw` (the white flag), `buy` (the purse), `lost` (the broken sword), `coin` (Forge's
+  Bronze Challenge Coin sprite), `build` (new) and `questdone` (new).
+- **One map, `util/TfrButtonIcons.regionOf`.** It is opt-in per dialog: `Controls.newTextButton` is unchanged, so
+  management screens, the HUD and Back/Close/Cancel/Not now keep their text.
+  - Leave, (Leave), any answer ending " (Leave)", Walk away and Turn Back take the boot.
+  - Enter, Pass through and Open the gate take the gate.
+  - Attack, Attack (two Archmages), Attack again in N days, (Fight) and Prepare yourself! take the swords.
+  - Browse quests and every "... (Accept Quest)" take the scroll.
+  - Every "... Complete Quest)", (Quest Complete) and (Take your reward) take the medal.
+  - (Withdraw) and (Flee) take the flag.
+  - Pay ... and Buy Back ... take the purse.
+  - Restore town, Rebuild, Repair ..., Restore Armory and Upgrade ... take the hammer.
+- **Where:**
+  - **`MapDialog`:** every option and the pinned last option, so quests, gates, rubble shops and Restore town. A long
+    answer wraps beside the icon.
+  - **`WorldStage`:**
+    - the barred town (Attack, Leave);
+    - the sealed castle (Leave);
+    - the capital's toll (Pay, Attack (two Archmages) or Attack again, Leave);
+    - the Legendary warning (Enter, Turn Back);
+    - the bonfire kit (Rebuild).
+  - **`TownRestoration`:** the Job Board (Browse quests, Upgrade to Capitol in its three states, Leave).
+  - **`EconomyBuildings`:** a Capitol building's upgrade.
+  - **`DuelScene`:** the Card Lost row. OK takes the broken sword, Buy Back the purse, Bronze Coin the coin. A won card's
+    row (OK, Auto-Sell) stays text.
+- **Card Lost needs Forge's FButton to draw an icon:**
+  - `FButton.setIcon` draws it left of the label. A `{Gold}` symbol is measured as one line-height square, so the pair
+    stays centered.
+  - `getCornerFitWidth` and `getAutoSizeBounds` make room for it.
+  - `FDialog.setButtonIcon` sets one before the dialog shows, so round 853's `fitButtons` widens the corner OK.
+  - Additive and marked TFR; see CORE_ENGINE_CHANGES.
+- **The log:** `[TFR-ButtonIcons] <dialog>: "<label>" -> <region> (<px> px)`, one line per decorated button (the Card
+  Lost row on one line); `[TFR-ButtonIcons] no sprites/button_icons.atlas: every button stays text only` when the
+  sheet is missing.
+- **Stays text, by the audit:**
+  - Back, Close, Cancel, Not now, Decline (Quest), Got it, Understood, a lone OK, Continue;
+  - Card Gained;
+  - the Capitol's rebuild chooser (all four categories or none);
+  - the Arena's mode dialog;
+  - the start and in-game menus;
+  - management screens and the HUD;
+  - level-up, boon and specialty picks;
+  - the Teleporter's Travel rows.
+- **Seen in the agent game** (scratch save, cheats, duels at 50x), at 1280x720 (32 px) and 1920x1080 (48 px):
+  - the barred town;
+  - a gauntlet gate's Leave and Pass through;
+  - a quest offer's (Accept Quest);
+  - Card Lost;
+  - a wasteland town's Restore town;
+  - the restored town's Job Board.
+
+  Not reached in a shot, wired by the same map:
+  - the sealed castle, the capital's toll, the Legendary warning, the bonfire kit;
+  - Upgrade to Capitol, a building's upgrade;
+  - a "(Complete Quest)" answer, (Fight), (Withdraw).
+- **The art:** Art Library `Projects/The Forsaken Realms/Game Art/Button Icons (round 1007)/` (the two new icons, the
+  sheet and both ChatGPT sources); the reused eight are TFR 2's, in `Projects/The Forsaken Realms II/Game Art/Duel Choice
+  Icons/`.
+
 ## Round 1006: World Standings' Reputation and Balance dialogs fit the screen (2026-11-10)
 
 The user: "Yes, fix it", to round 1005's note that World Standings' Reputation info dialog runs taller than the

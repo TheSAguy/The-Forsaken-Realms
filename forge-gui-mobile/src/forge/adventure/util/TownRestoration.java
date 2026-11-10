@@ -1042,10 +1042,10 @@ public class TownRestoration {
         label.setWrap(true);
         label.skipToTheEnd();
         dialog.getContentTable().add(label).width(250f).row();
-        dialog.getButtonTable().add(Controls.newTextButton("Browse quests", () -> {
+        dialog.getButtonTable().add(TfrButtonIcons.decorate("the Job Board", Controls.newTextButton("Browse quests", () -> { // TFR round 1007: the button icon
             stage.hideDialog();
             openQuestBoard.run();
-        })).width(240f).row();
+        }), "Browse quests")).width(240f).row();
         boolean isCapitolItself = point != null && CAPITOL_POI_NAME.equals(point.getData().name);
         // Round 253 (user: "Only town that can become your capitol ... Same gate"): the gate itself is unchanged -
         // CAPITOL_TOWNS_REQUIRED owned towns, Orazca among them, and the same resource cost - but the upgrade is
@@ -1059,6 +1059,7 @@ public class TownRestoration {
                     "Upgrade to Capitol (only at Orazca)", () -> {});
             elsewhere.setDisabled(true);
             TfrPlaceTips.capitol(elsewhere, "orazca", countPlayerTowns(), CAPITOL_TOWNS_REQUIRED); // round 999
+            TfrButtonIcons.decorate("the Job Board", elsewhere, "Upgrade to Capitol"); // TFR round 1007: the button icon
             dialog.getButtonTable().add(elsewhere).width(240f).row();
         }
         if (!isCapitolItself && !capitolExists() && seatIsHere) {
@@ -1068,6 +1069,7 @@ public class TownRestoration {
                         "Upgrade to Capitol (" + owned + "/" + CAPITOL_TOWNS_REQUIRED + " towns)", () -> {});
                 needMore.setDisabled(true);
                 TfrPlaceTips.capitol(needMore, "towns", owned, CAPITOL_TOWNS_REQUIRED); // round 999
+                TfrButtonIcons.decorate("the Job Board", needMore, "Upgrade to Capitol"); // TFR round 1007: the button icon
                 dialog.getButtonTable().add(needMore).width(240f).row();
             } else {
                 // Multi-resource cost (2026-08-12 user table, wood/stone halved 2026-08-21: 1000
@@ -1082,11 +1084,12 @@ public class TownRestoration {
                 upgrade.setDisabled(!EconomyBuildings.canAffordCost(CAPITOL_COST_GOLD,
                         CAPITOL_COST_WOOD, CAPITOL_COST_STONE, CAPITOL_COST_SHARDS));
                 TfrPlaceTips.capitol(upgrade, "upgrade", owned, CAPITOL_TOWNS_REQUIRED); // round 999
+                TfrButtonIcons.decorate("the Job Board", upgrade, "Upgrade to Capitol"); // TFR round 1007: the button icon
                 dialog.getButtonTable().add(upgrade).width(240f).row();
             }
         }
         TownSpecialties.addJobBoardRow(stage, dialog); // round 760: choose or change the town's specialty
-        dialog.getButtonTable().add(Controls.newTextButton("Leave", stage::hideDialog)).width(240f).row();
+        dialog.getButtonTable().add(TfrButtonIcons.decorate("the Job Board", Controls.newTextButton("Leave", stage::hideDialog), "Leave")).width(240f).row(); // TFR round 1007: the button icon
         dialog.setKeepWithinStage(true);
         stage.showDialog();
     }

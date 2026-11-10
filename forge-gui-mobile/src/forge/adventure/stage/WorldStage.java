@@ -443,7 +443,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
         label.setWrap(true);
         label.skipToTheEnd();
         dialog.getContentTable().add(label).width(250f).row();
-        dialog.getButtonTable().add(Controls.newTextButton("Rebuild", () -> {
+        dialog.getButtonTable().add(TfrButtonIcons.decorate("the bonfire kit", Controls.newTextButton("Rebuild", () -> { // TFR round 1007: the button icon
             hideDialog();
             if (Current.player().getShards() < cost) {
                 GameHUD.getInstance().addNotification("[BLACK]Not enough shards to rebuild the bonfire kit (" + cost + " [WHITE][+Shards][BLACK]).", true); // round 367: the icon in its own colors
@@ -453,7 +453,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
             Current.player().repairItem(kit);
             GameHUD.getInstance().addNotification("The bonfire kit is rebuilt - " + kit.uses + " fires again.", true);
             System.out.println("[TFR-Bonfire] kit rebuilt for " + cost + " shards");
-        })).width(120f);
+        }), "Rebuild")).width(120f);
         dialog.getButtonTable().add(Controls.newTextButton("Not now", this::hideDialog)).width(120f).row();
         dialog.setKeepWithinStage(true);
         showDialog();
@@ -1781,12 +1781,12 @@ public class WorldStage extends GameStage implements SaveFileContent {
         dialog.getContentTable().add(label).width(250f).row();
 
         if (canAttack) {
-            dialog.getButtonTable().add(Controls.newTextButton("Attack", () -> {
+            dialog.getButtonTable().add(TfrButtonIcons.decorate("a barred town", Controls.newTextButton("Attack", () -> { // TFR round 1007: the button icon
                 hideDialog();
                 startTownAssault(poi, barredColor);
-            })).width(240f).row();
+            }), "Attack")).width(240f).row();
         }
-        dialog.getButtonTable().add(Controls.newTextButton("Leave", this::hideDialog)).width(240f).row();
+        dialog.getButtonTable().add(TfrButtonIcons.decorate("a barred town", Controls.newTextButton("Leave", this::hideDialog), "Leave")).width(240f).row(); // TFR round 1007: the button icon
         dialog.setKeepWithinStage(true);
         showDialog();
     }
@@ -1806,7 +1806,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
         label.setWrap(true);
         label.skipToTheEnd();
         dialog.getContentTable().add(label).width(250f).row();
-        dialog.getButtonTable().add(Controls.newTextButton("Leave", this::hideDialog)).width(240f).row();
+        dialog.getButtonTable().add(TfrButtonIcons.decorate("a sealed castle", Controls.newTextButton("Leave", this::hideDialog), "Leave")).width(240f).row(); // TFR round 1007: the button icon
         dialog.setKeepWithinStage(true);
         showDialog();
         System.out.println("[TFR-Treasure] " + poi.getDisplayName() + "'s gate stays shut - no "
@@ -1927,6 +1927,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
                 : Controls.newTextButton("Pay " + ColorReputation.CAPITAL_ENTRY_TOLL + " [+Gold] (you have "
                     + Current.player().getGold() + " [+Gold])"); // round 934 (P3-56): the amount's icon
         payButton.setDisabled(!canAffordToll);
+        TfrButtonIcons.decorate("a capital's toll", payButton, "Pay "); // TFR round 1007: the button icon: the purse
         dialog.getButtonTable().add(payButton).width(240f).row();
         // Round 100 (user spec 2026-09-03): storm the capital - a 1-vs-2 against two Archmages (weekly cooldown as for towns)
         String capitalColor = ColorReputation.colorOfTown(poi.getData());
@@ -1934,16 +1935,17 @@ public class WorldStage extends GameStage implements SaveFileContent {
                 && capitalColor != null && TerritoryControl.basicLandFor(capitalColor) != null;
         int capitalCooldown = capitalAssault ? TerritoryControl.assaultCooldownDaysLeft(poi, Current.world().getCurrentDay()) : 0;
         if (capitalAssault && capitalCooldown <= 0) {
-            dialog.getButtonTable().add(Controls.newTextButton("Attack (two Archmages)", () -> {
+            dialog.getButtonTable().add(TfrButtonIcons.decorate("a capital's toll", Controls.newTextButton("Attack (two Archmages)", () -> { // TFR round 1007: the button icon
                 hideDialog();
                 startTownAssault(poi, capitalColor);
-            })).width(240f).row();
+            }), "Attack (two Archmages)")).width(240f).row();
         } else if (capitalAssault) {
             TextraButton cooldownButton = Controls.newTextButton("Attack again in " + capitalCooldown + (capitalCooldown == 1 ? " day" : " days"));
             cooldownButton.setDisabled(true);
+            TfrButtonIcons.decorate("a capital's toll", cooldownButton, "Attack again"); // TFR round 1007: the button icon
             dialog.getButtonTable().add(cooldownButton).width(240f).row();
         }
-        dialog.getButtonTable().add(Controls.newTextButton("Leave", this::hideDialog)).width(240f).row();
+        dialog.getButtonTable().add(TfrButtonIcons.decorate("a capital's toll", Controls.newTextButton("Leave", this::hideDialog), "Leave")).width(240f).row(); // TFR round 1007: the button icon
         dialog.setKeepWithinStage(true);
         showDialog();
     }
@@ -1974,14 +1976,14 @@ public class WorldStage extends GameStage implements SaveFileContent {
         label.skipToTheEnd();
         dialog.getContentTable().add(label).width(250f).row();
 
-        dialog.getButtonTable().add(Controls.newTextButton("Enter", () -> {
+        dialog.getButtonTable().add(TfrButtonIcons.decorate("a Legendary gate", Controls.newTextButton("Enter", () -> { // TFR round 1007: the button icon
             hideDialog();
             autoSaveHere();
             loadPOI(poi);
             point.getMapSprite().checkOut();
             visitPoi(poi); // round 493
-        })).width(240f).row();
-        dialog.getButtonTable().add(Controls.newTextButton("Turn Back", this::hideDialog)).width(240f).row();
+        }), "Enter")).width(240f).row();
+        dialog.getButtonTable().add(TfrButtonIcons.decorate("a Legendary gate", Controls.newTextButton("Turn Back", this::hideDialog), "Turn Back")).width(240f).row(); // TFR round 1007: the button icon
         dialog.setKeepWithinStage(true);
         showDialog();
     }

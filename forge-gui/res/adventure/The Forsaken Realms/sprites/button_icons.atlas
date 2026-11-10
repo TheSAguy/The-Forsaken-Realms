@@ -1,0 +1,65 @@
+button_icons.png
+size: 500,82
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+enter
+  xy: 0, 0
+  size: 32, 32
+attack
+  xy: 50, 0
+  size: 32, 32
+leave
+  xy: 100, 0
+  size: 32, 32
+orders
+  xy: 150, 0
+  size: 32, 32
+withdraw
+  xy: 200, 0
+  size: 32, 32
+buy
+  xy: 250, 0
+  size: 32, 32
+lost
+  xy: 300, 0
+  size: 32, 32
+coin
+  xy: 350, 0
+  size: 32, 32
+build
+  xy: 400, 0
+  size: 32, 32
+questdone
+  xy: 450, 0
+  size: 32, 32
+enter_48
+  xy: 0, 34
+  size: 48, 48
+attack_48
+  xy: 50, 34
+  size: 48, 48
+leave_48
+  xy: 100, 34
+  size: 48, 48
+orders_48
+  xy: 150, 34
+  size: 48, 48
+withdraw_48
+  xy: 200, 34
+  size: 48, 48
+buy_48
+  xy: 250, 34
+  size: 48, 48
+lost_48
+  xy: 300, 34
+  size: 48, 48
+coin_48
+  xy: 350, 34
+  size: 48, 48
+build_48
+  xy: 400, 34
+  size: 48, 48
+questdone_48
+  xy: 450, 34
+  size: 48, 48

@@ -876,6 +876,7 @@ public class DuelScene extends ForgeScene {
             }
             if (onDone != null) onDone.run();
         });
+        forge.adventure.util.TfrButtonIcons.anteRow(popup, title, buttons); // TFR round 1007: the Card Lost row's icons
         FThreads.invokeInEdtNowOrLater(popup::show);
     }
 

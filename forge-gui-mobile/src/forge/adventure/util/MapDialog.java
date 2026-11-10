@@ -497,6 +497,7 @@ public class MapDialog {
                         });
                     }
                     B.getTextraLabel().setWrap(true); //We want this to wrap in case it's a wordy choice.
+                    TfrButtonIcons.decorate("a map dialog", B, name, WIDTH - 18); // TFR round 1007: the option's icon (Leave, Accept Quest...)
                     forge.adventure.util.TfrPlaceTips.mapOption(B, option.name); // TFR round 999: the restore offer's tip
                     buttons.add(B);
                     B.setVisible(false);
@@ -530,6 +531,7 @@ public class MapDialog {
                             ? Controls.newTextButton("[%88]" + pinnedName)
                             : Controls.newTextButton("[%88]" + pinnedName, () -> loadDialog(pinnedOption));
                     pinnedButton.getTextraLabel().setWrap(true);
+                    TfrButtonIcons.decorate("a map dialog", pinnedButton, pinnedName, WIDTH - 18); // TFR round 1007
                     pinnedButton.setDisabled(pinned.isDisabled);
                     buttons.add(pinnedButton);
                     pinnedButton.setVisible(false);
