@@ -2,23 +2,23 @@
 
 ### New things to do
 
-- **🏅 Five new Ascension perks:**
-  - **Bounty Hunter:** bounties pay up to ×2.
+- **🏅 Five new Ascendance perks:**
+  - **Bounty Hunter:** Bounty bonuses grow ×1.5, then ×2, with the cap raised to +50%.
   - **Legend Slayer:** your first win over each legend pays its whole card list plus a mythic from its deck.
   - **Treasure Seeker:** more map pieces, and treasures pay twice.
   - **Tournament Regular:** cheaper Inn entry fees, and a 3-0 run pays a rare (sometimes a mythic) from the event's set.
   - **Guild Favorite:** side quests pay +50% gold and shards, plus an extra card, and give you longer to finish them.
 - **🎨 Every perk icon repainted** in one painted style.
-- **💬 Tooltips:** hover over buttons and HUD items for a short explanation: the world map, New Game, Settings, towns, shops, the Inn, Ascendance, quests, the journal and map tokens. Turn them on or off in Settings > Show tooltips (Auto shows them on Easy and Normal and hides them on Hard and Insane).
-- **🏷️ Clearer buttons:** [PLACEHOLDER - waiting for the user's text]
+- **💬 Tooltips (PC):** hover over buttons and HUD items for a short explanation: the world map, New Game, Settings, towns, shops, the Inn, Ascendance, quests, the journal and map tokens. Turn them on or off in Settings > Show tooltips (Auto shows them on Easy and Normal and hides them on Hard and Insane).
+- **🏷️ Clearer buttons:** Repair shows its price, deck slots show N/40, the Armory's Re-roll counts down its days, the Job Board shows your reputation, Abandon Quest names its reputation cost, and Speed-Up shows 50x.
 - **🕯️ Caves and dungeons start with the HUD hidden** for a cleaner view (double-tap your avatar to toggle it). The world map keeps your choice.
 
 ### Fixes you'll notice
 
 - **⏭️ End Turn "twitching":** the flickering, smeared End Turn caption is fixed.
-- **🍺 Inn Drafts:** quitting during a final no longer crashes the Inn later, and the champion's prize is paid.
+- **🍺 Inn Drafts:** an Inn event left in a broken state no longer crashes the Inn, and the champion's prize is paid.
 - **🪟 Empty map dialogs:** a game launched minimized (or alt-tabbed while loading) no longer leaves every map dialog blank and unclickable. This was the "quest freeze" some of you hit.
-- **💎 Old-set boosters:** Legends, Alpha and Beta packs cost about 1,200 to 1,800 gold instead of about 59,000, and no pack can be sold back for a profit.
+- **💎 Old-set boosters:** Legends, Alpha and Beta packs now cost a few thousand gold at most instead of about 59,000, and no pack can be sold back for a profit.
 - **🧠 AI:**
   - Enemies now play their Incubate, Empower and Recruit cards.
   - An enemy combo that is actually killing you finishes its turn.

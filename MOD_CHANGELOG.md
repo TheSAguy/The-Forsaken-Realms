@@ -14298,6 +14298,11 @@ the RC build and its test, waits for the main thread's "RC window open". Nothing
   `docs/tfr/releases.md`. Tested per `C:\CLAUDE\PROJECTS\TFR1\notes\release-1.28-rc-checklist.md`, all pass: the
   zip fresh on desktop (5 duels at 50x, `errors=0`, a 1.27 save loads), the signed APK over 1.27 on LDPlayer; the
   Android 50x duel on a test-only autopilot build of the same commit, never committed.
+- **Follow-up 2: the notes corrections** the user approved ("Yes, apply them"), in `RELEASE_NOTES_v1.28.md` and the
+  draft: "Ascendance perks"; Bounty Hunter "Bounty bonuses grow ×1.5, then ×2, with the cap raised to +50%"; "Tooltips
+  (PC)"; the Clearer buttons line (round 992's labels; the placeholder is gone); Inn Drafts "an Inn event left in a
+  broken state" (round 996 found no cause); old-set boosters "a few thousand gold at most". No file the builds carry
+  changed, so the RC stands.
 
 ## Round 1001: hover tips on the world map's tokens and the custom difficulty rows (2026-11-09)
 

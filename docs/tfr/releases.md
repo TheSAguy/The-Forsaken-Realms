@@ -153,7 +153,7 @@ signed APK over 1.27 on LDPlayer (assets, 1.28 on screen, log sharing No, a new 
 on a test-only autopilot build of the same commit (a human seat has no speed button).
 
 Notes = `RELEASE_NOTES_v1.28.md` (the user's text of 2026-11-09, title "The Forsaken Realms 1.28: Perks & Pointers",
-1.27's Android section; the "Clearer buttons" bullet waits for the user's text). GUIDE What's New 1.28 above "Coming
+1.27's Android section; the user's corrections applied in round 1002's follow-up 2). GUIDE What's New 1.28 above "Coming
 from 1.26?". The Discord FAQ says v1.28 (`EDITED` {1, 3, 23}, nothing new; paste list `notes/faq-1.28-edits.md`;
 artifact v16 at release). Posts: `notes/release-1.28-posts.md`. The publish session tags, pushes, publishes and
 replaces this block with the RELEASED one.
