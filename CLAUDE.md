@@ -20,10 +20,10 @@ shown dialog's body only when the window is taller than the screen); round 1007 
 and the Card Lost row through a new optional icon on Forge's `FButton`; `[TFR-ButtonIcons]` lines); round 1008 (Android's
 update no longer quits on the return from the installer: a waiting "Open Installer Again / Keep Playing" dialog in
 `AssetsDownloader.waitOutInstaller`, a keep-on-screen line in the prompt, `[TFR-Update]` lines for the return and the
-choice; proven on LDPlayer, `C:\CLAUDE\PROJECTS\TFR1\notes\r1008\report.md`); round 1009 (the Talonborn Harpy's map animations are real loops, frames only, Art sub-thread). Engine = the 11.09 daily (round 994, upstream `7d0acc8aa92`; round 769's R1-R4 still
+choice; proven on LDPlayer, `C:\CLAUDE\PROJECTS\TFR1\notes\r1008\report.md`); round 1009 (the Talonborn Harpy's map animations are real loops, frames only, Art sub-thread); round 1010 (ten more round-179 enemies get real animation loops, five enemies.json scales restore their map size, Art sub-thread). Engine = the 11.09 daily (round 994, upstream `7d0acc8aa92`; round 769's R1-R4 still
 keep TFR's synchronous auto save, eager shops, Inn events and place entry; bosses keep the player's AI setting through
 `bossAiFollowsSetting`); next merge from upstream after `7d0acc8aa92` (its first commit is `b3802f9255a`, #12773, hidden-zone ChangeZone in APNAP order); BASE_INSTALL is that daily, so packages need no
-`--allow-base-mismatch`. Next version: 1.29 / 12900. Next free round: 1010. The agent profile's window is
+`--allow-base-mismatch`. Next version: 1.29 / 12900. Next free round: 1011. The agent profile's window is
 1280x720 - at 3840x2160 it covered the screen, got minimized, and a minimized game stops (the bridge times out, shots
 come back 1x1). Agent games keep their own LOCALAPPDATA cache (round 860). Log sharing (round 698) posts to Discord
 through a webhook kept OUT of git in `C:\TFR\secrets\discord_log_webhook.txt` - never commit it; the packager and
