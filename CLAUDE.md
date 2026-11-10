@@ -6,76 +6,14 @@ every round built. If you find something missing, fix the docs rather than going
 
 ## NOW (rewrite this block each round; never append a new one)
 
-**v1.27 "Bounties & Gold" is the latest release** (tag `tfr-v1.27` @ `bd22a89e6f8`, published 2026-11-06
-00:50 UTC (11.05 Pacific); rounds 939-979 on top of v1.26; assets, notes and the tag commit in `docs/tfr/releases.md`;
-the round detail in `MOD_CHANGELOG.md`). `modVersion` 1.27 / `modVersionDate` 11.05, Android `tfr.version` 1.27 /
-versionCode 12700, `RELEASE_NOTES_v1.27.md`, GUIDE's What's New in 1.27, the Discord FAQ at v1.27 (artifact v15;
-`EDITED`/`ADDED` reset by round 980). **Unreleased (for 1.28):** round 981 (a save's picture is captured before the
-next scene is drawn - Nova's "the preview image of each save file is the save menu"), round 982 (F4 stays locked
-through a pickup's or a win's freeze and after robbing a guard; the console's and bridge's `leave` keep round 971's
-window - r127-test P3-1), round 983 (a selected deck under the duel minimum gets an "Incomplete Deck" warning on
-leaving the deck list and sits out its duels for the last legal deck; a lost ante card the collection never held, a
-padded Wastes, changes no deck and offers no Buy Back - logs-1106b P2-1), round 984 (the AI casts its Incubate
-and Empower cards: new `IncubateAi`/`EmpowerAi` in `SpellApiToAi`, an upstream gap the user is reporting - logs-1107 P3-5),
-round 985 (slow devices: the print sheets are built on a background thread after a load or a new world, once and
-under a lock, not on the GL thread at the first booster - `[TFR-PrintSheets]`, `[TFR-Perf] print sheets loaded on`;
-card textures are unloaded one file at a time, so one failure no longer strands the rest - `[TFR-Memory] card texture
-unload failed` - logs-1108 P3-9 and P3-11), round 986 (three loot perks from Fable's proposals, approved in
-`notes/perks-fable-1108.md`: Bounty Hunter - the Bounty's points x1.5/x2, cap 40%/50%; Legend Slayer - the first win over
-each legend pays its whole card list and a mythic from its deck, keyed `enemy|legendSlayer|<name>` in the world's
-once-paid map; Treasure Seeker - 2 map pieces an obelisk, then a treasure's gold, shards and cards twice; new
-`util/LootPerks` + `LootPerksTest`; 38 lasting perks, 68 ranks), round 987 (the two town perks, same approval:
-Tournament Regular - Inn entry fees in gold and shards -25%/-50%, all 13 fee reads through `Ascendance.innFee`, and a
-3-0 bracket pays a rare from the event's set, 1 in 8 a mythic; Guild Favorite, level 6+ - side quests pay +50% gold and
-shards and +1 card a card reward (epilogue and stage epilogues, scaled copies, never story quests) and 20 days instead of
-15 for new ones; new `util/TownPerks` + `TownPerksTest`; stock `AdventureEventData`, `EventScene`, `AdventureQuestData`,
-`AdventureQuestController`; `ascendance_icons` page 800x1200; 40 lasting perks, 71 ranks), round 988 (the perk icons repainted) and round 989 (the HUD
-starts in its hidden view in a cave or dungeon, the player's toggle kept level to level, the world map's view back on
-leaving - TFR 2's rule ported: new `util/TfrHud` + `TfrHudTest`, `GameHUD.isHudHidden()`, console `hud`, `[TFR-Hud]`) and round 990 (map dialogs after a launch that loaded at 0x0 - the "freeze turning in the
-slime quest", logs-1108b P2-1: new `util/StageViewports` keeps the HUD, map and world stages' screen viewports in step
-with the window from `Forge.resize`/`resume` and `HudScene.enter`, the game stages' cameras untouched; new
-`scene/SceneViewports` resizes a UI scene that missed a resize off screen before it is entered; the dialog watchdog
-logs a stale viewport; `[TFR-Viewport]`; `StageViewportsTest`; an upstream bug too) and round 991 (the old sets' packs
-repriced - stock `cardprices.txt` `LEG` 2000, `LEA`/`LEB` 3000, were upstream's 50,000 collector rows; `FEM` 200 kept -
-and round 932's pack floor (`AdventurePlayer.expectedPackSellPrice`) values each slot at its set's average sell price
-from the price list, restricted cards out, a classic save's town factor in, so no pack shelves under its resale even at
-the lowest factor 0.390: new `util/PackFloor` + `PackFloorTest`, `[TFR-PackFloor]` - logs-1108c P3-13) and round 992 (the tooltip audit's visible labels, behind `tfrHelpLabels`: the Abandon Quest confirm names its
-failure dialog's reputation cost, Repair shows "[+Gold] N", deck slots "N/40", a waiting Armory Re-roll "in N days",
-the Job Board its reputation and building slots, Speed-Up a "50x" tag; ability names left to round 993's tip - new
-`util/TfrLabels` + `TfrLabelsTest`, `[TFR-Labels]`) and round 993 (hover tips: TFR 2's `Tfr2Tips` ported as `util/TfrTips` - region tips polled from
-`Forge.render`, the gold-framed box, texts in the plane's `config tables/tips.json` with `{tuning.FIELD}` fills - on the
-world-map HUD (`util/TfrHudTips`, ability buttons included), New Game and Settings; "Show tooltips: Auto / On / Off"
-(`SettingData.tfrTooltips`, global, Auto = on for Easy/Normal, off for Hard/Insane, New Game's button follows the
-difficulty box); mouse only; console `tips`, `[TFR-Tips]`; `TfrTipsTest`; rounds B-D to come) and round 994 (the engine
-to the 11.09 daily, below; enemy decks built off the GL thread while the VS screen stays up, `[TFR-DeckGen]`; the loop
-breaker's AI count starts over when an opponent loses life, with a 300-use backstop, so upstream's FlatMC kill loops
-finish; `EffectData`'s UID and `IncubateAi` kept ours). Round 995 (the End Turn "twitch", logs-1109b P2-1: new `forge.util.GlyphPoolGuard` empties libGDX's static glyph run pool on the GL thread at each turn's start and after a caught text failure, counting the nulls and duplicate runs an off-thread layout leaves; `FSkinFont` logs its first off-GL-thread layout with the stack and no longer swallows a failed measure silently; a failed layout's broken runs are dropped (follow-up: the agent proof found them re-poisoning the pool every frame; follow-up 2: CardRenderer's counter and marker tabs too); `[TFR-GlyphPool]`, console `glyphpool`; `GlyphPoolGuardTest` proves a duplicate run breaks the End Turn caption until healed). Round 996 (an Inn event's broken prize state, logs-1109b P2-2: a saved Draft with no reward
-packs, then a three-slot prize table, crashed the Inn and left the champion unpaid. Stock `AdventureEventData` now
-repairs it before `getDescription` and `giveRewards` read it: packs read back from the table, else dealt again at the
-event's seed; the table grown to four slots; lost tiers rebuilt; a null tier or pack skipped. New `util/InnEventRepair`
-+ `InnEventRepairTest`, `[TFR-InnEvent]`. Cause not found; the agent repro (a kill mid-final, a reload, a collect) did not reproduce it: an Inn event is saved
-only when a map is entered mid-event, and it loads back whole). Round 997 (seven small fixes from the log reviews: the Android
-asset download has 15 s/30 s timeouts and a `[TFR-Assets] N%` line every 25%; a pause before the assets exist no longer
-prints `[TFR-Config] FATAL`; `Forge.dispose` runs once - Android disposed twice at an exit, `[TFR-Exit]`; the console's
-`teleport to poi` (the capital runes) keeps round 971's result window and refunds the rune, `leave` was round 982's;
-new `util/DuelArtRelease` frees a duel's card art on the first map after it, win or loss; stock `Tracker.unfreeze`
-copies and clears its queue first, the start-in-play CME; new `util/EconomyLog`, `[TFR-Trade]`/`[TFR-Bank]`, throttled;
-`TrackerTest`, `DuelArtReleaseTest`, `EconomyLogTest`). Round 998 (four open ends: a mage waiting at the Capitol, or
-in its duel, is written to the save and queued again on load - new `util/CapitolDefenseSave` + test, old saves none
-pending, `dev-tools/save-editing/PlantCapitolMage.java` for agent checks; new `RecruitAi` in stock `SpellApiToAi` (the
-AI now casts Sound the Trumpets; upstream has none); stock `AbilityUtils` prints its "fallback to Card" line only when
-the card has the value - Relic Amulet's 299 lines; `[TFR-Memory]`'s `undoObjects=` became `undoKB=`/`undoDeltas=` from
-`UndoManager`'s own retained estimate; `RecruitAiTest`, `CostSVarFallbackTest`). Round 999 (hover tips, the tooltip audit's round B: towns' Job Board - restore, Capitol, specialty, realm - shops, the Spellsmith with its named price multipliers, the Shard Trader and the Inn; new `util/TfrPlaceTips`, hooks in stock `RewardScene`, `SpellSmithScene`, `ShardTraderScene`, `InnScene`, `MenuScene`, `MapDialog`; `TfrTipsTest` 9). Round 1000 (hover tips, round C: the Ascendance status and level-up dialogs - new `TfrTips.MAP_DIALOG` scene - the quest log, the journal's streak, coin and land pips, Notoriety, the standings' Status cells, the inventory's maps and sets buttons, the Research Lab; new `util/TfrScreenTips`, `{asc.FIELD}` and `{streakWins}` fills; hooks in stock `QuestLogScene`, `PlayerStatisticScene`, `InventoryScene`; `TfrTipsTest` 11). Round 1001 (hover tips, round D, the last: world-map tokens - an AI town's or capital's guards, a ruined town, an obelisk, a treasure's X, piles, the Mystery and the chest - through new `util/TfrMapTips`, a per-frame probe drawing the same box on the HUD's stage, not TfrPlates; the custom difficulty knobs' own tooltips on hover, wrapped by `TfrTips.plain`; a list row scrolled out of view no longer answers the mouse; console `tips at X Y` (a pretend mouse for the agent); stock `PointOfInterestMapSprite.aiGuardDots` public; `TfrTipsTest` 13). **1.28 log watch**: a `[TFR-Exit] dispose called again`
-line and whether Android's `CRASH_NATIVE` exits stop (round 997's guess at their cause); a
-`[TFR-InnEvent] loaded with a broken reward state` line (round 996's shape was on disk at load, with player data);
-upstream's FlatMC tuning for
-`Reckless.ai` and `Cautious.ai` (360 TFR enemies) - win ratios and duel times against them; a `[TFR-GlyphPool] ...
-duplicates` line (round 995's mechanism, with player data) and `text laid out off the GL thread` (the caller to move
-onto the GL thread).
-Engine = the 11.09 daily (round 994, upstream `7d0acc8aa92`; round 769's R1-R4 still
+**v1.28 "Perks & Pointers" is the latest release** (tag `tfr-v1.28` @ `21d9d577ba4`, published 2026-11-10
+01:55 UTC (11.09 Pacific); rounds 981-1002 on top of v1.27; assets, notes and the tag commit in `docs/tfr/releases.md`;
+the round detail in `MOD_CHANGELOG.md`). `modVersion` 1.28 / `modVersionDate` 11.09, Android `tfr.version` 1.28 /
+versionCode 12800, `RELEASE_NOTES_v1.28.md`, GUIDE's What's New in 1.28, the Discord FAQ at v1.28 (`EDITED`/`ADDED`
+reset by round 1003). NOTHING is unreleased. Engine = the 11.09 daily (round 994, upstream `7d0acc8aa92`; round 769's R1-R4 still
 keep TFR's synchronous auto save, eager shops, Inn events and place entry; bosses keep the player's AI setting through
 `bossAiFollowsSetting`); next merge from upstream after `7d0acc8aa92` (its first commit is `b3802f9255a`, #12773, hidden-zone ChangeZone in APNAP order); BASE_INSTALL is that daily, so packages need no
-`--allow-base-mismatch`. Next version: 1.28 / 12800 - round 1002 set it (`modVersion` 1.28 / 11.09, versionCode 12800, `RELEASE_NOTES_v1.28.md` (the user's text with their corrections), GUIDE What's New 1.28, FAQ v1.28 `EDITED` {1, 3, 23}, a ready-for-the-tag STATE in `docs/tfr/releases.md`); its RC (from `f1f97f4cf2c`, in `C:\CLAUDE\PROJECTS\TFR1\release\v1.28`) is built and tested, all pass - the publish session tags it. Next free round: 1003 (995-1002 handed out). The agent profile's window is
+`--allow-base-mismatch`. Next version: 1.29 / 12900. Next free round: 1004. The agent profile's window is
 1280x720 - at 3840x2160 it covered the screen, got minimized, and a minimized game stops (the bridge times out, shots
 come back 1x1). Agent games keep their own LOCALAPPDATA cache (round 860). Log sharing (round 698) posts to Discord
 through a webhook kept OUT of git in `C:\TFR\secrets\discord_log_webhook.txt` - never commit it; the packager and

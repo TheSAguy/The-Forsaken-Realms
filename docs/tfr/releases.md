@@ -135,17 +135,19 @@ and the private project names were checked absent from the unpushed history and 
 packaged from the tag commit (`PACKAGE_OK.txt` verified). No itch.io upload by the session; the user posts the zip and
 APK. NOTHING is unreleased. Next version: 1.28 / 12800. Next merge from upstream after `1e8c35fca3e`.
 
-## STATE 2026-11-09: **v1.28 "Perks & Pointers" READY FOR THE TAG** (round 1002; RC built and tested 17:07-17:51 PST)
-Rounds 981-1001 on top of v1.27. Engine = the 11.09 daily (upstream `7d0acc8aa92`, round 994) on the matching
+## STATE 2026-11-10 (01:55 UTC): **v1.28 "Perks & Pointers" RELEASED** - tag `tfr-v1.28` @ `21d9d577ba4` (annotated),
+published 01:55:53 UTC (2026-11-09 17:55 Pacific), Latest. Rounds 981-1002 on top of v1.27; `main` was pushed at
+`21d9d577ba4` (the tag commit; round 1003's ledger follow-up after it). RC built and tested 17:07-17:51 PST. Engine = the 11.09 daily (upstream `7d0acc8aa92`, round 994) on the matching
 BASE_INSTALL. `modVersion` 1.28 / `modVersionDate` 11.09 (the RC's build day; reset it if the RC is built later),
-Android `tfr.version` 1.28 / versionCode 12800. Assets in `C:\CLAUDE\PROJECTS\TFR1\release\v1.28`, built from `f1f97f4cf2c`
+Android `tfr.version` 1.28 / versionCode 12800. Assets in `C:\CLAUDE\PROJECTS\TFR1\release\v1.28`, each checked on GitHub at its exact byte size and locally against
+the SHA-256s below before upload, built from `f1f97f4cf2c`
 (round 1001's follow-up; the round 1002 follow-up after it is docs only):
 - `The-Forsaken-Realms-v1.28.zip` 519.1 MB (519,107,645 bytes; SHA-256 `db9ee65c4293...`);
 - `forsaken-realms-1.28-signed-aligned.apk` 16.0 MB (16,011,116 bytes; SHA-256 `6b53552eda13...`;
   com.thesaguy.forsakenrealms, versionCode 12800, signer EE:60:39:25);
 - `assets.zip` 429.7 MB (429,743,025 bytes; SHA-256 `f0448230597f...`; build.txt pair 2026-11-10 01:07:55, one `mvn`
   run in `C:\TFR-build` via R:; carries `log_share.txt`, no `pc_*.ogg`). Round 792's prompts ("430MB" / "16MB")
-  still fit, so unchanged.
+  still fit, so unchanged; the APK's download URL `releases/download/tfr-v1.28/assets.zip` answers with the full size.
 
 RC test (`C:\CLAUDE\PROJECTS\TFR1\notes\release-1.28-rc-checklist.md`): all pass - the desktop zip fresh (1.28 on
 screen, a new game, 5 duels at 50x, a tip, a shop, the hidden HUD in a dungeon, save/load, a 1.27 save, `errors=0`); the
@@ -155,5 +157,6 @@ on a test-only autopilot build of the same commit (a human seat has no speed but
 Notes = `RELEASE_NOTES_v1.28.md` (the user's text of 2026-11-09, title "The Forsaken Realms 1.28: Perks & Pointers",
 1.27's Android section; the user's corrections applied in round 1002's follow-up 2). GUIDE What's New 1.28 above "Coming
 from 1.26?". The Discord FAQ says v1.28 (`EDITED` {1, 3, 23}, nothing new; paste list `notes/faq-1.28-edits.md`;
-artifact v16 at release). Posts: `notes/release-1.28-posts.md`. The publish session tags, pushes, publishes and
-replaces this block with the RELEASED one.
+`EDITED`/`ADDED` reset by round 1003). Posts: `notes/release-1.28-posts.md`. The webhook URL was checked absent from the
+unpushed history and the tree before the push. No itch.io upload by the session; the user posts the zip and APK.
+NOTHING is unreleased. Next version: 1.29 / 12900. Next merge from upstream after `7d0acc8aa92`.

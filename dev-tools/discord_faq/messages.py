@@ -6,11 +6,8 @@ FAQ_VERSION = "v1.28"
 # What this version changed, by message number: EDITED are edited in place in Discord, ADDED are new topics. Support
 # is always the last message: new topics go before it, and the user reposts Support at the end of the channel.
 # build_page.py tags them. Reset both at the next release.
-# 1.28 (round 980 reset them after 1.27; v1.27's own set was {1, 7, 9, 13}, none ADDED): round 986 edits 3 (the three
-# loot perks: Bounty Hunter, Legend Slayer, Treasure Seeker; "About 38 perks"); round 987 edits 3 again (the two town
-# perks: Tournament Regular, Guild Favorite; "About 40 perks"); round 1002 edits 1 (the header's version) and 23 (round
-# 994's loop breaker: the count starts over while you lose life, 300 at most).
-EDITED = {1, 3, 23}
+# 1.29: nothing changed yet (round 1003 reset them after 1.28; v1.28's own set was {1, 3, 23}, none ADDED).
+EDITED = set()
 ADDED = set()
 
 M = []

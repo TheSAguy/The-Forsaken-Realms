@@ -14264,6 +14264,21 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 1003: 1.28 released (2026-11-09)
+
+- **Published** 2026-11-10 01:55:53 UTC (11.09 Pacific) on the user's call ("We're good to release once you've done your
+  testing"): tag `tfr-v1.28` @ `21d9d577ba4` (annotated), Latest, title "The Forsaken Realms 1.28: Perks & Pointers",
+  body `RELEASE_NOTES_v1.28.md`; `main` pushed to `origin master` at `21d9d577ba4` (a fast-forward from `8f311408a29`),
+  with the Windows zip (519.1 MB), the APK (16.0 MB, versionCode 12800) and `assets.zip` (429.7 MB). Each asset's size
+  and SHA-256 matched the ledger before upload, every size matches on GitHub, and the APK's `assets.zip` URL answers
+  with the full size. Before the push the unpushed history and the tree were checked for the log-sharing webhook URL:
+  none. Ledger: `docs/tfr/releases.md`.
+- **FAQ**: `EDITED` and `ADDED` in `dev-tools/discord_faq/messages.py` are empty sets again, v1.28's set kept in the
+  comment.
+- **Docs**: the v1.28 RELEASED block in `docs/tfr/releases.md`; the NOW block is rewritten short (rounds 981-1002 now
+  released; their detail stays in this file). Next version 1.29 / 12900, next free round 1004, next engine merge after
+  `7d0acc8aa92`. No code change, no build.
+
 ## Round 1002: the version is 1.28, with its release notes, guide, FAQ and posts (2026-11-09)
 
 Part 1 of the 1.28 release the user called ("I want everything in before 1.28"; the notes: "Let's just do this:"; then
