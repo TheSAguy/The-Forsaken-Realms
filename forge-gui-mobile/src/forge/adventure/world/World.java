@@ -142,6 +142,27 @@ public class World implements Disposable, SaveFileContent {
         openingWaveSent = sent;
     }
 
+    // Round 1005: "The War Begins" (util/WarIntro) has been shown in this run. warIntroOldSave: the save was written
+    // before the round (no key) and has not been checked yet this load - one holding a town sees the pages on load.
+    private boolean warIntroShown = false;
+    private boolean warIntroOldSave = false;
+
+    public boolean isWarIntroShown() {
+        return warIntroShown;
+    }
+
+    public void setWarIntroShown(boolean shown) {
+        warIntroShown = shown;
+    }
+
+    public boolean isWarIntroOldSave() {
+        return warIntroOldSave;
+    }
+
+    public void setWarIntroOldSave(boolean oldSave) {
+        warIntroOldSave = oldSave;
+    }
+
     // Round 425: a New Game+ that took its invested resources back - the one-off mages each AI color still owes on
     // TuningData.ngPlusWaveDay (TerritoryControl.sendNewGamePlusWave). 0 = none owed, or already sent. Saved.
     private int ngPlusWaveMages = 0;
@@ -1298,6 +1319,9 @@ public class World implements Disposable, SaveFileContent {
         }
         openingWaveSent = !saveFileData.containsKey("openingWaveSent") || saveFileData.readBool("openingWaveSent"); // round 422
         ngPlusWaveMages = saveFileData.containsKey("ngPlusWaveMages") ? saveFileData.readInt("ngPlusWaveMages") : 0; // round 425
+        boolean[] warIntro = forge.adventure.util.WarIntro.readState(saveFileData); // round 1005
+        warIntroShown = warIntro[0];
+        warIntroOldSave = warIntro[1];
 
         colorTerritoryRadius.clear();
         if (saveFileData.containsKey("colorTerritoryRadius")) {
@@ -1679,6 +1703,7 @@ public class World implements Disposable, SaveFileContent {
         data.storeObject("colorNextAttackDay", colorNextAttackDay);
         data.store("openingWaveSent", openingWaveSent); // round 422
         data.store("ngPlusWaveMages", ngPlusWaveMages); // round 425
+        data.store(forge.adventure.util.WarIntro.KEY, warIntroShown); // round 1005
         if (history != null) { // round 626
             try {
                 byte[] blob = history.toBytes();
@@ -2968,6 +2993,8 @@ public class World implements Disposable, SaveFileContent {
             colorNextAttackDay.clear();
             openingWaveSent = false; // round 422: a new world - the AI's opening wave goes out on the first world-map frame
             ngPlusWaveMages = 0; // round 425: New Game+ sets it after generateNew when the invested resources came back
+            warIntroShown = false; // round 1005: a new run waits for its first attack (New Game+ carries it, SaveLoadScene)
+            warIntroOldSave = false;
             colorTerritoryRadius.clear();
             defeatedColors.clear();
             forcedPlayerTargetPending.clear();

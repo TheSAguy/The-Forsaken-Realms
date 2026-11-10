@@ -56,7 +56,8 @@ public class WorldStandingsScene extends UIScene {
         // every other explanatory/confirm dialog in the mod already uses, single "Close" button.
         ui.onButtonPress("balanceSheet", () -> forge.adventure.util.BalanceSheet.open(this));
         ui.onButtonPress("reputationInfo", this::showReputationInfo);
-        ui.onButtonPress("expansionInfo", this::showExpansionInfo);
+        // Round 1005: the old Expansion explainer's button is "The War" now - the War Begins pages, read again.
+        ui.onButtonPress("expansionInfo", () -> forge.adventure.util.WarIntro.reopen(this));
         // Replaces the old "Explanations" button (2026-08-14 user request) - a single long-form
         // overview for players who have never touched this mod before, via InfoTextScene (the
         // same scrollable-page pattern Guard Info uses) since this page runs far longer than the
@@ -104,26 +105,6 @@ public class WorldStandingsScene extends UIScene {
                         + ColorReputation.CAPITAL_ENTRY_TOLL + " [+Gold] to enter, 40% pricier once inside), "
                         + "50% more likely to be attacked, no healing at their Inns, noticeably tougher enemies roaming their land.\n\n"
                         + "Your own territory is also always safer to fight in than anyone else's, on top of all of the above.");
-    }
-
-    // Expansion/defense explainer (2026-08-11, round 8) - mechanics cross-checked against
-    // TerritoryControl.java (attackerWinChance() tiers, GUARD_FIGHT_ATTACKER_BONUS,
-    // OUTLOOK_DEFENSE_BONUS, ATTACKER_SACKS_TOWN_CHANCE) and WorldStage.startForcedCapitolDuel()/
-    // triggerCapitolDefeat() rather than recalled from memory.
-    private void showExpansionInfo() {
-        showInfoDialog("Expansion",
-                "Each color periodically sends a mage from its Castle toward one of its nearest "
-                        + "neutral or enemy towns. Reaching an undefended town gives it a real chance to "
-                        + "capture it - stronger mages (Apprentice/Adept/Master/Archmage) have a much "
-                        + "better chance.\n\n"
-                        + "Defending a town:\n"
-                        + "- Hire Guards (Armory, Level 2) to fight the attacker before it can capture.\n"
-                        + "- Build an Outlook to cut the capture chance by 5%.\n"
-                        + "- Even a successful capture has a 20% chance the town is only sacked (reverted "
-                        + "to ruins) instead of kept.\n\n"
-                        + "Your Capitol is different: any mage that reaches it (after any hired guards "
-                        + "fall) triggers a forced best-of-3 duel to defend it in person. Losing that "
-                        + "duel ends your game.");
     }
 
     // Mod Details overview (2026-08-14 user request): "how the mod differs from base Shandalar...

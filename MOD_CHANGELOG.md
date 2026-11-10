@@ -14264,6 +14264,61 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 1005: "The War Begins" - what "under attack" means, how to defend, how a run ends (2026-11-10)
+
+A player on Discord ("Days of Love Nights of War"): "Is there anyway we could get a guide on how fighting the other
+colors works? Im getting to the point where things are 'under attack' but I dont really know what that means or how
+to interact with it." The user: a pop-up "when your first town is under attack. Tells you exactly what's going on.
+What you need to do ... What the AI is going to try and do ... How to win/lose." Phase 1 (audit, text, mock-ups:
+`C:\CLAUDE\PROJECTS\TFR1\notes\r1005\r1005-phase1.md`) approved by the user: "Yes, build it", with the GUIDE's
+Capitol-surge line cut to match round 267 (the surge stays a hidden mechanic, in the pages too). For 1.29.
+
+- **The pages** (`util/WarIntro`, texts in `config tables/tips.json` `war.*`): The War Begins, Defend Your Towns,
+  Roaming Guards, What the Colors Want, How It Ends; Back / Next / Understood. Live values: the attacking color and
+  town, an Apprentice guard's weekly gold after difficulty (`EconomyBuildings.guardWeeklyGoldCost`), the towns a
+  Capitol needs, the roaming-guard cap and rest days (`RoamingGuards`), the Ring Cities that end a run and the warning
+  (`starTownsLossCount`, so a custom game shows its own). Page 3 reads "Your Capitol's Armory hires..." once the
+  Capitol stands. Premises corrected at Phase 1: Roaming Guards are Capitol-only (5 towns), so the pages lead with
+  beating the mage on the road and local guards (Armory Level 2); "Raise the Banner" already briefs guards, so the
+  pages tie the war together instead of repeating it.
+- **When:** `WorldStage.onActing`, after the opening-wave check, past the pause/dialog guard (never on another dialog,
+  only on the world map), twice a second: the first time `TerritoryControl.playerTownsUnderAttack()` is not empty.
+  So a ruin restored while a mage is already on its way counts, and so does a save loaded mid-attack.
+- **The flag:** `World.warIntroShown`, saved as `warIntroShown`; a new world stores false. **A save from before the
+  round** (no key) that holds a town or the Capitol shows the pages once on its first world-map frame, page 1
+  reworded ("The colors are at war with you."); one with no town waits for its first real attack. **New Game+**
+  carries the flag (`SaveLoadScene`, logged `[TFR-NewGamePlus] The War Begins ...`).
+- **Read it again:** World Standings' Expansion button is **The War** (landscape and portrait JSONs) and opens the
+  same pages; page 1 names the current attack, or the general opening when nothing of yours is targeted. The old
+  Expansion text (`showExpansionInfo`, round 8) is gone; the pages cover it.
+- **Console (cheats):** `war` reports the flag; `war show`, `war reset`, `war old` (play a save from before 1.29),
+  `war attack <color>` (an Apprentice from that castle at your first town).
+- **Log:** `[TFR-WarIntro] shown (first attack: Blue -> Orazca)`, `shown on load (save from before 1.29, N town(s)
+  held)`, `save from before 1.29 holds no town - waiting for the first attack`, `closed`, `reopened from World
+  Standings`, plus the console lines.
+- **GUIDE:** What's New in 1.29 (new section and TOC entry); The Capitol's "Raising it draws fire" keeps only the
+  one-more-mage rule (the Archmage surge cut, round 267). GUIDE.html regenerated (`guide_html.py --check` OK). No
+  factual disagreement found between the GUIDE's war sections and the code.
+- **Test:** `WarIntroTest` (6): the first attack shows it, never twice, no attack no pop-up, an old save with a town
+  shows on load and one without waits, the flag through Java serialization, a save without the key reads as old.
+  Maven `-o -pl forge-gui-mobile -am test -Dtest=WarIntroTest,CapitolDefenseSaveTest`: exit 0, 11/11. Desktop jar
+  `-o -pl forge-gui-mobile-dev -am package -DskipTests`: exit 0.
+- **Agent game** (`C:\CLAUDE\PROJECTS\TFR1\agent`, cheats, this round's classes ahead of the 1.28 jar, the three
+  resource files copied in for the run and restored after; shots and logs in `C:\CLAUDE\PROJECTS\TFR1\notes\r1005\`):
+  - Old saves with no town (slots 42, 4, 41, 7): no pop-up, the "waiting" line.
+  - Slot 7, Capitol raised by console, saved as slot 60 (no attack yet), `war attack blue`: the pages at once,
+    `a1_first_attack_page1-5.png`. Saved as slot 61 with the mage still marching, reloaded: no pop-up,
+    `a2_reload_no_popup.png`.
+  - World Standings, The War: `a3_standings_button.png`, `a3_reopen_page1-2.png`; the standings screen clean after.
+  - A real pre-1.29 save: slot 60 loaded and saved as slot 62 by the plain 1.28 jar, then loaded on this round's
+    classes: the reworded page 1 on load, `a4_old_save_on_load.png`; closed, saved as 63, reloaded: no pop-up.
+  - Portrait 540x960, slot 62: `p1_portrait_page1/2/5.png`, World Standings `p2_portrait_standings.png`, reopen
+    `p2_portrait_reopen.png`. The window set back to 1280x720 after.
+  - Two roaming-monster duels on the walk to Orazca, settled at 50x. No exceptions in the three saved logs.
+  - Not run: New Game+ (the carry is two lines, read in review only).
+- **Seen in passing, not changed:** World Standings' Reputation info dialog runs taller than the 1280x720 window (its
+  first line is cut off at the top).
+
 ## Round 1004: the mana-pool tab switches on the GL thread, and the Android update path is logged (2026-11-10)
 
 The user: "Yes, start 1004", approving the review `C:\CLAUDE\PROJECTS\TFR1\notes\logs-1110.md` P2-3 and P3-19. For

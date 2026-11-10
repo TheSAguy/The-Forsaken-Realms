@@ -148,5 +148,36 @@
   "custom.basic": "Basic: the rules most players change.",
   "custom.expert": "Expert: every rule, the fine-tuning ones too.",
   "custom.changedOnly": "Show only the rules you changed.",
-  "custom.reset": "Back to {preset}'s value."
+  "custom.reset": "Back to {preset}'s value.",
+
+  // ---- round 1005: "The War Begins" (util/WarIntro), a dialog not a hover tip - pages 1-5, titles and texts.
+  // Filled by WarIntro: {color} {town} (the first attack), {wage} (an Apprentice guard's weekly gold, after difficulty),
+  // {towns} (towns for the Capitol), {guards} {rest} (roaming guards and the days a beaten one rests), {lose} {warn}
+  // (the Ring Cities that end a run, a custom game's too, and the warning). The Capitol's Archmage answer stays out
+  // (round 267: a hidden mechanic).
+  "war.title1": "The War Begins",
+  "war.page1": "[RED]{color} has sent a mage at {town}![]
+Until now the five colors fought over the wasteland and each other. From today your towns are targets too, and attacks will keep coming.
+The mage walks from its castle, so you have time to answer. On the Map, Details marks every town that is Under Attack!",
+  "war.page1Later": "[RED]The colors are at war with you.[]
+Your towns are targets: every few days a color may send a mage at one of them, and the attacks will keep coming.
+A mage walks from its castle, so you have time to answer. On the Map, Details marks every town that is Under Attack!",
+  "war.title2": "Defend Your Towns",
+  "war.page2": "- Beat the mage on the road and the attack ends. Lose, and it walks on.
+- Guards fight it first. Upgrade a town's Armory to Level 2 and hire them there: one per town, two at the Capitol, from [+Gold] {wage} a week.
+- With no guard standing, the mage rolls to take the town: 10% for an Apprentice, up to 90% for an Archmage. An Outlook and the town's reputation lower it.
+- The Rally rune takes you straight to a town under attack.",
+  "war.title3": "Roaming Guards",
+  "war.page3": "Once you hold {towns} towns, Orazca can rise as your Capitol. Its Armory hires up to {guards} Roaming Guards. Each carries one of your decks, races the mage to the threatened town and fights it in a real duel. A beaten guard rests {rest} days.
+If a town falls, the attacker keeps it, or 1 time in 5 sacks it to a ruin you can restore again.",
+  "war.page3Capitol": "Your Capitol's Armory hires up to {guards} Roaming Guards. Each carries one of your decks, races the mage to the threatened town and fights it in a real duel. A beaten guard rests {rest} days.
+If a town falls, the attacker keeps it, or 1 time in 5 sacks it to a ruin you can restore again.",
+  "war.title4": "What the Colors Want",
+  "war.page4": "Each color sends a mage every 2-5 days at one of the 5 towns nearest its land: ruins, its rivals' towns, and yours. Ring Cities draw extra attention.
+Your standing decides how often they pick you: about half as often when they are Happy with you, half again as often at War.
+They want the Ring Cities, and they want your Capitol.",
+  "war.title5": "How It Ends",
+  "war.page5": "[GREEN]You win[] by holding all 5 Ring Cities and bringing down all 5 castles.
+[RED]You lose[] if one color holds {lose} of the 5 Ring Cities (you are warned at {warn}), if a mage gets past your Capitol's guards and beats you in its best-of-three duel, or if you hold no town and no free town is left.
+Losing an ordinary duel never ends a run. Read this again any time: World Standings, The War."
 }

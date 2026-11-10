@@ -58,7 +58,7 @@
     {
       "type": "TextButton",
       "name": "expansionInfo",
-      "text": "[%80]Expansion",
+      "text": "[%80]The War",
       "width": 65,
       "height": 18,
       "x": 340,

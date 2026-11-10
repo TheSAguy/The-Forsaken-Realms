@@ -726,6 +726,9 @@ public class WorldStage extends GameStage implements SaveFileContent {
         World openingWorld = WorldSave.getCurrentSave().getWorld();
         if (openingWorld != null && !openingWorld.isOpeningWaveSent())
             TerritoryControl.sendOpeningWave(openingWorld);
+        // Round 1005: "The War Begins", once - the first mage at a player town, or an old save that holds one. Past the
+        // pause/dialog guard above, so it never lands on another dialog, and only ever on the world map.
+        forge.adventure.util.WarIntro.check(openingWorld);
         setDownOffBarrier(); // round 294
         drawNavigationArrow();
         if (player.isMoving())
@@ -1711,6 +1714,23 @@ public class WorldStage extends GameStage implements SaveFileContent {
             return;
         }
         showStarTownWarningDialog(message);
+    }
+
+    /** Round 1005: "The War Begins" in this stage's own dialog, page by page (util/WarIntro has the texts). */
+    public void showWarIntro(String[][] pages) {
+        showWarIntroPage(pages, 0);
+    }
+
+    private void showWarIntroPage(String[][] pages, int page) {
+        Dialog dialog = getDialog();
+        dialog.clearListeners();
+        forge.adventure.util.WarIntro.fill(dialog, pages, page, next -> showWarIntroPage(pages, next), () -> {
+            hideDialog();
+            System.out.println("[TFR-WarIntro] closed");
+        });
+        dialog.setKeepWithinStage(true);
+        showDialog();
+        dialog.toFront(); // round 209: never leave this to add-order
     }
 
     private void showStarTownWarningDialog(String message) {

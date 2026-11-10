@@ -556,6 +556,8 @@ public class SaveLoadScene extends UIScene {
                     System.out.println("[TFR-NewGamePlus] carrying: " + (carry == CARRY_CARDS_ONLY ? "cards only"
                             : carry == CARRY_INVESTED ? "cards + current + invested resources" : "cards + current resources")
                             + ", items " + (keepItems ? "kept" : "left behind"));
+                    // Round 1005: a player who has read "The War Begins" is not shown it again in the new run.
+                    final boolean warIntroShown = WorldSave.getCurrentSave().getWorld().isWarIntroShown();
                     WorldSave.getCurrentSave().clearChanges();
                     // Round 837: the picker's preset, or ("Same as this save") the loaded save's own - never a
                     // fallback to Normal. The config preset goes to updateDifficulty, which lays a custom save's
@@ -571,6 +573,8 @@ public class SaveLoadScene extends UIScene {
                     WorldSave.getCurrentSave().getWorld().setGenerationDifficulty(target != null
                             ? target.name : Current.player().getDifficulty().name);
                     if (WorldSave.getCurrentSave().getWorld().generateNew(0)) {
+                        WorldSave.getCurrentSave().getWorld().setWarIntroShown(warIntroShown);
+                        System.out.println("[TFR-NewGamePlus] The War Begins " + (warIntroShown ? "already read - carried" : "not read yet"));
                         if (target != null)
                             Current.player().updateDifficulty(target);
                         System.out.println("[TFR-NewGamePlus] difficulty " + forge.adventure.util.CustomDifficulty.displayName(Current.player())

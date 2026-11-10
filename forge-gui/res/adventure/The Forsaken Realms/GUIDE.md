@@ -11,18 +11,19 @@ are in the [FAQ](#faq) at the end.
 ## Table of Contents
 
 1. [Introduction](#introduction)
-2. [What's New in 1.28](#whats-new-in-128)
-3. [Starting Out](#starting-out)
-4. [Changes from the Base Game](#changes-from-the-base-game)
-5. [Early Game Advice](#early-game-advice)
-6. [Mid and Late Game Advice](#mid-and-late-game-advice)
-7. [The World](#the-world)
-8. [Dungeon Guide, by Color](#dungeon-guide-by-color)
-9. [Item Guide](#item-guide)
-10. [Notes on Difficulty](#notes-on-difficulty)
-11. [Appendix: Mechanics in Detail](#appendix-mechanics-in-detail)
-12. [FAQ](#faq)
-13. [Support & Community](#support--community)
+2. [What's New in 1.29](#whats-new-in-129)
+3. [What's New in 1.28](#whats-new-in-128)
+4. [Starting Out](#starting-out)
+5. [Changes from the Base Game](#changes-from-the-base-game)
+6. [Early Game Advice](#early-game-advice)
+7. [Mid and Late Game Advice](#mid-and-late-game-advice)
+8. [The World](#the-world)
+9. [Dungeon Guide, by Color](#dungeon-guide-by-color)
+10. [Item Guide](#item-guide)
+11. [Notes on Difficulty](#notes-on-difficulty)
+12. [Appendix: Mechanics in Detail](#appendix-mechanics-in-detail)
+13. [FAQ](#faq)
+14. [Support & Community](#support--community)
 
 ---
 
@@ -40,6 +41,17 @@ the early game is meant to be a fight.
 
 *Windows, macOS and Linux launchers all ship (Windows is the tested one), and every release includes an Android
 version - playable, but it gets far less testing than the desktop builds.*
+
+## What's New in 1.29
+
+The short version for returning players. Everything in 1.29 works on your current save.
+
+- **The War Begins:** the first time a war mage marches on one of your towns, five short pages explain what "under
+  attack" means, how to defend (beat the mage on the road, hire guards, the Rally rune, Roaming Guards), what the
+  colors are after, and how a run is won and lost - see [Winning and Losing](#winning-and-losing) and [Territory, and
+  Defending What's Yours](#territory-and-defending-whats-yours). A save that already holds a town shows them once
+  when you load it. Read them again any time from World Standings (the map's **Info** button), **The War**, which
+  replaces the old Expansion page.
 
 ## What's New in 1.28
 
@@ -497,9 +509,8 @@ Upgrading carries Orazca's reputation, buildings and guards forward, and adds +2
 on top for good measure. The Capitol's Job Board offers the usual town quests and the Capitol's own, such as
 finding the five AI capitals.
 
-Raising it draws fire. The moment your Capitol stands, every color still in the game sends an
-Archmage at your realm, and for as long as it stands each color may keep one more attack mage in
-the field.
+Raising it draws fire: for as long as it stands, each color may keep one more attack mage in the
+field.
 
 **Your roads.** Raising the Capitol also paves your realm: cobblestone roads join it to every town
 you hold (captured Ring Cities included), taking over the old sand roads wherever they already run,

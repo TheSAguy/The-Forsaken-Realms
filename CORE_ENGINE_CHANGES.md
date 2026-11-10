@@ -35,6 +35,20 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 1005 - "The War Begins" pop-up (util/WarIntro)
+- `forge-gui-mobile/src/forge/adventure/world/World.java` (STOCK, already TFR-edited): fields `warIntroShown`,
+  `warIntroOldSave` with getters/setters after `setOpeningWaveSent`; `load` reads them through `WarIntro.readState`
+  after `ngPlusWaveMages`; `save` stores `warIntroShown` after `ngPlusWaveMages`; `generateNew` resets both after
+  `ngPlusWaveMages = 0`.
+- `forge-gui-mobile/src/forge/adventure/stage/WorldStage.java` (STOCK): `onActing` calls `WarIntro.check(openingWorld)`
+  right after the opening-wave check; new `showWarIntro` / `showWarIntroPage` before `showStarTownWarningDialog`.
+- `forge-gui-mobile/src/forge/adventure/scene/SaveLoadScene.java` (STOCK): New Game+ reads `isWarIntroShown()` before
+  `clearChanges()` and sets it back right after `generateNew(0)`, with a `[TFR-NewGamePlus]` line.
+- `forge-gui-mobile/src/forge/adventure/stage/ConsoleCommandInterpreter.java` (STOCK): one `registerCommand` line, `war`.
+- New TFR-only: `util/WarIntro.java`, `test/.../util/WarIntroTest.java`. TFR-only edits: `WorldStandingsScene`
+  (`expansionInfo` opens `WarIntro.reopen`; `showExpansionInfo` removed), `TownRestoration` (`CAPITOL_TOWNS_REQUIRED`
+  package-visible), `tips.json` (`war.*`), `ui/world_standings*.json` (the button reads "The War").
+
 ### Round 1004 - the mana-pool tab switches on the GL thread (logs-1110 P2-3), `[TFR-Update]` lines (P3-19)
 - `forge-gui-mobile/src/forge/screens/match/MatchController.java` (STOCK): `showManaPool` and `hideManaPool` keep their
   stock bodies, each wrapped whole in `FThreads.invokeInEdtLater(() -> { ... })`, plus a comment above them; each body

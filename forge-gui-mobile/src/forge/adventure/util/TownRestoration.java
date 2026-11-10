@@ -1006,7 +1006,7 @@ public class TownRestoration {
     private static final int CAPITOL_COST_WOOD = 100;
     private static final int CAPITOL_COST_STONE = 100;
     private static final int CAPITOL_COST_SHARDS = 50;
-    private static final int CAPITOL_TOWNS_REQUIRED = 5;
+    static final int CAPITOL_TOWNS_REQUIRED = 5; // round 1005: package-visible for WarIntro's page 3
 
     /**
      * Restored-town Job Board menu (user request 2026-08-08): instead of jumping straight into
