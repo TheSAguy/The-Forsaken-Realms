@@ -197,6 +197,9 @@ public class AssetsDownloader {
         boolean connectedToInternet = Forge.getDeviceAdapter().isConnectedToInternet();
         if (connectedToInternet) {
             //currently for desktop/mobile-dev release on github
+            // TFR round 1012 (logs-1111 P3-23): a line before the request, so a launch that stalls here leaves a trace;
+            // GitLogs logs the outcome (ok, timed out or failed, with its time) when it returns, within about 10 s.
+            System.out.println("[TFR-Update] release check: asking GitHub (5 s connect and read timeouts)");
             final String releaseTag = Forge.getDeviceAdapter().getReleaseTag(GITHUB_RELEASES_ATOM);
             try {
                 URL versionUrl = new URL(versionText);

@@ -35,6 +35,19 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 1012 - the avatar's Full Control menu on the GL thread (logs-1111 P3-22), release-check timeouts (P3-23)
+- `forge-gui-mobile/src/forge/screens/match/MatchController.java` (STOCK, already TFR-edited by round 1004):
+  `showFullControl` keeps its AI check and its flag read; the `FPopupMenu` construction and `menu.show(...)` are wrapped
+  whole in `FThreads.invokeInEdtLater(() -> { ... })`, starting with a null check on `getView()` /
+  `getPlayerPanel(selected)`, plus a comment. On a merge: re-apply upstream's new menu body inside the wrapper. Upstream
+  has the same bug (worth offering).
+- `forge-gui-android/src/forge/app/GitLogs.java` (STOCK): new package-private `openFeed(url, timeoutMs)`
+  (`HttpURLConnection`, connect and read timeouts) and `describe(e, ms)`; `getLatest` and `getLatestReleaseTag` open
+  their feed through `openFeed(..., 5000)` instead of `URL.openStream()`; `getLatestReleaseTag` prints a `[TFR-Update]
+  release check:` line (ok/timed out/failed, with ms). Parsing unchanged.
+- `forge-gui-mobile/src/forge/assets/AssetsDownloader.java` (STOCK, already TFR-edited): one `[TFR-Update] release
+  check: asking GitHub` line before `getReleaseTag`. Nothing else changed.
+
 ### Round 1011 - long names fit the VS screen (util/VsNameFit)
 - `forge-gui-mobile/src/forge/screens/TransitionScreen.java` (STOCK, already TFR-edited): in `drawBackground`'s VS
   branch, the landscape and portrait name draws (`layout.setText` + `g.drawText` of `playerAvatarName` and

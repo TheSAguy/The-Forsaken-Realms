@@ -14264,6 +14264,54 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 1012: the avatar's Full Control menu is built on the GL thread, and the Android release check times out (2026-11-11)
+
+The user: "Yes, fix both", approving `C:\CLAUDE\PROJECTS\TFR1\notes\logs-1111.md` P3-22 and P3-23. For 1.29.
+
+- **P3-22, a second glyph-pool caller.** Long-pressing your own avatar (`VAvatar.longPress`) hops to the game thread
+  (`ThreadUtil.invokeInGameThread`) and calls `MatchController.showFullControl`, which built the stock "Full Control"
+  `FPopupMenu` and showed it there: every `FMenuItem` measures its label through libGDX's unsynchronized glyph pool while
+  the GL thread draws (round 1004's race; df6c3465's 1.28 log). **Fix:** the flag set is still read where it was (on the
+  game thread, from the player's controller); the menu's construction and `menu.show(...)` run whole on the GL thread
+  through `FThreads.invokeInEdtLater`, with an early return when the match screen or the player's panel is gone by then.
+  `VAvatar` is untouched (the review's alternative, a second stock file, was not taken). Round 995's guard stays.
+- **Callers checked** (grep): `showFullControl` has one mobile caller, the long-press lambda, and nothing runs after it
+  there, so nothing depended on it being synchronous. The desktop UI's `CMatchUI.showFullControl` is a separate Swing
+  method. The checkbox toggles already ran on the GL thread (a tap) and still edit the same flag set.
+- **P3-23, the Android release check had no timeout.** `GitLogs.getLatestReleaseTag` (and `getLatest`, the commits feed,
+  snapshots only) opened GitHub's Atom feed with `URL.openStream()`: no connect or read timeout, so a stalled connection
+  held the launch on "Checking for updates..." (the card database loads only after the check). 4fb442f9's 1.28 launch
+  sat 54 s and was swiped away. **Fix:** both feeds open through `HttpURLConnection` with a 5 s connect and a 5 s read
+  timeout (`GitLogs.openFeed`); on a timeout or any failure the tag comes back `""`, which `checkForUpdates` already
+  treats as "no newer release", and the game loads. A read timeout is per read, so a feed that trickles a byte every few
+  seconds can still run longer; that is not what the log showed.
+- **`[TFR-Update]` lines:** `release check: asking GitHub (5 s connect and read timeouts)` before the request
+  (`AssetsDownloader.checkForUpdates`, so a stall still leaves a trace), then from `GitLogs` one of
+  `release check: ok in N ms, tag tfr-vX.YZ` (or `tag none found`), `release check: timed out after N ms (...); playing
+  on`, `release check: failed after N ms: <e>; playing on`. Round 1004's `check:` line follows as before.
+- **Other startup network calls, checked:** `isConnectedToInternet` is capped at 2 s (`ThreadUtil.executeWithTimeout`);
+  `FileUtil.readFile(URL)` (the snapshot `version.txt`/`build.txt`, never reached by a `tfr.version` build) also runs
+  under `executeWithTimeout`; the APK and `assets.zip` downloads have round 997's 30 s read timeout; desktop's
+  `UpdateNotice` runs on a daemon thread with 5 s timeouts and never blocks loading; desktop skips `checkForUpdates`
+  entirely. None needed a change. Outside startup, `LibGDXImageFetcher`'s second download path (line ~133) has its
+  timeouts commented out (stock); it fetches card art in the background, so it was left alone.
+- **Proof, P3-23:** `C:\CLAUDE\PROJECTS\TFR1\notes\r1012\gitlogs-test\` compiles the real `GitLogs.java` (with a stub
+  `AtomReader`; the Android module has no test setup) against a local server that accepts and never answers. Before
+  (HEAD's `GitLogs.java`): still waiting when killed at 20 s. After: `getLatestReleaseTag` returned `""` in 5,031 ms with
+  `[TFR-Update] release check: timed out after 5024 ms (Read timed out); playing on`, `getLatest` in 5,017 ms, PASS.
+  Not run on a phone.
+- **Proof, P3-22 (agent game, cheats, 1280x720, slot 6 loaded, a spawned Wild Rat, auto-battle off so the seat is the
+  player's; the menu returns at once for an AI seat).** Posted window-message holds never fire a long-press (Windows
+  sends a mouse-move at the real cursor when the game captures the mouse, which leaves the tap square), so a proof-only
+  bridge verb in a scratch class overlay, never committed, calls `VAvatar.longPress` on the GL thread, as the gesture
+  adapter does (`C:\CLAUDE\PROJECTS\TFR1\notes\r1012\proof-bridge-verb\`). Before (the agent jar): the menu opened,
+  `glyphpool state` went from `off-GL-thread layouts 0` to `7`, and forge.log has `[TFR-GlyphPool] text laid out off the
+  GL thread: Game-1` with df6c3465's stack (`FMenuItem.<init>` <- `MatchController$7.buildMenu` <- ... <-
+  `FDropDown.show`). After (the built `MatchController` classes ahead of the jar): the same menu, `off-GL-thread layouts
+  0`, no off-GL line; a ticked flag still showed ticked when the menu was reopened. The duels were hand-played (no speed
+  button on a hand-played seat, as in round 1004) and stopped after turn 1-2. Shots and logs:
+  `C:\CLAUDE\PROJECTS\TFR1\notes\r1012\`. Maven `-o -pl forge-gui-mobile-dev -am package -DskipTests`: exit 0.
+
 ## Round 1011: long enemy names fit the VS screen (2026-11-10)
 
 The user: "Yes, fix it", of an Art sub-thread's 1280x720 shot where "Archangel of the Gilded Dawn (Archmage)" ran off
