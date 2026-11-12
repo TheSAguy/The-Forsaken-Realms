@@ -14264,6 +14264,37 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 1015: The War pages break their own lines, and the tips test passes again (2026-11-11)
+
+The user: "Yes, fix it", approving the fix for `TfrTipsTest.tipsBreakTheirOwnLines`, which has failed since round 1005
+(found by round 1013). Text only, for 1.29.
+
+- **Rule:** every tips.json line stays at 125 characters or less, markup aside. Round 1005's War pages had seven longer
+  lines in six keys. `WarIntro` wraps its body at 330 (landscape) / 240 (portrait), so the rule is not strictly needed
+  there. Breaking at sentence ends still reads cleanly, so the text was fixed and the test's rule left as it is.
+- **Broken at sentence ends, wording kept** (longest line before -> after, markup aside):
+  - `war.page1`: 136 -> 118 ("...each other." / "From today...")
+  - `war.page2`: 135 and 155 -> 110 ("- Guards fight it first." / "Upgrade..."; "...for an Archmage." / "An Outlook...")
+  - `war.page3`: 243 -> 109
+  - `war.page3Capitol`: 192 -> 99
+  - `war.page4`: 149 -> 124 ("...and yours." / "Ring Cities draw extra attention.")
+- **One sentence reshaped:** `war.page5` (215 -> 93). The three ways to lose were one sentence, too long for any break
+  at a sentence end, so they are now a list in page 2's style ("[RED]You lose[] if:" then "- one color holds...",
+  "- a mage gets past...", "- or you hold no town..."). The words are the same; only the line breaks and the leading
+  "if" moved.
+- `war.page1Later` (the old-save variant) was already under the limit (116) and is unchanged. The `{town}` line is 34
+  characters plus the name; the longest town name in the town lists is 27 characters, so it stays near 60.
+- **Test:** Maven `-o -pl forge-gui-mobile -am test -Dsurefire.failIfNoSpecifiedTests=false -Dtest=<all 23
+  forge-gui-mobile test classes>`: exit 0, 126 tests, 0 failures (`TfrTipsTest` included).
+- **Agent game** (cheats, the agent's round-1013 jar, this tips.json copied in for the run and restored after; slot 60
+  loaded, nothing saved; `war reset`, `war attack red`, `war show`). Shots in `C:\CLAUDE\PROJECTS\TFR1\notes\r1015\`:
+  `L1_first_attack_page1-5.png` (1280x720), `L2_later_page1.png` (the old-save page 1), `L3_no_capitol_page3.png`
+  (slot 7, `war.page3`), and `P1_first_attack_page1-5.png` and `P2_later_page1.png` (540x960). Every line is readable
+  and nothing is clipped. The dialogs are a line or two taller than round 1005's (`C:\CLAUDE\PROJECTS\TFR1\notes\r1005\`)
+  and still fit both windows. The window was set back to 1280x720 after. Log: the `[TFR-WarIntro]` lines, no exceptions.
+- **Not checked:** Android (the same text and wrap width as the 540x960 portrait shots).
+- **Files:** `forge-gui/res/adventure/The Forsaken Realms/config tables/tips.json`. No code, no stock engine file.
+
 ## Round 1014: Kiora's Boss Effect picture says "end step" (2026-11-11)
 
 - `forge-gui/res/adventure/common/custom_card_pics/Kiora's Boss Effect.fullborder.jpg` (stock picture, upstream typo):
