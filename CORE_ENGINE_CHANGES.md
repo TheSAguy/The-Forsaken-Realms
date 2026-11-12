@@ -37,6 +37,7 @@ md` already gets updated after every change.
 
 ### Round 1017 - enemy decks lose the cards the AI can't play; [TFR-DeckGen] flagged: log line
 - `forge-gui-mobile/src/forge/adventure/data/EnemyData.java` (STOCK, already TFR-edited): `generateDeck`'s two `.dck` returns (randomizeDeck and the numbered deck) are wrapped in a new private `logFlagged(Deck)`, which prints `[TFR-DeckGen] flagged: <enemy> (<copies>): ...` for flagged non-land cards (`CardAiHints.isRemovedFromAiDecks`) and returns the deck unchanged. On a merge: keep the wrap around whatever upstream returns there.
+- Round 1017 (follow-up), same file: `logFlagged` prints once per enemy name per run (static `LOGGED_FLAGGED` set) and tags the key cards round 1017 kept (`KEPT_KEY_CARDS`) with "(kept)". TFR-only lines; nothing upstream to keep.
 
 ### Round 1016 - the VS screen's names and records in the clean font (TfrFonts.vsFont)
 - `forge-gui-mobile/src/forge/screens/TransitionScreen.java` (STOCK, already TFR-edited): in `drawBackground`'s VS

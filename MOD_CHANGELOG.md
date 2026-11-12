@@ -14264,6 +14264,16 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 1017 (follow-up): the [TFR-DeckGen] flagged: line once per enemy, key cards tagged (2026-11-12)
+
+The main thread's review of wave 1: `logFlagged` printed on every `generateDeck` call, so repeat fights and background
+deck generation repeated the same line, and the key cards round 1017 keeps on purpose would log for ever.
+
+- `EnemyData.logFlagged` prints once per enemy name per run (a static concurrent set, as `MISSING_KEYS` below it).
+- A key card round 1017 kept (Masticore, Parallax Wave, Opposition, Psychatog, Channel, Karn, Silver Golem, Autumn
+  Willow) is tagged `(kept)` in the line, so a log review does not read it as a miss.
+- Not seen in a game: compile only (Maven exit 0).
+
 ## Round 1017 (wave 3): every enemy deck is clear of the spells the AI can't play (2026-11-12)
 
 The user: "Let's replace ALL "unplayable cards" from all decks." Wave 3 takes every enemy `.dck` file that still held

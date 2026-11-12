@@ -155,9 +155,15 @@ public class EnemyData implements Serializable {
     }
 
     // Round 1017: hand-made .dck enemy decks load unfiltered, so a card Forge flags AI:RemoveDeck:All (the AI can't
-    // play it sensibly) sits in the enemy's hand. Round 1017 swapped them out of the worst decks; this line lists
-    // what is left in the deck an enemy fields, so log reviews can track it. Lands are skipped (the AI still plays a
-    // flagged land as a land), and so are the cards ai-card-roles.txt keeps for Flat Monte Carlo.
+    // play it sensibly) sits in the enemy's hand. Round 1017 swapped them out of every enemy deck but a named deck's
+    // key cards; this line lists what is left in the deck an enemy fields, so log reviews can track it. Lands are
+    // skipped (the AI still plays a flagged land as a land), and so are the cards ai-card-roles.txt keeps for Flat
+    // Monte Carlo. Once per enemy name per run (decks are generated again for every fight and in the background); a
+    // key card round 1017 kept on purpose is tagged "(kept)", so a review does not read it as a miss.
+    private static final java.util.Set<String> LOGGED_FLAGGED = java.util.concurrent.ConcurrentHashMap.newKeySet();
+    private static final java.util.Set<String> KEPT_KEY_CARDS = new java.util.HashSet<>(java.util.Arrays.asList(
+            "Masticore", "Parallax Wave", "Opposition", "Psychatog", "Channel", "Karn, Silver Golem", "Autumn Willow"));
+
     private Deck logFlagged(Deck d) {
         if (d == null) return null;
         try {
@@ -168,9 +174,10 @@ public class EnemyData implements Serializable {
                 if (rules.getType().isLand() || !forge.card.CardAiHints.isRemovedFromAiDecks(rules)) continue;
                 if (sb.length() > 0) sb.append(", ");
                 sb.append(e.getValue()).append("x ").append(e.getKey().getName());
+                if (KEPT_KEY_CARDS.contains(e.getKey().getName())) sb.append(" (kept)");
                 copies += e.getValue();
             }
-            if (copies > 0)
+            if (copies > 0 && LOGGED_FLAGGED.add(String.valueOf(getName())))
                 System.out.println("[TFR-DeckGen] flagged: " + getName() + " (" + copies + "): " + sb);
         } catch (RuntimeException ex) {
             System.out.println("[TFR-DeckGen] flagged: check failed for " + getName() + ": " + ex);
