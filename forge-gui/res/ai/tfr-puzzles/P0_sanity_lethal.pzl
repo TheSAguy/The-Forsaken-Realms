@@ -1,0 +1,17 @@
+[metadata]
+Name:P0 sanity - three Bears into one Wall at 4 life
+Description:Runner check. The AI swings with all three Grizzly Bears; one is walled, 4 damage is lethal.
+Turns:1
+Expect:winner=ai
+[state]
+humanlife=4
+ailife=20
+turn=5
+activeplayer=ai
+activephase=MAIN1
+humanhand=
+humanlibrary=Island;Island;Island;Island;Island
+humanbattlefield=Wall of Wood;Island;Island
+aihand=
+ailibrary=Forest;Forest;Forest;Forest;Forest
+aibattlefield=Grizzly Bears;Grizzly Bears;Grizzly Bears;Forest;Forest;Forest

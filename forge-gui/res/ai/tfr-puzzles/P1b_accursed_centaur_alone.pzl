@@ -1,0 +1,17 @@
+[metadata]
+Name:P1b - Accursed Centaur with no other creature (control for etb-drawback-allow)
+Description:Accursed Centaur's enter trigger sacrifices a creature. With no other creature it sacrifices itself: casting it only throws the card away. etb-drawback-allow weighs the drawback in a copy of the game and must keep the veto here. Expect: the Centaur stays in hand.
+Turns:1
+Expect:aihand has Accursed Centaur
+[state]
+humanlife=20
+ailife=20
+turn=7
+activeplayer=ai
+activephase=MAIN1
+humanhand=
+humanlibrary=Island;Island;Island;Island;Island
+humanbattlefield=Island;Island;Island
+aihand=Accursed Centaur
+ailibrary=Swamp;Swamp;Swamp;Swamp;Swamp
+aibattlefield=Swamp;Swamp;Swamp

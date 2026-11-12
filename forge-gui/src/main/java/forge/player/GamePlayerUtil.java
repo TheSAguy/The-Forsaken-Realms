@@ -70,7 +70,7 @@ public final class GamePlayerUtil {
         return createAiPlayer(name, avatarIndex, sleeveIndex, options, "");
     }
     public static LobbyPlayer createAiPlayer(final String name, final int avatarIndex, final int sleeveIndex, final Set<AIOption> options, final String profileOverride) {
-        final LobbyPlayerAi player = new LobbyPlayerAi(name, options);
+        final LobbyPlayerAi player = forge.ai.tfr.TfrAiRules.newLobbyPlayer(name, options, forge.localinstance.properties.ForgeConstants.AI_PROFILE_DIR); // TFR round 1018: the TFR AI rules seat
 
         // TODO: implement specific AI profiles for quest mode.
         String profile = "";

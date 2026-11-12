@@ -1149,7 +1149,7 @@ public class AiController {
                     return AiPlayDecision.BadEtbEffects;
                 }
             }
-            if (!sa.isLandAbility() && !checkETBEffects(card, sa, null)) {
+            if (!sa.isLandAbility() && !checkETBEffects(card, sa, null) && !forge.ai.tfr.TfrAiRules.allowEtbDrawback(player, card, sa)) { // TFR round 1018: etb-drawback-allow (temporary, until upstream weighs mandatory ETB drawbacks)
                 return AiPlayDecision.BadEtbEffects;
             }
         }

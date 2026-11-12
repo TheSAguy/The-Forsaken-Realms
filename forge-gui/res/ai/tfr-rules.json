@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "about": "TFR AI rules (round 1018): amended rules that review Forge's AI decisions and take priority. Rules run in this order. 'enabled' lists the adventure difficulties a rule runs at (Easy, Normal, Hard, Insane) plus Other for any game that is not an adventure duel (deck tester, benches). params.shadow=true makes a rule log what it would change ('<id> (shadow)') and change nothing: a rule earns the right to act from evidence. Edit and restart the game to switch a rule; no build needed. Every change a rule makes logs [TFR-AiRule]. The proof is res/ai/tfr-puzzles (TfrAiPuzzleTest); the merge protocol is in CORE_ENGINE_CHANGES.md.",
+  "rules": [
+    {
+      "id": "etb-drawback-allow",
+      "kind": "spell",
+      "enabled": ["Normal", "Hard", "Insane", "Other"],
+      "params": { "minNetValue": 0 },
+      "test": ["P1_crocodile_hold", "P1b_accursed_centaur_alone", "P2_ichor_rats_hold", "P2b_ichor_rats_8poison_pass"],
+      "retireWhen": "P1 and P2 pass with the rules off at off, lite and max (the puzzle test says RETIRE?): upstream weighs mandatory enter-the-battlefield drawbacks (our draft PR). Then delete the rule and its AiController line."
+    },
+    {
+      "id": "alpha-strike-count",
+      "kind": "attack",
+      "enabled": ["Normal", "Hard", "Insane", "Other"],
+      "params": { "shadow": true },
+      "test": ["P3_eldrazi_stall", "P3b_eldrazi_stall_lifelink", "P4_block_trigger_trap"],
+      "retireWhen": "Shadow since round 1018: Forge took every lethal we built (P3 at off, lite and max), and the rule's one fire in the 112-game bench lost (a block trigger killed the attacker; it now stays out when the defender has a combat trigger). Switch shadow off only when log reviews show '(shadow)' lines where the all-out attack would really have won; delete it if two releases of log reviews show none."
+    }
+  ]
+}

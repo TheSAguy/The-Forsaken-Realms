@@ -35,6 +35,52 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 1018 - the TFR AI rules (forge.ai.tfr): a seat that reviews Forge's AI decisions, two rules, the merge protocol
+Three stock lines, one temporary. Everything else is new files.
+- `forge-gui/src/main/java/forge/player/GamePlayerUtil.java` (STOCK): `createAiPlayer(name, avatar, sleeve, options,
+  profile)` makes its `LobbyPlayerAi` with `forge.ai.tfr.TfrAiRules.newLobbyPlayer(name, options,
+  ForgeConstants.AI_PROFILE_DIR)` instead of `new LobbyPlayerAi(name, options)`. That re-reads `res/ai/tfr-rules.json`
+  when it changed and returns a `TfrLobbyPlayerAi` (a `LobbyPlayerAi` whose controller is a `TfrPlayerControllerAi
+  extends PlayerControllerAi`). Every AI seat goes through here: adventure duels, roaming-guard duels
+  (`DeckTesterSimulator`), the deck tester, desktop modes, the benches and TFR 2's harness. On a merge: keep the one call
+  whatever upstream does around it; if upstream adds fields to the lobby player, `TfrLobbyPlayerAi` inherits them.
+- `forge-ai/src/main/java/forge/ai/AiController.java` (STOCK, **TEMPORARY**): in `saSideEffects`, the
+  `checkETBEffects` veto line gains `&& !forge.ai.tfr.TfrAiRules.allowEtbDrawback(player, card, sa)` (marked `TFR round
+  1018`). Rule `etb-drawback-allow`: a spell vetoed with `BadEtbEffects` is played out in a `GameSimulator` copy and
+  allowed when the position scores better. Our upstream PR draft (`C:\CLAUDE\PROJECTS\TFR1\notes\r1018\upstream-pr\`)
+  makes the same fix in upstream; **when upstream has it, P1 and P2 report "RETIRE?" in `TfrAiPuzzleTest`: delete the
+  rule, this line and this entry.** On a merge before then: keep the clause on whatever line upstream vetoes
+  `BadEtbEffects` from `checkETBEffects`. `AiController` is upstream's fastest-moving AI file (round 924's four sites
+  are here too).
+- `forge-gui-mobile/src/forge/adventure/scene/DuelScene.java` (STOCK): one static-init line after the class's existing
+  static block, `TfrAiRules.setDifficultySource(() -> Current.player().getDifficulty().name)`, so the rules read the
+  loaded save's difficulty live (guard duels included). On a merge: keep it as its own line.
+
+New files (no merge conflicts possible; listed so a merge round knows they exist):
+- `forge-ai/src/main/java/forge/ai/tfr/`: `TfrAiRules` (the file, difficulty, switches, log, fire counts),
+  `TfrLobbyPlayerAi`, `TfrPlayerControllerAi`, `EtbDrawbackAllow`, `AlphaStrikeCount`, `TfrJson`. They override
+  `LobbyPlayerAi.createIngamePlayer` / `createMindSlaveController` and `PlayerControllerAi.chooseSpellAbilityToPlay` /
+  `declareAttackers`: **a merge that changes those signatures breaks the build here, not silently.**
+- `forge-gui/res/ai/tfr-rules.json` (the rules, switchable without a build; `params.shadow` makes a rule log what it
+  would change and change nothing) and `forge-gui/res/ai/tfr-puzzles/*.pzl` (the proof, Forge's `[state]` puzzle format,
+  plus `Turns:`, `Expect:` and `RulesOff:` lines).
+- `forge-gui-desktop/src/test/java/forge/ai/tfr/TfrAiPuzzleTest.java`.
+
+#### The AI rules merge protocol (every engine merge, TFR 1 and TFR 2)
+1. Merge as usual. The three stock lines above are the only conflict points; re-apply them on top of upstream.
+2. Run `TfrAiPuzzleTest` (`mvn -pl forge-gui-desktop -am test -Dtest=TfrAiPuzzleTest
+   -Dsurefire.failIfNoSpecifiedTests=false`, under a minute: every puzzle with the rules on and off, 3 runs, at `off`, `lite` and `max`). The table goes to
+   `forge-gui-desktop/target/tfr-ai-puzzles.txt`.
+3. Read the verdicts. "RULES ON FAILS": upstream changed something a rule relies on; fix the rule before packaging.
+   "RETIRE?": a puzzle that needed the rule now passes with the rules off; upstream fixed it, so delete the rule (its
+   class, its entry in `tfr-rules.json`, its `KNOWN` id, its stock line if any) in the merge round, or say in the merge
+   report why it stays. "RULES OFF FAILS (expected pass)": a control puzzle broke upstream; tell the user (the
+   engine-merge conflict rule).
+4. Say in the merge round's changelog entry which rules are still live, which are in shadow, and why.
+- **TFR 2** takes the layer at its next merge of TFR 1 and follows the same protocol. Its benches already seat AIs
+  through `GamePlayerUtil.createAiPlayer`, so they get the rules seat with no change; they run as difficulty `Other`
+  unless the bench forces `-Dtfr.airules=on|off`.
+
 ### Round 1017 - enemy decks lose the cards the AI can't play; [TFR-DeckGen] flagged: log line
 - `forge-gui-mobile/src/forge/adventure/data/EnemyData.java` (STOCK, already TFR-edited): `generateDeck`'s two `.dck` returns (randomizeDeck and the numbered deck) are wrapped in a new private `logFlagged(Deck)`, which prints `[TFR-DeckGen] flagged: <enemy> (<copies>): ...` for flagged non-land cards (`CardAiHints.isRemovedFromAiDecks`) and returns the deck unchanged. On a merge: keep the wrap around whatever upstream returns there.
 - Round 1017 (follow-up), same file: `logFlagged` prints once per enemy name per run (static `LOGGED_FLAGGED` set) and tags the key cards round 1017 kept (`KEPT_KEY_CARDS`) with "(kept)". TFR-only lines; nothing upstream to keep.

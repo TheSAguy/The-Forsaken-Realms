@@ -14264,6 +14264,93 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 1018: the TFR AI rules, an amended rule set that takes priority over Forge's AI (2026-11-12)
+
+The user, of players' "The AI is dumb in duels": "we need to have a smooth integration with TFR 1 & 2 and Forge updates.
+Like an amended set of rules we use that take priority", then "Start both" (round 1017, the deck swaps, and this round,
+the audit's round B, `C:\CLAUDE\PROJECTS\TFR1\notes\ai-audit\report.md` section 6). The full findings are in
+`C:\CLAUDE\PROJECTS\TFR1\notes\r1018\report.md`.
+
+- **The seat:**
+  - `GamePlayerUtil.createAiPlayer` makes a `forge.ai.tfr.TfrLobbyPlayerAi`, whose controller is a
+    `TfrPlayerControllerAi`. That covers every AI seat: adventure duels, roaming-guard duels, the deck tester, the
+    benches, and TFR 2's harness.
+  - Forge decides first (its heuristics plus Flat Monte Carlo); then the enabled rules in
+    `forge-gui/res/ai/tfr-rules.json` review the decision, in file order.
+  - Rules never run inside game copies (rollouts, simulations): there they would cost time on every rollout, flood
+    the log, and could overwrite the attack a rollout is testing.
+- **The rules file:**
+  - Each rule has an id, a kind, the difficulties it runs at, params, its proving puzzles and a `retireWhen` note.
+  - Edit it and restart: no build. A missing or broken file runs no rule.
+  - `-Dtfr.airules=on|off` forces every rule on or off (the switch the test and the bench use).
+  - New `params.shadow`: the rule logs what it would change (`<id> (shadow)`) and changes nothing.
+- **The difficulty:**
+  - DuelScene registers a supplier, once: `Current.player().getDifficulty().name`. It is read live on each rule
+    check, so a guard duel or a duel after loading another save never sees a stale value.
+  - It is never read inside a copy, and it never throws: no adventure loaded means `Other`.
+  - Both rules run at Normal, Hard, Insane and Other; Easy keeps stock Forge. Why wider than the audit's
+    "Hard/Insane first": both are bug-fix rules, Normal is where the complaint comes from, and switching one off is
+    one JSON edit.
+- **Rule `etb-drawback-allow`** (audit pattern 2):
+  - Forge's heuristic vetoes a permanent whose enter trigger it would not choose to run (`BadEtbEffects`), even when
+    that trigger is mandatory. Crocodile of the Crossing sat in hand for 35 turns; Ichor Rats for 13.
+  - The rule plays the spell out in a `GameSimulator` copy, scores it with Forge's own `GameStateEvaluator`, and lifts
+    the veto when the position gets better.
+  - It is only weighed for a spell the AI can pay for now. The answer is cached per card, turn, phase and board, and a
+    kept veto logs once a turn.
+  - Hook: one line in `AiController.saSideEffects`, marked temporary; the same fix goes upstream as a draft PR.
+- **Rule `alpha-strike-count`** (audit pattern 3), shipped in **shadow mode**:
+  - After Forge declares attackers, it counts what an all-out attack gets past the opponent's best blocks. It uses a
+    maximum-weight transversal matching with each blocker's block capacity, adds lifelink blockers' power to the life
+    to beat, and ignores tricks.
+  - When that is lethal and Forge's attack is not, it would send everything.
+  - It stays out when the defender has an attack or block trigger, which acts before combat damage.
+  - Why shadow: Forge took every lethal we built (P3 at off, lite and max, also at AI life 2 and 6). The rule's one
+    fire in the first bench lost: Giggling Skitterspike's block trigger killed the attacker at 6 life before damage.
+    It earns the right to act from `(shadow)` lines in log reviews.
+- **The audit corrected:**
+  - g021 (turns 50-58) was never lethal: Moldering Karok's lifelink and Stonefare Crocodile's paid lifelink.
+  - FlatMC rollouts do not time out on that board. What stalled it is Flat Monte Carlo overriding Forge's own pressure
+    attack (all 20 creatures, leaving the opponent at 3) with "attack with nothing", on one rollout per candidate (n=1,
+    1667 vs 1380). That calls for a different rule in a next round.
+- **The proof, `TfrAiPuzzleTest`** (forge-gui-desktop):
+  - It plays every `forge-gui/res/ai/tfr-puzzles/*.pzl` with the rules on and off, 3 runs each, at `off`, `lite` and
+    `max`, in under a minute.
+  - The puzzles: P0 sanity, P1 the Crocodile (rules off 0/3 everywhere), P1b Accursed Centaur alone (held either
+    way), P2 Ichor Rats (rules off 0/3 at off and lite, 3/3 at max), P2b Rats at 8 poison, P3 the lethal big board,
+    P3b the real g021 board, P4 the block-trigger trap.
+  - With the rules on, all 24 rows pass 3/3. A puzzle that needed a rule and passes without it reports "RETIRE?".
+- **The bench** (the audit's 56 games, `pairs14`, at max; one seat with the rules, the other stock; run three ways):
+  final code, all three ways run together:
+  - the rules side won 56/112 (50.0%), the same as those decks without rules (56/112), so not worse;
+  - average length 19.13 turns against 17.39 (+10.0%; the limit was +20%);
+  - `etb-drawback-allow` changed 8 decisions (Crocodile of the Crossing 4 times, Cryptic Coat 4); `alpha-strike-count`
+    0, not even in shadow.
+
+  The first bench (before shadow mode and the trigger guard): 56/112 again, -7.7% length, `etb-drawback-allow` 16,
+  `alpha-strike-count` 1 (the losing g043). The two no-rules runs differ by as much (22-34 vs 26-30 wins, 19.39 vs
+  17.39 turns): Flat Monte Carlo's time budget makes games vary, so 56 games per configuration cannot show differences
+  under about 10%. Runs: `C:\CLAUDE\PROJECTS\TFR1\notes\r1018\bench\` (`runs\` final, `runs\round1\` first).
+- **Log:**
+  - `[TFR-AiRule] rules v1 loaded from tfr-rules.json: ...`
+  - one line per seat at duel start: `[TFR-AiRule] rules v1 difficulty=<X> seat=<name>: <rules>`
+  - `[TFR-AiRule] <id> <before> -> <after>` for every change
+  - `... kept the veto: ...`, `... stays out: ...` and `... (shadow) ...` lines
+- **Seen in the agent game at 50x:**
+  - On Easy, every seat logs "no rule".
+  - With Easy added to the agent's copy of the rules file (no build), both seats run both rules.
+  - Excerpts: `C:\CLAUDE\PROJECTS\TFR1\notes\r1018\agent-excerpt-run1.txt` and `-run2.txt`.
+- **The merge protocol:**
+  - Standing rule in `CLAUDE.md`; in full in `CORE_ENGINE_CHANGES.md` round 1018.
+  - TFR 2 takes the layer at its next merge of TFR 1; its benches already seat AIs through `createAiPlayer`.
+- **Upstream:** the patch and PR text are in `C:\CLAUDE\PROJECTS\TFR1\notes\r1018\upstream-pr\`, a draft for the user
+  to post.
+- **Not done:**
+  - The Flat Monte Carlo one-sample override rule.
+  - Forge's heuristic attacking into a block-trigger trap at `off` (P4: it dies with the rules on or off; Flat Monte
+    Carlo saves it at max).
+  - No `alpha-strike-count` change outside shadow.
+
 ## Round 1017 (follow-up): the [TFR-DeckGen] flagged: line once per enemy, key cards tagged (2026-11-12)
 
 The main thread's review of wave 1: `logFlagged` printed on every `generateDeck` call, so repeat fights and background

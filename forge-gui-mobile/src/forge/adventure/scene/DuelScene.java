@@ -137,6 +137,7 @@ public class DuelScene extends ForgeScene {
             introKeysMap.put(i, "AdvBossIntro" + i);
         }
     }
+    static { forge.ai.tfr.TfrAiRules.setDifficultySource(() -> Current.player().getDifficulty().name); } // TFR round 1018: the TFR AI rules read the save's difficulty live (every duel, guard duels too)
 
     private static class cardFDisplayObject extends FDisplayObject {
         private CardView cardView;

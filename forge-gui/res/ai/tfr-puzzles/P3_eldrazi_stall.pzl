@@ -1,0 +1,17 @@
+[metadata]
+Name:P3 - the big-board stall (from audit run max-default g021, turn 50)
+Description:g021's turn-50 board made truly lethal (the lifelink Moldering Karok is a second Spined Karok; the crocodile side has only Forests, so Stonefare Crocodile has no lifelink). Every block stops at most 10 attackers, so the 15 left deal at least 10. Round 1018 found Forge takes this lethal by itself at off and max (3/3 and 2/2 with the rules off; also at AI life 2 and 6): the audit's 'misses lethal on a big board' did not reproduce. Kept as alpha-strike-count's guard: with the rules on the AI must still win, the rule must not get in the way.
+Turns:1
+Expect:winner=ai
+[state]
+humanlife=10
+ailife=13
+turn=50
+activeplayer=ai
+activephase=MAIN1
+humanhand=
+humanlibrary=Forest;Forest;Forest;Forest;Forest
+humanbattlefield=Algae Gharial|Counters:P1P1=3;Spined Karok;Stonefare Crocodile;Lurking Crocodile;Lurking Crocodile;Wardscale Crocodile;Wardscale Crocodile;Wardscale Crocodile;Wild Crocodile;Spined Karok;Forest;Forest;Forest;Forest;Forest;Forest;Forest;Forest;Forest;Forest;Forest;Forest;Forest;Forest;Forest;Forest
+aihand=
+ailibrary=Forest;Forest;Forest;Forest;Forest
+aibattlefield=Culling Drone;Culling Drone;T:c_1_1_eldrazi_scion_sac;T:c_1_1_eldrazi_scion_sac;T:c_1_1_eldrazi_scion_sac;T:c_1_1_eldrazi_scion_sac;T:c_1_1_eldrazi_scion_sac;T:c_1_1_eldrazi_scion_sac;T:c_1_1_eldrazi_scion_sac;T:c_1_1_eldrazi_scion_sac;T:c_0_1_eldrazi_spawn_sac;T:c_0_1_eldrazi_spawn_sac;T:c_0_1_eldrazi_spawn_sac;T:c_0_1_eldrazi_spawn_sac;T:c_0_1_eldrazi_spawn_sac;Carrier Thrall;Carrier Thrall;Carrier Thrall;Brood Monitor;Brood Monitor;Blisterpod;Blisterpod;Nest Invader;Catacomb Sifter;Kozilek's Predator;Forest;Forest;Forest;Forest;Forest;Forest;Swamp;Swamp;Swamp;Swamp;Swamp;Swamp;Swamp;Swamp

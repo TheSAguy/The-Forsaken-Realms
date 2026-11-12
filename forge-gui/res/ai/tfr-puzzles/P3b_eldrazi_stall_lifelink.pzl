@@ -1,0 +1,17 @@
+[metadata]
+Name:P3b - the real g021 turn-50 board, with the lifelink blocker (control)
+Description:The board as it was: Moldering Karok (lifelink) blocks, and the crocodile side has black mana for Stonefare Crocodile's lifelink. The best blocks let 10 through, but the Karok's lifelink gains 3 at the same time, so the opponent survives at 3 or more. The audit's detector called this a missed lethal; it was not. alpha-strike-count must not fire. Round 1018: with the rules off, Forge's heuristic attacks here and takes the crocodiles to 3-6 (off); at max Flat Monte Carlo overrides that with no attack on one rollout per candidate (1667 vs 1380), which is what really stalled g021 for 20 turns. Not lethal, so alpha-strike-count must stay out.
+Turns:1
+Expect:fired alpha-strike-count=0
+[state]
+humanlife=10
+ailife=13
+turn=50
+activeplayer=ai
+activephase=MAIN1
+humanhand=
+humanlibrary=Forest;Forest;Forest;Forest;Forest
+humanbattlefield=Algae Gharial|Counters:P1P1=3;Spined Karok;Stonefare Crocodile;Lurking Crocodile;Lurking Crocodile;Wardscale Crocodile;Wardscale Crocodile;Wardscale Crocodile;Wild Crocodile;Moldering Karok;Forest;Forest;Forest;Forest;Forest;Necroblossom Snarl;Necroblossom Snarl;Necroblossom Snarl;Necroblossom Snarl;Overgrown Tomb;Overgrown Tomb;Swamp;Swamp;Swamp;Woodland Cemetery;Woodland Cemetery
+aihand=
+ailibrary=Forest;Forest;Forest;Forest;Forest
+aibattlefield=Culling Drone;Culling Drone;T:c_1_1_eldrazi_scion_sac;T:c_1_1_eldrazi_scion_sac;T:c_1_1_eldrazi_scion_sac;T:c_1_1_eldrazi_scion_sac;T:c_1_1_eldrazi_scion_sac;T:c_1_1_eldrazi_scion_sac;T:c_1_1_eldrazi_scion_sac;T:c_1_1_eldrazi_scion_sac;T:c_0_1_eldrazi_spawn_sac;T:c_0_1_eldrazi_spawn_sac;T:c_0_1_eldrazi_spawn_sac;T:c_0_1_eldrazi_spawn_sac;T:c_0_1_eldrazi_spawn_sac;Carrier Thrall;Carrier Thrall;Carrier Thrall;Brood Monitor;Brood Monitor;Blisterpod;Blisterpod;Nest Invader;Catacomb Sifter;Kozilek's Predator;Forest;Forest;Forest;Forest;Forest;Forest;Swamp;Swamp;Swamp;Swamp;Swamp;Swamp;Swamp;Swamp
