@@ -179,5 +179,11 @@ They want the Ring Cities, and they want your Capitol.",
   "war.title5": "How It Ends",
   "war.page5": "[GREEN]You win[] by holding all 5 Ring Cities and bringing down all 5 castles.
 [RED]You lose[] if one color holds {lose} of the 5 Ring Cities (you are warned at {warn}), if a mage gets past your Capitol's guards and beats you in its best-of-three duel, or if you hold no town and no free town is left.
-Losing an ordinary duel never ends a run. Read this again any time: World Standings, The War."
+Losing an ordinary duel never ends a run. Read this again any time: World Standings, The War.",
+
+  // ---- round 1013: the start screen's warning when another copy of the game is already open (desktop; util/SecondCopy)
+  "secondCopy.title": "Already Running",
+  "secondCopy.body": "The Forsaken Realms is already running in another window.\nTwo copies playing at once can overwrite each other's saves.\n\nQuit this copy, or play anyway?",
+  "secondCopy.quit": "Quit",
+  "secondCopy.play": "Play anyway"
 }

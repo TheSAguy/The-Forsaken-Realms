@@ -14264,6 +14264,52 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 1013: Kiora's Boss Effect says "end step", and a second copy of the game warns before play (2026-11-11)
+
+The user: "Yes, start both", approving `C:\CLAUDE\PROJECTS\TFR1\notes\logs-1111b.md` P3-24 (text only) and P3-26. For
+1.29. The Kiora card picture, with the same typo baked in, is the Art thread's round 1014.
+
+- **P3-24, Kiora's Boss Effect (gnomedoom's report).** `forge-gui/res/adventure/common/custom_cards/kioras_boss_effect.txt`
+  read "At the beginning of your and step" in the end-step trigger's `TriggerDescription$` (line 10) and the `Oracle:`
+  line (line 17); both now say "end step", and the Oracle's "create  a 1/1" lost its double space. The trigger itself
+  (`Mode$ Phase | Phase$ End Of Turn | ValidPlayer$ You`) was already right and is untouched: text only, no gameplay
+  change. Upstream's typo (#10158), still on upstream master; `CORE_ENGINE_CHANGES.md` says to take upstream's file once
+  they fix it. `grep -rli "your and step"` over `forge-gui/res` now finds nothing.
+- **P3-26, two desktop copies on one save.** One player ran two copies for 14 minutes and both wrote the same auto and
+  quick slots. Round 948's `LastExit` already saw the other copy's `lastexit.lock` and only logged it. Now:
+  - `util/LastExit.takeLock(File)` says what the lock found (`SecondCopy.Lock`): **TAKEN**, **HELD_ELSEWHERE**
+    (`tryLock` returned null: another live process holds it), **SAME_PROCESS** (`OverlappingFileLockException`: this
+    JVM already holds it) or **UNSUPPORTED** (no locking on that file system: tracked as before, no warning).
+  - **No false alarm from a crash:** the OS drops a file lock when its process ends, killed or crashed, so a lock file a
+    dead copy left behind is simply taken. Proven in the game: a copy started right after `agent_stop` killed the
+    previous one logged `[TFR-LastExit] NOT clean ...` and showed no warning.
+  - `util/SecondCopy` (new) holds the pure rule `shouldWarn(lock, mobile)` (HELD_ELSEWHERE on desktop only), the
+    once-per-launch latch and the log lines. `scene/StartScene.enter()` (stock) shows the warning in place of the
+    log-sharing question: title "Already Running", "The Forsaken Realms is already running in another window. Two
+    copies playing at once can overwrite each other's saves. Quit this copy, or play anyway?", buttons **Quit** (first,
+    the keyboard default; `Forge.exit(true)`) and **Play anyway** (closes it and asks the log question as before). The
+    dialog is modal, so nothing behind it can be pressed; `DialogFit.fitToStage` after show (round 1006).
+  - Texts in `config tables/tips.json` (`secondCopy.title/body/quit/play`), read through `TfrTips.text`; a missing key
+    falls back to the key's name, never a blank.
+  - **Android: no warning.** Android runs one process per app (a second tap on the icon brings the running game back),
+    and `LastExit` doesn't run there at all; `shouldWarn` also says no for a phone.
+  - **Log:** `[TFR-SecondCopy] detected: another copy of the game holds lastexit.lock; the start screen will warn`,
+    `warning shown on the start screen`, `quit: the player closed this copy`, `play anyway: the player kept this copy
+    open beside the other one`. The `[TFR-LastExit]` line for a held lock stays.
+- **Files:** `forge-gui/res/adventure/common/custom_cards/kioras_boss_effect.txt` (stock), `scene/StartScene.java`
+  (stock), `util/LastExit.java`, `util/SecondCopy.java` (new), `config tables/tips.json`,
+  `forge-gui-mobile/test/forge/adventure/util/SecondCopyTest.java` (new).
+- **Checked:** Maven `-o -pl forge-gui-mobile -am test -Dtest=SecondCopyTest`: exit 0. The test covers the rule, a stale
+  lock file (TAKEN), the same JVM (SAME_PROCESS), and a child JVM holding the lock (HELD_ELSEWHERE, then free once it
+  dies). Agent game, this round's classes ahead of the agent jar, two copies on the agent profile (the first with no
+  bridge, the second through `agent_launch.cmd`); shots in `C:\CLAUDE\PROJECTS\TFR1\notes\r1013\`:
+  `L_first_copy_no_dialog.png` and `P_first_copy_no_dialog.png` (no dialog), `L_second_copy_warning.png` and
+  `P_second_copy_warning.png` (1280x720 and 540x960), `L_second_copy_after_play_anyway.png`. Play anyway (landscape)
+  left the start screen usable; Quit (portrait) closed only the second copy. Log lines as above, no exceptions.
+- **Not run:** a real double-click of the Windows launcher (the agent copies are the same jar and profile), a profile on a
+  file system without locks, and Android. **Pre-existing, not this round:** `TfrTipsTest.tipsBreakTheirOwnLines` fails
+  on `war.page1` (a 136-character line from round 1005's War pages).
+
 ## Round 1012: the avatar's Full Control menu is built on the GL thread, and the Android release check times out (2026-11-11)
 
 The user: "Yes, fix both", approving `C:\CLAUDE\PROJECTS\TFR1\notes\logs-1111.md` P3-22 and P3-23. For 1.29.

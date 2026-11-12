@@ -413,8 +413,33 @@ public class StartScene extends UIScene {
         }
 
         super.enter();
-        askOrShareLogs();
+        if (forge.adventure.util.SecondCopy.takeWarning())
+            warnSecondCopy(); // round 1013: asks the log question itself after Play anyway
+        else
+            askOrShareLogs();
         forge.adventure.util.UpdateNotice.attach(ui); // round 782: PC update notice
+    }
+
+    /**
+     * Round 1013 (logs-1111b P3-26: two desktop copies played one save for 14 minutes): another copy of the game holds
+     * LastExit's lock, so warn before the player can load or start a game. Quit is the default (the first button, the
+     * one the keyboard lands on); Play anyway keeps the behavior before this round. Texts in tips.json (secondCopy.*).
+     */
+    private void warnSecondCopy() {
+        System.out.println("[TFR-SecondCopy] warning shown on the start screen");
+        Dialog dialog = createGenericDialog(forge.adventure.util.SecondCopy.text("title"),
+                forge.adventure.util.SecondCopy.text("body"),
+                forge.adventure.util.SecondCopy.text("quit"), forge.adventure.util.SecondCopy.text("play"), () -> {
+                    forge.adventure.util.SecondCopy.answered(true);
+                    removeDialog();
+                    Forge.exit(true);
+                }, () -> {
+                    forge.adventure.util.SecondCopy.answered(false);
+                    removeDialog();
+                    askOrShareLogs();
+                }, false, "", true);
+        showDialog(dialog);
+        forge.adventure.util.DialogFit.fitToStage(dialog); // round 1006: never taller than the screen
     }
 
     /** Round 698: the one-time log-sharing question (Yes first, the default the user asked for), else the previous

@@ -33,7 +33,8 @@ import java.util.TimerTask;
  *
  * <p>The last touch dates the end within a minute. A second copy of the game is told apart by a lock on
  * {@code lastexit.lock}, held for the session's life (the OS drops it when a process dies, killed or not): a copy that
- * can't take it says so and leaves the marker to the copy that holds it. Never throws: a log line must not stop a launch.
+ * can't take it says so and leaves the marker to the copy that holds it, and since round 1013 tells {@link SecondCopy},
+ * whose start-screen dialog asks the player to quit or play anyway. Never throws: a log line must not stop a launch.
  */
 public final class LastExit {
     private static final String FILE = "lastexit.txt";
@@ -57,9 +58,12 @@ public final class LastExit {
         try {
             marker = new File(ForgeConstants.USER_DIR, FILE);
             startedAt = System.currentTimeMillis();
-            if (!takeLock()) {
-                System.out.println("[TFR-LastExit] another copy of the game is running (it holds " + LOCK
-                        + "); this one leaves the marker to it");
+            SecondCopy.Lock got = takeLock(new File(ForgeConstants.USER_DIR, LOCK));
+            SecondCopy.record(got); // round 1013: the start screen warns about a second copy
+            if (got == SecondCopy.Lock.HELD_ELSEWHERE || got == SecondCopy.Lock.SAME_PROCESS) {
+                System.out.println("[TFR-LastExit] " + (got == SecondCopy.Lock.SAME_PROCESS
+                        ? "this process already holds " + LOCK + "; the marker stays as it is"
+                        : "another copy of the game is running (it holds " + LOCK + "); this one leaves the marker to it"));
                 marker = null;
                 return;
             }
@@ -112,15 +116,39 @@ public final class LastExit {
         return text + (crash == null ? "; no hs_err_pid crash file since then" : "; JVM crash file " + crash);
     }
 
-    private static boolean takeLock() {
+    /**
+     * Round 1013: what the lock says, not just yes/no. The OS drops a lock when its process ends, so a file a crash left
+     * behind is free and is TAKEN; tryLock returning null means another live process holds it (HELD_ELSEWHERE); an
+     * OverlappingFileLockException means this JVM already holds it (SAME_PROCESS, never a second copy); any other
+     * failure is a file system without locks (UNSUPPORTED: the session is tracked anyway, and nobody is warned).
+     * Package-private and file-taking for LastExitLockTest; the channel and lock stay held for the process's life.
+     */
+    static SecondCopy.Lock takeLock(File file) {
+        FileChannel channel = null;
         try {
-            lockChannel = new RandomAccessFile(new File(ForgeConstants.USER_DIR, LOCK), "rw").getChannel();
-            lock = lockChannel.tryLock();
-            return lock != null;
+            channel = new RandomAccessFile(file, "rw").getChannel();
+            FileLock got = channel.tryLock();
+            if (got == null) {
+                channel.close();
+                return SecondCopy.Lock.HELD_ELSEWHERE;
+            }
+            lockChannel = channel;
+            lock = got;
+            return SecondCopy.Lock.TAKEN;
         } catch (OverlappingFileLockException e) {
-            return false;
-        } catch (Throwable t) { // no lock to be had (a file system without locks): track the session anyway
-            return true;
+            closeQuietly(channel);
+            return SecondCopy.Lock.SAME_PROCESS;
+        } catch (Throwable t) {
+            closeQuietly(channel);
+            return SecondCopy.Lock.UNSUPPORTED;
+        }
+    }
+
+    private static void closeQuietly(FileChannel channel) {
+        try {
+            if (channel != null)
+                channel.close();
+        } catch (Throwable ignored) {
         }
     }
 

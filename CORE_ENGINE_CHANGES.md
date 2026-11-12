@@ -35,6 +35,19 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 1013 - Kiora's Boss Effect text (logs-1111b P3-24), the second-copy warning (P3-26)
+- `forge-gui/res/adventure/common/custom_cards/kioras_boss_effect.txt` (STOCK, upstream #10158): UPSTREAM TYPO, fixed in
+  our copy. Line 10 (`TriggerDescription$`) and line 17 (`Oracle:`) said "your and step"; both now "your end step", and
+  the Oracle's "create  a 1/1" has one space. The trigger's other fields are unchanged. Still wrong on upstream master
+  on 2026-11-11: **at the next engine merge, take upstream's version once they have fixed it** (if theirs reads "end
+  step", drop ours). The picture `custom_card_pics/Kiora's Boss Effect.fullborder.jpg` is the Art thread's round 1014.
+- `forge-gui-mobile/src/forge/adventure/scene/StartScene.java` (STOCK, already TFR-edited): `enter()`'s
+  `askOrShareLogs()` call becomes `if (SecondCopy.takeWarning()) warnSecondCopy(); else askOrShareLogs();`, plus the new
+  private `warnSecondCopy()` (a `createGenericDialog` with Quit / Play anyway, `DialogFit.fitToStage` after show). On a
+  conflict in `enter()`, keep upstream's body and re-add that if/else where the log question is asked.
+- New mod files, no upstream counterpart: `forge-gui-mobile/src/forge/adventure/util/SecondCopy.java`,
+  `forge-gui-mobile/test/forge/adventure/util/SecondCopyTest.java` (`util/LastExit.java` is TFR's own, round 948).
+
 ### Round 1012 - the avatar's Full Control menu on the GL thread (logs-1111 P3-22), release-check timeouts (P3-23)
 - `forge-gui-mobile/src/forge/screens/match/MatchController.java` (STOCK, already TFR-edited by round 1004):
   `showFullControl` keeps its AI check and its flag read; the `FPopupMenu` construction and `menu.show(...)` are wrapped
