@@ -4,11 +4,11 @@ Name=Shattergang Brothers
 1 Giant Ambush Beetle
 1 Akoum Refuge|C13
 1 Armillary Sphere|C13
-1 Blood Rites|C13
-1 Carnage Altar|C13
+1 Warstorm Surge|C13
+1 Mind Stone|TRC
 1 Charnelhoard Wurm|C13
 1 Command Tower|C13
-1 Curse of Chaos|C13
+1 Impact Tremors|MOC
 1 Curse of Shallow Graves|C13
 1 Deepfire Elemental|C13
 1 Dirge of Dread|C13
@@ -19,18 +19,18 @@ Name=Shattergang Brothers
 5 Forest|C13|1
 1 Foster|C13
 1 Furnace Celebration|C13
-1 Goblin Bombardment|C13
+1 Raid Bombardment|UMA
 1 Underfoot Underdogs
 1 Golgari Guildgate|C13
 1 Golgari Guildmage|C13
 1 Golgari Rot Farm|C13
 1 Grim Backwoods|C13
 1 Gruul Guildgate|C13
-1 Hua Tuo, Honored Physician|C13
+1 Eternal Witness|M3C
 1 Akoum Boulderfoot
 1 Jade Mage|C13
-1 Jar of Eyeballs|C13
-1 Jund Charm|C13
+1 Darksteel Ingot|C13
+1 Darigaaz's Charm|DDE
 1 Jund Panorama|C13
 1 Kazandu Refuge|C13
 1 Khalni Garden|C13
@@ -38,13 +38,13 @@ Name=Shattergang Brothers
 1 Llanowar Reborn|C13
 1 Mass Mutiny|C13
 4 Mountain|C13|1
-1 Night Soil|C13
+1 Fungal Plots|J25
 1 Obelisk of Jund|C13
 1 Opal Palace|C13
 1 Ophiomancer|C13
 1 Orazca Relic
 1 Primal Vigor|C13
-1 Quagmire Druid|C13
+1 Vesper Ghoul|DIS
 1 Rakdos Guildgate|C13
 1 Reincarnation|C13
 1 Restore|C13
@@ -59,8 +59,8 @@ Name=Shattergang Brothers
 1 Spoils of Victory|C13
 1 Sprouting Thrinax|C13
 1 Stalking Vengeance|C13
-1 Stronghold Assassin|C13
-1 Sudden Demise|C13
+1 Royal Assassin|ACR
+1 Fireball|C13
 4 Swamp|C13|1
 1 Swiftfoot Boots|C13
 1 Temple of the False God|C13
@@ -68,7 +68,7 @@ Name=Shattergang Brothers
 1 Terramorphic Expanse|C13
 1 Tooth and Claw|C13
 1 Vile Requiem|C13
-1 Viscera Seer|C13
+1 Carrion Feeder|FDC
 1 Vivid Grove|C13
 1 Walker of the Grove|C13
 1 Widespread Panic|C13

@@ -8,7 +8,7 @@ Name=Grothama
 1 Beanstalk Wurm|WOE
 1 Arcane Signet|TDC
 1 Asceticism|SOM
-1 Beast Within|TDC
+1 Crushing Vines|CMR
 1 Blossoming Defense|SCD
 1 Bow of Nylea|THS
 1 Boxing Ring|NCC
@@ -32,17 +32,17 @@ Name=Grothama
 1 Fyndhorn Elves|CMR
 1 Garruk, Primal Hunter|C21
 1 Garruk's Uprising|BLC
-1 Greater Good|BBD
+1 Elemental Bond|TDC
 1 Heroic Intervention|AER
-1 Hunter's Insight|CMM
+1 Bite Down|J25
 1 Hurricane|10E
 1 Kodama's Reach|TDC
 1 Kogla, the Titan Ape|IKO
 1 Kraul Harpooner|CLU
-1 Life's Legacy|NCC
+1 Rabid Bite|M20
 1 Llanowar Elves|J25
 1 Llanowar Tribe|KHC
-1 Momentous Fall|JMP
+1 Harrow|TDC
 1 Mortal's Resolve|BNG
 1 Nature's Claim|CNS
 1 Nature's Lore|MKC
@@ -54,8 +54,8 @@ Name=Grothama
 1 Ram Through|CMM
 1 Return of the Wildspeaker|OTC
 1 Rhonas's Monument|AKH
-1 Seedling Charm|MIR
-1 Setessan Tactics|JOU
+1 Giant Growth|J25
+1 Titanic Brawl|J22
 1 Snakeskin Veil|TDM
 1 Sol Ring|TDC
 1 Soul's Majesty|NEC
@@ -66,4 +66,4 @@ Name=Grothama
 1 Vigor|PLST
 1 Voracious Hydra|M20
 1 Warbriar Blessing|J25
-1 Wild Growth|PIP
+1 Abundant Growth|PIP

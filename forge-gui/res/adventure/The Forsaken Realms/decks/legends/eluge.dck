@@ -5,7 +5,7 @@ Name=Eluge, the Shoreless Sea
 [Main]
 1 Acquire|5DN
 1 Aqueous Form|THS
-1 Aquitect's Will|LRW
+1 Preordain|C15
 1 Beyeen Veil|ZNR
 1 Blue Sun's Zenith|C13
 1 Cackling Counterpart|ISD
@@ -13,12 +13,12 @@ Name=Eluge, the Shoreless Sea
 1 Change of Plans|NCC
 1 Clever Impersonator|KTK
 1 Clone Legion|C17
-1 Commandeer|OTP
+1 Opportunity|C13
 1 Commander's Insight|C21
 1 Force of Will
 1 Confirm Suspicions|SOI
 1 Counterspell|CMM
-1 Curse of the Swine|M3C
+1 Ravenform|LCC
 1 Dig Through Time|KTK
 1 Calamitous Tide|BLB
 1 Into the Flood Maw|BLB
@@ -27,20 +27,20 @@ Name=Eluge, the Shoreless Sea
 1 Mind Spring|BLB
 1 Stolen by the Fae|BLC
 1 Jace, the Mind Sculptor|BLC
-1 Dominate|NEM
+1 Archmage's Charm|H1R
 1 Drown in Dreams|MIC
 1 Fact or Fiction|DD2
 1 Finale of Revelation|M3C
 1 Flow of Knowledge|BRO
 1 Frantic Search|UMA
-1 High Tide|FEM|3
-1 Illusionist's Gambit|C13
+1 Brainstorm|C15
+1 Aetherize|C15
 1 Insidious Will|KLD
 1 Invoke the Winds|NEO
 35 Island|BLB
 1 March of Swirling Mist|NEO
 1 Mass Manipulation|RNA
-1 Mind Games|STH
+1 Dispel|WWK
 1 Mindsplice Apparatus|ONE
 1 Mnemonic Deluge|CMR
 1 Negate|M11
@@ -57,7 +57,7 @@ Name=Eluge, the Shoreless Sea
 1 Silver Scrutiny|DMU
 1 Sol Ring|C20
 1 Spark Double|WAR
-1 Spelltwine|DDM
+1 Rise from the Tides|SOI
 1 Stolen Identity|GTC
 1 Stormtide Leviathan|CMR
 1 Stroke of Genius|DMR

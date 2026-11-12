@@ -4,7 +4,7 @@ Name=Sheldon, the Commander
 1 Ruhan of the Fomori|SLD|[1695]
 [Main]
 1 Academy Ruins|TSP
-1 Acidic Soil|USG
+1 Act of Treason|GTC
 1 Aether Flash|7ED
 1 Arcane Signet|ELD
 1 Aura Thief|UDS
@@ -12,7 +12,7 @@ Name=Sheldon, the Commander
 1 Blasphemous Act|ISD
 1 Blind Obedience|GTC
 1 Blue Sun's Zenith|MBS
-1 Boros Fury-Shield|RAV
+1 Withstand|GPT
 1 Boros Reckoner|GTC
 1 Burnished Hart|CMR|[691]
 1 Chain Reaction|WWK
@@ -20,13 +20,13 @@ Name=Sheldon, the Commander
 1 Comeuppance|C14
 1 Command Tower|SLD|[1697]
 1 Confounding Conundrum|ZNR
-1 Copy Enchantment|RAV
+1 Mirrormade|ELD
 1 Coveted Jewel|C18
 1 Darksteel Ingot|PAL04
-1 Day's Undoing|ORI
+1 Compulsive Research|RAV
 1 Deflecting Palm|KTK
 1 Desertion|CN2
-1 Gather Specimens|ALA
+1 Opportunity|ULG
 1 Gideon's Sacrifice|WAR
 1 Gilded Lotus|MRD
 1 Gisela, Blade of Goldnight|AVR
@@ -41,17 +41,17 @@ Name=Sheldon, the Commander
 1 Land Tax|G10
 1 Leadership Vacuum|C19
 1 Worship
-1 Mandate of Peace|C19
+1 Swords to Plowshares|AFC
 1 Mimic Vat|SOM
 1 Minamo, School at Water's Edge|CHK
 1 Mind Stone|DCI
-1 Mirror Strike|PCY
-1 Mischievous Quanar|SCG
+1 Retaliate|5DN
+1 Mulldrifter|C15
 1 Mistveil Plains|SHM
 8 Mountain|AKH
 1 Mountain|ZNR
 1 Mystic Monastery|KTK
-1 Parallectric Feedback|GPT
+1 Chandra's Outrage|M11
 1 Phyrexian Metamorph|NPH
 1 Phyrexian Vindicator|ONE|[300]
 5 Plains|AKH
@@ -59,10 +59,10 @@ Name=Sheldon, the Commander
 1 Prairie Stream|BFZ
 1 Public Enemy|SNC
 1 Raugrin Triome|IKO|[311]
-1 Reflect Damage|MIR
+1 Lorehold Command|STX
 1 Reflecting Pool|SHM
-1 Refuse|HOU
-1 Reins of Power|STH
+1 Lightning Blast|7ED
+1 Aetherize|GTC
 1 Reiterate|TSP
 1 Relic of Legends|DMU
 1 Reliquary Tower|M13
@@ -74,7 +74,7 @@ Name=Sheldon, the Commander
 1 Sacred Foundry|RAV
 1 Settle the Wreckage|XLN
 1 Sol Ring|SLD|[1696]
-1 Solar Blaze|WAR
+1 Heroic Reinforcements|FDN
 1 Solemn Simulacrum|M12
 1 Steam Vents|GPT
 1 Sun Titan|DDL

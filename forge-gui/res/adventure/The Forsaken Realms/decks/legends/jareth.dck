@@ -6,7 +6,7 @@ Name=Jareth, Leonine Titan
 1 Akroma, Angel of Wrath|LGN
 1 Aura of Silence|WTH
 1 Aurification|ONS
-1 Balancing Act|ODY
+1 Day of Judgment|FDN
 1 Battle Screech|JUD
 1 Beloved Chaplain|ODY
 1 Blinding Angel|NEM
@@ -16,17 +16,17 @@ Name=Jareth, Leonine Titan
 1 Crackdown|MMQ
 1 Dawn Elemental|SCG
 1 Death or Glory|INV
-1 Debt of Loyalty|WTH
+1 Exile|ALL
 1 Decree of Justice|SCG
 1 Desert|ARN
-1 Devoted Caretaker|ODY
+1 Benevolent Bodyguard|JUD
 1 Disenchant|ICE
 1 Dion, Bahamut's Dominant
 1 Dust Bowl|MMQ
 1 Equipoise|VIS
 1 Exalted Angel|ONS
 1 Field of Souls|TMP
-1 Flickering Ward|TMP
+1 Holy Strength|4ED
 1 Glory|JUD
 1 Holy Day|LEG
 1 Intrepid Hero|7ED
@@ -34,7 +34,7 @@ Name=Jareth, Leonine Titan
 1 Karmic Guide|ULG
 1 Kor Haven|NEM
 1 Land Tax|4ED
-1 Lieutenant Kirtar|ODY
+1 Kangee's Lieutenant|SCD
 1 Mishra's Factory|4ED
 1 Mother of Runes|ULG
 1 Noble Purpose|MMQ
@@ -44,9 +44,9 @@ Name=Jareth, Leonine Titan
 1 Pearl Medallion|TMP
 34 Plains|ONS|3
 1 Power Matrix|MMQ
-1 Prismatic Strands|JUD
+1 Safe Passage|M13
 1 Radiant, Archangel|ULG
-1 Reconnaissance|EXO
+1 Gerrard's Battle Cry|TMP
 1 Reprisal|ALL
 1 Reya Dawnbringer|INV
 1 Righteous Fury|PO2
@@ -57,7 +57,7 @@ Name=Jareth, Leonine Titan
 1 Shelter|ODY
 1 Sol Ring|3ED
 1 Soltari Visionary|EXO
-1 Soul Sculptor|USG
+1 Auramancer|ODY
 1 Soul Warden|EXO
 1 Spurnmage Advocate|JUD
 1 Swords to Plowshares|ICE

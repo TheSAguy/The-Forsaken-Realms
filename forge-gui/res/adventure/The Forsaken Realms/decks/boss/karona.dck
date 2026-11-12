@@ -25,7 +25,7 @@ Name=Karona, False God
 1 Arcades Sabboth|LEG
 2 Darigaaz, the Igniter|INV
 1 Vaevictis Asmadi|LEG
-1 Dromar, the Banisher|INV
+1 Sharuum the Hegemon|BRC
 1 Chromium|LEG
 2 Crosis, the Purger|INV
 1 Nicol Bolas|LEG
@@ -37,7 +37,7 @@ Name=Karona, False God
 1 Tek|INV
 1 Shivan Dragon|LEA
 1 Two-Headed Dragon|MMQ
-1 Quicksilver Dragon|ONS
+1 Mist Dragon|MIR
 1 Teeka's Dragon|MIR
 1 Thunder Dragon|S99
 1 Eternal Dragon|SCG
@@ -48,9 +48,9 @@ Name=Karona, False God
 2 Counterspell
 2 Undermine|INV
 2 Recoil|INV
-2 Fire Covenant|ICE
+2 Bedevil|MSC
 2 Terminate|PLS
-2 Hull Breach|PLS
+2 Destructive Revelry|PIO
 2 Decimate|ODY
 2 Aura Shards|INV
 2 Mirari's Wake|JUD
@@ -60,7 +60,7 @@ Name=Karona, False God
 2 Suffocating Blast|APC
 4 Pernicious Deed|APC
 2 Energy Bolt|MIR
-2 Reflect Damage|MIR
+2 Warleader's Helix|UMA
 2 Temporal Spring|APC
 2 Yavimaya's Embrace|APC
 

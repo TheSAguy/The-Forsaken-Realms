@@ -11,7 +11,7 @@ Name=Gisa, the Hellraiser
 1 Withering Torment|DSK
 1 Accursed Duneyard|DRC
 1 Ayara, First of Locthwain|ELD
-1 Ghoulcaller Gisa|CMM
+1 Noxious Ghoul|LGN
 1 Gisa, Glorious Resurrector|MID
 1 Death Baron|FDN
 1 Gisa's Bidding|INR
@@ -27,7 +27,7 @@ Name=Gisa, the Hellraiser
 1 Dark Ritual|TMP
 1 Desert|ARN
 1 Doom Blade|M10
-1 Dread Charge|POR
+1 Zombify|FDN
 1 Encroaching Wastes|M14
 1 Falkenrath Noble|MM3
 1 Feed the Swarm|ZNR
@@ -36,20 +36,20 @@ Name=Gisa, the Hellraiser
 1 Ghost Quarter|C14
 1 Ghost Vacuum|DSK
 1 Gilded Lotus|DOM
-1 Glasses of Urza|4ED
+1 Wayfarer's Bauble|C14
 1 Gravespawn Sovereign|ONS
 1 Gruesome Fate|RIX
 1 Heraldic Banner|ELD
-1 Hex Parasite|NPH
+1 Brass Man|4ED
 1 Idol of Oblivion|ONC
 1 Kaervek, the Punisher|OTJ
 1 Lightning Greaves|C17
 1 Liquimetal Torque|BRC
 1 Lord of the Accursed|AKH
 1 Mind Stone|WTH
-1 Mirage Mirror|HOU
+1 Pristine Talisman|C14
 1 Oona's Blackguard|MOR
-1 Oubliette|2XM
+1 Bastion of Remembrance|CMM
 1 Pelakka Predation|ZNR
 1 Piranha Marsh|ZEN
 1 Plague Belcher|AKH
@@ -61,7 +61,7 @@ Name=Gisa, the Hellraiser
 1 Relic of Progenitus|MD1
 1 Scrabbling Claws|C18
 1 Sol Ring|C14
-1 Stronghold Assassin|C13
+1 Royal Assassin|4ED
 1 Sunscorched Desert|AKH
 23 Swamp|OTJ
 1 Swiftfoot Boots|M12
@@ -78,5 +78,5 @@ Name=Gisa, the Hellraiser
 1 Volatile Fault|LCI
 1 Withered Wretch|LGN
 1 Zombie Master|4ED
-1 Zombie Trailblazer|TOR
+1 Lord of the Undead|FDC
 1 Zulaport Cutthroat|BFZ

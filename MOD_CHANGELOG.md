@@ -14264,6 +14264,42 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 1017: enemy decks lose the cards the AI can't play, wave 1 (2026-11-12)
+
+The user, of players' "The AI is dumb in duels": "Start both" (the AI audit's round A, this round, and round B, the AI
+rules layer, round 1018). The audit (`C:\CLAUDE\PROJECTS\TFR1\notes\ai-audit\report.md`, pattern 1) found 1,192 of
+2,187 TFR enemies (55%) carrying cards Forge flags `AI:RemoveDeck:All` ("the AI can't play this sensibly"): 5,508
+copies in 1,691 hand-made `.dck` files, 91% of them spells. `CardUtil.getDeck` loads a `.dck` as written (only the
+generated `.json` decks filter the flag, `RewardData`), so the enemy sat on a hand it never cast.
+
+- **The decks:** the 124 worst `.dck` files under `res/adventure/The Forsaken Realms/decks/` (every deck with 7 or more
+  flagged copies: the legends, the World Champion decks, the Fallen Empires and Shandalar '97 decks, the Gaea, Urza
+  and Karona bosses, the minibosses and the tier decks above that line). 985 copies swapped, one line per card.
+- **The rule for a replacement:** same colors, mana value within 1, same card type, not flagged `RemoveDeck:All`,
+  printed in an edition TFR loads (not `restrictedEditions` or `digitalOnlyEditions`), not in
+  `restricted_cards.json`; a singleton legend deck never gets a card it holds, a 60-card deck never passes 4 copies;
+  a World Champion, Fallen Empires or Shandalar '97 deck only gets a card printed before its event. The new line takes
+  a set code the deck already uses where the card was printed there. TFR's legend decks do not follow Commander color
+  identity (Sisay's deck plays blue), so a replacement only has to fit the colors the deck already plays.
+- **Left alone:** lands (the AI plays a flagged land as a land), the 22 cards `res/lists/ai-card-roles.txt` keeps for
+  Flat Monte Carlo, and key cards (the user's rule: named decks keep their lists and swap only the unplayable cards;
+  a signature card stays): Masticore in Jon Finkel '00 (4), Kai Budde '99 (3) and Janosch Kuhn '00 (2), Parallax
+  Wave in Tom van de Logt '00 (4, the Replenish combo), Opposition in Alex Borteh '01 (4), Karn, Silver Golem in the
+  Urza boss (2), Autumn Willow in both Daughter of Autumn tier decks.
+- **Judgment calls:** the Gaea boss's Gaea's Liege -> Kalonian Twingrove (the same "power = Forests" body), the Urza
+  boss's Urza's Avenger -> Wurmcoil Engine (the boss gets stronger), Brian Hacker '98's Cataclysm -> Serra Angel
+  (Armageddon rejected), the Dark Ages Preacher's Festival -> Swords to Plowshares.
+- **Log:** `EnemyData.generateDeck` prints `[TFR-DeckGen] flagged: <enemy> (<copies>): 4x Masticore, ...` for a deck an
+  enemy fields that still holds flagged spells (lands and the Flat Monte Carlo cards skipped; no line for a clean
+  deck), so log reviews can track what is left.
+- **Numbers** (`deckcheck.py`, before -> after): flagged copies in enemy `.dck` files 5,508 -> 4,523; deck files with
+  one 1,691 -> 1,626; enemies with one 1,192 -> 1,146; in the 124 decks 1,124 -> 139 (95 lands, 23 Flat Monte Carlo
+  copies, 21 key-card copies).
+- **The full list** (deck, card out, card in, why) and the before/after deck checks:
+  `C:\CLAUDE\PROJECTS\TFR1\notes\r1017\swaps.md`, `before\`, `after\`; the tools and pick files in `tools\`.
+- **Not done here:** the other decks (waves 2 and 3, the user: "Let's replace ALL unplayable cards from all decks"),
+  and no AI change (round 1018). Not seen in a duel: the swaps are data only, checked by `deckcheck.py`.
+
 ## Round 1016: the VS screen's names and records in the clean font (2026-11-11)
 
 The user: "Yes, port it", of TFR 2's fix for the same screen, after a TFR 1 shot where "Victor", "0 - 0" and "Apprentice

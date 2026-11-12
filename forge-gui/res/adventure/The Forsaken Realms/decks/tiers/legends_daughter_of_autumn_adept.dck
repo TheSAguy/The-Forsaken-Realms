@@ -11,8 +11,8 @@ Name=Daughter of Autumn
 1 Argothian Sprite|bro
 1 Augur of Autumn|mid
 1 Autumn Willow|hml
-1 Autumn's Veil|m12
-1 Blood of the Martyr|chr
+1 Giant Growth|MSH
+1 Safe Passage|M13
 1 Blossoming Sands|mom
 1 Botanical Plaza|snc
 1 Canopy Vista|woc
@@ -22,8 +22,8 @@ Name=Daughter of Autumn
 1 Command Tower|woc
 1 Commander's Sphere|cmm
 1 Dawnstrider|mmq
-1 Edge of Autumn|tsr
-1 Eight-and-a-Half-Tails|chk
+1 Rampant Growth|TRC
+1 Devilthorn Fox|PLST
 1 Elfhame Palace|scd
 1 Faerie Guidemother|eld
 1 Woodland Liege
@@ -31,14 +31,14 @@ Name=Daughter of Autumn
 1 Fog|4ed
 2 Forest|woe
 1 Fortified Village|woc
-1 Foxfire|5ed
+1 Spore Cloud|FEM
 1 Fylgja|ice
-1 General's Regalia|mmq
+1 Darksteel Ingot|PIO
 1 Graypelt Refuge|scd
 1 Heal|5ed
 1 Hot Springs|ice
 1 Hushbringer|eld
-1 Jade Monolith|6ed
+1 Icy Manipulator|DMR
 1 Kei Takahashi|chr
 1 Knight of Autumn|grn
 1 Lifeforce|5ed
@@ -56,7 +56,7 @@ Name=Daughter of Autumn
 1 Reinforced Bulwark|roe
 1 Rite of Passage|5dn
 1 Scattered Groves|cmm
-1 Scryb Ranger|tsr
+1 Sylvan Ranger|WOC
 1 Scryb Sprites|5ed
 1 Selesnya Guildgate|znc
 1 Selesnya Sanctuary|cmm

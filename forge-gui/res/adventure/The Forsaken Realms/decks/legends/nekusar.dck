@@ -20,11 +20,11 @@ Name=Nekusar
 1 Damnation|MM3|[63]
 1 Dark Ritual|V13|[1]
 1 Dig Through Time|KTK|[36]
-1 Disallow|AER
+1 Cancel|M10
 1 Dragonskull Summit|M10|[223]
 1 Teferi's Puzzle Box|MIR
-1 Psychosis Crawler|MBS
-1 Dark Deal|FRF
+1 Solemn Simulacrum|MRD
+1 Mind Rot|M10
 1 Fell Specter|JMP
 1 Evacuation|STH
 1 Razorkin Needlehead|DSK
@@ -45,20 +45,20 @@ Name=Nekusar
 1 Increasing Vengeance|DKA|[95]
 1 Nightscape Familiar|PLS
 4 Island|BFZ|[255]
-1 Jace's Archivist|M12|[59]
+1 Reckless Scholar|CNS
 1 Lightning Greaves|CMM|[398]
 1 Mana Confluence|EXP|[42]
-1 Misdirection|CNS|[102]
+1 Dismiss|C13
 1 Molten Psyche|SOM
 3 Mountain|BFZ|[265]
 1 Notion Thief|DGM|[88]
 1 Mind's Eye
-1 Pact of Negation|MMA|[56]
+1 Spell Pierce|MM3
 1 Phyrexian Tyranny|PLS|[118]
 1 Polluted Delta|MH3|[224]
 1 Ponder|M12|[73]
 1 Preordain|CMR|[84]
-1 Psychosis Crawler|MBP|[282]
+1 Phyrexian Hulk|M13
 1 Reflecting Pool|CLB|[358]
 1 Reforge the Soul|AVR|[151]
 1 Reiterate|TSP|[175]
@@ -92,6 +92,6 @@ Name=Nekusar
 1 Watery Grave|GTC|[249]
 1 Wheel and Deal|ONS|[121]
 1 Wheel of Fortune|3ED|[185]
-1 Whispering Madness|GTC|[207]
-1 Windfall|USG|[111]
-1 Winds of Change|4ED|[232]
+1 Urza's Guilt|PLS
+1 Prosperity|C13
+1 Burning Inquiry|M10

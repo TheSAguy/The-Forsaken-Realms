@@ -8,9 +8,9 @@ Name=Hapatra
 1 Feed the Swarm
 1 Blowfly Infestation|ECC|[46]
 1 Bojuka Bog|EOC|[149]
-1 Cannibalize|STH|[53]
+1 Night's Whisper|ECC
 1 Caustic Hound
-1 Cauldron of Souls|C16|[246]
+1 Gilded Lotus|BLC
 1 Chainbreaker|SHM|[249]
 1 Elite Cat Warrior
 1 Command Tower|CMM|[420]
@@ -18,8 +18,8 @@ Name=Hapatra
 1 Contagion Engine|SOM|[145]
 1 Corrosive Mentor|SHM|[61]
 1 Deity of Scars|EVE|[118]
-1 Devoted Druid|ECC|[104]
-1 Dragon Throne of Tarkir|KTK|[219]
+1 Llanowar Elves|4ED
+1 Loxodon Warhammer|HOP
 1 Trespasser's Curse
 18 Forest|AKH|[268]
 1 Gaea's Anthem|MM3|[127]
@@ -39,8 +39,8 @@ Name=Hapatra
 1 Bog Smugglers
 1 Orochi Eggwatcher|CHK|[233]
 1 Orochi Sustainer|CHK|[236]
-1 Pack's Disdain|MOR|[73]
-1 Plaguemaw Beast|MBS|[87]
+1 Go for the Throat|MBS
+1 Garruk's Packleader|BLC
 1 Final-Sting Faerie
 1 Putrefy|ECC|[131]
 1 Quillspike|EVE|[126]
@@ -64,7 +64,7 @@ Name=Hapatra
 16 Swamp|AKH|[263]
 1 Tainted Wood|DSC|[305]
 1 Tusked Colossodon
-1 Tribal Unity|HOP|[80]
+1 Luminescent Rain|MOR
 1 Trigon of Corruption|SOM|[213]
 1 Wickerbough Elder|ECC|[118]
 1 Woodfall Primus|NCC|[322]

@@ -5,7 +5,7 @@ Name=Jalira
 [Main]
 1 Alirios, Enraptured|thb
 1 All-Seeing Arbiter|snc
-1 Proteus Staff|mrd
+1 Pristine Talisman|LTC
 1 Colossal Whale|m14
 1 Reef Worm|c21
 1 Triplicate Titan|c21
@@ -21,14 +21,14 @@ Name=Jalira
 1 Coral Atoll|vis
 1 Counterspell|6ed
 1 Defiler of Dreams|dmu
-1 Energy Tap|leg
+1 Ponder|TRC
 1 Faerie Conclave|ulg
 1 Fblthp, the Lost|pwar
 1 Flip the Switch|mid
 1 Foresee|fut
 1 Gilded Lotus|mrd
 1 Hard Evidence|mh2
-1 High Tide|dmr
+1 Unsummon|FRA
 1 Hope of Ghirapur|plst
 1 Inkwell Leviathan|2xm
 1 Interpret the Signs|jou
@@ -46,9 +46,9 @@ Name=Jalira
 1 Nadir Kraken|thb
 1 Otterball Antics|blb
 1 Phyrexian Ingester|ema
-1 Polymorphist's Jest|m15
+1 Cancel|PLST
 1 Preordain|brc
-1 Profaner of the Dead|dtk
+1 Archaeomancer|J25
 1 Quicksilver Amulet|ulg
 1 Revenge of the Drowned|mid
 1 Sapphire Medallion|mh3
@@ -61,7 +61,7 @@ Name=Jalira
 1 Sleep with the Fishes|snc
 1 Sol Ring|onc
 1 Soldevi Excavations|all
-1 Soothsaying|mmq
+1 Curiosity|PLST
 1 Sphinx of Magosi|w16
 1 Sphinx of the Second Sun|cmr
 1 Stormtide Leviathan|m13

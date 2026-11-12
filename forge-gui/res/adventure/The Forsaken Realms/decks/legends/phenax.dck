@@ -4,7 +4,7 @@ Name=Phenax, God of Deception
 1 Phenax, God of Deception|BNG
 [Main]
 1 Animate Dead|3ED
-1 Aphetto Alchemist|ONS
+1 Azure Mage|MM3
 1 Arcane Denial|ALL
 1 Arcane Signet|WOC
 1 Arcanis the Omnipotent|ONS
@@ -27,7 +27,7 @@ Name=Phenax, God of Deception
 1 Drift of Phantasms|RAV
 1 Extract from Darkness|ZNC
 1 Fractured Sanity|MH2
-1 Freed from the Real|A25
+1 Control Magic|3ED
 1 Aether Vial
 1 Imperious Mindbreaker|VOC
 20 Island|THB
@@ -41,8 +41,8 @@ Name=Phenax, God of Deception
 1 King Macar, the Gold-Cursed|JOU
 1 Lazav, Dimir Mastermind|ZNC
 1 Maddening Cacophony|ZNR
-1 Magewright's Stone|DIS
-1 Memory Plunder|C17
+1 Mind Stone|ZNC
+1 Soul Manipulation|ZNC
 1 Mesmeric Orb|BRR
 1 Mind Grind|GTC
 1 Mizzium Skin|RTR
@@ -62,13 +62,13 @@ Name=Phenax, God of Deception
 1 The Haunt of Hightower|RNA
 1 Thousand-Year Elixir|CMA
 1 Tidal Force|C13
-1 Tideforce Elemental|WWK
+1 Frost Lynx|PLST
 1 Tree of Perdition|EMN
-1 Triton Tactics|THS
-1 Turnabout|USG
+1 Unsummon|3ED
+1 Cryptic Command|TRC
 1 Undead Alchemist|ISD
 1 Vesuvan Doppelganger|3ED
 1 Visions of Beyond|UMA
-1 Vizier of Tumbling Sands|AKH
+1 Deceiver Exarch|C13
 1 Wight of Precinct Six|JMP
 1 Worn Powerstone|C18

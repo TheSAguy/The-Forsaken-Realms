@@ -33,17 +33,17 @@ Name=Mairsil
 1 Blighted Bat|jmp
 1 Cathartic Reunion|2xm
 1 Chainer, Dementia Master|tor
-1 Cinderhaze Wretch|shm
+1 Shriekmaw|ECC
 1 Command Tower|c20
 1 Damnable Pact|c17
 1 Talisman of Creativity|tdc
 1 Dragonskull Summit|xln
-1 Endling|mh1
+1 Gravedigger|J25
 1 Epiphany at the Drownyard|soi
 1 Kairi, the Swirling Sky
 1 Evolving Wilds|iko
 1 Exotic Orchard|c21
-1 Faithless Looting|c21
+1 Tormenting Voice|J22
 1 Fervor|m13
 1 Flamekin Village|cm2
 1 Foreboding Ruins|dsc
@@ -53,20 +53,20 @@ Name=Mairsil
 1 Hateflayer|eve
 8 Island|c17
 1 Memnarch|arc
-1 Mirage Mirror|hou
+1 Chromatic Lantern|MBC
 7 Mountain|c17
 1 Necrotic Ooze|som
 1 Nightscape Familiar|e01
 1 Ornithopter of Paradise|mh2
 1 Path of Ancestry|c20
 1 Prismatic Vista|mh1
-1 Quicksilver Elemental|mrd
+1 Mulldrifter|ECC
 1 Rakdos Carnarium|c20
 1 Fellwar Stone|drk
 1 Read the Bones|ths
 1 Relic of Legends|dmu
 1 Riptide Laboratory|mh2
-1 Shauku, Endbringer|mir
+1 Sheoldred, Whispering One|PLST
 1 Shivan Reef|c21
 1 Sign in Blood|cm2
 1 Skull of Ramos|mmq
@@ -77,7 +77,7 @@ Name=Mairsil
 1 Star Compass|ima
 6 Swamp|c17
 1 Talisman of Dominance|e01
-1 Torchling|e01
+1 Siege-Gang Commander|TDC
 1 Tormod's Crypt|c14
 1 Training Grounds|roe
 1 Vandalblast|tsr

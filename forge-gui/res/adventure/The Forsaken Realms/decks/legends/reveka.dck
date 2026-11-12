@@ -5,7 +5,7 @@ Name=Reveka, Wizard Savant
 [Main]
 1 Arcane Denial|ALL
 1 Psionic Blast|LEA
-1 Mind Bomb|DRK
+1 Preordain|TDC
 1 Mawcor|TMP
 1 Suq'Ata Firewalker|MIR
 1 Zuran Spellcaster|ICE
@@ -13,7 +13,7 @@ Name=Reveka, Wizard Savant
 1 Thornwind Faeries|ULG
 1 Charisma|MMQ
 1 Sigil of Sleep|UDS
-1 Aphetto Alchemist|ONS
+1 Azure Mage|MM3
 1 Arcane Signet|ELD
 1 Archmage's Charm|MH1
 1 Basilisk Collar|DSC
@@ -34,7 +34,7 @@ Name=Reveka, Wizard Savant
 1 Frantic Search|TDC
 1 Gilded Lotus|BLC
 1 Grindstone
-1 High Tide|FEM
+1 Brainstorm|DSC
 1 Imprisoned in the Moon|INR
 1 Into the Flood Maw|BLB
 35 Island|5ED
@@ -48,7 +48,7 @@ Name=Reveka, Wizard Savant
 1 Psychic Venom|LEA
 1 Rapid Hybridization|TDC
 1 Reality Shift|TDC
-1 Recurring Insight|ROE
+1 Cosmic Epiphany|PRM
 1 Retreat to Coralhelm|DSC
 1 Riptide Laboratory|MH2
 1 Sakashima the Impostor|SOK
@@ -59,12 +59,12 @@ Name=Reveka, Wizard Savant
 1 Spark Double|RVR
 1 Staff of Nin|CM2
 1 Stock Up|DFT
-1 Swan Song|EOC
+1 Spell Pierce|NEO
 1 Thought Vessel|DSC
 1 Thousand-Year Elixir|C21
 1 Thran Dynamo|BLC
-1 Turnabout|DMR
+1 Cryptic Command|TRC
 1 War Room|MKC
 1 Wayfarer's Bauble|TDC
 1 Willbreaker|ORI
-1 Windfall|OTC
+1 Compulsive Research|TDC

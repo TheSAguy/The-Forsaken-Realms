@@ -35,6 +35,9 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 1017 - enemy decks lose the cards the AI can't play; [TFR-DeckGen] flagged: log line
+- `forge-gui-mobile/src/forge/adventure/data/EnemyData.java` (STOCK, already TFR-edited): `generateDeck`'s two `.dck` returns (randomizeDeck and the numbered deck) are wrapped in a new private `logFlagged(Deck)`, which prints `[TFR-DeckGen] flagged: <enemy> (<copies>): ...` for flagged non-land cards (`CardAiHints.isRemovedFromAiDecks`) and returns the deck unchanged. On a merge: keep the wrap around whatever upstream returns there.
+
 ### Round 1016 - the VS screen's names and records in the clean font (TfrFonts.vsFont)
 - `forge-gui-mobile/src/forge/screens/TransitionScreen.java` (STOCK, already TFR-edited): in `drawBackground`'s VS
   branch, after `BitmapFont font = Controls.getBitmapFont("default", ...)`, `font` becomes `TfrFonts.vsFont(font)` when

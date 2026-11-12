@@ -147,11 +147,35 @@ public class EnemyData implements Serializable {
         }
 
         if (randomizeDeck) {
-            return forge.adventure.util.CommanderCards.stripEnemyDeck( // round 387: no commander-only cards
-                    CardUtil.getDeck(Aggregates.random(deck), true, isFantasyMode, colors, life > 13, canUseGeneticAI), getName());
+            return logFlagged(forge.adventure.util.CommanderCards.stripEnemyDeck( // round 387: no commander-only cards
+                    CardUtil.getDeck(Aggregates.random(deck), true, isFantasyMode, colors, life > 13, canUseGeneticAI), getName()));
         }
-        return forge.adventure.util.CommanderCards.stripEnemyDeck( // round 387: no commander-only cards
-                CardUtil.getDeck(deck[Current.player().getEnemyDeckNumber(this.getName(), deck.length)], true, isFantasyMode, colors, life > 13, canUseGeneticAI), getName());
+        return logFlagged(forge.adventure.util.CommanderCards.stripEnemyDeck( // round 387: no commander-only cards
+                CardUtil.getDeck(deck[Current.player().getEnemyDeckNumber(this.getName(), deck.length)], true, isFantasyMode, colors, life > 13, canUseGeneticAI), getName()));
+    }
+
+    // Round 1017: hand-made .dck enemy decks load unfiltered, so a card Forge flags AI:RemoveDeck:All (the AI can't
+    // play it sensibly) sits in the enemy's hand. Round 1017 swapped them out of the worst decks; this line lists
+    // what is left in the deck an enemy fields, so log reviews can track it. Lands are skipped (the AI still plays a
+    // flagged land as a land), and so are the cards ai-card-roles.txt keeps for Flat Monte Carlo.
+    private Deck logFlagged(Deck d) {
+        if (d == null) return null;
+        try {
+            StringBuilder sb = new StringBuilder();
+            int copies = 0;
+            for (java.util.Map.Entry<forge.item.PaperCard, Integer> e : d.getMain()) {
+                forge.card.CardRules rules = e.getKey().getRules();
+                if (rules.getType().isLand() || !forge.card.CardAiHints.isRemovedFromAiDecks(rules)) continue;
+                if (sb.length() > 0) sb.append(", ");
+                sb.append(e.getValue()).append("x ").append(e.getKey().getName());
+                copies += e.getValue();
+            }
+            if (copies > 0)
+                System.out.println("[TFR-DeckGen] flagged: " + getName() + " (" + copies + "): " + sb);
+        } catch (RuntimeException ex) {
+            System.out.println("[TFR-DeckGen] flagged: check failed for " + getName() + ": " + ex);
+        }
+        return d;
     }
 
     // Session-local, transient by design: one line per run is enough to prove the gate is

@@ -12,7 +12,7 @@ Name=Gyome
 1 Sproutback Trudge|c21
 1 Ravenous Chupacabra|rix
 1 Taste of Death|c21
-1 Wall of Limbs|m15
+1 Wall of Bone|GVL
 1 Bake into a Pie|jmp
 1 Bala Ged Recovery|znr
 1 Beledros Witherbloom|stx
@@ -24,8 +24,8 @@ Name=Gyome
 1 Clifftop Lookout|blb
 1 Command Tower|khc
 1 Diabolic Edict
-1 Cuombajj Witches|cmr
-1 Deadly Tempest|c21
+1 Zulaport Cutthroat|SOC
+1 Crux of Fate|FIC
 1 Deathsprout|war
 1 Dina, Soul Steeper|stx
 1 Diresight|blb
@@ -38,7 +38,7 @@ Name=Gyome
 1 Gilded Goose|eld
 1 Gingerbread Cabin|eld
 1 Gluttonous Troll|c21
-1 God-Eternal Bontu|eoc
+1 Gray Merchant of Asphodel|FDC
 1 Golgari Rot Farm|khc
 1 Greta, Sweettooth Scourge|woe
 1 Healing Technique|c21
@@ -53,7 +53,7 @@ Name=Gyome
 1 Myriad Landscape|khc
 1 Open the Way|mat
 1 Pest Infestation|c21
-1 Phyrexian Delver|inv
+1 Gravedigger|J25
 1 Radiant Fountain|m21
 1 Reassembling Skeleton|m12
 1 Restless Cottage|woe
@@ -62,7 +62,7 @@ Name=Gyome
 1 Savvy Hunter|eld
 1 Skullclamp|c17
 1 Sol Ring|c21
-1 Spawning Pit|dst
+1 Mind Stone|TRC
 1 Stargaze|blb
 1 Study Hall|c21
 8 Swamp|stx
@@ -75,7 +75,7 @@ Name=Gyome
 1 Thriving Moor|jmp
 1 Tireless Provisioner|mh2
 1 Tough Cookie|woe
-1 Trading Post|m13
+1 Icy Manipulator|DMR
 1 Trail of Crumbs|eld
 1 Valentin, Dean of the Vein|stx
 1 Veinwitch Coven|c21

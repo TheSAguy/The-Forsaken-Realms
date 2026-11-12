@@ -16,7 +16,7 @@ Name=Atris
 1 Rags|akh
 1 Feast of Succession|cmr
 1 Do or Die|inv
-1 Choice of Damnations|sok
+1 Corrupt|BRO
 1 Barrin's Spite|inv
 1 Baleful Strix|2xm
 1 Bitter Triumph|lci
@@ -53,10 +53,10 @@ Name=Atris
 1 Ornithopter of Paradise|mh2
 1 Overwhelming Remorse|bro
 1 Phyrexian Metamorph|nph
-1 Polymorphist's Jest|c17
-1 Primordial Mist|c18
+1 Cancel|PLST
+1 Future Sight|MH1
 1 Protection Racket|ncc
-1 Reins of Power|cmd
+1 Aetherize|FDN
 1 Rise of the Dark Realms|fdn
 1 Sakashima's Student|pca
 1 Sapphire Medallion|cmm
@@ -67,9 +67,9 @@ Name=Atris
 1 Shipwreck Marsh|mid
 1 Solemn Simulacrum|j22
 1 Sphinx Ambassador|m10
-1 Split Decision|gn3
-1 Sudden Spoiling|tsr
-1 Sudden Substitution|c19
+1 Counterspell|FDC
+1 Murder|J25
+1 Dismiss|J22
 10 Swamp|thb
 1 Tainted Isle|clb
 1 Terrain Generator|clb

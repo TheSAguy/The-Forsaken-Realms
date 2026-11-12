@@ -8,13 +8,13 @@ Name=Ilharg
 1 Big Score|blc
 1 Blast-Furnace Hellkite|brc
 1 Bogardan Hellkite|c14
-1 Bolt Bend|war
+1 Lightning Blast|8ED
 1 Cavalier of Flame|m20
 1 Chandra, Torch of Defiance|cmm
 1 Chaos Warp|cmr
 1 Combat Celebrant|blc
 1 Combustible Gearhulk|kld
-1 Conjurer's Closet|c13
+1 Gilded Lotus|MSC
 1 Crystal Vein|c14
 1 Cursed Mirror|mh3
 1 Swiftfoot Boots|tdc
@@ -29,13 +29,13 @@ Name=Ilharg
 1 Emergence Zone|war
 1 Enduring Courage|dsk
 1 Everflowing Chalice|c16
-1 Faithless Looting|dka
+1 Tormenting Voice|J22
 1 Fanatic of Mogis|ths
 1 Fiendish Duo|gn2
 1 Fire Diamond|mir
 1 Flameshadow Conjuring|ori
 1 Full Throttle|dft
-1 Generator Servant|uma
+1 Hellspark Elemental|PLST
 1 Great Train Heist|otj
 1 Hammer of Purphoros|ths
 1 Hazoret's Monument|akh
@@ -43,7 +43,7 @@ Name=Ilharg
 1 Inferno Titan|m12
 1 Kher Keep|c13
 1 Lightning Greaves|cmm
-1 Magus of the Wheel|a25
+1 Prodigal Pyromancer|TSR
 1 Meteor Golem|m19
 1 Mind Stone|c14
 1 Mob Rule|voc
@@ -70,5 +70,5 @@ Name=Ilharg
 1 Warstorm Surge|m12
 1 Wheel of Misfortune|cmr
 1 Whispersilk Cloak|dst
-1 Wild Ricochet|m14
+1 Fiery Confluence|LCC
 1 Worn Powerstone|mh3

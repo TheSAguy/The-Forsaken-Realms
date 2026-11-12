@@ -3,16 +3,16 @@ Name=Phelddagrif
 [Commander]
 1 Phelddagrif|all
 [Main]
-1 Angel's Trumpet|ulg
+1 Loxodon Warhammer|ONC
 1 Archon of Absolution|eld
-1 Archon of Valor's Reach|c20
+1 Dragonlord Dromoka|TDC
 1 Baird, Steward of Argive|dom
 1 Ezuri's Predation|cmm
 1 Arachnogenesis|cmm
 1 Aetherize|gtc
 1 Comeuppance|c14
 1 Generous Gift|mh1
-1 Beast Within|nph
+1 Crushing Vines|CMR
 1 Faeburrow Elder|eld
 1 Austere Command|mkc
 1 Aven Mindcensor|clb
@@ -23,7 +23,7 @@ Name=Phelddagrif
 1 Brokers Hideout|snc
 1 Buried in the Garden|otp
 1 Caltrops|7ed
-1 Cataclysmic Gearhulk|moc
+1 Serra Angel|J25
 1 Chromatic Lantern|rtr
 1 Command Tower|otc
 1 Commander's Sphere|lcc
@@ -54,7 +54,7 @@ Name=Phelddagrif
 1 Razorverge Thicket|one
 1 Reclamation Sage|scd
 1 Reidane, God of the Worthy|khm
-1 Reins of Power|clb
+1 Ray of Command|DDM
 1 Retrieve|vow
 1 Return to Dust|lcc
 1 Reverence|sok
@@ -65,7 +65,7 @@ Name=Phelddagrif
 1 Seaside Citadel|mkc
 1 Selesnya Sanctuary|clu
 1 Simic Growth Chamber|clu
-1 Slaughter the Strong|rix
+1 Day of Judgment|FDN
 1 Smothering Tithe|cmm
 1 Spara's Headquarters|snc
 1 Stroke of Midnight|woe
@@ -73,8 +73,8 @@ Name=Phelddagrif
 1 Temple Garden|rvr
 1 Temple of Mystery|otc
 1 Temporary Lockdown|dmu
-1 Questing Phelddagrif|pls
-1 Tranquil Frillback|mat
+1 Rafiq of the Many|CMM
+1 Thrashing Brontodon|J25
 1 Treetop Village|j22
 1 Trickster's Elk|mh3
 1 Trygon Predator|otc

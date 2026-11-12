@@ -16,14 +16,14 @@ Name=Hazezon Tamar
 1 Elfhame Palace|INV
 1 Exploration|USG
 1 Fires of Yavimaya|INV
-1 Flicker|UDS
+1 Declaration in Stone|NCC
 8 Forest|3ED
 1 Forgotten Cave|ONS
 1 Grasslands|MIR
 1 Jaya Ballard, Task Mage
 1 Harrow|TMP
 1 High Market|MMQ
-1 Hull Breach|PLS
+1 Destructive Revelry|PIO
 1 Hurricane|ICE
 1 Jungle Patrol|MIR
 1 Shivan Oasis|INV
@@ -37,12 +37,12 @@ Name=Hazezon Tamar
 1 Nantuko Monastery|JUD
 1 Naturalize|ONS
 1 Nature's Lore|ICE
-1 Night Soil|FEM
+1 Sylvan Anthem|MH2
 1 Oblation|ONS
 1 Overrun|TMP
 1 Pendelhaven|TSB
 7 Plains|3ED
-1 Pulsemage Advocate|JUD
+1 Keepers of the Faith|LEG
 1 Rampant Growth|MIR
 1 Reclamation Sage|TSR
 1 Regrowth|CEI
@@ -58,7 +58,7 @@ Name=Hazezon Tamar
 1 Starstorm|ONS
 1 Fervor|WTH
 1 Swords to Plowshares|4ED
-1 Sylvan Library|4ED
+1 Forgotten Harvest|PCY
 1 Terminal Moraine|PLS
 1 Terrain Generator|NEM
 1 Tranquil Thicket|ONS
@@ -75,7 +75,7 @@ Name=Hazezon Tamar
 1 Siege-Gang Commander|ONS
 1 Rout|INV
 1 Collective Unconscious|MMQ
-1 Goblin Bombardment|TMP
+1 Raid Bombardment|UMA
 1 Explosive Vegetation|ONS
 1 Wall of Blossoms|STH
 1 Karplusan Forest|ICE

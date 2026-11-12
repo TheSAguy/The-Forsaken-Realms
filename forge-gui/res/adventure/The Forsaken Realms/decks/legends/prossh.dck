@@ -11,7 +11,7 @@ Name=Prossh
 1 Nogi, Draco-Zealot|TDC
 1 Rohgahh, Kher Keep Overlord|DMC
 1 Hit|DIS
-1 Beast Within|NPH
+1 Crushing Vines|CMR
 1 Avenger of Zendikar|WWK
 1 Awakening Zone|CMD
 1 Chaos Warp|CMD
@@ -34,7 +34,7 @@ Name=Prossh
 1 Farhaven Elf|KHC
 9 Forest|M14
 1 Foster|C13
-1 Goblin Bombardment|C13
+1 Dragon Tempest|DTK
 1 Golgari Charm|RTR
 1 Golgari Rot Farm|KHC
 1 Impact Tremors|DTK
@@ -47,7 +47,7 @@ Name=Prossh
 1 Mob Rule|FRF
 8 Mountain|M14
 1 Mountain Valley|MIR
-1 Nullmage Shepherd|RAV
+1 Immaculate Magistrate|CMR
 1 Ogre Slumlord|ZNC
 1 Ophiomancer|C13
 1 Overgrown Tomb|RTR
@@ -65,11 +65,11 @@ Name=Prossh
 1 Sol Ring|KHC
 1 Sprouting Thrinax|ALA
 1 Stalking Vengeance|C16
-1 Strionic Resonator|C19
-1 Sudden Spoiling|C14
+1 Lightning Greaves|C19
+1 Murder|CMR
 7 Swamp|RTR
 1 Swiftfoot Boots|KHC
-1 Tears of Rage|DST
+1 Trumpet Blast|CNS
 1 Temple of the False God|C20
 1 Tempt with Vengeance|C13
 1 Terminate|ARB
@@ -77,7 +77,7 @@ Name=Prossh
 1 Veteran Explorer|WTH
 1 Warstorm Surge
 1 Victimize|USG
-1 Viscera Seer|CMR
+1 Carrion Feeder|FDC
 1 Wood Elves|POR
 1 Yavimaya Granger|ULG
 1 Zealous Conscripts|MM3

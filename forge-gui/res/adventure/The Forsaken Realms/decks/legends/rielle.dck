@@ -5,7 +5,7 @@ Name=Rielle, the Everwise
 [Main]
 1 Anger|JUD
 1 Artful Dodge|DKA
-1 Bolt Bend|WAR
+1 Lightning Blast|TMP
 1 Brallin, Skyshark Rider|C20
 1 Brass's Tunnel-Grinder|LCI
 1 Breakthrough|CNS
@@ -17,32 +17,32 @@ Name=Rielle, the Everwise
 1 Dispel|BFZ
 1 Distortion Strike|ROE
 1 Evacuation|STH
-1 Faithless Looting|C15
-1 Firestorm|WTH
-1 Flux|POR
+1 Tormenting Voice|ZNR
+1 Lightning Bolt|3ED
+1 Compulsive Research|CNS
 1 Forgotten Cave|C21
 1 Frantic Search|C20
 1 Geistblast|SOI
 1 Glint-Horn Buccaneer|M20
 1 Gravitic Punch|GRN
 1 Harmonic Prodigy|MH2
-1 High Tide|FEM
+1 Brainstorm|C21
 1 Immolating Gyre|JMP
 1 Incendiary Command|C13
 1 Increasing Vengeance|C19
 14 Island|IKO
 1 Izzet Boilerworks|C21
 1 Arcane Signet|C19
-1 Jace's Archivist|C15
+1 Reckless Scholar|CNS
 1 Kazuul's Fury|ZNR
 1 Key to the City|C21
 1 Khorvath's Fury|BBD
 1 Library of Leng|5ED
 1 Lonely Sandbar|C21
-1 Magus of the Jar|TSP
-1 Magus of the Wheel|C20
+1 Lier, Disciple of the Drowned|TDC
+1 Prodigal Pyromancer|TSR
 1 Mana Geyser|C21
-1 Memory Jar|ULG
+1 Mind's Eye|BBD
 14 Mountain|IKO
 1 Command Tower|C19
 1 Path of Ancestry|LCC
@@ -52,7 +52,7 @@ Name=Rielle, the Everwise
 1 Neurok Stealthsuit|5DN
 1 Ominous Seas|IKO
 1 Ox of Agonas|THB
-1 Psychosis Crawler|C20
+1 Solemn Simulacrum|C20
 1 Reforge the Soul|C16
 1 Reliquary Tower|C21
 1 Runechanter's Pike|ISD
@@ -68,11 +68,11 @@ Name=Rielle, the Everwise
 1 Temple of Epiphany|C21
 1 Thought Vessel|CMR
 1 Thrill of Possibility|THB
-1 Tolarian Winds|USG
+1 Catalog|USG
 1 Tormod's Crypt|M21
 1 Talisman of Creativity|TDC
 1 Unleash Fury|M21
 1 Walking Atlas|WWK
 1 Wheel of Misfortune|CMR
-1 Windfall|USG
+1 Divination|DKA
 1 Wonder|MH2

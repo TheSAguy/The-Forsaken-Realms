@@ -11,10 +11,10 @@ Name=Elf Queen Guay
 2 Wood Elves|POR
 1 Wanderlust|5ED
 2 Taunting Elf|ONS
-1 Seedtime|JUD
+1 Naturalize|ONS
 1 Thoughtleech|7ED
 2 Respite|TMP
-2 Resuscitate|EXO
+2 Wrap in Vigor|PLST
 2 Quirion Trailblazer|INV
 2 Planeswalker's Favor|PLS
 2 Norwood Riders|PO2
@@ -41,16 +41,16 @@ Name=Elf Queen Guay
 2 Starlit Angel|POR
 1 Angelic Page|USG
 2 Serra Angel|O90P
-1 Gaea's Blessing|WTH
-1 Vigilant Martyr|MIR
+1 Rampant Growth|MIR
+1 Soul Warden|EXO
 1 Sustaining Spirit|ALL
-2 Reverent Mantra|MMQ
+2 Chastise|JUD
 1 Commander Eesha|JUD
-1 Atalya, Samite Master|INV
+1 Master Healer|7ED
 1 Angelic Renewal|WTH
 1 Auramancer|ODY
 1 Devout Harpist|ULG
-1 Embolden|ODY
+1 Dawn Charm|PLST
 1 Angelic Wall|PO2
 
 [StartInBattle_Reference]

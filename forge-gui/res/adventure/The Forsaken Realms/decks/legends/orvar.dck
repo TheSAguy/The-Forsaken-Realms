@@ -16,27 +16,27 @@ Name=Orvar
 1 Corsair Captain|fdn
 1 Distortion Strike|roe
 1 Case of the Ransacked Lab|mkm
-1 Cerulean Wisps|shm
+1 Opt|TDC
 1 Cloudpost|mrd
 1 Counterspell|mmq
 1 Mind Stone|woc
 1 Dive Down|xln
-1 Dream's Grip|mrd
-1 Energy Tap|4ed
-1 Enervate|ice
+1 Unsummon|FRA
+1 Preordain|TDC
+1 Arcane Denial|MSC
 1 Enter the Enigma|dsk
 1 Essence Flux|soi
 1 Fleeting Distraction|fdn
-1 Ghostly Flicker|avr
-1 High Tide|fem
+1 Cancel|PLST
+1 Brainstorm|TRC
 1 Hydroelectric Specimen|mh3
 1 Infuse|ice
 34 Island|khm
-1 Jinx|hml
+1 Mana Drain|2X2
 1 Leap|sth
 1 Micromancer|dmu
 1 Midnight Clock|eld
-1 Mind Games|sth
+1 Dispel|PLST
 1 Mirror Box|neo
 1 Mulldrifter|lrw
 1 Murmuring Mystic|rvr
@@ -52,7 +52,7 @@ Name=Orvar
 1 Sapphire Medallion|mh3
 1 Scourge of Fleets|znc
 1 Shadow Rift|tmp
-1 Shimmering Mirage|apc
+1 Essence Scatter|SOS
 1 Shipwreck Dowser|m21
 1 Shore Up|dmu
 1 Slip Out the Back|snc
@@ -61,9 +61,9 @@ Name=Orvar
 1 Stormchaser Drake|vow
 1 Swiftfoot Boots|scd
 1 Talrand, Sky Summoner|2x2
-1 Thermal Flux|csp
+1 Consider|TDC
 1 Thought Vessel|plg22
-1 Twiddle|4ed
+1 Distract|DS0
 1 Updraft|ice
 1 Vesuvan Duplimancy|dmu
 1 Wayfarer's Bauble|tdc
