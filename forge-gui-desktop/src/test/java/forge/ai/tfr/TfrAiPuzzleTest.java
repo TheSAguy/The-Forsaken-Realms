@@ -27,6 +27,7 @@ import forge.game.GameType;
 import forge.game.Match;
 import forge.game.card.Card;
 import forge.game.event.GameEvent;
+import forge.game.event.GameEventAttackersDeclared;
 import forge.game.event.GameEventTurnBegan;
 import forge.game.player.Player;
 import forge.game.player.RegisteredPlayer;
@@ -47,7 +48,8 @@ import static org.testng.Assert.fail;
  * <ul>
  *   <li>{@code Turns:N}: stop after N turns;</li>
  *   <li>{@code Expect:...}: checked at the end: {@code winner=ai}, {@code humanlife<=N}, {@code ailife>=N},
- *   {@code <zone> has|lacks NAME} (zone = aibattlefield, humangraveyard, ...), {@code fired <rule id>=N};</li>
+ *   {@code <zone> has|lacks NAME} (zone = aibattlefield, humangraveyard, ...), {@code fired <rule id>=N},
+ *   {@code aiattackers>=N} / {@code aiattackers<=N} (the most attackers the AI declared in one combat, round 1019);</li>
  *   <li>{@code RulesOff:pass|fail} or per strength {@code RulesOff:off=fail,lite=fail,max=pass}: what the puzzle does
  *   with the rules off (default pass). With the rules on every puzzle must pass every run.</li>
  * </ul>
@@ -181,6 +183,13 @@ public class TfrAiPuzzleTest extends AITest {
             game.AI_FLAT_MONTE_CARLO_MAX = "max".equals(mc);
             game.AI_FLAT_MONTE_CARLO_LITE = "lite".equals(mc);
             final int limit = turns;
+            final Map<String, Integer> mostAttackers = new HashMap<>();
+            game.subscribeToEvents(new Object() {
+                @Subscribe
+                public void on(final GameEventAttackersDeclared ev) {
+                    mostAttackers.merge(ev.player().getName(), ev.attackersMap().size(), Math::max);
+                }
+            });
             game.subscribeToEvents(new Object() {
                 int seen = 0;
 
@@ -208,7 +217,7 @@ public class TfrAiPuzzleTest extends AITest {
             boolean ok = true;
             final StringBuilder why = new StringBuilder();
             for (final String ex : expects) {
-                final boolean pass = check(ex, hp, ap, fired);
+                final boolean pass = check(ex, hp, ap, fired, mostAttackers.getOrDefault(ap.getName(), 0));
                 ok &= pass;
                 why.append(pass ? " pass: " : " FAIL: ").append(ex).append(';');
             }
@@ -217,12 +226,18 @@ public class TfrAiPuzzleTest extends AITest {
             }
             System.out.println("[TfrAiPuzzleTest] " + f.getName() + " mc=" + mc + " rules=" + (rulesOn ? "on" : "off") + " run " + r
                     + (ok ? " PASS" : " FAIL") + " in " + (System.currentTimeMillis() - t0) + " ms (human life " + hp.getLife()
-                    + ", ai life " + ap.getLife() + ", fired " + fired + ")" + why);
+                    + ", ai life " + ap.getLife() + ", most ai attackers " + mostAttackers.getOrDefault(ap.getName(), 0) + ", fired " + fired + ")" + why);
         }
         return passes;
     }
 
-    static boolean check(final String ex, final Player hp, final Player ap, final Map<String, Integer> fired) {
+    static boolean check(final String ex, final Player hp, final Player ap, final Map<String, Integer> fired, final int aiAttackers) {
+        if (ex.startsWith("aiattackers>=")) {
+            return aiAttackers >= Integer.parseInt(ex.substring(13).trim());
+        }
+        if (ex.startsWith("aiattackers<=")) {
+            return aiAttackers <= Integer.parseInt(ex.substring(13).trim());
+        }
         if (ex.equals("winner=ai")) {
             return hp.hasLost() && !ap.hasLost();
         }

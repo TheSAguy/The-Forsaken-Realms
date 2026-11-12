@@ -14264,6 +14264,58 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 1019: Flat Monte Carlo's cut to no attack, the board stall (2026-11-12)
+
+The user chose "Fix the stall first" after round 1018 found that on audit game g021's board (puzzle P3b) Flat Monte
+Carlo overrode Forge's own 20-creature pressure attack with "attack with nothing". Round 1018 read it as a sample-size
+problem (one rollout per line). The full findings are in `C:\CLAUDE\PROJECTS\TFR1\notes\r1019\report.md`.
+
+- **The correction: it is the score, not the samples.** 112 traced bench games (`pairs14`, MAX and LITE, rules off):
+  - 0 of the 54 cuts (33 at MAX, 21 at LITE) were on one sample per line. One sample a line only happens on a board
+    as big as P3b, and only in a cold JVM: a warm one gave P3b two samples a line and it still cut.
+  - Lines with two samples had two identical samples 95% (MAX) and 93% (LITE) of the time. The rollouts are nearly
+    deterministic, so Flat Monte Carlo's paired-majority test is usually one comparison counted twice.
+  - g021 reproduced (62 turns, 201 s): Flat Monte Carlo cut the crocodile side's 5-10-creature attacks to nothing on
+    10 turns, by 150-450 points, each on two identical samples.
+  - So a guard on the sample count would never fire at two samples and would review every cut at three. The rule
+    reviews the cut itself.
+- **Rule `mc-attack-cut-guard`** (kind attack; Normal, Hard, Insane, Other; `forge-ai/.../tfr/McAttackCutGuard.java`):
+  - When Flat Monte Carlo replaces the heuristic's attack with no attack, the rule keeps the heuristic's attack.
+  - It stays out when the defender has an attack or block trigger (P4, Giggling Skitterspike), or when the swing back
+    could be lethal: every opposing creature attacks next turn into the AI's creatures that stay untapped, best blocks,
+    the attack kills nothing (P5).
+  - Params: `cuts` (`to-nothing`, or `any` for every smaller attack), `belowSamples` (0 = any sample count), `shadow`.
+  - Hook: one line in `AiController.refineAttackWithFlatMonteCarlo`, marked temporary (`TfrAiRules.keepHeuristicAttack`).
+    Flat Monte Carlo's `Result` does not keep the heuristic's attack, so the seat could not see it after the fact.
+  - Log: `[TFR-AiRule] mc-attack-cut-guard turn N <seat> FlatMC cut the attack from X to 0 (... power; R rollouts over L
+    lines, K per line) -> keep the heuristic's X attackers (opponent life, own life)`, and `... stays out: ..., <why>`.
+- **The puzzles** (`TfrAiPuzzleTest`, all 27 rows pass 3/3 with the rules on, Maven exit 0):
+  - P3b now plays the crocodiles' turn too (`Turns:2`) and expects at least 10 attackers and the AI alive. Rules on:
+    the AI attacks with 20 and the crocodiles drop to 6-9, and the AI is at 8 after their swing back. Rules off:
+    `off` attacks (3/3), `lite` and `max` hold (0/3), its `RulesOff` line.
+  - P4 also expects no `mc-attack-cut-guard` fire: at max Flat Monte Carlo holds, the rule stays out for the trigger.
+  - P5 (new), holding back is right: P3b plus three Serra Angels and four Craw Wurms, tapped. The heuristic attacks
+    with 20 and dies on the swing back (-4); Flat Monte Carlo holds, the rule stays out (39 dmg against 13 life), and
+    the AI lives at 1 (6/6 at lite and max).
+  - New `Expect:aiattackers>=N|<=N` (the most attackers the AI declared in one combat).
+- **The bench** (56 games of `pairs14`, seed 1117, one seat with the rules, run three ways together):
+  - LITE: the rules side won 58/112 (51.8%) against 50.0% for the same decks without rules; 18.71 against 17.95
+    turns; the rule fired 8 times.
+  - MAX: 46/112 (41.1%) against 50.0%. This is run-to-run noise, not the rule: in the 54 "first" games where no rule
+    changed anything (identical play), the rules side won 17 against 28. In the games where the rule fired: 3/5 at
+    MAX, 2/8 at LITE, against 3/5 and 3/8 without rules. MAX length 17.70 against 17.18 turns; the rule fired 9 times.
+  - 16 of the 17 kept attacks dealt damage to the opponent; the other (MAX g049, one zombie token) was blocked and
+    traded. Some attackers died in blocks (MAX g022, the Eldrazi side, which won that game).
+  - Stalls: no over-30-turn duel had a fire. The long duels (g021 37/61/45 turns at MAX, longest 84 s against 201 s
+    in the traced baseline) came from the Eldrazi side's heuristic never attacking with its 25 tokens (Flat Monte Carlo
+    agreed), a different cause and a candidate for a next round.
+- **Upstream PR draft**: `C:\CLAUDE\PROJECTS\TFR1\notes\r1019\upstream-pr\` (README, diff, test). It is narrower than the
+  rule: on one sample per line, a smaller attack than the heuristic's needs 5x the heuristic bonus (400) to override.
+  P3b's noisy cut was 287; P5's real lost game was 727. The patch applies to upstream `7d0acc8aa92`; its 3 tests pass.
+- **Not done:** the 50x agent duel showing the rule load needs the next package (the agent jar's rules file would list
+  the rule as unknown).
+- Rules still live: `etb-drawback-allow` (on), `mc-attack-cut-guard` (on), `alpha-strike-count` (shadow).
+
 ## Round 1018: the TFR AI rules, an amended rule set that takes priority over Forge's AI (2026-11-12)
 
 The user, of players' "The AI is dumb in duels": "we need to have a smooth integration with TFR 1 & 2 and Forge updates.

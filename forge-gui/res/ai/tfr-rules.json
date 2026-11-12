@@ -11,6 +11,14 @@
       "retireWhen": "P1 and P2 pass with the rules off at off, lite and max (the puzzle test says RETIRE?): upstream weighs mandatory enter-the-battlefield drawbacks (our draft PR). Then delete the rule and its AiController line."
     },
     {
+      "id": "mc-attack-cut-guard",
+      "kind": "attack",
+      "enabled": ["Normal", "Hard", "Insane", "Other"],
+      "params": { "cuts": "to-nothing", "belowSamples": 0 },
+      "test": ["P3b_eldrazi_stall_lifelink", "P4_block_trigger_trap", "P5_crack_back_hold"],
+      "retireWhen": "Round 1019: Flat Monte Carlo replaced the heuristic's attack with no attack on 10 turns in a row (audit g021, a 20-turn stall), on near-identical rollouts: its position score values the creatures kept home over the damage. The rule keeps the heuristic's attack unless the defender has a combat trigger or the swing back could be lethal. cuts: to-nothing (default) or any; belowSamples: only cuts on fewer samples per line (0 = any). Retire when P3b attacks at lite and max with the rules off (the puzzle test says RETIRE?): upstream stops cutting that attack (our draft PR in notes/r1019/upstream-pr). Then delete the rule and its AiController line."
+    },
+    {
       "id": "alpha-strike-count",
       "kind": "attack",
       "enabled": ["Normal", "Hard", "Insane", "Other"],

@@ -36,8 +36,9 @@ import forge.game.spellability.SpellAbility;
  * benches) counts as the difficulty {@value #OTHER}. {@code -Dtfr.airules=on|off} (or {@link #force(Boolean)}) runs
  * every rule in the file, or none, whatever the difficulty: the switch the puzzle test and the benches use.</p>
  *
- * <p>Stock hooks: {@code GamePlayerUtil.createAiPlayer} (the seat) and one line in {@code AiController.saSideEffects}
- * (rule etb-drawback-allow). Both are in {@code CORE_ENGINE_CHANGES.md}.</p>
+ * <p>Stock hooks: {@code GamePlayerUtil.createAiPlayer} (the seat), one line in {@code AiController.saSideEffects}
+ * (rule etb-drawback-allow) and one in {@code AiController.refineAttackWithFlatMonteCarlo} (rule mc-attack-cut-guard).
+ * All three are in {@code CORE_ENGINE_CHANGES.md}.</p>
  */
 public final class TfrAiRules {
     public static final String TAG = "[TFR-AiRule]";
@@ -72,7 +73,7 @@ public final class TfrAiRules {
 
     /** The rules this build knows, by id. A rule in the file that is not here is ignored (with a log line). */
     static final Set<String> KNOWN = Collections.unmodifiableSet(new LinkedHashSet<>(List.of(
-            EtbDrawbackAllow.ID, AlphaStrikeCount.ID)));
+            EtbDrawbackAllow.ID, AlphaStrikeCount.ID, McAttackCutGuard.ID)));
 
     private static volatile Map<String, Entry> rules = Collections.emptyMap();
     private static volatile String version = "none";
@@ -270,6 +271,21 @@ public final class TfrAiRules {
     /** The stock hook in {@code AiController.saSideEffects}: may lift a BadEtbEffects veto (rule etb-drawback-allow). */
     public static boolean allowEtbDrawback(final Player ai, final Card card, final SpellAbility sa) {
         return EtbDrawbackAllow.allow(ai, card, sa);
+    }
+
+    /**
+     * The stock hook in {@code AiController.refineAttackWithFlatMonteCarlo} (round 1019): Flat Monte Carlo chose
+     * {@code result.attackers} over the heuristic's {@code heuristic} attack, which is still in the combat. True keeps
+     * the heuristic's attack (rule mc-attack-cut-guard). Never throws: a rule must not break Forge's attack.
+     */
+    public static boolean keepHeuristicAttack(final Player ai, final java.util.Map<Card, forge.game.GameEntity> heuristic,
+                                              final forge.ai.simulation.FlatMonteCarloPicker.Result result) {
+        try {
+            return McAttackCutGuard.keepHeuristic(ai, heuristic, result);
+        } catch (final RuntimeException e) {
+            System.out.println(TAG + " " + McAttackCutGuard.ID + " error, Flat Monte Carlo's attack stands: " + e);
+            return false;
+        }
     }
 
     /** Called by {@link TfrPlayerControllerAi} after Forge declared its attackers. */

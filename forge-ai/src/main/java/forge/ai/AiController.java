@@ -1551,7 +1551,7 @@ public class AiController {
         noteFlatMcOutcome(result.reason);
         final boolean changed = result.decidedByRollouts && result.attackers != null && !result.attackers.equals(before);
         FlatMonteCarloStats.noteAttackResult(result, changed);
-        if (!changed) {
+        if (!changed || forge.ai.tfr.TfrAiRules.keepHeuristicAttack(player, before, result)) { // TFR round 1019: mc-attack-cut-guard
             return;
         }
         combat.clearAttackers();

@@ -1,9 +1,10 @@
 [metadata]
 Name:P4 - the block-trigger trap (from the round 1018 bench, max-second g043, turn 15)
-Description:Five Grizzly Bears against two blockers at 5 life: by the combat-damage count the all-out attack gets at least 6 through, lethal. But one blocker is Giggling Skitterspike with five +1/+1 counters, and when it blocks it deals 6 to each opponent: the attacking AI, at 6 life, dies before combat damage. In g043 Forge (at max) held back, alpha-strike-count sent everything in and lost; the rule now stays out when the defender has a combat trigger. Expect: no fire, not even in shadow. Found on the way (round 1018): Forge's heuristic alone (off) attacks into this trap and dies, with the rules on or off; Flat Monte Carlo (max) saves it. A candidate for a future rule, not this one's job.
+Description:Five Grizzly Bears against two blockers at 5 life: by the combat-damage count the all-out attack gets at least 6 through, lethal. But one blocker is Giggling Skitterspike with five +1/+1 counters, and when it blocks it deals 6 to each opponent: the attacking AI, at 6 life, dies before combat damage. In g043 Forge (at max) held back, alpha-strike-count sent everything in and lost; the rule now stays out when the defender has a combat trigger. Expect: no fire, not even in shadow. Found on the way (round 1018): Forge's heuristic alone (off) attacks into this trap and dies, with the rules on or off; Flat Monte Carlo (max) saves it. A candidate for a future rule, not this one's job. Round 1019: when Flat Monte Carlo holds back here, mc-attack-cut-guard must not bring the attack back (it stays out when the defender has a combat trigger).
 Turns:1
 Expect:fired alpha-strike-count=0
 Expect:fired alpha-strike-count (shadow)=0
+Expect:fired mc-attack-cut-guard=0
 [state]
 humanlife=5
 ailife=6

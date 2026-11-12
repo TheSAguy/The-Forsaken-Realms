@@ -35,6 +35,26 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 1019 - rule mc-attack-cut-guard: one more AiController line (Flat Monte Carlo's attack choice)
+One stock line, temporary like round 1018's; everything else is in `forge.ai.tfr` and the res files.
+- `forge-ai/src/main/java/forge/ai/AiController.java` (STOCK, **TEMPORARY**): in `refineAttackWithFlatMonteCarlo`, the
+  line `if (!changed) {` becomes `if (!changed || forge.ai.tfr.TfrAiRules.keepHeuristicAttack(player, before, result)) {`
+  (marked `TFR round 1019`). At that point `before` holds the heuristic's attack, still in the combat, and `result` is
+  Flat Monte Carlo's choice; returning there keeps the heuristic's attack. `FlatMonteCarloStats` still counts the
+  decision as changed (it measures Flat Monte Carlo, not TFR). Why a stock line: `FlatMonteCarloPicker.Result` does not
+  keep the heuristic's attack, and the seat only sees the combat after Flat Monte Carlo replaced it. Rule
+  `mc-attack-cut-guard`: keep the heuristic's attack when Flat Monte Carlo cuts it to no attack, unless the defender
+  has a combat trigger or the swing back could be lethal. Our upstream PR draft
+  (`C:\CLAUDE\PROJECTS\TFR1\notes\r1019\upstream-pr\`) is narrower (one-sample cuts with a small gap); **when P3b
+  attacks at lite and max with the rules off, `TfrAiPuzzleTest` reports "RETIRE?": delete the rule, this line and this
+  entry.** On a merge before then: keep the clause on whatever line returns early when Flat Monte Carlo did not change
+  the attack; the heuristic's attack must still be in `combat` and in a `Map<Card, GameEntity>` there. If upstream
+  renames `refineAttackWithFlatMonteCarlo` or stops passing the heuristic attack through `combat`, re-find the point
+  where the rollouts' attack replaces it.
+
+New files: `forge-ai/src/main/java/forge/ai/tfr/McAttackCutGuard.java`; puzzle
+`forge-gui/res/ai/tfr-puzzles/P5_crack_back_hold.pzl`. `TfrAiPuzzleTest` gains `Expect:aiattackers>=N|<=N`.
+
 ### Round 1018 - the TFR AI rules (forge.ai.tfr): a seat that reviews Forge's AI decisions, two rules, the merge protocol
 Three stock lines, one temporary. Everything else is new files.
 - `forge-gui/src/main/java/forge/player/GamePlayerUtil.java` (STOCK): `createAiPlayer(name, avatar, sleeve, options,
@@ -67,7 +87,8 @@ New files (no merge conflicts possible; listed so a merge round knows they exist
 - `forge-gui-desktop/src/test/java/forge/ai/tfr/TfrAiPuzzleTest.java`.
 
 #### The AI rules merge protocol (every engine merge, TFR 1 and TFR 2)
-1. Merge as usual. The three stock lines above are the only conflict points; re-apply them on top of upstream.
+1. Merge as usual. The stock lines are the only conflict points (round 1018's three, round 1019's one in
+   `AiController.refineAttackWithFlatMonteCarlo`); re-apply them on top of upstream.
 2. Run `TfrAiPuzzleTest` (`mvn -pl forge-gui-desktop -am test -Dtest=TfrAiPuzzleTest
    -Dsurefire.failIfNoSpecifiedTests=false`, under a minute: every puzzle with the rules on and off, 3 runs, at `off`, `lite` and `max`). The table goes to
    `forge-gui-desktop/target/tfr-ai-puzzles.txt`.
