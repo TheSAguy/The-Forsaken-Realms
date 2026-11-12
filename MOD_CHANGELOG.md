@@ -14264,6 +14264,15 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 1014: Kiora's Boss Effect picture says "end step" (2026-11-11)
+
+- `forge-gui/res/adventure/common/custom_card_pics/Kiora's Boss Effect.fullborder.jpg` (stock picture, upstream typo):
+  the rules text's last paragraph read "At the beginning of your and step"; the "a" is repainted as an "e" lifted from
+  "the" on the same line (same font, weight, color, baseline; e-n gap 1 px like "Tentacles"). The picture had the typo
+  once; its "create a 1/1" was already single-spaced. Re-encoded with the original's own quantization tables, 4:4:4,
+  progressive, 480x670; outside the 8x8 blocks the edit touches, max pixel difference 7/255 (mean 0.09). Pairs with
+  round 1013's script fix. Proof: `C:\CLAUDE\PROJECTS\ART\notes\tfr1_kiora_card\`. Art thread; no build needed.
+
 ## Round 1013: Kiora's Boss Effect says "end step", and a second copy of the game warns before play (2026-11-11)
 
 The user: "Yes, start both", approving `C:\CLAUDE\PROJECTS\TFR1\notes\logs-1111b.md` P3-24 (text only) and P3-26. For

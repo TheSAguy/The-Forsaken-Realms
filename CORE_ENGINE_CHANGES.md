@@ -35,6 +35,11 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 1014 - Kiora's Boss Effect picture
+- `forge-gui/res/adventure/common/custom_card_pics/Kiora's Boss Effect.fullborder.jpg` (STOCK, upstream typo): "your and
+  step" repainted to "your end step" on the card face. At the next engine merge, take upstream's picture only if theirs
+  reads "end step"; otherwise keep ours.
+
 ### Round 1013 - Kiora's Boss Effect text (logs-1111b P3-24), the second-copy warning (P3-26)
 - `forge-gui/res/adventure/common/custom_cards/kioras_boss_effect.txt` (STOCK, upstream #10158): UPSTREAM TYPO, fixed in
   our copy. Line 10 (`TriggerDescription$`) and line 17 (`Oracle:`) said "your and step"; both now "your end step", and
