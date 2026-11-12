@@ -24,7 +24,7 @@ Name=Jolrael
 1 Diplomatic Escort|MMQ
 1 Disdainful Stroke|TSR
 1 Dissipate|MIR
-1 Ensnare|NEM
+1 Cryptic Command|TRC
 1 Eternal Witness|TSR
 1 Exploration|USG
 1 Explosive Vegetation|ONS
@@ -32,7 +32,7 @@ Name=Jolrael
 1 Natural Order
 1 Three Visits|PTK
 1 Foil|PCY
-1 Forbid|EXO
+1 Cancel|PLST
 12 Forest|PO2
 1 Llanowar Elves|LEB
 1 Gush|MMQ
@@ -40,12 +40,12 @@ Name=Jolrael
 1 Hinterland Harbor|TSR|[396]
 1 Hullbreaker Horror|INR|[357]
 9 Island|PO2
-1 Jolrael, Mwonvuli Recluse|DMR|[343]
+1 Rofellos, Llanowar Emissary|UDS
 1 Lonely Sandbar|ONS
 1 Mishra's Factory|ATQ
 1 Misty Rainforest|MH2
 1 Multani, Maro-Sorcerer|ULG
-1 Mystic Confluence|TSR
+1 Soul Read|J25
 1 Mystic Remora|ICE
 1 Mystic Snake|TSB
 1 Nature's Lore|PO2
@@ -55,7 +55,7 @@ Name=Jolrael
 1 Path of Ancestry|BRC
 1 Prime Speaker Zegana|RVR|[377]
 1 Propaganda|TMP
-1 Psychosis Crawler|BRR
+1 Solemn Simulacrum|BRC
 1 Rampant Growth|MIR
 1 Reclamation Sage|TSR
 1 Reliquary Tower|BRC

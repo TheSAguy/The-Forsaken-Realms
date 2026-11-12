@@ -5,7 +5,7 @@ Name=Vorel
 [Main]
 1 Arashi, the Sky Asunder|c21
 1 Barkchannel Pathway|khm
-1 Biomass Mutation|c21
+1 Simic Charm|GTC
 1 Forbidden Lore
 1 Brawn|cm2
 1 Bred for the Hunt|dgm
@@ -15,9 +15,9 @@ Name=Vorel
 1 Chasm Skulker|ncc
 1 Crawling Barrens|znr
 1 Cryptolith Rite|soi
-1 Curse of the Swine|c21
+1 Ravenform|LCC
 1 Didn't Say Please|eld
-1 Djinn of Wishes|c18
+1 Mahamoti Djinn|PLST
 1 Evolution Sage|war
 1 Fathom Mage|gtc
 11 Forest|gk2|[133]
@@ -61,13 +61,13 @@ Name=Vorel
 1 Arcane Signet|eld
 1 Ravenous Slime|c18
 1 Renata, Called to the Hunt|thb
-1 Repudiate|rna
+1 Voidslime|RVR
 1 Ruinous Intrusion|mic
 1 Scavenging Ooze|m21
 1 Sequence Engine|c21
 1 Simic Ascendancy|rna
 1 Simic Growth Chamber|c21
-1 Simic Manipulator|gtc
+1 Simic Fluxmage|GTC
 1 Siren Stormtamer|xln
 1 Steelbane Hydra|eld
 1 Temple of Mystery|tdc

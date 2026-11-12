@@ -15,10 +15,10 @@ Name=Homarid Warrior
 1 Roiling Dragonstorm
 1 Fishliver Oil|ARN
 3 Viscerid Armor|ALL
-2 Breaking Wave|INV
+2 Counterspell|3ED
 2 Unstable Mutation|3ED
-2 High Tide|FEM|[18c]
-2 Homarid Spawning Bed|FEM
+2 Brainstorm|5ED
+2 Unsummon|3ED
 [StartInBattle_Reference]
 1 Sand Silos|FEM
 1 Tidal Influence|FEM

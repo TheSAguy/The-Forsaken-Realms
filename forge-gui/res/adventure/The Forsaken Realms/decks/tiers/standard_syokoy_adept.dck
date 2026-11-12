@@ -1,19 +1,19 @@
 [metadata]
 Name=Syokoy
 [Main]
-1 Aeon Chronicler|PLC
+1 Mulldrifter|ECC
 1 Brine Elemental|TSP
 2 Tidebinder Mage
 1 Desert|TSB
 2 Theorist's Proxy
-2 Erratic Mutation|PLC
+2 Cancel|TSP
 3 Fathom Seer|TSP
 2 Fledgling Mawcor|TSP
 19 Island|TSP
 1 Jodah's Avenger|PLC
 1 Hullbreacher
 2 Ovinize|PLC
-1 Ovinomancer|TSB
+1 Temporal Adept|9ED
 1 Piracy Charm|PLC
 1 Pongify|PLC
 2 Riptide Pilferer|PLC
@@ -21,4 +21,4 @@ Name=Syokoy
 2 Chronozoa
 2 Tidewalker|PLC
 2 Unstable Mutation|TSB
-1 Willbender|TSB
+1 Azure Mage|MM3

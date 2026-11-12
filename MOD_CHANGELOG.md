@@ -14264,6 +14264,30 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 1017 (wave 2): 400 more enemy decks lose the cards the AI can't play (2026-11-12)
+
+The user, after wave 1: "Let's replace ALL "unplayable cards" from all decks. After the initial 100 decks are fixed.
+Let's do the next 400." Wave 2 takes the next 400 `.dck` files by `AI:RemoveDeck:All` copies (legends, tier decks,
+arena, bosses, the remaining World Champion and Fallen Empires decks), with wave 1's rules.
+
+- **How:** a card table, one default replacement per flagged card (`Beast Within` -> Crushing Vines, `High Tide` ->
+  Brainstorm, `Dispatch` -> Swords to Plowshares, ...), checked per deck (same colors, mana value within 1, same type,
+  editions TFR loads, singleton and 4-copy limits, era-true for the named decks); where the default fails a deck, the
+  deck's own best-ranked candidate takes its place. 1,807 copies swapped in 398 files: 725 by the table, 625 by the
+  deck's candidate, 12 picked by hand.
+- **Left alone:** lands, the Flat Monte Carlo cards, and key cards: Psychatog in Carlos Romao '02 (4), Opposition in
+  Sim Han How '02 (4), Channel in Henry Stern '95 (1), Autumn Willow in the Daughter of Autumn master deck.
+- **Judgment calls:** the Fallen Empires homarid decks' Homarid Spawning Bed -> Unsummon; Thieves' Auction ->
+  Insurrection; Altar of Dementia -> Mind Stone; Static Orb -> Disrupting Scepter; Svend Geertsen '97's Bounty of the
+  Hunt -> Hurricane.
+- **Numbers** (`deckcheck.py`, after wave 1 -> after wave 2): flagged copies in enemy `.dck` files 4,523 -> 2,716;
+  deck files with one 1,626 -> 1,276; enemies with one 1,146 -> 909; in the 400 decks 1,871 -> 64 (43 lands, 11 Flat
+  Monte Carlo copies, 10 key-card copies).
+- **The full list:** `C:\CLAUDE\PROJECTS\TFR1\notes\r1017\swaps_wave2.md`; the card table in
+  `C:\CLAUDE\PROJECTS\TFR1\notes\r1017\tools\picks5_cardtable.txt`, `picks6_cardtable.txt`, `picks7_wave2.txt`; the
+  deck checks in `after_w2\`.
+- **Not done here:** the remaining decks (wave 3). Not seen in a duel: data only, checked by `deckcheck.py`.
+
 ## Round 1017: enemy decks lose the cards the AI can't play, wave 1 (2026-11-12)
 
 The user, of players' "The AI is dumb in duels": "Start both" (the AI audit's round A, this round, and round B, the AI

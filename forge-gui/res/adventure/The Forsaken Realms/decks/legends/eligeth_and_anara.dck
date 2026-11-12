@@ -4,7 +4,7 @@ Name=Anara and Eligeth
 1 Anara, Wolvid Familiar|cmr
 1 Eligeth, Crossroads Augur|cmr
 [Main]
-1 Alrund, God of the Cosmos|khm
+1 Mulldrifter|ECC
 1 Anticognition|znr
 1 Arcane Signet|eoc
 1 Archive Dragon|woe
@@ -13,8 +13,8 @@ Name=Anara and Eligeth
 1 Peregrination|bng
 1 Gilded Lotus|dom
 1 Thran Dynamo|c14
-1 Soramaro, First to Dream|sok
-1 Masumaro, First to Live|sok
+1 Dream Eater|DSC
+1 Kindercatch|ISD
 1 Kasmina, Enigma Sage|stx
 1 Fated Intervention|bng
 1 Ferocious Charge|5dn
@@ -26,7 +26,7 @@ Name=Anara and Eligeth
 1 Behold the Multiverse|khm
 1 Behold the Unspeakable|neo
 1 Biblioplex Kraken|j22
-1 Biomass Mutation|dsc
+1 Simic Charm|GTC
 1 Body of Knowledge|dsc
 1 Botanical Sanctum|otj
 1 Calculated Dismissal|plst
@@ -63,9 +63,9 @@ Name=Anara and Eligeth
 1 Obscuring Haze|cmm
 1 Overflowing Basin|fic
 1 Prognostic Sphinx|dsc
-1 Psychosis Crawler|blc
+1 Solemn Simulacrum|MSC
 1 Reliquary Tower|tdc
-1 Repudiate|rvr
+1 Voidslime|RVR
 1 Serum Sovereign|one
 1 Sifter Wurm|cmr
 1 Simic Ascendancy|blc

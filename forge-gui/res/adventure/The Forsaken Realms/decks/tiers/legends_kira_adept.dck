@@ -12,17 +12,17 @@ Name=Kira
 1 Lantern Spirit
 1 Coral Atoll|cmr
 1 Counterspell|dsc
-1 Disallow|aer
+1 Cancel|PLST
 1 Battleground Geist|inr
 1 Scion of Glaciers
 1 Engulf the Shore|gn2
 1 Essence Flux|inr
 1 Frantic Search|tdc
 1 Geist of the Archives|emn
-1 Ghostly Flicker|cmm
+1 Catalog|PLST
 1 Ghostly Pilferer|otc
 1 Harmonized Crescendo|ecl
-1 High Tide|dmr
+1 Unsummon|FRA
 1 Anti-Magic Aura
 27 Island|chk|[291]
 1 Kefnet's Monument|akh
@@ -55,5 +55,5 @@ Name=Kira
 1 Thought Vessel|dsc
 1 Soothing of Sméagol
 1 Unwind|dom
-1 Windfall|otc
+1 Compulsive Research|TDC
 1 Witness Protection|fdn

@@ -3,7 +3,7 @@ Name=Pharika, God of Affliction
 [Commander]
 1 Pharika, God of Affliction|JOU
 [Main]
-1 Fertile Ground|BBD
+1 Rancor|EMA
 1 Aftermath Analyst|MKM
 1 Agent of Erebos|JOU
 1 Amzu, Swarm's Hunger|CLU
@@ -38,7 +38,7 @@ Name=Pharika, God of Affliction
 1 Honest Rutstein|OTJ
 1 Insidious Roots|MKM
 1 Animate Dead
-1 Kenrith's Transformation|WOC
+1 Regeneration|4ED
 1 Kishla Village|TDM
 1 Kruphix's Insight|C18
 1 Lignify|LRW
@@ -51,7 +51,7 @@ Name=Pharika, God of Affliction
 1 Nessian Wanderer|CMM
 1 Nurturing Peatland|MH1
 1 Nylea's Colossus|C18
-1 Nyx Weaver|TDC
+1 Rotwidow Pack|MH1
 1 Overgrown Tomb|RVR
 1 Plaza of Heroes|DMU
 1 Ripples of Undeath|MH3
@@ -70,7 +70,7 @@ Name=Pharika, God of Affliction
 1 Thoughtrender Lamia|JOU
 1 Thunderfoot Baloth|DSC
 1 Tormod, the Desecrator|CMR
-1 Tortured Existence|STH
+1 Vampiric Rites|SCD
 1 Tragic Slip|INR
 1 Tribune of Rot|CLU
 1 Twilight Mire|TDC
@@ -78,9 +78,9 @@ Name=Pharika, God of Affliction
 1 Tyvar's Stand|ONE
 1 Undead Butler|J25
 1 Underground Mortuary|MKM
-1 Utopia Sprawl|RVR
+1 Abundant Growth|INR
 1 Verdant Catacombs|MH2
 1 Verduran Enchantress|CMM
 1 Viridescent Bog|DSC
-1 Wild Growth|4ED
+1 Forced Adaptation|RVR
 1 Woodland Cemetery|TDC

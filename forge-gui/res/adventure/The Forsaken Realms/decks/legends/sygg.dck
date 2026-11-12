@@ -3,17 +3,17 @@ Name=Sygg, River Cutthroat
 [Commander]
 1 Sygg, River Cutthroat|SHM
 [Main]
-1 Leech Bonder|SHM
+1 Simic Fluxmage|GTC
 1 Helm of the Ghastlord|SHM
 1 Mire Triton|CMM
 1 Oona's Blackguard|SHM
 1 Triton Shorestalker|OTC
 1 Wanderbrine Rootcutters|SHM
-1 Aquitect's Will|LRW
+1 Preordain|J22
 1 Hollowsage|SHM
 1 Gravelgill Duo|SHM
 1 Merrow Levitator|EVE
-1 Inkfathom Witch|SHM
+1 Duskmantle Guildmage|GTC
 1 Inkfathom Infiltrator|SHM
 1 Disruptor of Currents|ECL
 1 Silvergill Adept|LRW
@@ -56,7 +56,7 @@ Name=Sygg, River Cutthroat
 1 Reflecting Pool|CNS
 1 River of Tears|IMA
 1 Rogue's Passage|LCC
-1 Sea Scryer|MIR
+1 Vodalian Arcanist|M21
 1 Seafloor Oracle|LCC
 1 Secluded Courtyard|LCC
 1 Shipwreck Marsh|MID
@@ -65,7 +65,7 @@ Name=Sygg, River Cutthroat
 1 Stonybrook Banneret|MOR
 1 Svyelun of Sea and Sky|LCC
 13 Swamp|SHM
-1 Swan Song|THS
+1 Spell Pierce|ZEN
 1 Tainted Isle|WOC
 1 Talisman of Dominance|WOC
 1 Teferi's Ageless Insight|M21

@@ -8,8 +8,8 @@ Name=Homarid Shaman
 1 Homarid|FEM|[19c]
 1 Homarid|FEM|[19d]
 1 Homarid Warrior|FEM|[22c]
-1 Wave Elemental|MIR
-1 Tidal Wave|MIR
+1 Air Elemental|3ED
+1 Counterspell|3ED
 1 Tidal Kraken|MMQ
 1 King Crab|ULG
 2 Wall of Water|3ED
@@ -17,8 +17,8 @@ Name=Homarid Shaman
 3 Unsummon|3ED
 4 Scent of Brine|UDS
 4 Psionic Blast|2ED
-2 High Tide|FEM|[18c]
-1 Homarid Spawning Bed|FEM
+2 Brainstorm|ICE
+1 Homarid Warrior|FEM
 1 Dream Tides|VIS
 1 Sidequest: Card Collection
 1 Flood|DRK

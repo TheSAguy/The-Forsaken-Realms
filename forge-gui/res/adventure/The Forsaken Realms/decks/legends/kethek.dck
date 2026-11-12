@@ -14,13 +14,13 @@ Name=Kethek
 1 Enslave|NPH
 1 Threaten|10E
 1 Act of Treason|ORI
-1 Bolt Bend|WAR
+1 Lightning Blast|8ED
 1 Braids, Arisen Nightmare|DMU
 1 Captivating Crew|OTC
 1 Charcoal Diamond|MIR
 1 Claim the Firstborn|ELD
 1 Command Tower|OTC
-1 Disciple of Bolas|NCC
+1 Graveborn Muse|PLST
 1 Dockside Chef|NEO
 1 Dragonskull Summit|OTC
 1 Everflowing Chalice|MKC
@@ -31,7 +31,7 @@ Name=Kethek
 1 Foreboding Ruins|LCC
 1 Fractured Powerstone|MOC
 1 Furnace Reins|MOM
-1 Goblin Bombardment|MH2
+1 Raid Bombardment|UMA
 1 Grim Haruspex|FRF
 1 Harness by Force|JOU
 1 Industrial Advancement|NCC
@@ -55,7 +55,7 @@ Name=Kethek
 1 Pack's Betrayal|MID
 1 Pawn of Ulamog|PLST
 1 Phyrexian Arena|MKC
-1 Prismatic Lens|OTC
+1 Chromatic Lantern|OTC
 1 Prowling Geistcatcher|MIC
 1 Puppeteer Clique|WOC
 1 Rakdos, Patron of Chaos|MKM
@@ -74,4 +74,4 @@ Name=Kethek
 1 Temple of Malice|OTC
 1 Traitorous Greed|M21
 1 Twisted Fealty|WOE
-1 Viscera Seer|LCC
+1 Carrion Feeder|PLST

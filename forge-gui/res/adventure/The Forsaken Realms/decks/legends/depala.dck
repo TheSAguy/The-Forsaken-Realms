@@ -3,7 +3,7 @@ Name=Depala, Pilot Exemplar
 [Commander]
 1 Depala, Pilot Exemplar|KLD
 [Main]
-1 Act on Impulse|J22
+1 Reckless Impulse|J25
 1 Aerial Surveyor|NEC
 1 Aethershield Artificer|J22
 1 Arcane Signet|TDC
@@ -21,11 +21,11 @@ Name=Depala, Pilot Exemplar
 1 Country Roads|DFT
 1 Jabari's Influence
 1 Digsite Engineer|C21
-1 Dispatch|NEC
+1 Swords to Plowshares|NEC
 1 Duergar Hedge-Mage|MOC
 1 Dwarven Hold|FEM
 1 Dwarven Mine|ELD
-1 Dwarven Recruiter|ODY
+1 Dwarven Bloodboiler|PLST
 1 Evolving Wilds|EOC
 1 Forgotten Cave|J25
 1 Foundry Inspector|BRR
@@ -70,7 +70,7 @@ Name=Depala, Pilot Exemplar
 1 Temple of Triumph|EOC
 1 Terramorphic Expanse|TDC
 1 Thrill of Possibility|M21
-1 Tragic Arrogance|C21
+1 Wrath of God|2XM
 1 Untethered Express|AER
 1 Veteran Motorist|KLD
 1 Visionary Augmenter|KLD
