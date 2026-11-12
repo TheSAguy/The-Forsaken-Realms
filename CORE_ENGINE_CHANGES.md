@@ -35,6 +35,13 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 1016 - the VS screen's names and records in the clean font (TfrFonts.vsFont)
+- `forge-gui-mobile/src/forge/screens/TransitionScreen.java` (STOCK, already TFR-edited): in `drawBackground`'s VS
+  branch, after `BitmapFont font = Controls.getBitmapFont("default", ...)`, `font` becomes `TfrFonts.vsFont(font)` when
+  that is not null (the clean font at the scale that puts its line on LanaPixel's); before the stock
+  `Controls.getBitmapFont("default")` reset, `TfrFonts.vsUnscaled()` when it was used. Pixel mode draws as stock. On a
+  merge: keep the swap right after the font is made, before any measuring.
+
 ### Round 1014 - Kiora's Boss Effect picture
 - `forge-gui/res/adventure/common/custom_card_pics/Kiora's Boss Effect.fullborder.jpg` (STOCK, upstream typo): "your and
   step" repainted to "your end step" on the card face. At the next engine merge, take upstream's picture only if theirs

@@ -51,7 +51,8 @@ public final class VsNameFit {
         if (text == null)
             text = "";
         float base = font.getData().scaleX;
-        String key = text + '|' + Math.round(maxWidth) + '|' + Math.round(room) + '|' + base;
+        // round 1016: the font too, as the screen draws in LanaPixel or the clean font
+        String key = text + '|' + Math.round(maxWidth) + '|' + Math.round(room) + '|' + base + '|' + System.identityHashCode(font);
         VsNameFit cached = CACHE.get(key);
         if (cached != null)
             return cached;

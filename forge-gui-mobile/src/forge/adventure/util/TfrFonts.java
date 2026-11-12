@@ -72,6 +72,12 @@ public final class TfrFonts {
     private static boolean active;
     /** Round 955: the clean glyphs as a BitmapFont at 1/k, for the skin's styles; null in Pixel mode. */
     private static BitmapFont cleanBitmap;
+    /** Round 1016: the font file and stage size cleanBitmap was made from, for vsFont(). */
+    private static FileHandle cleanTtf;
+    private static float cleanSize;
+    /** Round 1016: the duel's VS screen font (vsFont), made at vsK times its stage size; null until a VS screen draws. */
+    private static BitmapFont vsBitmap;
+    private static int vsK;
     /** The skin restyle() last ran on (a skin reloaded after Assets.dispose is a new object). */
     private static WeakReference<Skin> restyled;
 
@@ -117,6 +123,8 @@ public final class TfrFonts {
     public static Font textraFont(BitmapFont pixel, TextureAtlas items) {
         active = false;
         cleanBitmap = null;
+        cleanTtf = null;
+        disposeVs();
         String[] mode = mode();
         if (!mode[0].equals("clean")) {
             System.out.println("[TFR-Font] pixel (" + mode[1] + ")");
@@ -148,22 +156,9 @@ public final class TfrFonts {
             float down = Float.parseFloat(System.getProperty("tfr.fontY", "-1"));
             // LanaPixel's line (13 + 1): the same line spacing, and the icons, which the font sizes to its line, as big
             float line = Float.parseFloat(System.getProperty("tfr.fontLine", "14"));
-            FreeTypeFontGenerator gen = new FreeTypeFontGenerator(ttf);
-            FreeTypeFontGenerator.FreeTypeFontParameter p = new FreeTypeFontGenerator.FreeTypeFontParameter();
-            p.size = Math.round(size * k);
-            p.characters = FreeTypeFontGenerator.DEFAULT_CHARS + EXTRA_CHARS;
-            p.genMipMaps = true;
-            p.minFilter = Texture.TextureFilter.MipMapLinearLinear;
-            p.magFilter = Texture.TextureFilter.Linear;
             int pad = 2 * k;  // room for the mipmaps: a glyph drawn at 1/4 still has 2 px of clear space around it
-            // the packer keeps its pixmaps, so the pages are managed textures that come back after an Android context loss
-            PixmapPacker packer = new PixmapPacker(1024, 1024, Pixmap.Format.RGBA8888, pad, false, new PixmapPacker.SkylineStrategy());
-            packer.setTransparentColor(Color.WHITE);
-            packer.getTransparentColor().a = 0;
-            p.packer = packer;
-            BitmapFont big = gen.generateFont(p);
-            big.setOwnsTexture(true);  // a font made with its own packer leaves its pages to the caller
-            gen.dispose();
+            int px = Math.round(size * k);
+            BitmapFont big = generate(ttf, px, pad);
             Font f = new Font(big, Font.DistanceFieldType.STANDARD, 0f, down * k, 0f, 0f) {
                 @Override
                 public Layout markup(String text, Layout appendTo) {
@@ -177,20 +172,98 @@ public final class TfrFonts {
             f.integerPosition = false;
             // the stock font's yAdjust (2) plus 2: at 2 the check boxes and gender signs sat about 2 px above the clean text
             float pixelY = Float.parseFloat(System.getProperty("tfr.pixelY", "4"));
-            Font px = new Font(pixel, 0f, pixelY, 0f, 1f);
-            px.addAtlas(items, 0f, 6f, 0f);
-            px.integerPosition = false;
-            f.setFamily(new Font.FontFamily(new String[]{"Clean", "Pixel"}, new Font[]{f, px}));
+            Font pf = new Font(pixel, 0f, pixelY, 0f, 1f);
+            pf.addAtlas(items, 0f, 6f, 0f);
+            pf.integerPosition = false;
+            f.setFamily(new Font.FontFamily(new String[]{"Clean", "Pixel"}, new Font[]{f, pf}));
             cleanBitmap = bitmapCopy(big, pixel, k);
+            cleanTtf = ttf;
+            cleanSize = size;
             active = true;
             System.out.println(String.format(Locale.US, "[TFR-Font] clean (%s): %s at %d px, drawn at 1/%d (%.1f stage px, line %.1f), "
-                            + "glyphs %d px apart on %d page(s), window %dx%d", mode[1], ttf.name(), p.size, k, size, f.cellHeight,
+                            + "glyphs %d px apart on %d page(s), window %dx%d", mode[1], ttf.name(), px, k, size, f.cellHeight,
                     pad, big.getRegions().size, Gdx.graphics.getBackBufferWidth(), Gdx.graphics.getBackBufferHeight()));
             return f;
         } catch (RuntimeException e) {
             System.err.println("[TFR-Font] the clean font failed (" + e + "): the pixel font stays");
             return null;
         }
+    }
+
+    /** The clean face at px pixels, mipmapped, its glyphs pad px apart (Round 1016: shared by textraFont and vsFont). */
+    private static BitmapFont generate(FileHandle ttf, int px, int pad) {
+        FreeTypeFontGenerator gen = new FreeTypeFontGenerator(ttf);
+        try {
+            FreeTypeFontGenerator.FreeTypeFontParameter p = new FreeTypeFontGenerator.FreeTypeFontParameter();
+            p.size = px;
+            p.characters = FreeTypeFontGenerator.DEFAULT_CHARS + EXTRA_CHARS;
+            p.genMipMaps = true;
+            p.minFilter = Texture.TextureFilter.MipMapLinearLinear;
+            p.magFilter = Texture.TextureFilter.Linear;
+            // the packer keeps its pixmaps, so the pages are managed textures that come back after an Android context loss
+            PixmapPacker packer = new PixmapPacker(1024, 1024, Pixmap.Format.RGBA8888, pad, false, new PixmapPacker.SkylineStrategy());
+            packer.setTransparentColor(Color.WHITE);
+            packer.getTransparentColor().a = 0;
+            p.packer = packer;
+            BitmapFont big = gen.generateFont(p);
+            big.setOwnsTexture(true);  // a font made with its own packer leaves its pages to the caller
+            return big;
+        } finally {
+            gen.dispose();
+        }
+    }
+
+    /**
+     * Round 1016: the duel's VS screen (TransitionScreen) in the clean font; null in Pixel mode (the plane, the setting
+     * or a non-Latin language: the caller keeps pixel). pixel is LanaPixel at the scale the screen gave it; the font
+     * comes back at the scale that puts its line on pixel's, so it is as big as the widgets' clean text is next to
+     * LanaPixel. That scale is 4.5-7 screen px per stage px, far above cleanBitmap's k (2-3 at 1280x720), which drew it
+     * soft, so this font is made at its own k: the draw scale rounded up, read from the screen the VS screen is drawn
+     * on (never a 0x0 launch window, round 951), and drawn down through the mipmaps. Made once, again only for a bigger
+     * k; vsUnscaled() puts its scale back. Log: [TFR-VsName] clean font.
+     */
+    public static BitmapFont vsFont(BitmapFont pixel) {
+        if (cleanBitmap == null || cleanTtf == null || pixel == null)
+            return null;
+        BitmapFont.BitmapFontData pd = pixel.getData();
+        float s = pd.scaleY;
+        if (!(s > 0))
+            return null;
+        int k = Math.max(2, (int) Math.ceil(s - 0.01f));
+        if (vsBitmap == null || vsK < k) {
+            try {
+                BitmapFont big = generate(cleanTtf, Math.round(cleanSize * k), 2 * k);
+                BitmapFont.BitmapFontData d = big.getData();
+                d.markupEnabled = false;
+                d.setLineHeight(pd.lineHeight / s * k);  // LanaPixel's own line, as bitmapCopy
+                disposeVs();
+                vsBitmap = big;
+                vsK = k;
+                d.setScale(s / k);
+                System.out.println(String.format(Locale.US, "[TFR-VsName] clean font: %d px at 1/%d for the pixel font's x%.2f "
+                                + "(cap %.1f vs pixel %.1f, line %.1f vs %.1f), %d page(s)", Math.round(cleanSize * k), k, s,
+                        big.getCapHeight(), pixel.getCapHeight(), big.getLineHeight(), pixel.getLineHeight(), big.getRegions().size));
+            } catch (RuntimeException e) {
+                System.err.println("[TFR-VsName] the clean font failed (" + e + "): the VS screen keeps the pixel font");
+                cleanTtf = null;  // not again this session
+                return null;
+            }
+        }
+        vsBitmap.getData().setScale(s / vsK);
+        return vsBitmap;
+    }
+
+    /** Round 1016: vsFont's font back at its own scale (1/k), after the VS screen drew. */
+    public static void vsUnscaled() {
+        if (vsBitmap != null)
+            vsBitmap.getData().setScale(1f / vsK);
+    }
+
+    private static void disposeVs() {
+        if (vsBitmap != null)
+            vsBitmap.dispose();
+        vsBitmap = null;
+        vsK = 0;
     }
 
     /**

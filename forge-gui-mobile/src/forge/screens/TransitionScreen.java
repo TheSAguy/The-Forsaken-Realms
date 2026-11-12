@@ -244,6 +244,11 @@ public class TransitionScreen extends FContainer {
                     enemyAvatar.flip(true, false);
                 float fontScale = GuiBase.isAndroid() ? 12f : 10f;
                 BitmapFont font = Controls.getBitmapFont("default", fontScale / (screenW / screenH));
+                // TFR round 1016: the names and records in the clean font when the game draws in it, at the scale that puts
+                // its line on LanaPixel's (TfrFonts.vsFont); Pixel mode, a non-Latin language or another plane keep LanaPixel
+                BitmapFont clean = forge.adventure.util.TfrFonts.vsFont(font);
+                if (clean != null)
+                    font = clean;
                 if (textureRegion != null) {
                     float value = 1 - percentage;
                     if (eventDuel)
@@ -332,6 +337,8 @@ public class TransitionScreen extends FContainer {
                     p1Name.draw(g, font, layout, centerY, Math.max(playerTop, playerBottom + p1Name.blockHeight()), Color.WHITE, percentage);
                 }
                 //reset bitmapfont
+                if (clean != null)
+                    forge.adventure.util.TfrFonts.vsUnscaled();
                 Controls.getBitmapFont("default");
             } else if (isIntro) {
                 if (textureRegion != null) {

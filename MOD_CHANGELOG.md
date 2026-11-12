@@ -14264,6 +14264,56 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 1016: the VS screen's names and records in the clean font (2026-11-11)
+
+The user: "Yes, port it", of TFR 2's fix for the same screen, after a TFR 1 shot where "Victor", "0 - 0" and "Apprentice
+Merfolk Fighter" were still in LanaPixel on the pre-duel VS screen. Round 955's table had left this screen as "a
+follow-up if wanted".
+
+- **The cause:** `TransitionScreen` draws the VS screen's names and records with the skin's `default` BitmapFont
+  (LanaPixel) scaled to `10 / aspect` (12 on Android), about 5.6 screen px per stage px. Round 955 put the clean
+  BitmapFont into the skin's styles only, and that one is made for the stage: k = 2-3 at 1280x720, so drawn 5.6x it
+  would be magnified about 2x and soft.
+- **The fix:** `TfrFonts.vsFont(pixel)` makes the VS screen its own clean font, from the same font file and stage size
+  as the widgets' clean font, at its own k: the pixel font's draw scale rounded up (6 at 1280x720 and 540x960, so 54 px
+  glyphs drawn at x0.94 through the mipmaps). Its line is LanaPixel's line, so it sits exactly as big next to LanaPixel
+  as the widgets' clean text does (round 955's 9 px on a line of 14). It is made on the first VS screen and again only
+  for a bigger k. The scale is read from the screen being drawn, never from a launch-time window, so round 951's 0x0
+  window cannot make it soft. `vsUnscaled()` puts its own scale back after the draw; the shared `default` font is reset
+  by the stock `Controls.getBitmapFont("default")` call as before.
+- **Fallbacks:** `vsFont` returns null whenever the widgets' clean font was not made (Pixel setting, a non-Latin
+  language, a plane without `cleanFontEnabled`, or a font failure), and the screen keeps LanaPixel exactly as before.
+  A failure making the VS font logs once and keeps LanaPixel for the session.
+- **VsNameFit:** it measures and draws with whichever font it is handed, so the shrink and wrap now measure the clean
+  glyphs. Its cache key now includes the font, so a size cached for LanaPixel is never reused for the clean font.
+- **Taken from TFR 2 and adapted:** the idea (the clean font scaled to the pixel font's scale on the VS screen, put
+  back after). TFR 2 rescales its stage-sized clean BitmapFont (`Tfr2Fonts.scaled`); TFR 1 makes a VS-sized one,
+  because the stage-sized glyphs magnified 2-3x are soft. TFR 2's `TransitionScreen` has no `VsNameFit`; here the
+  font goes in before the fit, so the fit measures the font that is drawn.
+- **Not taken:** TFR 2's `RewardActor` change (an item's hover picture title) and its `Controls.getRewardHeaderFont`
+  change (the shop overlay's item names). Neither is the VS screen: the hover picture is LanaPixel drawn into a
+  192x256 picture, round 955's "reward card pictures" row, a different problem with its own trade-offs.
+- **Log:** `[TFR-VsName] clean font: 54 px at 1/6 for the pixel font's x5.63 (cap 36.6 vs pixel 39.4, line 73.1 vs
+  73.1), 1 page(s)` once per size.
+- **Files:** `forge-gui-mobile/src/forge/screens/TransitionScreen.java` (STOCK; `CORE_ENGINE_CHANGES.md`),
+  `forge-gui-mobile/src/forge/adventure/util/TfrFonts.java` (`vsFont`, `vsUnscaled`, the FreeType generation moved
+  into `generate()` for both fonts), `forge-gui-mobile/src/forge/adventure/util/VsNameFit.java` (the cache key). No
+  data change, no save change. No unit test: the new code is all FreeType and GL.
+- **Checked:** Maven `-o -pl forge-gui-mobile-dev -am package -DskipTests` exit 0; `-o -pl forge-gui-mobile -am test
+  -Dtest='forge.adventure.**'` exit 0, 111/111 (log `C:\CLAUDE\PROJECTS\TFR1\notes\r1016\mvn_test.log`). Agent game (cheats, the three classes put ahead of
+  the jar, save slot 4, nothing saved, every duel settled at 50x), VS screens grabbed from the window (`PrintWindow`):
+  `C:\CLAUDE\PROJECTS\TFR1\notes\r1016\` (`before\`, `after\`; `L_` 1280x720, `P_` 540x960;
+  `compare_landscape.png`, `compare_portrait.png`).
+  - Seraph of the Burning Brand (Archmage Boss): two lines in both orientations (68% in portrait), the records below.
+  - Goblin Worker (Apprentice): landscape one line, as before. Portrait: before, one line at 76%; after, two lines at
+    79%. The clean font is about 5% wider than LanaPixel at the same line ("Pictal": 134 px wide vs 127, 39 px tall vs
+    43), so the one line would need about 72%, under `VsNameFit`'s 75% floor, and the fit takes the bigger two-line
+    draw. That is the fit working as designed.
+  - The player's "Pictal" and the "0 - 0" records are in the clean font, sharp, the same height as before.
+- **Not checked in the game:** Android's 12 / aspect scale (the same code path, k rounded up from the larger scale),
+  Pixel mode and a non-Latin language (the fallbacks return before anything changes), an Inn tournament's VS screen
+  (the same drawing code), 1920x1080.
+
 ## Round 1015: The War pages break their own lines, and the tips test passes again (2026-11-11)
 
 The user: "Yes, fix it", approving the fix for `TfrTipsTest.tipsBreakTheirOwnLines`, which has failed since round 1005
