@@ -7,7 +7,7 @@ Name=Yidris
 1 Ancient Cellarspawn|dsc
 1 Arcane Signet|sld|[1492]
 1 Averna, the Chaos Bloom|cmr
-1 Beast Within|c16
+1 Crushing Vines|CMR
 1 Berserkers' Onslaught|dtk
 1 Blood Mist|emn
 1 Clever Impersonator|c19
@@ -54,7 +54,7 @@ Name=Yidris
 1 Tidespout Tyrant|bbd
 1 Hullbreaker Horror|inr
 1 Wooded Foothills|ktk
-1 Rakdos Charm|c16
+1 Terminate|TRC
 1 Rampant Growth|hop
 1 Relentless Assault|vis
 1 Rishkar's Expertise|aer
@@ -84,7 +84,7 @@ Name=Yidris
 1 Tasigur, the Golden Fang|frf
 1 Treasure Cruise|ktk
 1 Trumpeting Carnosaur|lci
-1 Turnabout|usg
+1 Cryptic Command|TRC
 1 Volcanic Torrent|cmr
 1 Wheel of Fate|c16
 1 Whispersilk Cloak|c16

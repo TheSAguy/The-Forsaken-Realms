@@ -3,7 +3,7 @@ Name=Skullbriar, the Walking Grave
 [Main]
 1 Hex|CMD|[87]
 1 Acidic Slime|CMD|[140]
-1 Beast Within|EOC|[93]
+1 Crushing Vines|2XM
 1 Blooming Marsh|OTJ|[266]
 1 Call of the Death-Dweller|IKO|[78]
 1 Case of the Trampled Garden|MKM|[156]
@@ -28,7 +28,7 @@ Name=Skullbriar, the Walking Grave
 1 Hardened Scales|WOT|[55]
 1 Haunted Mire|TDC|[369]
 1 Hornbash Mentor|IKO|[159]
-1 Hunter's Insight|CMM|[296]
+1 Bite Down|FDN
 1 Inscription of Abundance|DSC|[186]
 1 Invigorating Surge|J25|[673]
 1 Llanowar Reborn|LCC|[341]
@@ -40,7 +40,7 @@ Name=Skullbriar, the Walking Grave
 1 Oblivion's Hunger|ZNR|[119]
 1 Ordeal of Nylea|FDN|[641]
 1 Ornery Tumblewagg|OTJ|[171]
-1 Profane Command|SCD|[99]
+1 Exsanguinate|FDN
 1 Putrefy|EOC|[124]
 1 Qarsi Revenant|TDM|[86]
 1 Rancor|EMA|[180]

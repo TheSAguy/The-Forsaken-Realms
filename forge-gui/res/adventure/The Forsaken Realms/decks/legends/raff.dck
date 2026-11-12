@@ -6,8 +6,8 @@ Name=Raff
 1 Aeronaut Admiral|aer
 1 Aethersphere Harvester|aer
 1 Disenchant|mir
-1 Disallow|aer
-1 Time Stop|chk
+1 Cancel|PLST
+1 Opportunity|J25
 1 Aradara Express|kld
 1 Raff, Weatherlight Stalwart|dmu
 1 Arcbound Crusher|dst
@@ -16,7 +16,7 @@ Name=Raff
 1 Azorius Cluestone|dgm
 1 Azorius Keyrune|rtr
 1 Talisman of Progress|mrd
-1 Blinkmoth Infusion|5dn
+1 Dismiss|J22
 1 Bomat Bazaar Barge|kld
 1 Broodstar|mrd
 1 Chief of the Foundry|kld

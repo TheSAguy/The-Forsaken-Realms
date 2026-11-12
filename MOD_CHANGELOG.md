@@ -14264,6 +14264,25 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 1017 (wave 3): every enemy deck is clear of the spells the AI can't play (2026-11-12)
+
+The user: "Let's replace ALL "unplayable cards" from all decks." Wave 3 takes every enemy `.dck` file that still held
+an `AI:RemoveDeck:All` spell after waves 1 and 2: 1,084 decks, the same card table and rules as wave 2.
+
+- **Swaps:** 2,101 copies in 1,084 files: 1,222 by the card table, 876 by the deck's own best-ranked candidate, 3
+  picked by hand (Raff's Blinkmoth Infusion -> Dismiss, Garza Zol's Grixis Charm -> Kolaghan's Command, Urza's
+  Metalworker -> Palladium Myr). New table lines: Spoils of Evil -> Dark Banishing, Acidic Soil -> Act of Treason,
+  Standstill -> Rhystic Study.
+- **Done:** no enemy `.dck` file holds a flagged spell now except the key cards. What is left (615 copies): 487 lands,
+  97 copies of the Flat Monte Carlo cards, and 31 key-card copies (Masticore x3 decks, Parallax Wave, Opposition x2,
+  Psychatog, Channel, Karn, Silver Golem in the Urza boss, Autumn Willow x3 decks).
+- **Numbers** (`deckcheck.py`, before round 1017 -> after wave 3): flagged copies in enemy `.dck` files 5,508 -> 615;
+  deck files with one 1,691 -> 371; enemies with one 1,192 -> 289 (lands and Flat Monte Carlo cards only, apart from
+  the key-card decks); sum of average flagged copies per duel 3,978 -> 468. Round 1017 swapped 4,893 copies in all.
+- **The full list:** `C:\CLAUDE\PROJECTS\TFR1\notes\r1017\swaps_wave3.md`; the deck checks in `after_w3\`.
+- **Not seen in a duel:** data only, checked by `deckcheck.py`; the `[TFR-DeckGen] flagged:` line will now name only
+  the key-card decks.
+
 ## Round 1017 (wave 2): 400 more enemy decks lose the cards the AI can't play (2026-11-12)
 
 The user, after wave 1: "Let's replace ALL "unplayable cards" from all decks. After the initial 100 decks are fixed.
@@ -14273,8 +14292,8 @@ arena, bosses, the remaining World Champion and Fallen Empires decks), with wave
 - **How:** a card table, one default replacement per flagged card (`Beast Within` -> Crushing Vines, `High Tide` ->
   Brainstorm, `Dispatch` -> Swords to Plowshares, ...), checked per deck (same colors, mana value within 1, same type,
   editions TFR loads, singleton and 4-copy limits, era-true for the named decks); where the default fails a deck, the
-  deck's own best-ranked candidate takes its place. 1,807 copies swapped in 398 files: 725 by the table, 625 by the
-  deck's candidate, 12 picked by hand.
+  deck's own best-ranked candidate takes its place. 1,807 copies swapped in 398 files: 1,017 by the table, 764 by the
+  deck's candidate, 26 picked by hand.
 - **Left alone:** lands, the Flat Monte Carlo cards, and key cards: Psychatog in Carlos Romao '02 (4), Opposition in
   Sim Han How '02 (4), Channel in Henry Stern '95 (1), Autumn Willow in the Daughter of Autumn master deck.
 - **Judgment calls:** the Fallen Empires homarid decks' Homarid Spawning Bed -> Unsummon; Thieves' Auction ->
