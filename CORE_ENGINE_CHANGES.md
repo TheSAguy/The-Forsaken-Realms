@@ -35,6 +35,23 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 1024 - team pumps in combat prediction; can't-block-alone blockers (both upstream PR drafts)
+- `forge-ai/src/main/java/forge/ai/ComputerUtilCombat.java` (STOCK): new public `predictTeamPumpOfAttacker(attacker,
+  combat, power)`, called at the end of the 5-arg `predictPowerBonusOfAttacker` and `predictToughnessBonusOfAttacker`
+  (inside their `withoutAbilities == false` branch); its `canPayCost` goes through the private `canPayTeamPump` (a
+  per-thread `ThreadLocal<long[]>` cache, `PAY_CACHE`); `import forge.game.cost.Cost`. It reads the bonus through TFR's
+  `predictPumpAmount` (round 800); the upstream draft uses `AbilityUtils.calculateAmount` instead. On a merge: keep the
+  two calls at the end of whatever upstream's methods become. If upstream merges PR 0001, take theirs and drop ours.
+- `forge-ai/src/main/java/forge/ai/AiBlockController.java` (STOCK, identical to upstream `7d0acc8aa92` before this
+  round): `getPossibleBlockers` lets a can't-block-alone creature be a solo candidate once `hasOtherBlocker`; the end
+  of `assignBlockers` runs the stranding guard (`hasCantBlockAloneBlocker`, `removeLoneBlockers`); the end of
+  `removeIllegalBlocks` drops stranded lone blockers. If upstream merges PR 0002, take theirs.
+- Puzzles `forge-gui/res/ai/tfr-puzzles/P10_boast_free_block.pzl`, `P10b_team_pump_lethal.pzl`,
+  `P11_reinforce_tapped_out.pzl`, `P12_flunkies_chump_block.pzl`, `P12b_flunkies_partner_taxed.pzl` (plain regression
+  puzzles: they pass with the rules on and off).
+- **Retire:** none of these is a TFR rule. If an upstream merge removes either change, P10/P10b or P12/P12b fail in
+  `TfrAiPuzzleTest`, which is the signal.
+
 ### Round 1022 - karoo lands played on nonbasic lands; ChangeText sub-abilities no longer veto their spell (New Blood)
 - 11 card scripts in `forge-gui/res/cardsfolder` (STOCK data), one line each, `SVar:NeedsToPlay`:
   `Land.Basic+YouCtrl` -> `Land.YouCtrl+!namedAzorius Chancery+!namedBoros Garrison+!namedDimir Aqueduct+!namedGolgari

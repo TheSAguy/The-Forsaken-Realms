@@ -14264,6 +14264,54 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 1024: blocks and the lethal check see the attacker's team pump; Mogg Flunkies can chump-block (2026-11-12)
+
+The user's words: "I'd like for you to continue work on improving the AI please." The main thread scoped it to round
+1023's study findings F2 and F1, then added F6. The full findings, puzzles, cost and bench are in
+`C:\CLAUDE\PROJECTS\TFR1\notes\r1024\report.md`; upstream PR drafts (the user posts them) in
+`C:\CLAUDE\PROJECTS\TFR1\notes\r1024\upstream-pr\`.
+
+- **F2, team pumps (stock `ComputerUtilCombat`):**
+  - `predictPowerBonusOfAttacker` / `predictToughnessBonusOfAttacker` counted pump triggers and the attacker's own
+    activated Pump, never an activated `PumpAll`. A Boast (Battershield Warrior) or a team pump at home (Thunderscape
+    Master) read as +0 in block choice and in `lifeInDanger`.
+  - New `predictTeamPumpOfAttacker`: the biggest activated, untargeted `PumpAll` of the attacker's controller that
+    covers the attacker and can be paid now, counted once. It skips sorcery-speed abilities, sacrifice-self costs, tap
+    costs on a tapped, sick or attacking source, and a Boast already used or whose creature isn't attacking. It runs
+    only when the caller counts abilities (`withoutAbilities == false`).
+  - **Cost:** the first version spent 10-14% of game time in `canPayCost` on team-pump decks and timed out 22 AI
+    decisions at lite. `canPayTeamPump` now caches the answer per thread (16 slots keyed by game and ability id, checked
+    against a stamp of the timestamp, turn, step, stack, life, hand, mana pool, counters and tapped permanents): 96%
+    hits, about 2% of game time, no timeouts.
+- **F6, can't block alone (stock `AiBlockController`):**
+  - `getPossibleBlockers(..., solo=true)` dropped every "can't (attack or) block alone" creature, so Mogg Flunkies only
+    joined gang blocks on the same attacker. The rule only needs another blocker anywhere in the combat. Now it is a
+    solo candidate once another creature of its side blocks.
+  - **Stranding guard** (the main thread asked for it): a later step can remove the partner block (an unpaid block
+    tax, the menace check), and the declare step would then strip the lone Flunkies and leave its attacker unblocked.
+    The end of `assignBlockers` drops unpayable blocks and stranded lone blockers, puts the unblocked attackers back,
+    and makes good and chump blocks once more (bounded). `removeIllegalBlocks` (the timeout repair) drops a stranded
+    lone blocker too.
+  - The study's suggested "keep a margin of 2" rule is not needed: with a vanilla 3/3 in the Flunkies' place, Forge
+    already blocks all three ground attackers.
+- **F1, reinforcing into open mana: no rule.** The trick kills the first blocker either way (a pumped 4/4 Cub kills
+  the 1/3 alone); reinforcing risks one more 1/1 and kills the attacker whenever no trick comes. Evidence puzzles E1/E2
+  stay in `C:\CLAUDE\PROJECTS\TFR1\notes\r1024\puzzles\`; P11 guards the reinforcement.
+- **Puzzles** (`forge-gui/res/ai/tfr-puzzles/`, both seats AI; 3 runs at off and lite, this round's five also at max):
+  - P10_boast_free_block: stock blocks the Battershield and loses the Trooper (0/3); fixed, no block (3/3).
+  - P10b_team_pump_lethal: AI at 8, two Bears, Thunderscape Master home; stock takes the 4 (0/3); fixed, chumps one.
+  - P11_reinforce_tapped_out: guard, the AI keeps reinforcing against a tapped-out attacker (passes both).
+  - P12_flunkies_chump_block: the study's F6 board; stock dies (0/3), fixed lives (3/3).
+  - P12b_flunkies_partner_taxed: the stranding guard; without it the AI dies, with it no damage (as stock).
+  - Every older suite puzzle still passes; `mvn -pl forge-ai -am compile` exit 0.
+- **Bench** (stock against fixed, both seats, seed 1117; pairs14, 112 games an arm, and 8 team-pump pairings, 64):
+  - Same length and speed within noise: shipped version +2% a turn at lite on team-pump decks, +0.7% on pairs14.
+  - No AI timeouts, no new errors.
+  - "Took lethal with idle blockers" fell in 5 of 6 runs (pairs14 off 0.40 -> 0.22 a game), but two stock runs differ
+    by as much (0.33 and 0.50), so this is a direction, not a measured gain.
+- **Found, not fixed:** the attacking AI (`PumpAllAi`) never taps Thunderscape Master, not even for exact lethal.
+- **Not run:** `TfrAiPuzzleTest` in Maven (it would hold `locks\build` too long); the packaging round's run covers it.
+
 ## Round 1022: karoo lands played on nonbasic lands, New Blood cast (2026-11-12)
 
 The user asked to "continue work on improving the AI". This round is the audit's option A, Claude as critic: mine the

@@ -1,0 +1,18 @@
+[metadata]
+Name:P10b - the lethal check counts a team pump that stayed home (round 1024, F2)
+Description:The AI is at 8. Two Grizzly Bears attack; Thunderscape Master stays home untapped with {G}{G} open ({G}{G},{T}: creatures you control get +2/+2). On the printed numbers 4 damage leaves the AI at 4, out of danger, so stock Forge keeps its two Eager Cadets home and a player who taps the Master wins (8). Round 1024 counts the Master's pump in the lethal check: 8 is lethal, so the AI chump-blocks. Expect: a Cadet chump-blocks, and the AI lives. Found on the way: Forge's attacking AI never taps the Master here, not even for exact lethal (the puzzle's 'human' is an AI too), so the AI's life alone can't tell the two apart.
+Turns:1
+Expect:aigraveyard has Eager Cadet
+Expect:ailife>=1
+[state]
+humanlife=20
+ailife=8
+turn=5
+activeplayer=human
+activephase=COMBAT_DECLARE_ATTACKERS
+humanhand=
+humanlibrary=Forest;Forest;Forest;Forest;Forest
+humanbattlefield=Grizzly Bears|Attacking;Grizzly Bears|Attacking;Thunderscape Master;Forest;Forest
+aihand=
+ailibrary=Plains;Plains;Plains;Plains;Plains
+aibattlefield=Eager Cadet;Eager Cadet;Plains;Plains

@@ -1,0 +1,17 @@
+[metadata]
+Name:P12 - Mogg Flunkies chump-blocks once another creature blocks (round 1024, from round 1023's study F6, duel 7 turn 11)
+Description:The AI at 5 faces four attackers with two Raging Goblins and Mogg Flunkies (3/3, can't block alone); the opponent has 4 Plains open and Moment of Triumph. Stock Forge chump-blocks with the Goblins only: AiBlockController asked every solo block for blockers that can block alone, so the Flunkies stayed home even with a Goblin blocking, 4 got through (at 1 on paper) and the pump was lethal. With a plain Hill Giant instead, stock Forge blocks all three ground attackers and lives. Round 1024: a can't-block-alone creature is a solo candidate once another creature of its controller blocks. Expect: the AI lives (the Flunkies blocks; the trick may then kill it).
+Turns:1
+Expect:ailife>=1
+[state]
+humanlife=20
+ailife=5
+turn=11
+activeplayer=human
+activephase=COMBAT_DECLARE_ATTACKERS
+humanhand=Moment of Triumph;Plains
+humanlibrary=Plains;Plains;Plains;Plains;Plains
+humanbattlefield=Raffine's Informant|Attacking|Counters:P1P1=1;Moorland Inquisitor|Attacking;Beskir Shieldmate|Attacking;Seraph of Dawn|Attacking;Plains;Plains;Plains;Plains
+aihand=
+ailibrary=Mountain;Mountain;Mountain;Mountain;Mountain
+aibattlefield=Raging Goblin;Raging Goblin;Mogg Flunkies;Mountain;Mountain;Mountain

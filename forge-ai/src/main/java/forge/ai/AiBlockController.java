@@ -88,7 +88,10 @@ public class AiBlockController {
             // if the blocker can block a creature with lure it can't block a creature without
             if (CombatUtil.canBlock(attacker, blocker, combat)) {
                 boolean cantBlockAlone = blocker.hasKeyword("CARDNAME can't attack or block alone.") || blocker.hasKeyword("CARDNAME can't block alone.");
-                if (solo && cantBlockAlone) {
+                // "can't block alone" needs another blocking creature anywhere in the combat, not on this attacker:
+                // once one is assigned, it may block on its own (Mogg Flunkies as a chump blocker). If that other
+                // block is dropped later, the declare-blockers step removes the lone one.
+                if (solo && cantBlockAlone && !hasOtherBlocker(combat, blocker)) {
                     continue;
                 }
                 blockers.add(blocker);
@@ -96,6 +99,15 @@ public class AiBlockController {
         }
 
         return blockers;
+    }
+
+    private static boolean hasOtherBlocker(final Combat combat, final Card blocker) {
+        for (final Card b : combat.getAllBlockers()) {
+            if (!b.equals(blocker) && b.getController().equals(blocker.getController())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     // finds blockers that won't be destroyed
@@ -1071,6 +1083,10 @@ public class AiBlockController {
                 }
             }
         }
+        // see the end of assignBlockers: no refill here, this runs outside the AI's deadline
+        if (hasCantBlockAloneBlocker(combat)) {
+            removeLoneBlockers(combat);
+        }
     }
     public void assignBlockersForCombat(final Combat combat, final CardCollection excludedBlockers) {
         // TODO plan blocks together with teammates (CR 805.10d)
@@ -1245,6 +1261,60 @@ public class AiBlockController {
                 }
             }
         }
+
+        // A can't-block-alone creature may have been picked next to a block that a later step removed (a block tax
+        // the AI can't pay, the check above). The declare-blockers step would strip it and leave its attacker
+        // unblocked, so drop it now and give its attacker one more pass with the blockers that are left.
+        if (hasCantBlockAloneBlocker(combat)) {
+            final List<Card> unpaid = CardLists.filterControlledBy(combat.getAllBlockers(), ai);
+            removeUnpayableBlocks(combat);
+            unpaid.removeAll(combat.getAllBlockers());
+            blockersLeft.removeAll(unpaid); // blocks the AI can't pay for are no partner for the pass below
+            if (removeLoneBlockers(combat)) {
+                for (final Card attacker : attackers) {
+                    if (combat.getBlockers(attacker).isEmpty() && !attackersLeft.contains(attacker)
+                            && CombatUtil.canBeBlocked(attacker, null, ai)) {
+                        attackersLeft.add(attacker); // also the attackers whose unpaid block was removed
+                    }
+                }
+                makeGoodBlocks(combat);
+                makeChumpBlocks(combat);
+                removeUnpayableBlocks(combat);
+                removeLoneBlockers(combat);
+            }
+        }
+    }
+
+    private boolean hasCantBlockAloneBlocker(final Combat combat) {
+        for (final Card b : CardLists.filterControlledBy(combat.getAllBlockers(), ai)) {
+            if (b.hasKeyword("CARDNAME can't attack or block alone.") || b.hasKeyword("CARDNAME can't block alone.")) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /** Removes the AI's can't-block-alone blockers when no other creature of the AI blocks; true if any was removed. */
+    private boolean removeLoneBlockers(final Combat combat) {
+        boolean removed = false;
+        for (final Card b : CardLists.filterControlledBy(combat.getAllBlockers(), ai)) {
+            final boolean cantBlockAlone = b.hasKeyword("CARDNAME can't attack or block alone.") || b.hasKeyword("CARDNAME can't block alone.");
+            if (!cantBlockAlone || hasOtherBlocker(combat, b)) {
+                continue;
+            }
+            for (final Card attacker : combat.getAttackersBlockedBy(b)) {
+                if (combat.getBlockers(attacker).size() <= 1 && !attackersLeft.contains(attacker)) {
+                    attackersLeft.add(attacker);
+                    blockedButUnkilled.remove(attacker);
+                }
+            }
+            combat.removeFromCombat(b);
+            if (!blockersLeft.contains(b)) {
+                blockersLeft.add(b); // a reinforcing block takes it out of the list; it can block again next to a new partner
+            }
+            removed = true;
+        }
+        return removed;
     }
 
     public static CardCollection orderBlockers(Card attacker, CardCollection blockers) {

@@ -1,0 +1,17 @@
+[metadata]
+Name:P12b - the Flunkies is not left blocking alone when its partner's block tax goes unpaid (round 1024, guard for P12)
+Description:The AI at 4 with no untapped mana faces two Grizzly Bears with Wall of Wood (0/3, under Oppressive Rays: it can't block unless its controller pays {3}), Mogg Flunkies (3/3, can't block alone) and Eager Cadet (1/1). Round 1024 lets the Flunkies block once another creature blocks; without a guard the AI's plan was the Wall on one Bear and the Flunkies on the other. The Wall's tax goes unpaid, the declaration strips the Flunkies, and 4 damage kills the AI (stock Forge, which never lets the Flunkies block, chumps with the Cadet and lives at 2). The guard at the end of AiBlockController.assignBlockers drops the unpaid Wall from the candidates and the stranded Flunkies, then blocks again: Cadet and Flunkies, no damage. Expect: no damage gets through (ailife>=3 tells it from stranding, 0, and a lone Cadet chump, 2).
+Turns:1
+Expect:ailife>=3
+[state]
+humanlife=20
+ailife=4
+turn=7
+activeplayer=human
+activephase=COMBAT_DECLARE_ATTACKERS
+humanhand=
+humanlibrary=Forest;Forest;Forest;Forest;Forest
+humanbattlefield=Grizzly Bears|Attacking;Grizzly Bears|Attacking;Forest|Tapped;Forest|Tapped
+aihand=
+ailibrary=Forest;Forest;Forest;Forest;Forest
+aibattlefield=Wall of Wood|Id:301;Oppressive Rays|AttachedTo:301;Mogg Flunkies;Eager Cadet;Forest|Tapped;Forest|Tapped;Forest|Tapped

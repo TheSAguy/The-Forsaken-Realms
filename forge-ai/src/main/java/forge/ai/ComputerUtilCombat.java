@@ -29,6 +29,7 @@ import forge.game.card.*;
 import forge.game.combat.AttackingBand;
 import forge.game.combat.Combat;
 import forge.game.combat.CombatUtil;
+import forge.game.cost.Cost;
 import forge.game.cost.CostPayment;
 import forge.game.keyword.Keyword;
 import forge.game.phase.PhaseType;
@@ -1376,7 +1377,109 @@ public class ComputerUtilCombat {
                 power += pBonus;
             }
         }
+        power += predictTeamPumpOfAttacker(attacker, combat, true);
         return power;
+    }
+
+    /**
+     * The bonus an activated "creatures you control get +N/+N" (PumpAll) would give this attacker, when the attacker's
+     * controller can still pay for it this combat: a Boast on any attacking creature, or a team pump on a permanent
+     * that stayed home. The loop above only counts the attacker's own Pump abilities, so blocks and the "am I dead"
+     * check read an on-board team pump as +0. Counts the biggest one the controller can pay for, once (not their sum,
+     * since they share the same mana).
+     */
+    public static int predictTeamPumpOfAttacker(final Card attacker, final Combat combat, final boolean power) {
+        final Player controller = attacker.getController();
+        if (controller == null) {
+            return 0;
+        }
+        final String param = power ? "NumAtt" : "NumDef";
+        int best = 0;
+        for (final Card source : controller.getCardsIn(ZoneType.Battlefield)) {
+            for (final SpellAbility ability : source.getSpellAbilities()) {
+                if (ability.getApi() != ApiType.PumpAll || !ability.isActivatedAbility() || !ability.hasParam(param)
+                        || !ability.hasParam("ValidCards") || ability.usesTargeting() || ability.isCurse()) {
+                    continue;
+                }
+                if (ability.hasParam("ActivationPhases") || ability.hasParam("SorcerySpeed") || ability.hasParam("ActivationZone")) {
+                    continue;
+                }
+                if (ability.isBoast()) {
+                    // Boast: only once a turn, and only if its creature attacked (or is about to)
+                    if (ability.getActivationsThisTurn() > 0) {
+                        continue;
+                    }
+                    final boolean attacks = source.equals(attacker) || (combat != null && combat.isAttacking(source))
+                            || source.getDamageHistory().getCreatureAttacksThisTurn() > 0;
+                    if (!attacks) {
+                        continue;
+                    }
+                }
+                final Cost cost = ability.getPayCosts();
+                if (cost != null) {
+                    if (ComputerUtilCost.isSacrificeSelfCost(cost)) {
+                        continue;
+                    }
+                    if (cost.hasTapCost() && (source.isTapped() || (source.isCreature() && source.isSick())
+                            || (combat != null && combat.isAttacking(source) && !source.hasKeyword(Keyword.VIGILANCE)))) {
+                        continue;
+                    }
+                }
+                // "attacking" in ValidCards: the attacker under review may not be declared yet
+                final String valid = ability.getParam("ValidCards").replace("attacking+", "")
+                        .replace("+attacking", "").replace(".attacking", "");
+                if (!attacker.isValid(valid.split(","), controller, source, ability)) {
+                    continue;
+                }
+                String num = ability.getParam(param);
+                if (num.startsWith("+")) {
+                    num = num.substring(1);
+                }
+                final int bonus = predictPumpAmount(source, num, ability, attacker, power);
+                if (bonus <= best) {
+                    continue;
+                }
+                // the cost check last: it is the expensive part
+                if (canPayTeamPump(ability, controller)) {
+                    best = bonus;
+                }
+            }
+        }
+        return best;
+    }
+
+    // canPayCost is most of the team pump's cost, and block planning asks it again for every attacker and blocker
+    // pair while nothing changes. So each thread remembers the last answers, per game and ability, against a stamp
+    // of what can change the answer (the game's timestamp, the turn and step, the stack, the controller's life, hand
+    // and mana pool, and which permanents are tapped).
+    private static final int PAY_CACHE_SLOTS = 16;
+    private static final ThreadLocal<long[]> PAY_CACHE = ThreadLocal.withInitial(() -> new long[PAY_CACHE_SLOTS * 3]);
+
+    private static boolean canPayTeamPump(final SpellAbility ability, final Player controller) {
+        final Game game = controller.getGame();
+        long stamp = game.getTimestamp();
+        stamp = stamp * 31 + game.getPhaseHandler().getTurn();
+        stamp = stamp * 31 + java.util.Objects.hashCode(game.getPhaseHandler().getPhase());
+        stamp = stamp * 31 + game.getStack().size();
+        stamp = stamp * 31 + controller.getLife();
+        stamp = stamp * 31 + controller.getCardsIn(ZoneType.Hand).size();
+        stamp = stamp * 31 + controller.getManaPool().totalMana();
+        stamp = stamp * 31 + ability.getHostCard().getCounters().hashCode();
+        for (final Card c : game.getCardsIn(ZoneType.Battlefield)) {
+            stamp = stamp * 31 + c.getId() * 2L + (c.isTapped() ? 1 : 0);
+        }
+        // a slot is key, stamp, answer (0 empty, 1 can't pay, 2 can pay)
+        final long key = ((long) game.getId() << 32) | (ability.getId() & 0xffffffffL);
+        final long[] cache = PAY_CACHE.get();
+        final int slot = Math.floorMod(Long.hashCode(key), PAY_CACHE_SLOTS) * 3;
+        if (cache[slot + 2] != 0 && cache[slot] == key && cache[slot + 1] == stamp) {
+            return cache[slot + 2] == 2;
+        }
+        final boolean can = ComputerUtilCost.canPayCost(ability, controller, false);
+        cache[slot] = key;
+        cache[slot + 1] = stamp;
+        cache[slot + 2] = can ? 2 : 1;
+        return can;
     }
 
     // Predict the Toughness bonus of the attacker if blocked by the blocker
@@ -1601,6 +1704,7 @@ public class ComputerUtilCombat {
                 toughness += tBonus;
             }
         }
+        toughness += predictTeamPumpOfAttacker(attacker, combat, false);
         return toughness;
     }
 

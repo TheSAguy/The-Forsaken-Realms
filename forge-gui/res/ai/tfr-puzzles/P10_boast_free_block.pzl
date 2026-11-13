@@ -1,0 +1,17 @@
+[metadata]
+Name:P10 - a Boast turns a free block into a loss (round 1024, from round 1023's study F2)
+Description:The opponent attacks with Battershield Warrior (2/2; Boast {1}{W}: creatures you control get +1/+1) and holds two Plains open. The AI's Alaborn Trooper (2/3) "kills it and survives" on the printed numbers, so stock Forge blocks; the Boast makes the Warrior 3/3, the Trooper dies and the Warrior lives. The pump is on the battlefield and the mana is open: public information. Round 1024 counts the attacking side's affordable activated PumpAll in ComputerUtilCombat.predictPowerBonusOfAttacker / predictToughnessBonusOfAttacker. Expect: the Trooper survives (no block at 20 life). Stock Forge fails this at every strength (blocks never get Flat Monte Carlo's search).
+Turns:1
+Expect:aibattlefield has Alaborn Trooper
+[state]
+humanlife=20
+ailife=20
+turn=5
+activeplayer=human
+activephase=COMBAT_DECLARE_ATTACKERS
+humanhand=
+humanlibrary=Plains;Plains;Plains;Plains;Plains
+humanbattlefield=Battershield Warrior|Attacking;Plains;Plains
+aihand=
+ailibrary=Plains;Plains;Plains;Plains;Plains
+aibattlefield=Alaborn Trooper;Plains;Plains

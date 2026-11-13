@@ -1,0 +1,17 @@
+[metadata]
+Name:P11 - reinforce to kill when the attacker is tapped out (round 1024, guard for F1)
+Description:A guard against an AI too afraid of tricks to block. Felidar Cub (2/2) attacks into Lumengrid Warden (1/3) and Eager Cadet (1/1); the opponent has no untapped land and no cards in hand, so no trick is possible. The right play is the double block that kills the Cub (the Warden alone survives but kills nothing). Expect: the Cub dies.
+Turns:1
+Expect:humangraveyard has Felidar Cub
+[state]
+humanlife=20
+ailife=6
+turn=5
+activeplayer=human
+activephase=COMBAT_DECLARE_ATTACKERS
+humanhand=
+humanlibrary=Plains;Plains;Plains;Plains;Plains
+humanbattlefield=Felidar Cub|Attacking;Plains|Tapped;Plains|Tapped
+aihand=
+ailibrary=Plains;Plains;Plains;Plains;Plains
+aibattlefield=Lumengrid Warden;Eager Cadet;Plains;Plains
