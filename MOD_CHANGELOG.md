@@ -14270,6 +14270,10 @@ The user approved "the next stall: on the board that stalled for 20 turns, Forge
 tokens" ("Do both": diagnose it, then a rule). The full findings, puzzles and bench are in
 `C:\CLAUDE\PROJECTS\TFR1\notes\r1021\report.md`.
 
+**The stalls are NOT fixed.** The stall pairing's games did not get shorter: 9 went over 30 turns in both arms. Those
+boards are lifelink-bound (Stonefare Crocodile), where the rule rightly stays out. The rule breaks the other kind of
+stall: a surplus of attackers, few blockers, no lifelink (g006).
+
 - **The diagnosis** (8 replayed games of eldrazi_scion against crocodile at MAX, boards dumped at the AI's main phase
   and read by `C:\CLAUDE\PROJECTS\TFR1\notes\r1021\tools\AttackDiag.java`):
   - `AiAttackController.shouldAttack` judges each attacker alone. Below aggression 5, an attacker that one blocker
