@@ -1,0 +1,21 @@
+[metadata]
+Name:P6 - the stall: chip damage the swing back cannot punish (round 1021, the stall pairing's replay, game g006 turn 20)
+Description:The real board of a 35-turn stall (round 1021's replay of eldrazi_scion against crocodile at max, g006 turn 20). The crocodiles, at 10, have three untapped blockers (Wardscale Crocodile 5/3, the Phyrexian 3/3, Stonefare Crocodile 3/2, which can pay for lifelink). The AI, at 5, has eight attackers with power (Kozilek's Predator, Catacomb Sifter, two Nest Invaders, Carrier Thrall, three Scion tokens) and five 0/1 Spawn tokens. Forge holds: every attacker fails shouldAttack (one blocker kills it), and the all-out level needs its attritional count to kill (7, then 2: not lethal) and a life-ratio lead the AI does not have. In the replay the AI held for 10 turns while the crocodiles climbed to 24 and won. pressure-attack sends the eight: the best blocks stop three, 7 get through, 3 of that comes back as Stonefare's lifelink (net 4: dead in 3 turns at this rate), and the swing back (three crocodiles) meets five Spawn chump blockers: 0 through. Expect: the AI attacks with at least 8, the crocodiles drop to 7 or less, and the AI survives their turn (Turns:2). Rules off: Forge holds at off, lite and max.
+Turns:2
+Expect:aiattackers>=8
+Expect:humanlife<=7
+Expect:ailife>=1
+Expect:fired alpha-strike-count=0
+RulesOff:fail
+[state]
+humanlife=10
+ailife=5
+turn=20
+activeplayer=ai
+activephase=MAIN1
+humanhand=Crocodile of the Crossing;Forest
+humanlibrary=Forest;Forest;Forest;Forest;Forest
+humanbattlefield=Overgrown Tomb;Woodland Cemetery;Woodland Cemetery;Overgrown Tomb;Swamp|Tapped;Wardscale Crocodile;Forest|Tapped;Overgrown Tomb;Swamp|Tapped;t:Phyrexian Token,P:0,T:0,Cost:no cost,Color:C,Types:Artifact-Creature-Phyrexian,Keywords:,Image:phyrexian%7CMOM%7C17$alt|Transformed|Counters:P1P1=3;Forest;Stonefare Crocodile|SummonSick
+aihand=Nest Invader
+ailibrary=Forest;Forest;Forest;Forest;Forest
+aibattlefield=Forest;Swamp;Nest Invader;Swamp;Forest;Carrier Thrall;Catacomb Sifter;Nest Invader;T:c_0_1_eldrazi_spawn_sac;Forest;T:c_0_1_eldrazi_spawn_sac;T:c_0_1_eldrazi_spawn_sac;Swamp;Swamp;T:c_1_1_eldrazi_scion_sac;T:c_1_1_eldrazi_scion_sac;T:c_1_1_eldrazi_scion_sac;Kozilek's Predator;T:c_0_1_eldrazi_spawn_sac;T:c_0_1_eldrazi_spawn_sac

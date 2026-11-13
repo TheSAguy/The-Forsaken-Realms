@@ -5,6 +5,7 @@ Turns:1
 Expect:fired alpha-strike-count=0
 Expect:fired alpha-strike-count (shadow)=0
 Expect:fired mc-attack-cut-guard=0
+Expect:fired pressure-attack=0
 [state]
 humanlife=5
 ailife=6

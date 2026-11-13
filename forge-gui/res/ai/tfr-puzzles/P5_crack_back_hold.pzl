@@ -3,6 +3,7 @@ Name:P5 - holding back is right: the all-out attack loses to the swing back (rou
 Description:P3b's board, with three Serra Angels and four Craw Wurms on the crocodile side, all tapped (they attacked last turn). The AI's 20 attackers meet no new blockers, so Forge's heuristic sends them all in, and the tapped flyers and wurms come back at 5 untapped 0/1 blockers: the AI dies (off: ai life -4 every run). Holding back, it blocks the ground and takes 12 in the air: it lives at 1. Flat Monte Carlo (lite, max) sees that and holds back, which is exactly the cut to no attack mc-attack-cut-guard reviews: the rule must stay out, because its count says the swing back could be lethal (39 dmg past 5 blockers against 13 life). Expect: the rule never fires here. (Whether the AI survives depends on Flat Monte Carlo deciding in time, so it is not an Expect line: in round 1019's runs it held back and lived whenever it decided, and attacked and died when a cold JVM ran out of turn budget.)
 Turns:2
 Expect:fired mc-attack-cut-guard=0
+Expect:fired pressure-attack=0
 [state]
 humanlife=10
 ailife=13

@@ -35,6 +35,18 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 1021 - rule pressure-attack (no stock line)
+No stock file changes. New files, listed so a merge round knows they exist:
+- `forge-ai/src/main/java/forge/ai/tfr/PressureAttack.java` (rule `pressure-attack`). `TfrAiRules.reviewAttack` calls it
+  after `AlphaStrikeCount`, from the seat's `declareAttackers` override.
+  - It reads `CombatUtil.canAttack`/`canBlock`, `ComputerUtilCombat.damageIfUnblocked`, keywords
+    (`LIFELINK`, `VIGILANCE`, `INFECT`, `TOXIC`, `POISONOUS`, `DEFENDER`) and `AlphaStrikeCount.combatTrigger`.
+  - It sets attackers with `Combat.addAttacker` and checks them with `CombatUtil.validateAttackers`.
+  - A signature change there breaks this package's compile, which is the signal.
+- Puzzles `forge-gui/res/ai/tfr-puzzles/P6_eldrazi_pressure.pzl` and `P6b_lifelink_stall_hold.pzl`.
+- **Retire:** when P6 attacks at off, lite and max with the rules off, `TfrAiPuzzleTest` reports "RETIRE?". Then
+  delete the class, its `KNOWN` id, its `reviewAttack` call and its entry in `tfr-rules.json`.
+
 ### Round 1023 - the agent bridge's manual seat (Claude plays the player's side, dev tooling)
 - `forge-gui-mobile/src/forge/adventure/scene/DuelScene.java` (STOCK): the auto-battle arm of the player seat's
   `LobbyPlayer` line wraps `GamePlayerUtil.createAiPlayer(...)` in `forge.adventure.agent.AgentBridge.pilotSeat(...,

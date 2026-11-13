@@ -14264,6 +14264,72 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 1021: rule pressure-attack, the token side that never attacks (2026-11-12)
+
+The user approved "the next stall: on the board that stalled for 20 turns, Forge's AI never attacks with its Eldrazi
+tokens" ("Do both": diagnose it, then a rule). The full findings, puzzles and bench are in
+`C:\CLAUDE\PROJECTS\TFR1\notes\r1021\report.md`.
+
+- **The diagnosis** (8 replayed games of eldrazi_scion against crocodile at MAX, boards dumped at the AI's main phase
+  and read by `C:\CLAUDE\PROJECTS\TFR1\notes\r1021\tools\AttackDiag.java`):
+  - `AiAttackController.shouldAttack` judges each attacker alone. Below aggression 5, an attacker that one blocker
+    kills and that kills nothing never attacks: every token on a token board.
+  - Aggression 5 (everything attacks) needs the attritional count to kill the opponent outright and a lead on the
+    life-to-damage ratio. A token side facing bigger crocodiles has neither.
+  - So there is no level between "each attacker wins its fight" and "everything": nothing sends the surplus and keeps
+    the chump blockers home. Flat Monte Carlo, one turn deep, agrees with holding.
+  - g006 (the AI held at 5 life for 10 turns while the crocodiles went from 10 to 24) is breakable. g002 (63 turns) is
+    lifelink-bound: Stonefare Crocodile pays {2}{B} for lifelink as it blocks, so every chip comes back, and holding
+    there is right.
+  - The attritional count's 0-power miscount (Spawns counted as getting through) changes no decision on these boards,
+    so there is no upstream PR.
+- **Rule `pressure-attack`** (kind attack; Normal, Hard, Insane, Other; `forge-ai/.../tfr/PressureAttack.java`):
+  - It runs only when Forge declared no attack (`onlyWhenNoAttack`), one opponent, after `alpha-strike-count`.
+  - It sends every creature that can attack with power over 0, minus the h weakest kept home, when four things hold:
+    - **reach:** the damage past the opponent's best blocks (a maximum blockable set), minus every lifelink blocker's
+      gain, kills within `rounds` turns (3). Paid lifelink counts: a creature with a self-only lifelink pump.
+    - **life:** the opponent's all-out swing back into what stays home, one chump per blocker on the heaviest
+      attacker, leaves the AI at `minLifeAfter` (1) or more and short of lethal poison.
+    - **the race:** that swing back deals no more than the net chip beyond the swing back after no attack.
+    - **no trap:** the defender has no attack or block trigger (P4).
+  - It sends the smallest h that passes.
+  - Hook: none in stock code; `TfrAiRules.reviewAttack` calls it from the seat's `declareAttackers` override (an error
+    leaves Forge's attack and logs).
+  - Log: `[TFR-AiRule] pressure-attack turn N <seat> attacks with 0 -> pressure with S (P power, h kept home): T through
+    past B blockers (-L lifelink), kills in K at this rate; opponent life X, own life Y, swing back Z (W if held)`, and
+    `... stays out: ...` for the trigger case.
+- **Puzzles** (`TfrAiPuzzleTest`, all 11 "ok" at off, lite and max, 3 runs each, Maven exit 0, run in a clean worktree
+  at HEAD with only this round's files):
+  - **P6_eldrazi_pressure** (new, g006 turn 20, `Turns:2`): rules on, the AI attacks with 8 and the crocodiles end at
+    3-6, the AI alive after their swing back; rules off, Forge holds (0/3 at every level, `RulesOff:fail`).
+  - **P6b_lifelink_stall_hold** (new, g002 turn 21): the paid lifelink makes the chip worthless; no fire.
+  - **P4 and P5** gain `Expect:fired pressure-attack=0`.
+- **The bench** (`C:\CLAUDE\PROJECTS\TFR1\notes\r1021\bench\bench1021.sh`):
+  - **Setup:** shipped rules against shipped rules plus `pressure-attack`, MAX, the rules seat on each side. Both arms
+    and both sides ran at once (4 JVMs, same seeds, same snapshot), so they shared the load.
+  - **Stall pairing** (64 games per arm, seeds 1117 and 2027):
+    - The eldrazi seat won 25/32 against 23/32. The rule fired 12 times in 8 games, never on the crocodile seat.
+    - Length is unchanged: average 24.9 against 24.7 turns, 9 games over 30 turns in both arms, the longest 49 against
+      64.
+    - The fired games won 5, as did the same games in the base arm. The long games are mostly the lifelink-bound
+      kind, where the rule stays out.
+  - **Wide** (pairs14, 112 games per arm):
+    - The rules side won 55/112 against 52/112, 18.3 against 18.1 turns. The rule fired 5 times in 4 games, 3 of them
+      the stall pairing.
+    - The fired games had the same results as the base arm's and ran shorter (24.5 against 39.8 turns, one 21 against
+      63).
+    - Games with no fire: 53 against 50, the noise floor.
+- **Rollout: on.**
+  - The puzzles prove both directions. It fires rarely, only when Forge would do nothing, and no fired game lost what
+    the base arm won, except one of two that split either way.
+  - Shadow would fail P6. Off without a build: `"enabled": []` in `tfr-rules.json`.
+- **Not done:**
+  - The 50x agent duel showing the rule load waits for this round's package.
+  - The lifelink-bound stall (kill or tap the lifelinker first) is a different rule, left for a puzzle from a real
+    board.
+- Rules still live: `etb-drawback-allow` (on), `mc-attack-cut-guard` (on), `pressure-attack` (on),
+  `alpha-strike-count` (shadow).
+
 ## Round 1023 (follow-up): the seat's turn guard, the event list, card-by-card plays, and eight more study duels (2026-11-12)
 
 The manager asked for more study duels: aggressive decks at parity, trick-heavy enemies, and Hard with Adept/Master

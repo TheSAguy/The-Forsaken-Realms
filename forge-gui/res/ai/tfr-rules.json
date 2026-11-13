@@ -25,6 +25,14 @@
       "params": { "shadow": true },
       "test": ["P3_eldrazi_stall", "P3b_eldrazi_stall_lifelink", "P4_block_trigger_trap"],
       "retireWhen": "Shadow since round 1018: Forge took every lethal we built (P3 at off, lite and max), and the rule's one fire in the 112-game bench lost (a block trigger killed the attacker; it now stays out when the defender has a combat trigger). Switch shadow off only when log reviews show '(shadow)' lines where the all-out attack would really have won; delete it if two releases of log reviews show none."
+    },
+    {
+      "id": "pressure-attack",
+      "kind": "attack",
+      "enabled": ["Normal", "Hard", "Insane", "Other"],
+      "params": { "rounds": 3, "minLifeAfter": 1, "onlyWhenNoAttack": true },
+      "test": ["P6_eldrazi_pressure", "P6b_lifelink_stall_hold", "P4_block_trigger_trap", "P5_crack_back_hold"],
+      "retireWhen": "Round 1021: on the eldrazi_scion vs crocodile stall boards Forge declares no attack for 30+ turns: each token fails AiAttackController.shouldAttack (one blocker kills it), and the all-out level needs an attritional kill and a life-ratio lead the token side never has; nothing in between sends the surplus and keeps chump blockers home. The rule sends the surplus when its damage past the best blocks, minus lifelink (paid lifelink like Stonefare Crocodile's included), kills within 'rounds' turns at that rate, the opponent's all-out swing back into what stays home leaves the AI at 'minLifeAfter' or more, and that swing back costs no more than the chip. onlyWhenNoAttack: only when Forge declared no attack. Retire when P6 attacks at off, lite and max with the rules off (the puzzle test says RETIRE?)."
     }
   ]
 }

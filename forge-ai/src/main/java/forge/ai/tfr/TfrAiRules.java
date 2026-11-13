@@ -73,7 +73,7 @@ public final class TfrAiRules {
 
     /** The rules this build knows, by id. A rule in the file that is not here is ignored (with a log line). */
     static final Set<String> KNOWN = Collections.unmodifiableSet(new LinkedHashSet<>(List.of(
-            EtbDrawbackAllow.ID, AlphaStrikeCount.ID, McAttackCutGuard.ID)));
+            EtbDrawbackAllow.ID, AlphaStrikeCount.ID, McAttackCutGuard.ID, PressureAttack.ID)));
 
     private static volatile Map<String, Entry> rules = Collections.emptyMap();
     private static volatile String version = "none";
@@ -288,9 +288,17 @@ public final class TfrAiRules {
         }
     }
 
-    /** Called by {@link TfrPlayerControllerAi} after Forge declared its attackers. */
+    /**
+     * Called by {@link TfrPlayerControllerAi} after Forge declared its attackers (Flat Monte Carlo included): rules
+     * alpha-strike-count and, round 1021, pressure-attack. No stock line: the seat's own override is the hook.
+     */
     static void reviewAttack(final Player attacker, final Combat combat) {
         AlphaStrikeCount.review(attacker, combat);
+        try {
+            PressureAttack.review(attacker, combat); // round 1021: after the lethal count, so a lethal attack is never cut
+        } catch (final RuntimeException e) {
+            System.out.println(TAG + " " + PressureAttack.ID + " error, Forge's attack stands: " + e);
+        }
     }
 
     // ---- logging and counts ----

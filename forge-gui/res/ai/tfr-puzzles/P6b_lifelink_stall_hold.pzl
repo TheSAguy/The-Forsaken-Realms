@@ -1,0 +1,17 @@
+[metadata]
+Name:P6b - the stall the chip cannot break: Stonefare Crocodile's paid lifelink (round 1021, the replay's g002 turn 21)
+Description:The real board of a 63-turn stall (round 1021's replay, g002 turn 21). The crocodiles are at 4 with three untapped blockers (the Phyrexian 3/3, Stonefare Crocodile 3/2, Wild Crocodile 1/1) and mana open; the AI, at 7, has five attackers with power and five 0/1 Spawns. Sending the five gets 2 through the best blocks, but Stonefare Crocodile pays {2}{B} for lifelink as it blocks and gains 3: the crocodiles end at 5, the AI loses three creatures (round 1021's first count missed the paid lifelink, fired, and lost exactly that way). pressure-attack must stay out: it counts a blocker that can give itself lifelink as a lifelink blocker (net chip 2 - 3 < 1). Expect: the rule never fires. Rules off: Forge holds (pass).
+Turns:1
+Expect:fired pressure-attack=0
+[state]
+humanlife=4
+ailife=7
+turn=21
+activeplayer=ai
+activephase=MAIN1
+humanhand=Crocodile of the Crossing;Hunter's Edge;Hunter's Edge
+humanlibrary=Forest;Forest;Forest;Forest;Forest
+humanbattlefield=Forest;Forest;Wild Crocodile;Swamp|Tapped;Woodland Cemetery;Necroblossom Snarl;Swamp|Tapped;Stonefare Crocodile;Hagra Crocodile|Tapped;t:Phyrexian Token,P:0,T:0,Cost:no cost,Color:C,Types:Artifact-Creature-Phyrexian,Keywords:,Image:phyrexian%7CMOM%7C16$alt|Transformed|Counters:P1P1=3;Swamp|Tapped
+aihand=Natural Connection
+ailibrary=Forest;Forest;Forest;Forest;Forest
+aibattlefield=Swamp;Swamp;Forest;Swamp;T:c_0_1_eldrazi_spawn_sac;Nest Invader;T:c_0_1_eldrazi_spawn_sac;Forest;Nest Invader;T:c_0_1_eldrazi_spawn_sac;Blisterpod;Forest;Blisterpod;Swamp;Forest;Carrier Thrall;T:c_0_1_eldrazi_spawn_sac;T:c_0_1_eldrazi_spawn_sac
