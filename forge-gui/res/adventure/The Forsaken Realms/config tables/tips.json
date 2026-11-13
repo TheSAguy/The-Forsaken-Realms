@@ -196,5 +196,8 @@ Losing an ordinary duel never ends a run. Read this again any time: World Standi
   "secondCopy.title": "Already Running",
   "secondCopy.body": "The Forsaken Realms is already running in another window.\nTwo copies playing at once can overwrite each other's saves.\n\nQuit this copy, or play anyway?",
   "secondCopy.quit": "Quit",
-  "secondCopy.play": "Play anyway"
+  "secondCopy.play": "Play anyway",
+
+  // ---- round 1028: the notice after a draw the AI accepted because the duel had stopped moving (DuelScene, LoopBreaker)
+  "draw.noProgress": "Neither side made progress in {turns} turns, so your opponent accepted the draw. Nothing was won or lost."
 }

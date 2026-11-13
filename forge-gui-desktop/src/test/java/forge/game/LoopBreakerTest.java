@@ -298,6 +298,203 @@ public class LoopBreakerTest extends AITest {
         AssertJUnit.assertEquals("40 lows, the 40th the first of the 25 on the empty stack", 40 + LoopBreaker.TRIGGER_DRAW_AT - 1, repeats);
     }
 
+    // ---- round 1028: the no-progress draw ----------------------------------------------------------------------------
+
+    /** P3-29: both players gain life every turn, nobody gets through, the boards hold - the 9th turn's offer is a draw. */
+    @Test
+    public void aTwoSidedLifegainStallIsAcceptedAfter8Turns() {
+        Stall st = new Stall();
+        for (int t = 1; t <= LoopBreaker.NO_PROGRESS_TURNS; t++) {
+            st.turn(t, () -> st.bothGain(3));
+            AssertJUnit.assertFalse("turn " + t + ": too early", LoopBreaker.loopSeen(st.game));
+        }
+        st.turn(LoopBreaker.NO_PROGRESS_TURNS + 1, () -> st.bothGain(3));
+        AssertJUnit.assertTrue("8 turns of a lifegain stall: the AI takes the draw", LoopBreaker.loopSeen(st.game));
+        AssertJUnit.assertTrue(LoopBreaker.noProgressDraw(st.game));
+        AssertJUnit.assertTrue(LoopBreaker.drawReason(st.game), LoopBreaker.drawReason(st.game).startsWith("no progress for 8 turns"));
+        AssertJUnit.assertFalse("taking the offer is the coordinator's job, not the breaker's", st.game.isGameOver());
+    }
+
+    @Test
+    public void aBoardWhereNothingHappensIsAccepted() {
+        Stall st = new Stall();
+        st.play(LoopBreaker.NO_PROGRESS_TURNS + 1, () -> { });
+        AssertJUnit.assertTrue(LoopBreaker.loopSeen(st.game));
+    }
+
+    @Test
+    public void anOpponentLosingLifeIsProgress() {
+        Stall st = new Stall();
+        st.play(LoopBreaker.NO_PROGRESS_TURNS + 1, () -> st.ai.loseLife(1, false, false, null));
+        AssertJUnit.assertFalse("the AI's life goes down: the player is winning, not stuck", LoopBreaker.loopSeen(st.game));
+        AssertJUnit.assertFalse(LoopBreaker.noProgressDraw(st.game));
+    }
+
+    @Test
+    public void aBeatdownOnThePlayerIsProgress() {
+        Stall st = new Stall();
+        st.play(LoopBreaker.NO_PROGRESS_TURNS + 1, () -> st.human.loseLife(2, false, false, null));
+        AssertJUnit.assertFalse("the player is heading for a loss: no dodging it with a draw", LoopBreaker.loopSeen(st.game));
+    }
+
+    @Test
+    public void aRaceIsProgress() {
+        Stall st = new Stall();
+        st.play(LoopBreaker.NO_PROGRESS_TURNS + 1, () -> {
+            st.human.loseLife(3, false, false, null);
+            st.ai.loseLife(3, false, false, null);
+        });
+        AssertJUnit.assertFalse(LoopBreaker.loopSeen(st.game));
+    }
+
+    /** Lifegain in the first half, then the life starts going down: still above where the window began, below its middle. */
+    @Test
+    public void aLifeTotalTurningDownIsProgress() {
+        Stall st = new Stall();
+        for (int t = 1; t <= LoopBreaker.NO_PROGRESS_TURNS + 1; t++) {
+            final int turn = t;
+            st.turn(t, () -> {
+                if (turn <= 5)
+                    st.human.gainLife(10, null, null);
+                else
+                    st.human.loseLife(5, false, false, null);
+            });
+        }
+        AssertJUnit.assertTrue("still above the window's start", st.human.getLife() > 20 + 10);
+        AssertJUnit.assertFalse("but lower than 4 turns ago", LoopBreaker.loopSeen(st.game));
+    }
+
+    @Test
+    public void poisonCountersAreProgress() {
+        Stall st = new Stall();
+        st.play(LoopBreaker.NO_PROGRESS_TURNS + 1, () -> st.bothGain(5));
+        st.human.setPoisonCounters(1, st.ai);
+        AssertJUnit.assertFalse("a poison counter since the window began", LoopBreaker.loopSeen(st.game));
+    }
+
+    @Test
+    public void aShrinkingLibraryIsProgress() {
+        Stall st = new Stall();
+        st.play(LoopBreaker.NO_PROGRESS_TURNS + 1, () -> st.mill(st.human, 3));
+        AssertJUnit.assertFalse("milled 3 a turn: the library runs out in a few more turns", LoopBreaker.loopSeen(st.game));
+    }
+
+    @Test
+    public void naturalDrawsFromAFullLibraryAreNotProgress() {
+        Stall st = new Stall();
+        st.play(LoopBreaker.NO_PROGRESS_TURNS + 1, () -> st.mill(st.game.getPhaseHandler().getPlayerTurn(), 1));
+        AssertJUnit.assertTrue("one draw a turn from 40 cards", LoopBreaker.loopSeen(st.game));
+    }
+
+    @Test
+    public void aGrowingBoardIsProgress() {
+        Stall st = new Stall();
+        st.play(LoopBreaker.NO_PROGRESS_TURNS + 1, () -> addCard("Runeclaw Bear", st.ai));
+        AssertJUnit.assertFalse("the AI adds a creature every turn", LoopBreaker.loopSeen(st.game));
+    }
+
+    @Test
+    public void oneMoreCreatureIsNotProgress() {
+        Stall st = new Stall();
+        for (int t = 1; t <= LoopBreaker.NO_PROGRESS_TURNS + 1; t++) {
+            final int turn = t;
+            st.turn(t, () -> {
+                if (turn == 3)
+                    addCard("Runeclaw Bear", st.ai); // +2 power on 8: inside the slack
+            });
+        }
+        AssertJUnit.assertTrue(LoopBreaker.loopSeen(st.game));
+    }
+
+    @Test
+    public void aBoardTradedAwayIsProgress() {
+        Stall st = new Stall();
+        st.turn(1, () -> { });
+        for (Card c : new java.util.ArrayList<>(st.human.getCreaturesInPlay()))
+            st.game.getAction().moveToGraveyard(c, null);
+        for (int t = 2; t <= LoopBreaker.NO_PROGRESS_TURNS + 1; t++)
+            st.turn(t, () -> { });
+        AssertJUnit.assertFalse("the player's board is gone since the window began", LoopBreaker.loopSeen(st.game));
+    }
+
+    @Test
+    public void aPlaneswalkerGainingLoyaltyIsProgress() {
+        Stall st = new Stall();
+        Card walker = addCard("Ajani Goldmane", st.ai);
+        walker.setCounters(forge.game.card.CounterEnumType.LOYALTY, 4);
+        for (int t = 1; t <= LoopBreaker.NO_PROGRESS_TURNS + 1; t++)
+            st.turn(t, () -> walker.setCounters(forge.game.card.CounterEnumType.LOYALTY, walker.getCurrentLoyalty() + 1));
+        AssertJUnit.assertFalse("an ultimate on its way", LoopBreaker.loopSeen(st.game));
+    }
+
+    /** The loop test still runs first: a loop is a draw on turn 1, history or not, and says it was a loop. */
+    @Test
+    public void theLoopTestStillComesFirst() {
+        Stall st = new Stall();
+        st.play(LoopBreaker.NO_PROGRESS_TURNS + 1, () -> st.human.loseLife(2, false, false, null)); // progress
+        st.game.getPhaseHandler().devModeSet(PhaseType.MAIN1, st.ai);
+        SpellAbility sa = AbilityFactory.getAbility("AB$ GainLife | Cost$ 0 | LifeAmount$ 1 | SpellDescription$ Gain 1 life.",
+                st.ai.getCreaturesInPlay().getFirst());
+        sa.setActivatingPlayer(st.ai);
+        for (int i = 1; i <= LoopBreaker.AI_BAR_AT; i++)
+            st.game.getStack().add(sa);
+        AssertJUnit.assertTrue("a barred AI loop: accepted, whatever the life totals did", LoopBreaker.loopSeen(st.game));
+        AssertJUnit.assertFalse(LoopBreaker.noProgressDraw(st.game));
+    }
+
+    /** The hook: PhaseHandler takes the snapshots itself as real turns pass. Two AIs with only lands play 9 turns. */
+    @Test
+    public void realTurnsTakeTheSnapshots() {
+        Game game = initAndCreateGame();
+        for (Player p : game.getPlayers())
+            for (int i = 0; i < 40; i++)
+                addCardToZone("Plains", p, ZoneType.Library);
+        int turns = 0;
+        while (!game.isGameOver() && game.getPhaseHandler().getTurn() < LoopBreaker.NO_PROGRESS_TURNS + 2 && turns++ < 40)
+            playUntilNextTurn(game);
+        AssertJUnit.assertFalse(game.isGameOver());
+        AssertJUnit.assertTrue("turn " + game.getPhaseHandler().getTurn() + ": lands only, nothing moved",
+                LoopBreaker.loopSeen(game));
+    }
+
+    /** A board of two 4-power creatures a side, 20 life each and 40-card libraries; each turn() starts a turn. */
+    private final class Stall {
+        final Game game = initAndCreateGame();
+        final Player human = game.getPlayers().get(0);
+        final Player ai = game.getPlayers().get(1);
+
+        Stall() {
+            for (Player p : game.getPlayers()) {
+                addCard("Serra Angel", p);
+                addCard("Serra Angel", p);
+                for (int i = 0; i < 40; i++)
+                    addCardToZone("Plains", p, ZoneType.Library);
+            }
+        }
+
+        /** Turn t begins (the snapshot), then what happens in it. */
+        void turn(int t, Runnable during) {
+            game.getPhaseHandler().devModeSet(PhaseType.MAIN1, t % 2 == 1 ? human : ai, t);
+            LoopBreaker.onTurnBegan(game);
+            during.run();
+        }
+
+        void play(int turns, Runnable during) {
+            for (int t = 1; t <= turns; t++)
+                turn(t, during);
+        }
+
+        void bothGain(int n) {
+            human.gainLife(n, null, null);
+            ai.gainLife(n, null, null);
+        }
+
+        void mill(Player p, int n) {
+            for (int i = 0; i < n; i++)
+                game.getAction().moveToGraveyard(p.getCardsIn(ZoneType.Library).getFirst(), null);
+        }
+    }
+
     /** A mandatory, untargeted trigger of its own, built by hand so a test sets the stack size each time it comes back. */
     private SpellAbility trigger(Card host, Player p) {
         Trigger t = TriggerHandler.parseTrigger("Mode$ Always | TriggerDescription$ A test trigger.", host, true);

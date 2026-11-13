@@ -35,6 +35,17 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 1028 - the no-progress draw's per-turn snapshot
+- `forge-game/src/main/java/forge/game/phase/PhaseHandler.java` (STOCK): one line in `advanceToNextPhase`'s turn change, right
+  after `game.fireEvent(new GameEventTurnBegan(...))`: `forge.game.LoopBreaker.onTurnBegan(game)`, marked `TFR round
+  1028`. On a merge: keep it next to wherever upstream fires `GameEventTurnBegan`, once per turn.
+- `forge-game/src/main/java/forge/game/LoopBreaker.java` (TFR file): `onTurnBegan`, `snapshot`, `progress`,
+  `powerSlack`, `noProgressDraw`, `NO_PROGRESS_TURNS`, and `State.history`/`noProgressDraw`. `loopSeen` keeps its loop
+  test first, then runs the no-progress test.
+- `forge-gui-mobile/src/forge/adventure/scene/DuelScene.java`: the field `drawNoProgress`, set in `GameEnd`; the draw
+  notice reads tips.json `draw.noProgress` for it, and a loop draw's text is unchanged.
+- `forge-gui-desktop/src/test/java/forge/game/LoopBreakerTest.java`: 15 tests added.
+
 ### Round 1024 - team pumps in combat prediction; can't-block-alone blockers (both upstream PR drafts)
 - `forge-ai/src/main/java/forge/ai/ComputerUtilCombat.java` (STOCK): new public `predictTeamPumpOfAttacker(attacker,
   combat, power)`, called at the end of the 5-arg `predictPowerBonusOfAttacker` and `predictToughnessBonusOfAttacker`

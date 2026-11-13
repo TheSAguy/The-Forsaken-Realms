@@ -14264,6 +14264,69 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 1028: the AI takes a draw offer when the duel has stopped moving (2026-11-13)
+
+The log review `C:\CLAUDE\PROJECTS\TFR1\notes\logs-1113.md` (P3-29) found a two-sided lifegain stall: a Linux 1.28
+player at 193 life against Elder White Dragon at 150, 23 turns in. Neither side could get through. The player offered
+a draw, `[TFR-LoopBreak]` declined it (no loop, correctly), and the only way out was to concede, which cost an ante card.
+The user approved a fix: "Yes, add it" (to "Should the AI accept a draw when a lifegain stall makes no progress?").
+
+- **The test:** `LoopBreaker.loopSeen` (the AI's answer to the Game menu's Offer Draw) keeps its loop test first and
+  unchanged. With no loop, it now also accepts when nothing has moved for `NO_PROGRESS_TURNS` = 8 game turns. It
+  compares every player now against a snapshot taken as each turn begins. Any one of these is progress, and the offer
+  is declined:
+  - life lower than 8 turns ago, or lower than 4 turns ago (a race, a beatdown, a drain, a life total turning down);
+  - poison counters up;
+  - a library that would run out within 16 turns at the window's rate (mill, or the deck's end coming);
+  - creature power up or down by more than a quarter, and at least 3 (`powerSlack`): a side building, or a board
+    traded away;
+  - planeswalker loyalty up (an ultimate coming).
+- **Why this shape:** a side heading for a win moves one of these, so the player can't offer a draw to dodge a loss
+  on its way. Life that only goes up (the P3-29 stall) is no progress. One draw a turn from a full library, or one more
+  creature on an 8-power board, isn't either. The offer can be made again any turn: once the board settles for 8
+  turns, it's accepted. Round 1021's `pressure-attack` still stays out of lifelink-bound boards (puzzle P6b).
+- **Not covered:** a combo assembling in hand, or a counter-based alternate win (Helix Pinnacle, Approach of the
+  Second Sun), shows none of these signals. A side holding one could have the draw accepted. That's the price of a
+  test that reads only the board, and it only matters when the player is the one who offers.
+- **The snapshot:** one hook line in the stock `PhaseHandler`, right after `GameEventTurnBegan`:
+  `LoopBreaker.onTurnBegan(game)` keeps the last 9 turns' life, poison, library size, creature power and loyalty for
+  each player. A rollout's game copy keeps none.
+- **What a draw does** (checked in code, unchanged by this round; round 708's draw path): `DuelScene.GameEnd` applies
+  the ante result only `if (anteResult != null && !drawn)`, so no ante card is won or lost. There's no loot, no
+  defeat, no duel statistics row, and no Notoriety or win-streak change. No quest progresses (`WorldStage.setDrawn`
+  and `MapStage.setDrawn` do no quest or defeat handling) and no ReloadJab loss. On the world map the enemy leaves; a
+  territory mage keeps traveling and can't be fought again that day. In a town or dungeon the enemy holds its ground
+  and the player steps back. `[TFR-Duel]` says `draw` where it says `won` or `lost`, and the draw earns Honors Even (`TfrAchievements.onDraw`).
+- **What the player sees:**
+  - after the duel, the notice `draw.noProgress` (tips.json): "Neither side made progress in 8 turns, so your
+    opponent accepted the draw. Nothing was won or lost." It used to say "stuck in a loop" for every loop-breaker draw;
+    a loop draw still does;
+  - in the duel's game log: "Loop breaker: neither side made progress in the last 8 turns - the draw is accepted."
+  - The draw-offer dialog itself has no text slot, only the tally.
+- **Logs:**
+  - `[TFR-LoopBreak] draw offered - accepted: no progress for 8 turns (<player> life a->b, power a->b, library a->b; ...)`;
+  - a decline adds `; progress: <what moved>` to the existing line, for example `p1's creature power 8->26` or
+    `too early (turn 5, needs turn 9+ with every turn seen)`;
+  - `[TFR-Draw]` carries the reason `no progress for 8 turns - you offered a draw`.
+- **Proof:** `LoopBreakerTest`, 28/28 (13 kept, 15 new):
+  - accepted: a two-sided lifegain stall (declined on turns 1-8, accepted on turn 9), a still board, natural draws,
+    and one more creature inside the slack;
+  - declined: the opponent's life going down, a beatdown on the player, a race, a life total turning down mid-window,
+    poison, mill, a growing board, a traded-away board, and planeswalker loyalty;
+  - the loop test still comes first, whatever the life totals did;
+  - two AIs play real turns with lands only, so the `PhaseHandler` hook takes the snapshots and the offer is accepted
+    on turn 10.
+  - Maven: `mvn -o -pl forge-gui-desktop,forge-gui-mobile -am test -Dtest=LoopBreakerTest`, exit 0.
+- **No agent duel:** the agent bridge's manual seat has no Offer Draw verb, so an agent duel can't make the offer.
+  The unit tests are the proof. The first live sighting will be a `[TFR-LoopBreak] draw offered - accepted: no
+  progress` line in a player's log.
+- **Files:**
+  - `forge-game/src/main/java/forge/game/LoopBreaker.java`;
+  - `forge-game/src/main/java/forge/game/phase/PhaseHandler.java` (STOCK, one line);
+  - `forge-gui-mobile/src/forge/adventure/scene/DuelScene.java` (the draw notice);
+  - `forge-gui/res/adventure/The Forsaken Realms/config tables/tips.json` (`draw.noProgress`);
+  - `forge-gui-desktop/src/test/java/forge/game/LoopBreakerTest.java`.
+
 ## Round 1026 (follow-up): four more round-179 enemies get ping-pong Idle and Walk loops (2026-11-13)
 
 This is round 1026's follow-up and an Art main thread round. Round 1026 left these four alone because their loops were

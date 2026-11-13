@@ -206,6 +206,7 @@ public class PhaseHandler implements IHasForgeLog {
                 extraPhases.clear();
                 game.updateTurnForView();
                 game.fireEvent(new GameEventTurnBegan(PlayerView.get(playerTurn), turn));
+                forge.game.LoopBreaker.onTurnBegan(game); // TFR round 1028: the no-progress draw's snapshot
 
                 for (final Player active : getActivePlayers()) {
                     // Tokens starting game in play should suffer from Sum. Sickness

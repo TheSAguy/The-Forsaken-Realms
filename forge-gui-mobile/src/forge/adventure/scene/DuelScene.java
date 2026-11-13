@@ -190,6 +190,7 @@ public class DuelScene extends ForgeScene {
         // players losing at once) costs and pays nothing - no ante, no defeat, no loot, streaks as they were.
         drawn = isLastGameDrawn();
         drawReason = drawn && hostedMatch.getGame() != null ? forge.game.LoopBreaker.drawReason(hostedMatch.getGame()) : null;
+        drawNoProgress = drawn && hostedMatch.getGame() != null && forge.game.LoopBreaker.noProgressDraw(hostedMatch.getGame()); // round 1028
         if (drawn)
             System.out.println("[TFR-Draw] the duel ended in a draw" + (drawReason == null ? "" : " (" + drawReason + ")")
                     + " - nothing won or lost");
@@ -544,7 +545,11 @@ public class DuelScene extends ForgeScene {
             forge.adventure.util.Doppelganger.onDuelEnded(doppelDuel, winner); // TFR round 879
 
             if (drawn) {
-                GameHUD.getInstance().addNotification(drawReason != null
+                // Round 1028: the AI took the player's draw offer because nothing had moved for 8 turns - not a loop.
+                String noProgress = drawNoProgress ? forge.adventure.util.TfrTips.text("draw.noProgress",
+                        "turns", forge.game.LoopBreaker.NO_PROGRESS_TURNS) : null;
+                GameHUD.getInstance().addNotification(noProgress != null ? noProgress
+                        : drawReason != null && !drawNoProgress
                         ? "The duel was stuck in a loop and ended in a draw. Nothing was won or lost."
                         : "The duel ended in a draw. Nothing was won or lost.");
                 if (last instanceof IAfterMatch)
@@ -558,6 +563,7 @@ public class DuelScene extends ForgeScene {
     /** Round 708: this duel's result - set by GameEnd() before anything reads it. */
     private boolean drawn;
     private String drawReason;
+    private boolean drawNoProgress; // round 1028: LoopBreaker's no-progress draw
 
     /**
      * Round 708: did the last game end in a draw with the match still undecided? A drawn game never finishes a Forge match

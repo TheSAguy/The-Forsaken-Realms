@@ -4,11 +4,13 @@ import forge.game.card.Card;
 import forge.game.player.Player;
 import forge.game.spellability.SpellAbility;
 import forge.game.spellability.SpellAbilityStackInstance;
+import forge.game.zone.ZoneType;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.WeakHashMap;
 
 /**
@@ -38,6 +40,8 @@ import java.util.WeakHashMap;
  *   <li><b>the human's way out</b>: the AI accepts the Game menu's Offer Draw (PlayerControllerAi.acceptsDrawOffer) only
  *   once the breaker has barred an AI ability this turn, or while a trigger chain is live at {@link #DRAW_OFFER_AT} or
  *   more right now (round 840; it was any count reaching 10 this turn, which an AI pump used 10 times also met).
+ *   Round 1028: or when the game has made no progress for {@link #NO_PROGRESS_TURNS} turns (see {@link #progress}) - a
+ *   two-sided lifegain stall that only a concession, and the ante it costs, could end before.
  *   Otherwise it declines, as it always did, so the offer cannot dodge an ordinary losing duel.</li>
  * </ul>
  * The human's own repeated activations are never barred or turned into a draw - a combo is the player's to run.
@@ -53,6 +57,11 @@ public final class LoopBreaker {
     public static final int TRIGGER_BACKSTOP_AT = 1000;
     /** Round 994: uses of one ability of one card name in a turn by the AI, life lost or not (LoopRunner.MAX_ACTIVATIONS). */
     public static final int AI_BACKSTOP_AT = 300;
+    /** Round 1028: the no-progress draw's window, in game turns (each player's turn counts). */
+    public static final int NO_PROGRESS_TURNS = 8;
+
+    // round 1028: a snapshot's fields
+    private static final int LIFE = 0, POISON = 1, LIBRARY = 2, POWER = 3, LOYALTY = 4;
 
     private static final class State {
         int turn = Integer.MIN_VALUE;
@@ -71,6 +80,9 @@ public final class LoopBreaker {
         String mostWhat;   // and what it was
         String endReason;  // why this game ended as a draw, when it did
         int bars;          // round 735: every bar this game, never reset by a new turn
+        // round 1028: each turn's start, turn -> player id -> {life, poison, library, power, loyalty}; never reset by a turn
+        final TreeMap<Integer, Map<Integer, int[]>> history = new TreeMap<>();
+        boolean noProgressDraw; // round 1028: the offered draw was accepted for no progress
     }
 
     private static final Map<Game, State> states = new WeakHashMap<>();
@@ -226,7 +238,8 @@ public final class LoopBreaker {
     /**
      * PlayerControllerAi.acceptsDrawOffer: is there a loop? Round 840: yes once the breaker has barred an AI ability this
      * turn, or while a trigger chain is live at {@link #DRAW_OFFER_AT} or more right now (any action or life lost resets
-     * it). The turn's highest count is only logged.
+     * it). The turn's highest count is only logged. Round 1028: with no loop, it also accepts when nothing has moved for
+     * {@link #NO_PROGRESS_TURNS} turns ({@link #progress}); the loop test runs first and is unchanged.
      */
     public static synchronized boolean loopSeen(Game game) {
         State s = game == null ? null : states.get(game);
@@ -246,12 +259,109 @@ public final class LoopBreaker {
             why = s.barredWhat + " used " + AI_BAR_AT + " times this turn";
         else if (chain >= DRAW_OFFER_AT)
             why = s.labels.get(chainKey) + " triggered " + chain + " times in a row";
-        System.out.println("[TFR-LoopBreak] draw offered - " + (why != null ? "accepted: " + why
-                : "declined: no loop (no AI ability barred, live trigger chain " + chain + "; most repeats this turn "
-                + (now ? s.most : 0) + (now && s.mostWhat != null ? ", " + s.mostWhat : "") + ")"));
-        if (why != null)
+        if (why != null) {
+            System.out.println("[TFR-LoopBreak] draw offered - accepted: " + why);
             s.endReason = why + " - you offered a draw";
-        return why != null;
+            return true;
+        }
+        String noLoop = "no loop (no AI ability barred, live trigger chain " + chain + "; most repeats this turn "
+                + (now ? s.most : 0) + (now && s.mostWhat != null ? ", " + s.mostWhat : "") + ")";
+        // round 1028: the second test - a game that has stopped moving
+        StringBuilder held = new StringBuilder();
+        String progress = s == null ? "no turn seen yet" : progress(game, s, held);
+        if (progress != null) {
+            System.out.println("[TFR-LoopBreak] draw offered - declined: " + noLoop + "; progress: " + progress);
+            return false;
+        }
+        System.out.println("[TFR-LoopBreak] draw offered - accepted: no progress for " + NO_PROGRESS_TURNS + " turns ("
+                + held + ")");
+        s.endReason = "no progress for " + NO_PROGRESS_TURNS + " turns - you offered a draw";
+        s.noProgressDraw = true;
+        game.getGameLog().add(GameLogEntryType.INFORMATION, "Loop breaker: neither side made progress in the last "
+                + NO_PROGRESS_TURNS + " turns - the draw is accepted.");
+        return true;
+    }
+
+    /**
+     * Round 1028: PhaseHandler, as each turn begins - every player's life, poison, library, creature power and planeswalker
+     * loyalty, for the no-progress draw. A rollout's copy keeps no history.
+     */
+    public static synchronized void onTurnBegan(Game game) {
+        if (game == null || game.isSimulationCopy())
+            return;
+        State s = state(game);
+        Map<Integer, int[]> snap = new HashMap<>();
+        for (Player p : game.getRegisteredPlayers())
+            snap.put(p.getId(), snapshot(p));
+        s.history.put(s.turn, snap);
+        while (s.history.size() > NO_PROGRESS_TURNS + 1)
+            s.history.pollFirstEntry();
+    }
+
+    private static int[] snapshot(Player p) {
+        int power = 0, loyalty = 0;
+        for (Card c : p.getCreaturesInPlay())
+            power += Math.max(0, c.getNetPower());
+        for (Card c : p.getPlaneswalkersInPlay())
+            loyalty += c.getCurrentLoyalty();
+        return new int[] {p.getLife(), p.getPoisonCounters(), p.getCardsIn(ZoneType.Library).size(), power, loyalty};
+    }
+
+    /** Round 1028: how far one side's creature power may move over the window and still be "no progress". */
+    public static int powerSlack(int start) {
+        return Math.max(3, start / 4);
+    }
+
+    /**
+     * Round 1028: what moved over the last {@link #NO_PROGRESS_TURNS} turns, or null when nothing did - every player in
+     * the game, now against the snapshot at the window's start (and its middle, for life):
+     * <ul>
+     *   <li>life lower than {@code NO_PROGRESS_TURNS} or half as many turns ago (a race, a beatdown, a drain);</li>
+     *   <li>poison counters up;</li>
+     *   <li>a library that would run out within twice the window at the window's rate (mill, or the end of the deck);</li>
+     *   <li>creature power up or down by more than {@link #powerSlack} (a side building, or trading away its board);</li>
+     *   <li>planeswalker loyalty up (an ultimate coming).</li>
+     * </ul>
+     * A side heading for a win moves one of these, so the player can't use the offer to dodge a loss on its way. Life
+     * that only goes up - a two-sided lifegain stall - is no progress. {@code held} gets each player's numbers.
+     */
+    static String progress(Game game, State s, StringBuilder held) {
+        int turn = currentTurn(game);
+        Map<Integer, int[]> start = s.history.get(turn - NO_PROGRESS_TURNS);
+        Map<Integer, int[]> mid = s.history.get(turn - NO_PROGRESS_TURNS / 2);
+        if (start == null || mid == null)
+            return "too early (turn " + turn + ", needs turn " + (NO_PROGRESS_TURNS + 1) + "+ with every turn seen)";
+        for (Player p : game.getPlayers()) {
+            int[] a = start.get(p.getId()), m = mid.get(p.getId());
+            if (a == null || m == null)
+                return "too early (" + p.getName() + " not seen " + NO_PROGRESS_TURNS + " turns ago)";
+            int[] b = snapshot(p);
+            String who = p.getName();
+            if (b[LIFE] < a[LIFE] || b[LIFE] < m[LIFE])
+                return who + "'s life " + a[LIFE] + "->" + m[LIFE] + "->" + b[LIFE];
+            if (b[POISON] > a[POISON])
+                return who + "'s poison " + a[POISON] + "->" + b[POISON];
+            int gone = a[LIBRARY] - b[LIBRARY];
+            if (b[LIBRARY] == 0 || (gone > 0 && b[LIBRARY] <= 2 * gone))
+                return who + "'s library " + a[LIBRARY] + "->" + b[LIBRARY] + " runs out within " + 2 * NO_PROGRESS_TURNS
+                        + " turns";
+            if (Math.abs(b[POWER] - a[POWER]) > powerSlack(a[POWER]))
+                return who + "'s creature power " + a[POWER] + "->" + b[POWER];
+            if (b[LOYALTY] > a[LOYALTY])
+                return who + "'s planeswalker loyalty " + a[LOYALTY] + "->" + b[LOYALTY];
+            if (held.length() > 0)
+                held.append("; ");
+            held.append(who).append(" life ").append(a[LIFE]).append("->").append(b[LIFE]).append(", power ")
+                    .append(a[POWER]).append("->").append(b[POWER]).append(", library ").append(a[LIBRARY]).append("->")
+                    .append(b[LIBRARY]);
+        }
+        return null;
+    }
+
+    /** Round 1028: did this game end in a draw the AI accepted because nothing was moving? */
+    public static synchronized boolean noProgressDraw(Game game) {
+        State s = game == null ? null : states.get(game);
+        return s != null && s.noProgressDraw;
     }
 
     /** Why this game ended as a loop draw, or null when it did not. */
