@@ -49,6 +49,10 @@ md` already gets updated after every change.
 - Puzzles `forge-gui/res/ai/tfr-puzzles/P10_boast_free_block.pzl`, `P10b_team_pump_lethal.pzl`,
   `P11_reinforce_tapped_out.pzl`, `P12_flunkies_chump_block.pzl`, `P12b_flunkies_partner_taxed.pzl` (plain regression
   puzzles: they pass with the rules on and off).
+- New test (follow-up) `forge-gui-desktop/src/test/java/forge/ai/TeamPumpPredictionTest.java`: the cache's guard
+  (tapped lands, floating mana, a `GameCopier` copy). It calls `predictTeamPumpOfAttacker`, `GameCopier.makeCopy`,
+  `Card.setTapped`, `ManaPool.addMana`/`resetPool`. If upstream merges PR 0001 without the cache, keep the test: it
+  still holds.
 - **Retire:** none of these is a TFR rule. If an upstream merge removes either change, P10/P10b or P12/P12b fail in
   `TfrAiPuzzleTest`, which is the signal.
 

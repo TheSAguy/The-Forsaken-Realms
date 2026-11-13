@@ -1449,9 +1449,11 @@ public class ComputerUtilCombat {
     }
 
     // canPayCost is most of the team pump's cost, and block planning asks it again for every attacker and blocker
-    // pair while nothing changes. So each thread remembers the last answers, per game and ability, against a stamp
-    // of what can change the answer (the game's timestamp, the turn and step, the stack, the controller's life, hand
-    // and mana pool, and which permanents are tapped).
+    // pair while nothing changes. So each thread remembers the last answers, keyed by game id and ability id (a game
+    // copy is a new Game with its own id, although it keeps the timestamp and the ability ids), against a stamp of
+    // what can change the answer (the game's timestamp, the turn and step, the stack, the controller's life, hand and
+    // mana pool, the source's counters, and which permanents are tapped: tapping does not move the timestamp). An
+    // answer is reused only when key and stamp both match; nothing is cleared, a slot is overwritten by the next one.
     private static final int PAY_CACHE_SLOTS = 16;
     private static final ThreadLocal<long[]> PAY_CACHE = ThreadLocal.withInitial(() -> new long[PAY_CACHE_SLOTS * 3]);
 

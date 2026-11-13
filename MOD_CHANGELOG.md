@@ -14264,6 +14264,37 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 1024 (follow-up): the team-pump cache's key, a guard test, and the bench's wins, turns and seconds (2026-11-12)
+
+The main thread asked for two things: exactly what the per-thread cache is keyed on and when it is cleared (it must
+never answer for another game, game copy, turn, step, mana state or board), with a guard test; and the bench's
+before/after numbers.
+
+- **The cache** (`ComputerUtilCombat.canPayTeamPump`, `PAY_CACHE`): a `long[48]` per thread, 16 direct-mapped slots of
+  key, stamp, answer. No object references.
+  - **Key:** `game.getId() << 32 | ability.getId()`. Every `Game`, and so every `GameCopier` copy, gets its own id from
+    `Game.nextId()`; a copy inherits the original's timestamp and ability ids, which is why the game id is in the key.
+  - **Stamp:** the game's timestamp, turn, step and stack size; the controller's life, hand size and floating mana; the
+    source's counters; every battlefield permanent's id and tapped state (tapping a land does not move the timestamp).
+  - **Used** only when key and stamp both match; never cleared as a whole, a slot is overwritten by the next pair that
+    maps to it. A stale hit could only misjudge a prediction, never make an illegal play.
+- **Guard test** `forge-gui-desktop/src/test/java/forge/ai/TeamPumpPredictionTest.java`:
+  - Thunderscape Master with two Forests. The pump is +2 when untapped (twice, a hit), 0 with one Forest tapped (the
+    timestamp asserted unchanged), +2 untapped again, 0 tapped out, and +2 with {G}{G} floating.
+  - A `GameCopier` copy tapped out gives 0 while the real game gives +2, and the reverse.
+  - It passes; it fails against two broken builds (the stamp without the tapped state, and without the mana pool). It
+    was run through TestNG against round 1021's snapshot plus this round's classes, not through Maven.
+- **Bench, wins / turns / seconds** (stock against fixed, both seats the same AI, seed 1117; "wins" = the first-listed
+  deck's):
+  - pairs14 off (112 a side): 53 / 57 wins, 19.4 / 18.1 turns, 443 / 432 s.
+  - pairs14 lite: 57 / 58 wins, 19.6 / 19.6 turns, 1393 / 1403 s (+0.7%).
+  - Team-pump pairings off, shipped (64 a side): 33 / 26 wins, 18.4 / 16.9 turns, 213 / 107 s.
+  - Team-pump pairings lite, shipped: 30 / 33 wins, 18.5 / 18.3 turns, 489 / 496 s (+1.5%).
+  - The uncached first version, for the record: off 31 / 30, 17.0 / 17.3, 310 / 334 s; lite 27 / 23, 18.2 / 16.1,
+    809 / 938 s (+16%, 22 AI timeouts).
+  - Off seconds are noise at this size: game length swings, and the shipped off row's fix arm took half the time.
+    Two stock runs of the same pairings differ by 2-3 wins.
+
 ## Round 1024: blocks and the lethal check see the attacker's team pump; Mogg Flunkies can chump-block (2026-11-12)
 
 The user's words: "I'd like for you to continue work on improving the AI please." The main thread scoped it to round
