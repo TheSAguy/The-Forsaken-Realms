@@ -14264,6 +14264,26 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 1026 (follow-up): four more round-179 enemies get ping-pong Idle and Walk loops (2026-11-13)
+
+This is round 1026's follow-up and an Art main thread round. Round 1026 left these four alone because their loops were
+even. The user decided: "Ping-pong anyway". Previews are in `C:\CLAUDE\PROJECTS\ART\notes\blazeplate_orc_check\fix\`
+(the `review_sheet.png` rows marked NOT APPLIED, and `gifs\`). The atlases come from `build_atlas2.py`.
+
+- **What was wrong:** Walk was Idle played backwards in all four (Horror Faun, Ironhammer Brute, Magma Ogre and
+  Serratongue).
+- **The fix:** atlas data only. Idle plays forward and back, and Walk is the same loop started a few frames later.
+  - Horror Faun: Idle 0-1-2-3-2-1; Walk starts at frame 2.
+  - Ironhammer Brute: Idle 0-1-2-3-4-3-2-1; Walk starts at frame 2.
+  - Magma Ogre and Serratongue: Idle 0-1-2-3-4-5-4-3-2-1; Walk starts at frame 3.
+  - No other clip, Avatar or PNG changed, so there was no avatar bake.
+- **Left alone:** the Rolling Tusker. A ping-pong fixes a loop, not a death clip, and its Death already reads as a
+  collapse.
+- **Correction to round 1026:** its entry says the Blazeplate Orc's Walk starts "half a cycle later". It actually
+  starts 2 frames into a 6-frame loop, a third of the way. That offset only matters if a creature swaps between Idle
+  and Walk, and it isn't visible in play.
+- **TFR 2:** gets an identical-blob port on branch `enemy-anim-fix-2`.
+
 ## Round 1026: four round-179 enemies get readable loops and deaths; the Blazeplate Orc's VS portrait shows its head (2026-11-13)
 
 The user asked about the Blazeplate Orc on the VS screen ("Please look at the animation of this Orc, just confirm it's
