@@ -1843,7 +1843,7 @@ sprites/enemy/tfr/azure_headsman.atlas	1	1088	1600	64	64
 sprites/enemy/tfr/barrow_bonebow.atlas	1	1152	1600	57	57
 sprites/enemy/tfr/barrow_legionnaire.atlas	1	1216	1600	58	58
 sprites/enemy/tfr/barrow_skeleton.atlas	1	1280	1600	64	64
-sprites/enemy/tfr/blazeplate_orc.atlas	1	1344	1600	64	64
+sprites/enemy/tfr/blazeplate_orc.atlas	1	1344	1600	52	52
 sprites/enemy/tfr/bloodfang_bat.atlas	1	1408	1600	36	36
 sprites/enemy/tfr/bloodgaze_horror.atlas	1	1472	1600	29	29
 sprites/enemy/tfr/bloodveil_countess.atlas	1	1536	1600	64	64

@@ -22,20 +22,38 @@ Idle
 Idle
   xy: 248, 64
   size: 62, 110
-Walk
-  xy: 0, 174
+Idle
+  xy: 186, 64
+  size: 62, 110
+Idle
+  xy: 124, 64
+  size: 62, 110
+Idle
+  xy: 62, 64
   size: 62, 110
 Walk
-  xy: 62, 174
+  xy: 124, 64
   size: 62, 110
 Walk
-  xy: 124, 174
+  xy: 186, 64
   size: 62, 110
 Walk
-  xy: 186, 174
+  xy: 248, 64
   size: 62, 110
 Walk
-  xy: 248, 174
+  xy: 186, 64
+  size: 62, 110
+Walk
+  xy: 124, 64
+  size: 62, 110
+Walk
+  xy: 62, 64
+  size: 62, 110
+Walk
+  xy: 0, 64
+  size: 62, 110
+Walk
+  xy: 62, 64
   size: 62, 110
 Attack
   xy: 0, 284

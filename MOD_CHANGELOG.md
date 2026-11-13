@@ -14264,6 +14264,44 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 1026: four round-179 enemies get readable loops and deaths; the Blazeplate Orc's VS portrait shows its head (2026-11-13)
+
+The user asked about the Blazeplate Orc on the VS screen ("Please look at the animation of this Orc, just confirm it's
+okay"), then approved the fix: "Fix all 9". This is an Art main thread round. The review is in
+`C:\CLAUDE\PROJECTS\ART\notes\blazeplate_orc_check\findings.md`, and the previews and scripts are in its `fix\` folder.
+
+- **The bug:** round 179 built some sheets' clips from other clips played backwards.
+  - **The Blazeplate Orc:**
+    - Walk was Idle reversed: a body turn that snapped back every 0.8 s.
+    - Death was Attack reversed, so the orc "died" by standing up with its scimitar raised.
+    - Attack frame 2 was drawn at half height, a 7-px blob on the map.
+    - Its Avatar was a waist-up crop with the blade running off the bottom. The VS screen blows the Avatar region up
+      about 8x (Nearest).
+  - **The Cyclops of the Scorched Hills:** Walk was Idle reversed, and the loop jumped at its seam.
+  - **The Crimson Skywyrm:** Death ended in a glide.
+  - **The Shrine Scythe Dancer:** Death ended upright with the scythe raised.
+- **The fix:** atlas data only. No PNG, no code, no enemies.json. A clip may reuse a region; 49 atlases already do.
+  - **Blazeplate Orc:**
+    - Idle plays 0-1-2-3-2-1.
+    - Walk is the same loop, started half a cycle later.
+    - Attack plays 0-1-3-4 (the half-height frame is dropped).
+    - Death is Attack 4 -> Attack 2 (it hunches, then sinks).
+    - Avatar is now 162,66 52x52: the head and pauldrons from Idle frame 2.
+  - **Cyclops:** Idle and Walk play forward and back (8 frames). The round-578 `footprint` field stays on the first
+    Idle region.
+  - **Crimson Skywyrm:** Death is Attack 1, 2, 0 (it dives and ends crumpled).
+  - **Shrine Scythe Dancer:** Death is Hit, Attack 2, Attack 3 (it staggers and ends low).
+- **Checked and left alone (no visible fault):**
+  - Horror Faun, Ironhammer Brute, Magma Ogre and Serratongue also play Walk as Idle reversed. Their loops are even,
+    so it reads as the same motion. A real walk would need new frames.
+  - The Rolling Tusker's Death already curls into a ball.
+- **The bake:** `dev-tools/enemy_avatars/bake_avatars.py` was rerun. Only the Orc's cell changed (`avatars_1.png`,
+  and its `avatars.index` line went from 64x64 to 52x52). The audit found 2120 faces and 0 problems.
+- **Files:**
+  - the four `sprites/enemy/tfr/*.atlas` files;
+  - `sprites/enemy_avatars/avatars_1.png` and `avatars.index`.
+- **TFR 2:** gets these blobs through an identical port on branch `enemy-anim-fix`.
+
 ## Round 1024 (follow-up): the team-pump cache's key, a guard test, and the bench's wins, turns and seconds (2026-11-12)
 
 The main thread asked for two things: exactly what the per-thread cache is keyed on and when it is cleared (it must

@@ -64,17 +64,11 @@ Hit
   xy: 0, 481
   size: 157, 139
 Death
-  xy: 0, 620
+  xy: 0, 481
   size: 157, 139
 Death
-  xy: 157, 620
+  xy: 314, 342
   size: 157, 139
 Death
-  xy: 314, 620
-  size: 157, 139
-Death
-  xy: 471, 620
-  size: 157, 139
-Death
-  xy: 628, 620
+  xy: 471, 342
   size: 157, 139
