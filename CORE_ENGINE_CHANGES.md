@@ -35,6 +35,27 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 1022 - karoo lands played on nonbasic lands; ChangeText sub-abilities no longer veto their spell (New Blood)
+- 11 card scripts in `forge-gui/res/cardsfolder` (STOCK data), one line each, `SVar:NeedsToPlay`:
+  `Land.Basic+YouCtrl` -> `Land.YouCtrl+!namedAzorius Chancery+!namedBoros Garrison+!namedDimir Aqueduct+!namedGolgari
+  Rot Farm+!namedGruul Turf+!namedGuildless Commons+!namedIzzet Boilerworks+!namedOrzhov Basilica+!namedRakdos
+  Carnarium+!namedSelesnya Sanctuary+!namedSimic Growth Chamber` (one line in the file). Files:
+  `a/azorius_chancery.txt`, `b/boros_garrison.txt`, `d/dimir_aqueduct.txt`, `g/golgari_rot_farm.txt`,
+  `g/gruul_turf.txt`, `g/guildless_commons.txt`, `i/izzet_boilerworks.txt`, `o/orzhov_basilica.txt`,
+  `r/rakdos_carnarium.txt`, `s/selesnya_sanctuary.txt`, `s/simic_growth_chamber.txt`. Before, the AI played a karoo
+  only while it controlled a basic land. Extraplanar Lens carries the same old line and is untouched (not a karoo).
+  Puzzles P7, P7b, P7c.
+- `forge-ai/src/main/java/forge/ai/SpellApiToAi.java` (STOCK): one map line, `.put(ApiType.ChangeText,
+  DrawbackOnlyAi.class)` (after `ChangeTargets`). Before it ChangeText fell back to `CannotPlayAi`, whose `chkDrawback`
+  vetoed any spell carrying it as a sub-ability (New Blood).
+- New `forge-ai/src/main/java/forge/ai/ability/DrawbackOnlyAi.java` (stock-style, no TFR log line): a `CannotPlayAi`
+  whose `chkDrawback` says yes. Puzzle P8.
+- Upstream drafts: `C:\CLAUDE\PROJECTS\TFR1\notes\r1022\upstream-pr\` (README, two patches). The user posts them.
+- **At a merge:** if upstream changes a karoo's `NeedsToPlay` line, take theirs when it still allows a nonbasic land
+  and still refuses a karoo-only board (P7 and P7c pass); else keep ours. If upstream maps ChangeText itself, take
+  theirs and delete `DrawbackOnlyAi` when P8 passes. All three puzzles are plain regression puzzles (no rule behind
+  them), so a failure with the rules off is a regression too.
+
 ### Round 1021 - rule pressure-attack (no stock line)
 No stock file changes. New files, listed so a merge round knows they exist:
 - `forge-ai/src/main/java/forge/ai/tfr/PressureAttack.java` (rule `pressure-attack`). `TfrAiRules.reviewAttack` calls it

@@ -14264,6 +14264,52 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 1022: karoo lands played on nonbasic lands, New Blood cast (2026-11-12)
+
+The user asked to "continue work on improving the AI". This round is the audit's option A, Claude as critic: mine the
+logs on disk, judge the strong flags, prove each real pattern with a puzzle that fails today, and fix the top ones.
+The full ranking and evidence are in `C:\CLAUDE\PROJECTS\TFR1\notes\r1022\report.md`.
+
+- **What the mining found:**
+  - Every combat flag read in 3,081 headless games was a detector false positive: NO_BLOCK_DIES, SUICIDE_ATTACK,
+    CHUMP_BLOCK and MISSED_LETHAL. The detectors miss manlands, regeneration, menace, must-attack creatures, death
+    triggers and The Mindskinner.
+  - The real misplays are cards the AI never plays. Two were confirmed and fixed. Neither is a TFR rule: each is the
+    same bug at every difficulty.
+- **Karoo lands** (Azorius Chancery, Boros Garrison, Dimir Aqueduct, Golgari Rot Farm, Gruul Turf, Guildless Commons,
+  Izzet Boilerworks, Orzhov Basilica, Rakdos Carnarium, Selesnya Sanctuary, Simic Growth Chamber):
+  - **Before:** each carried `SVar:NeedsToPlay:Land.Basic+YouCtrl`, so the AI played one only while it controlled a
+    basic land. A deck with nonbasic lands sat on the karoo for turns. Vannifar held Simic Growth Chamber on turns 5
+    to 11 in a round 1019 bench game.
+  - **Who it hit:** 506 TFR decks hold a karoo. The zero-basic Master tier decks stalled in 69-86% of simulated
+    games (scorpion, porcupine, giralfgisa).
+  - **Now:** `Land.YouCtrl+!named<each karoo>`, so any land the AI controls except another karoo. Excluding karoos
+    stops a karoo-only board from bouncing a karoo each turn and making no mana. Extraplanar Lens has the same old
+    line and is untouched.
+  - **Puzzles:**
+    - P7 (two Yavimaya Coasts): 0/3 -> 3/3 at off, lite and max.
+    - P7b (a Forest): 3/3, the control.
+    - P7c (Gruul Turf alone): the Chamber stays in hand.
+  - **Bench:** 15 karoo decks, 60 games per arm. Karoo holds fell from 97 to 5 at off and from 41 to 2 at lite.
+    Karoo plays rose from 16 to 50 at off and from 11 to 53 at lite. Win rate was flat within noise.
+- **New Blood** (4 legend decks: Clavileno, Florian, Garza Zol, Vito):
+  - **Before:** its ChangeText sub-ability had no AI. `SpellApiToAi` fell back to `CannotPlayAi`, whose `chkDrawback`
+    vetoed the whole spell.
+  - **Now:** a new `forge-ai\...\ability\DrawbackOnlyAi.java` (a `CannotPlayAi` whose `chkDrawback` says yes) and the
+    line `.put(ApiType.ChangeText, DrawbackOnlyAi.class)`. Spells whose main effect is ChangeText (Magical Hack,
+    Sleight of Mind, Artificial Evolution) still never play.
+  - **Puzzle:** P8: 0/3 -> 3/3 at off, lite and max.
+- **Tests:** `TfrAiPuzzleTest`, in a clean worktree at HEAD plus this round's files: all 15 puzzles are "ok" at
+  off, lite and max (45 rows, 3 runs each, rules on and off; Maven exit 0). P7, P7b, P7c and P8 pass with the rules
+  on and off, as plain regression puzzles. Logs: `C:\CLAUDE\PROJECTS\TFR1\notes\r1022\mvn-test-offlite.log` and
+  `mvn-test-max.log`.
+- **Upstream:** two PR drafts in `C:\CLAUDE\PROJECTS\TFR1\notes\r1022\upstream-pr\` (the user posts).
+- **Not fixed, kept in notes:**
+  - P9 (`C:\CLAUDE\PROJECTS\TFR1\notes\r1022\puzzles\`): the heuristic attacks into a block trigger at `off` only.
+    LITE and MAX hold, and no player runs `off`.
+  - Artificial Evolution is dead in 8 decks. That is a deck swap for a later round.
+  - Detector fixes come before the next critic round.
+
 ## Round 1021: rule pressure-attack, the token side that never attacks (2026-11-12)
 
 The user approved "the next stall: on the board that stalled for 20 turns, Forge's AI never attacks with its Eldrazi

@@ -1,0 +1,18 @@
+[metadata]
+Name:P7c - only karoos in play: hold the second one (guard for the P7 fix)
+Description:With only a karoo in play, a second karoo would return the first and enter tapped, and the next turn the same again: the AI would loop on no mana. Round 1022 lets a karoo be played on any land except another karoo, so here it must stay in hand and the Gruul Turf keeps making mana.
+Turns:3
+Expect:aihand has Simic Growth Chamber
+Expect:aibattlefield has Gruul Turf
+[state]
+humanlife=20
+ailife=20
+turn=5
+activeplayer=ai
+activephase=MAIN1
+humanhand=
+humanlibrary=Island;Island;Island;Island;Island
+humanbattlefield=Island;Island;Island
+aihand=Simic Growth Chamber;Rumbling Baloth
+ailibrary=Rumbling Baloth;Rumbling Baloth;Rumbling Baloth;Rumbling Baloth;Rumbling Baloth
+aibattlefield=Gruul Turf

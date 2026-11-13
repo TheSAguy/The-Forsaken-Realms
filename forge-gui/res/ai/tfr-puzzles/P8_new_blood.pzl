@@ -1,0 +1,17 @@
+[metadata]
+Name:P8 - New Blood never cast (pattern 7, abilities with no AI)
+Description:New Blood (gain control of target creature, then change its text) sits in four TFR legend decks (Clavileno, Florian, Garza Zol, Vito). Its ChangeText sub-ability has no AI (SpellApiToAi maps no class, so CannotPlayAi), and chkDrawbackWithSubs vetoes the whole spell. Here the AI has a Vampire to tap, four Swamps and New Blood; the opponent has a Serra Angel. Steal it.
+Turns:1
+Expect:aibattlefield has Serra Angel
+[state]
+humanlife=20
+ailife=20
+turn=7
+activeplayer=ai
+activephase=MAIN1
+humanhand=
+humanlibrary=Plains;Plains;Plains;Plains;Plains
+humanbattlefield=Serra Angel;Plains;Plains;Plains;Plains;Plains
+aihand=New Blood
+ailibrary=Swamp;Swamp;Swamp;Swamp;Swamp
+aibattlefield=Vampire Nighthawk;Swamp;Swamp;Swamp;Swamp
