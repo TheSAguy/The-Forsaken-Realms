@@ -53306,3 +53306,27 @@ Three user asks in one round, built and packaged into the live folder.
 `util/TerritoryControl.java`, `stage/ConsoleCommandInterpreter.java`; plane `maps/tileset/caves.png` +
 `caves.atlas` (new), `world/points_of_interest.json`, `world/items.json`, `world/shops.json`,
 `sprites/items_rally.png` (new), `sprites/items.atlas`, `GUIDE.md`.
+
+## Round 1020: measuring difficulty, the [TFR-Duel] fields and the log table (2026-11-12)
+
+This is round C of the AI audit (`C:\CLAUDE\PROJECTS\TFR1\notes\ai-audit\report.md` sections 5-6). The user said
+"Do both". The full findings, the bench and its recommendation are in `C:\CLAUDE\PROJECTS\TFR1\notes\r1020\report.md`.
+
+- **The `[TFR-Duel]` line** gets six fields at its end, after `secs=`. The old fields and their order are unchanged:
+  - `difficulty=`: the save's, as on the game load line (`Normal`, `Custom(Hard)`).
+  - `ai=`: the enemy seat's profile; several seats are joined with `+`.
+  - `mc=`: `off`, `lite` or `max`.
+  - `aiRules=`: the `TfrAiRules` version.
+  - `aiTimeouts=`: real-game AI timeouts this duel, on any platform. A new counter in `LiteTurnCap`, fed by one line
+    in round 924's `AiController.noteLiteTimeout()`; rollout games don't count.
+  - `enemyTier=`: Apprentice to Archmage.
+  - Seen in the agent game: `... secs=16 difficulty=Normal ai=Default mc=max aiRules=1 aiTimeouts=0 enemyTier=Apprentice`.
+- **The log table**: `C:\CLAUDE\PROJECTS\TFR1\notes\r1020\tools\duel_table.py` (read only) gives win %, duels and the
+  median turns and seconds per difficulty, platform, difficulty x platform, version, and any `--by` field (`ai`, `mc`,
+  `enemyTier`, `player`). `--since YYYYMMDD` keeps only the logs since a change.
+  - Older logs take the difficulty from the latest `[TFR-Session] game load` line.
+- **The finding**: 548 duels from 31 zips plus the user's log. One Custom(Easy) install has 282 of them, all wins,
+  most on turn 1-2. Without it, players win 89.5%: Normal 89.2% (215-26), Insane 89.5% (17-2). The 95.9% headline
+  was mostly that one save.
+- **The profile bench** (Default, Hard and Hardest at MAX, `pairs14`, 4 seeds, the arms run at the same time): numbers
+  and recommendation in the report. No profile change ships in this round.

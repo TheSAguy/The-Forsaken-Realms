@@ -20,8 +20,22 @@ public final class LiteTurnCap {
 
     private static final AtomicInteger TRIPS = new AtomicInteger();
     private static final AtomicInteger SHORTENED = new AtomicInteger();
+    /** Round 1020: every AI timeout in a real game (desktop and phone), for the [TFR-Duel] line's aiTimeouts=. */
+    private static final AtomicInteger TIMEOUTS = new AtomicInteger();
 
     private LiteTurnCap() {
+    }
+
+    /** Round 1020: one AI priority session ran out of time. Rollout games don't count. */
+    static void noteTimeout(final boolean simulationCopy) {
+        if (!simulationCopy) {
+            TIMEOUTS.incrementAndGet();
+        }
+    }
+
+    /** Round 1020: the real-game AI timeouts since the last call. Called once per duel, for aiTimeouts=. */
+    public static int takeDuelTimeouts() {
+        return TIMEOUTS.getAndSet(0);
     }
 
     static void noteTrip(final Player player, final int turn) {

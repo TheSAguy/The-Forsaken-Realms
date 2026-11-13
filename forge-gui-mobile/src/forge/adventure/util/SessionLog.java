@@ -40,7 +40,8 @@ import java.util.Set;
  * <li>{@code [TFR-Session] start} once per launch (version, OS, Java, screen); {@code game load} / {@code game new} for
  * every load and new game (slot, day, level, difficulty, mode, NG+, the rule options); {@code end} at exit, and at a
  * pause when something changed (Android may never come back): duels, reloads after a loss, days, towns, gold.</li>
- * <li>{@code [TFR-Duel]} one line per duel: result, enemy, where, day, turns, both lives, mulligans, seconds.</li>
+ * <li>{@code [TFR-Duel]} one line per duel: result, enemy, where, day, turns, both lives, mulligans, seconds; since round
+ *     1020 also difficulty, ai (profile), mc (off/lite/max), aiRules, aiTimeouts and enemyTier, at the end.</li>
  * <li>{@code [TFR-Towns]} the held towns and their specialties after each load; {@code taken:} for each town won.</li>
  * <li>{@code [TFR-Perf] save / load} timings.</li>
  * <li>{@code [TFR-Error]} for exceptions Forge.java used to swallow without Sentry, with the trail of the last scenes.</li>
@@ -223,6 +224,7 @@ public final class SessionLog {
             String aiCap = forge.ai.LiteTurnCap.duelSummary(); // round 924
             if (aiCap != null)
                 System.out.println(aiCap);
+            int aiTimeouts = forge.ai.LiteTurnCap.takeDuelTimeouts(); // round 1020
             String result = drawn ? "draw" : winner ? "won" : "lost";
             if (!watched) {
                 duels++;
@@ -271,11 +273,54 @@ public final class SessionLog {
             System.out.println("[TFR-Duel] " + result + " enemy=\"" + (enemy == null ? "?" : enemy.getTieredDisplayName())
                     + "\" boss=" + (enemy != null && enemy.getData().boss) + " arena=" + arena + " event=" + event
                     + (watched ? " watched=true" : "") + " where=" + where() + " day=" + day() + " turns=" + turns
-                    + " life=" + life + " enemyLife=" + enemyLife + " mulligans=" + mulligans + " secs=" + secs);
+                    + " life=" + life + " enemyLife=" + enemyLife + " mulligans=" + mulligans + " secs=" + secs
+                    + aiFields(enemy, game, match, human, aiTimeouts)); // round 1020: new fields go at the end only
         } catch (Exception e) {
             System.out.println("[TFR-Duel] line failed: " + e);
         }
         QuietStream.flush("this duel"); // round 878
+    }
+
+    /**
+     * Round 1020: what the duel was played at, so the log review can split win % by difficulty: the save's difficulty,
+     * the enemy seat's AI profile(s), the Flat Monte Carlo mode, the TFR AI rules version, the duel's real-game AI
+     * timeouts and the enemy's tier. Appended after secs= so older parsers keep working.
+     */
+    private static String aiFields(EnemySprite enemy, Game game, Match match, RegisteredPlayer human, int aiTimeouts) {
+        String difficulty = "?";
+        try {
+            AdventurePlayer p = AdventurePlayer.current();
+            if (p != null && p.getDifficulty() != null)
+                difficulty = CustomDifficulty.logName(p); // as the game load line: Normal, Custom(Hard)
+        } catch (Exception ignored) {
+        }
+        Set<String> profiles = new java.util.LinkedHashSet<>();
+        if (match != null)
+            for (RegisteredPlayer rp : match.getPlayers())
+                if (rp != human && rp.getPlayer() instanceof forge.ai.LobbyPlayerAi) {
+                    String prof = ((forge.ai.LobbyPlayerAi) rp.getPlayer()).getAiProfile();
+                    profiles.add(prof == null || prof.isEmpty() ? "?" : prof);
+                }
+        String tier = enemy == null || enemy.getData() == null ? "?"
+                : forge.adventure.data.EnemyData.tierDisplayName(enemy.getData().tier);
+        return " difficulty=" + token(difficulty) + " ai=" + (profiles.isEmpty() ? "?" : token(String.join("+", profiles)))
+                + " mc=" + mcMode(game) + " aiRules=" + token(forge.ai.tfr.TfrAiRules.version())
+                + " aiTimeouts=" + aiTimeouts + " enemyTier=" + token(tier);
+    }
+
+    /** HostedMatch.startGame's choice: off when the preference is off, else lite on a phone or tablet and max on a PC. */
+    private static String mcMode(Game game) {
+        if (game != null)
+            return !game.AI_FLAT_MONTE_CARLO ? "off" : game.AI_FLAT_MONTE_CARLO_MAX ? "max"
+                    : game.AI_FLAT_MONTE_CARLO_LITE ? "lite" : "on";
+        if (!forge.model.FModel.getPreferences().getPrefBoolean(forge.localinstance.properties.ForgePreferences.FPref.MATCH_AI_FLAT_MONTE_CARLO))
+            return "off";
+        return GuiBase.isMobile() ? "lite" : "max";
+    }
+
+    /** One log token: no spaces, so a value never splits a field. */
+    private static String token(String v) {
+        return v == null || v.isEmpty() ? "?" : v.replace(' ', '_');
     }
 
     private static String where() {

@@ -35,6 +35,16 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 1020 - every AI timeout counted for the [TFR-Duel] line
+- `forge-ai/src/main/java/forge/ai/AiController.java` (STOCK): one line at the top of round 924's `noteLiteTimeout()`,
+  `LiteTurnCap.noteTimeout(game.isSimulationCopy())` (marked `TFR round 1020`). It counts every real-game priority
+  timeout on any platform. The lite cap below it is unchanged. It is inside a TFR-only method, so it adds no new merge
+  site beyond round 924's four.
+- `forge-ai/src/main/java/forge/ai/LiteTurnCap.java` (TFR file, round 924): a `TIMEOUTS` counter, `noteTimeout` and
+  `takeDuelTimeouts()`, read once per duel by `SessionLog.onDuelEnd` for `aiTimeouts=`.
+- `forge-gui-mobile/.../adventure/util/SessionLog.java` (TFR file): the `[TFR-Duel]` line's new end fields. It reads
+  `TfrAiRules.version()` (read only).
+
 ### Round 1019 - rule mc-attack-cut-guard: one more AiController line (Flat Monte Carlo's attack choice)
 One stock line, temporary like round 1018's; everything else is in `forge.ai.tfr` and the res files.
 - `forge-ai/src/main/java/forge/ai/AiController.java` (STOCK, **TEMPORARY**): in `refineAttackWithFlatMonteCarlo`, the

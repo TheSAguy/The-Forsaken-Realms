@@ -2566,6 +2566,7 @@ public class AiController {
 
     /** TFR round 924: the first timeout of a turn on lite settings: no Monte Carlo until the next turn. */
     void noteLiteTimeout() {
+        LiteTurnCap.noteTimeout(game.isSimulationCopy()); // TFR round 1020: every timeout, for [TFR-Duel] aiTimeouts=
         final int turn = game.getPhaseHandler().getTurn();
         if (game.getAIFlatMonteCarloLite() && turn != liteTimeoutTurn) {
             liteTimeoutTurn = turn;
