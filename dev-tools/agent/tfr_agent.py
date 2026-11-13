@@ -54,6 +54,7 @@ and prints the new board and prompt:
 Targets and choices name cards by id and players as "me" / "opp". A rejected decision prints why, with the same prompt.
 Each verb names the prompt it answers (play/pass: priority, attack/noattack, block/noblock, keep/mulligan); one sent
 to another prompt is refused and nothing happens - add expect= (empty) to override, e.g. `pass expect=` anywhere.
+Add turn=N to any verb to have it refused unless the prompt is on turn N (chained verbs: two priority prompts look alike).
 Default stops: your main phases and after blocks on your turn; the opponent's attackers, blockers and end step; any
 stack holding the opponent's spell or ability - and only when you have a legal play. After the duel: `settle`.
 

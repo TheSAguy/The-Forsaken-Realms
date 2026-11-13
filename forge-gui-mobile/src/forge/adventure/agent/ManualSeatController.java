@@ -648,6 +648,26 @@ final class ManualSeatController extends PlayerControllerAi {
                 () -> new ArrayList<>(super.chooseCardsForEffect(sourceList, sa, title, min, max, isOptional, params))));
     }
 
+    /** A dig that takes up to one card of each kind (Gift of the Gargantuan: a creature and/or a land). Round 1023 follow-up. */
+    @Override
+    public CardCollection chooseCardsForEffectMultiple(Map<String, CardCollection> validMap, SpellAbility sa, String title, boolean isOptional) {
+        if (!manual())
+            return super.chooseCardsForEffectMultiple(validMap, sa, title, isOptional);
+        CardCollection chosen = new CardCollection();
+        for (Map.Entry<String, CardCollection> e : validMap.entrySet()) {
+            CardCollection left = new CardCollection(e.getValue());
+            left.removeAll(chosen);
+            if (left.isEmpty())
+                continue;
+            chosen.addAll(chooseFrom("choose", title(title, sa) + " - " + e.getKey() + " (up to one)", left, 0, 1,
+                    () -> {
+                        Card best = forge.ai.ComputerUtilCard.getBestAI(left);
+                        return best == null ? new ArrayList<Card>() : new ArrayList<>(List.of(best));
+                    }));
+        }
+        return chosen;
+    }
+
     @Override
     public <T extends GameEntity> T chooseSingleEntityForEffect(FCollectionView<T> optionList, DelayedReveal delayedReveal, SpellAbility sa, String title, boolean isOptional, Player targetedPlayer, Map<String, Object> params) {
         if (!manual() || optionList.isEmpty())

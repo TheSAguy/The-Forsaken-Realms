@@ -304,6 +304,16 @@ final class ManualSeat {
                 m.put("prompt", pending);
                 return m;
             }
+            // turn=N (round 1023 follow-up): two priority prompts look alike, so a chained `pass` meant for turn 7's main phase 2
+            // once passed turn 9's main phase 1. With turn= the verb is refused on any other turn.
+            if (cmd.has("turn") && pending.get("state") instanceof Map<?, ?> st
+                    && !String.valueOf(st.get("turn")).equals(cmd.getString("turn", ""))) {
+                Map<String, Object> m = status();
+                m.put("ok", false);
+                m.put("error", verb + " was meant for turn " + cmd.getString("turn", "") + "; the waiting prompt is on turn " + st.get("turn") + " - nothing was sent");
+                m.put("prompt", pending);
+                return m;
+            }
             long s = seq;
             JsonValue d = cmd; // the request body: {cmd: verb, ...}
             decision = d;

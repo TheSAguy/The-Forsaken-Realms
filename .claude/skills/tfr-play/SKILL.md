@@ -132,13 +132,19 @@ first findings are in `C:\CLAUDE\PROJECTS\TFR1\notes\r1023\study.md`.
   3. When it prints `gameOver`, `settle` takes the win/lose screen and the rewards, as for any duel.
 - **Read every prompt before the next verb.** After a land drop with nothing castable, the next prompt is the attack,
   not main phase 1. Each verb names the prompt it answers and is refused at another one (nothing happens), but two
-  priority prompts look alike. `pass expect=` (empty) overrides the check.
+  priority prompts look alike: add `turn=N` (the prompt's turn) to a verb you chain, and it is refused on any other turn.
+  `pass expect=` (empty) overrides the prompt check.
 - **The default stops** ask only when you have a legal play: your main phases and after blocks on your turn; the
   opponent's attack and block steps (when something attacks) and end step; any stack holding the opponent's spell or
   ability. Your own spell resolves without a question. `duelmode stops=all` asks at every priority.
+- **Play numbers (`n`) shift after a land drop**: chain plays with `id=<card id>` (`ability=k` for a card's k-th play).
+- **An Aura asks its attach target again** after the cast, as a `choose` prompt.
 - **Still the AI's:** mana payment (it taps the lands), the targets of your triggered abilities, combat damage
   assignment, and rare choices (colors, card names, votes). The seat is an AI seat under the hood (`isAI()` is true).
-- **Cost:** about 25-50 decisions and 3-5 minutes a duel against Apprentice/Adept enemies (round 1023).
+- **Passing the opponent's turn:** each of its spells is a stop when you hold an instant-speed play. Loop
+  `pass until=turn turn=N` while the prompt is priority on the opponent's turn; a block prompt still comes.
+- **Cost:** about 15-50 decisions and 1.5-5 minutes a duel, Apprentice to Master, Normal and Hard (round 1023, 12
+  duels).
 - **Logs:** `[TFR-ManualSeat]` lines in forge.log and `/state`'s `agent.log`: the mode, every answer, every refusal and
   what it did. `[TFR-Duel]` ends the duel as usual.
 - **Write down** every AI decision that looks exploitable, with the turn and the board, as a candidate puzzle. Never

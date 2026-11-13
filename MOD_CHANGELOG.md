@@ -14264,7 +14264,35 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
-## Round 1023: the manual seat - Claude plays the player's side of a duel, and the first study (2026-11-12)
+## Round 1023 (follow-up): the seat's turn guard, the event list, card-by-card plays, and eight more study duels (2026-11-12)
+
+The manager asked for more study duels: aggressive decks at parity, trick-heavy enemies, and Hard with Adept/Master
+enemies. Eight more manual duels in the `agent-r1023` test copy (1 won, 2 lost, 5 conceded or handed to the AI from
+lost positions; four against Master decks at Hard). The findings F5-F8 and more evidence for F1/F2 are appended to
+`C:\CLAUDE\PROJECTS\TFR1\notes\r1023\study.md`.
+- **F2's seam is confirmed by contrast:** the AI respected Devkarin Dissident's own `ApiType.Pump`, but not the Boast
+  (`PumpAll`).
+- **F5:** an infect deck spent both of its pumps on a 0-power wall.
+- **F6:** at 5 life the AI left 4 unblocked against open mana and cards in hand.
+- **F7:** holding blockers back drew no over-commit (a negative result).
+- **F8 (minor):** Kogla fought a wall.
+
+Tool fixes:
+- **`turn=N` on any verb** (`ManualSeat.submit`): the verb is refused unless the prompt is on turn N. A chained `pass`
+  had passed a later turn's main phase twice (two priority prompts look alike). The guard then caught three stale
+  verbs.
+- **The event list's cap counts the lines shown** (`DuelView.state`): it was 60 raw log lines, phase lines included,
+  and two of the AI's turns dropped out of view. All new lines are shown now, up to 80, with a "(N older lines left
+  out)" line past that.
+- **Legal plays card by card** (`DuelView.legalPlays`): a card whose abilities throw is left out and logged
+  (`[TFR-ManualSeat] legal plays: ...`). Before, the whole list came back empty, which passes priority without a
+  question. None of the twelve duels hit it.
+- **`chooseCardsForEffectMultiple`** (Gift of the Gargantuan: "a creature and/or a land") is routed: one `choose` per
+  kind, up to one card each. It was the AI's in duel 8. This is compiled, not yet seen in a live duel.
+- **The skill:** play numbers shift after a land drop (chain by `id=`), an Aura asks its attach target again, passing
+  the opponent's turn, and the cost line.
+
+
 
 This is the AI audit's option C (`C:\CLAUDE\PROJECTS\TFR1\notes\ai-audit\report.md` section 4, pattern 5). The user
 asked to "continue work on improving the AI", and earlier: "maybe for training?". AI-vs-AI benches cannot show what a

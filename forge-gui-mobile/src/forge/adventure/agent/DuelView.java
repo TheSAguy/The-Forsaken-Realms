@@ -63,12 +63,16 @@ final class DuelView {
     /** Everything the player could put on the stack or play right now and pay for, in a stable order. */
     static List<Play> legalPlays(Player p) {
         Game game = p.getGame();
-        List<SpellAbility> all;
-        try {
-            all = ComputerUtilAbility.getOriginalAndAltCostAbilities(
-                    ComputerUtilAbility.getSpellAbilities(ComputerUtilAbility.getAvailableCards(game, p), p), p);
-        } catch (RuntimeException e) {
-            return new ArrayList<>();
+        // Card by card (round 1023 follow-up): one card whose abilities throw is left out and logged, instead of the whole
+        // list coming back empty - an empty list passes priority without a question.
+        List<SpellAbility> all = new ArrayList<>();
+        for (Card c : ComputerUtilAbility.getAvailableCards(game, p)) {
+            try {
+                all.addAll(ComputerUtilAbility.getOriginalAndAltCostAbilities(
+                        ComputerUtilAbility.getSpellAbilities(new CardCollection(c), p), p));
+            } catch (RuntimeException e) {
+                System.out.println("[TFR-ManualSeat] legal plays: " + c + " left out, its abilities threw " + e);
+            }
         }
         List<Play> out = new ArrayList<>();
         for (SpellAbility sa : all) {
@@ -84,7 +88,7 @@ final class DuelView {
                     continue;
                 out.add(new Play(out.size(), sa));
             } catch (RuntimeException e) {
-                // a card whose checks throw is not offered
+                System.out.println("[TFR-ManualSeat] legal plays: " + sa.getHostCard() + " not offered, its checks threw " + e);
             }
         }
         return out;
@@ -227,9 +231,10 @@ final class DuelView {
         // What happened since the last decision, oldest first: the opponent's plays, attacks, blocks, damage.
         List<GameLogEntry> log = game.getGameLog().getAllEntries();
         List<String> events = new ArrayList<>();
-        int from = Math.max(logMark[0], log.size() - 60);
+        // The cap counts the lines shown, not the raw log (round 1023 follow-up): with the phase lines in the count, a 60-line
+        // window lost whole turns of the AI's plays.
         String last = null;
-        for (int i = Math.max(0, from); i < log.size(); i++) {
+        for (int i = Math.max(0, logMark[0]); i < log.size(); i++) {
             GameLogEntry le = log.get(i);
             if (le.type() == forge.game.GameLogEntryType.PHASE)
                 continue; // the phase is in the state; every step's line only drowned the plays
@@ -239,6 +244,11 @@ final class DuelView {
             last = line;
         }
         logMark[0] = log.size();
+        if (events.size() > 80) {
+            int dropped = events.size() - 80;
+            events.subList(0, dropped).clear();
+            events.add(0, "(" + dropped + " older lines left out)");
+        }
         if (!events.isEmpty())
             s.put("events", events);
         if (!oracle.isEmpty())

@@ -45,7 +45,8 @@ md` already gets updated after every change.
   the stops, `[TFR-ManualSeat]` lines), `ManualSeatController.java` (extends `forge.ai.PlayerControllerAi`: it
   overrides `chooseSpellAbilityToPlay`, `playChosenSpellAbility`, `declareAttackers`, `declareBlockers`,
   `orderBlockers`/`orderAttackers`, `mulliganKeepHand`, `tuckCardsViaMulligan`, the discard, sacrifice, scry,
-  choice, confirm and number methods, `chooseModeForAbility` and `chooseOptionalCosts`), and `DuelView.java` (the
+  choice, confirm and number methods, `chooseCardsForEffectMultiple` (follow-up), `chooseModeForAbility` and
+  `chooseOptionalCosts`), and `DuelView.java` (the
   state read; it uses `ComputerUtilAbility`, `ComputerUtilCost`, `CardUtil.getValidCardsToTarget`,
   `CharmEffect.makePossibleOptions`). **On a merge:** a signature change in any of those `PlayerController` methods
   fails this package's compile, which is the signal; fix the override, nothing else depends on it.
