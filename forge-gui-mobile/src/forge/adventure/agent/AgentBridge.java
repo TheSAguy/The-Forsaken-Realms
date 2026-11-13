@@ -49,6 +49,8 @@ public final class AgentBridge {
     private final AgentObserver observer = new AgentObserver(this);
     private final WalkController walker = new WalkController(this);
     private final AgentActions actions = new AgentActions(this, observer, walker);
+    /** Round 1023: the manual duel seat (off until a client sends `duelmode mode=manual`). */
+    final ManualSeat seat = new ManualSeat(this);
     private volatile CompletableFuture<String> pendingCapture;
     private volatile String pendingCaptureFile;
     long frame;
@@ -133,6 +135,19 @@ public final class AgentBridge {
         return b != null && b.autoBattle;
     }
 
+    /**
+     * Round 1023: the lobby player of a duel the bridge pilots. {@code ai} (the AI seat DuelScene made) unless a client
+     * asked for manual duels (`duelmode mode=manual`) and this is the player's own fight, not a spectated one: then the
+     * seat whose decisions wait for the bridge ({@link ManualSeat}). Without the bridge this is never reached.
+     */
+    public static forge.LobbyPlayer pilotSeat(forge.LobbyPlayer ai, boolean spectated) {
+        AgentBridge b = instance;
+        if (b == null || spectated || !b.seat.manual)
+            return ai;
+        b.log("[TFR-ManualSeat] this duel's player seat waits for the bridge (manual mode)");
+        return b.seat.lobbyPlayer(ai);
+    }
+
     public static boolean isActive() {
         return instance != null;
     }
@@ -145,10 +160,11 @@ public final class AgentBridge {
         server.createContext("/wait", ex -> handle(ex, () -> waitIdle(ex)));
         server.createContext("/screenshot", ex -> handle(ex, () -> screenshot(param(ex, "file"))));
         server.createContext("/cmd", ex -> handle(ex, () -> command(body(ex))));
+        server.createContext("/duel", ex -> handle(ex, seat::read)); // round 1023: the manual seat's prompt and state
         server.createContext("/", ex -> handle(ex, () -> {
             Map<String, Object> m = new LinkedHashMap<>();
             m.put("ok", true);
-            m.put("endpoints", List.of("GET /state[?cheat=1]", "GET /wait?timeout=30", "GET /screenshot[?file=path]", "POST /cmd {cmd:...}"));
+            m.put("endpoints", List.of("GET /state[?cheat=1]", "GET /wait?timeout=30", "GET /screenshot[?file=path]", "GET /duel", "POST /cmd {cmd:...}"));
             m.put("cheats", cheats);
             return m;
         }));
@@ -299,6 +315,16 @@ public final class AgentBridge {
             Map<String, Object> m = new LinkedHashMap<>();
             m.put("ok", false);
             m.put("error", "console commands need TFR_AGENT_CHEATS=1");
+            return m;
+        }
+        // Round 1023: the manual seat's verbs run on this thread - they wait for the GAME thread, never the render thread.
+        if ("duel".equals(name))
+            return seat.read();
+        if ("duelmode".equals(name))
+            return seat.config(cmd);
+        if (ManualSeat.VERBS.contains(name)) {
+            Map<String, Object> m = seat.submit(name, cmd, cmd.getInt("timeout", 90));
+            m.put("cmd", name);
             return m;
         }
         CompletableFuture<Map<String, Object>> result = onGl(() -> actions.execute(name, cmd), 20);

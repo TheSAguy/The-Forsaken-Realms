@@ -1198,7 +1198,7 @@ public class DuelScene extends ForgeScene {
         // everything else the player's fight (equipment, ante, rewards, statistics) - unlike
         // aiControlsPlayerSide, which means "spectator / guard" and strips all of that.
         LobbyPlayer playerObject = aiControlsPlayerSide || forge.adventure.agent.AgentBridge.aiPilotsPlayer()
-                ? GamePlayerUtil.createAiPlayer(advPlayer.getName(), "")
+                ? forge.adventure.agent.AgentBridge.pilotSeat(GamePlayerUtil.createAiPlayer(advPlayer.getName(), ""), aiControlsPlayerSide) // round 1023: manual seat
                 : GamePlayerUtil.getGuiPlayer();
         FSkin.getAvatars().put(playerAvatarKey, advPlayer.avatar());
         playerObject.setAvatarIndex(playerAvatarKey);

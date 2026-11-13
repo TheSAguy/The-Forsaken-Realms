@@ -174,6 +174,7 @@ final class AgentObserver {
         a.put("busy", bridge.walker().isBusy());
         a.put("action", bridge.walker().describe());
         a.put("autoBattle", bridge.autoBattle);
+        a.put("duelMode", bridge.seat.manual ? "manual" : "auto"); // round 1023
         a.put("cheats", bridge.cheatsAllowed());
         a.put("frame", bridge.frame);
         a.put("notifications", bridge.drainNotifications());

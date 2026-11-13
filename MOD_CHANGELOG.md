@@ -14264,6 +14264,64 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 1023: the manual seat - Claude plays the player's side of a duel, and the first study (2026-11-12)
+
+This is the AI audit's option C (`C:\CLAUDE\PROJECTS\TFR1\notes\ai-audit\report.md` section 4, pattern 5). The user
+asked to "continue work on improving the AI", and earlier: "maybe for training?". AI-vs-AI benches cannot show what a
+human exploits (tricks into open mana, bait attacks, predictable blocks), and blocks never get Flat Monte Carlo's
+search. So the agent bridge gets in-duel verbs, and Claude plays the player's seat against Forge's AI. It is training
+and diagnosis only, in the agent game, never live play. The study is in `C:\CLAUDE\PROJECTS\TFR1\notes\r1023\study.md`.
+
+- **The manual seat** (`agent/ManualSeat.java`, `agent/ManualSeatController.java`, `agent/DuelView.java`):
+  - Off unless the bridge is up (`TFR_AGENT_PORT`) AND a client sends `duelmode mode=manual`, so release builds and
+    Android never see it.
+  - In manual mode, the duel the bridge's auto-battle would pilot gets a `ManualSeatController`: Forge's AI seat
+    (`PlayerControllerAi`) whose player decisions wait for the bridge. The routed decisions are priority (play a land,
+    cast, activate, with targets, X, modes and optional costs), attackers, blockers, damage order (legacy rule only),
+    mulligan and the bottom cards, discard, sacrifice, scry, list choices, confirms and numbers.
+  - The game thread publishes a prompt with a state snapshot and waits. Everything else stays the AI's: mana payment,
+    trigger targets, combat damage assignment and rare choices.
+  - The AI's own turns run at the duel's 50x. A game copy (the AI's rollouts) never waits.
+  - A prompt nobody answers for 30 minutes (`fallback=`) goes to the AI, so a forgotten duel cannot hang the game.
+- **The default stops** ask only when Claude has a legal play: its main phases and after blocks on its own turn; the
+  opponent's attackers, blockers (only when something attacks) and end step; and any stack holding the opponent's spell
+  or ability. Claude's own spell on top resolves without a question. `stops=all` asks at every priority.
+  `pass until=turn` skips the empty-stack stops until the next turn. About 80% of priorities passed without a question.
+- **The state read** (`GET /duel`, `tfr_agent.py duel`):
+  - turn, phase, both players' life, library and hand (the opponent's hand as a count only);
+  - battlefields with power/toughness, tapped, summoning sick, damage, counters, attachments and combat keywords;
+  - the stack (top first) and combat;
+  - the game log since the last decision (phase lines and doubled lines left out), and the oracle text of each new card
+    name, once;
+  - the numbered legal plays, with their target candidates (`me`, `opp`, card ids) and modes.
+- **The verbs** (`/cmd`, run on the bridge thread, never the render thread): `play`, `pass`, `attack`, `block`, `choose`,
+  `keep`, `mulligan`, `order`, `concede`, plus `duelmode` and `duel`. Each one blocks until the next prompt or the end
+  of the duel and returns the new board.
+  - A decision the game cannot use is refused with the reason, and the same prompt comes back.
+  - Each verb carries the prompt it answers (`expect`). The first duel lost an attack when a blind `pass` landed on the
+    attack prompt; now a verb sent to another prompt is refused and nothing happens.
+- **`[TFR-ManualSeat]` lines** log the mode, the seat, every prompt's answer, refusals and results.
+- **`DuelScene`** (stock): the auto-battle seat line goes through `AgentBridge.pilotSeat(ai, aiControlsPlayerSide)`. That
+  returns the AI seat unchanged unless manual mode is on and the duel is the player's own fight. Normal play never
+  reaches it: the bridge is off, so `aiPilotsPlayer()` is false and the seat is `getGuiPlayer()` as before.
+- **Proven in an `agent-r1023` test copy** (the round's classes ahead of the agent jar, Normal difficulty, a new game):
+  - Three manual duels won: Goblin Shieldbearer (Apprentice) on turn 11 with 25 decisions; White Wizard (Apprentice)
+    on turn 15 with 36; Crimson Burrower (Adept) on turn 21 with 46. They took 180, 233 and 267 s of game time, and
+    that includes Claude's thinking.
+  - A fourth manual duel tested `mulligan`, the bottom choice and `concede`.
+  - `duelmode autopilot=true` in a fifth duel: the AI finished it (won on turn 14), and the next duel asked again. (The
+    first build kept autopilot on for every later duel; the flag now names the one game it covers.)
+  - Two auto-battle duels, one before manual mode and one after `duelmode mode=auto`, ran AI-piloted with no
+    `[TFR-ManualSeat]` line.
+  - No exceptions in forge.log.
+- **The study's findings** are candidate puzzles for a later rules round, with no rules built here:
+  - F1: a double block into 5 open mana lost a 3-for-1 to a +2/+2.
+  - F2: blocks and the lethal check ignore Battershield Warrior's on-board Boast, and the AI died to it.
+    `predictPowerBonusOfAttacker` counts only `ApiType.Pump` abilities.
+  - F3: Reinforced Ronin cast five times without attacking.
+  - F4: Hornet Cannon fired when the Hornet would not attack.
+- Docs: the `tfr-play` skill's "Manual duels" section, `tfr_agent.py`'s help.
+
 ## Round 1019: Flat Monte Carlo's cut to no attack, the board stall (2026-11-12)
 
 The user chose "Fix the stall first" after round 1018 found that on audit game g021's board (puzzle P3b) Flat Monte

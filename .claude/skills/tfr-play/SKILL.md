@@ -1,13 +1,13 @@
 ---
 name: tfr-play
-description: Play The Forsaken Realms (TFR) as the player through the in-game agent bridge - start the ISOLATED agent game (its own folder, APPDATA profile and LOCALAPPDATA cache under C:\TFR\agent, never the user's game or saves), then loop read state -> decide -> one command -> settle; Forge's AI plays the duels. Use when the user asks Claude to play TFR, run an agent session, soak-test, or check a feature in a running game.
+description: Play The Forsaken Realms (TFR) as the player through the in-game agent bridge - start the ISOLATED agent game (its own folder, APPDATA profile and LOCALAPPDATA cache under C:\TFR\agent, never the user's game or saves), then loop read state -> decide -> one command -> settle; Forge's AI plays the duels, or Claude plays them decision by decision in manual mode (section 4b). Use when the user asks Claude to play TFR, run an agent session, soak-test, or check a feature in a running game.
 ---
 
 # Playing The Forsaken Realms through the agent bridge
 
 The bridge (MOD_SCOPE #117, `forge.adventure.agent`, round 161; isolated setup round 175) is inside the normal game
 jar and OFF unless the game starts with `TFR_AGENT_PORT`. Claude drives the overworld, towns, shops, dialogs, items
-and decks over loopback HTTP; **Forge's AI plays every duel on the player's seat** (the fight stays the player's:
+and decks over loopback HTTP; **Forge's AI plays every duel on the player's seat** unless manual mode is on (section 4b) (the fight stays the player's:
 equipment, ante, rewards, statistics). Design: `docs/design/2026-09-09-agent-play.md`. Client:
 `dev-tools/agent/tfr_agent.py` (its docstring lists every verb and command). Repo root:
 `C:\TFR\repo` - run the commands below from there. `C:\TFR` is a junction to `C:\CLAUDE\PROJECTS\TFR1` (since
@@ -101,7 +101,48 @@ python dev-tools/agent/tfr_agent.py boot     # waits for the bridge; prints the 
 - Model: `equip item=...` | `use item=...` | `sell item=...` | `deck op=list|select index=1|add card=... count=2`
   | `buy index=0` | `save slot=1 name="agent"` | `load slot=1` | `newgame`
   | `startingsets sets=DTK,any` (round 873: sets the New Game screen's Starting sets drop-downs in order; `any` = Random)
-- Duels: none - auto-battle is on while the bridge runs.
+- Duels: auto-battle by default (Forge's AI plays the seat). `duelmode mode=manual` makes the next duels YOURS,
+  decision by decision: section 4b.
+
+## 4b. Manual duels: Claude plays the player's seat (round 1023)
+
+For training and diagnosis only, and only in the agent game: finding what a human exploits in Forge's AI (tricks into
+open mana, bait attacks, predictable blocks). It is never for live play or the user's game. The study format and the
+first findings are in `C:\CLAUDE\PROJECTS\TFR1\notes\r1023\study.md`.
+
+- **Turn it on:** `python dev-tools/agent/tfr_agent.py duelmode mode=manual`. From then on, every duel the bridge would
+  auto-battle waits for you at each decision. Guard fights and spectated duels stay the AI's. `duelmode mode=auto` goes
+  back. Set mid-duel, the AI finishes that duel. `duelmode autopilot=true` hands only the current duel to the AI.
+- **Difficulty:** not Easy. The TFR AI rules skip Easy; use a Normal or harder save.
+- **Speed:** the AI's turns still run at the duel's 50x (the user's rule). Only your decisions wait. A prompt left
+  unanswered for 30 minutes (`fallback=`) goes to the AI, so a forgotten duel cannot hang the game.
+- **The loop:** start a fight as usual (walk into an enemy; with cheats, `console text='spawn enemy "Badger"'`). Then:
+  1. `tfr_agent.py duel` shows the waiting prompt and the board: life, hands (the opponent's as a count), lands,
+     creatures with P/T, tapped, sick, damage, counters and keywords, the stack, combat, what happened since your last
+     decision, and each new card's oracle text once.
+  2. Answer with ONE verb. It blocks until the game asks again (the AI's turn plays out meanwhile) and prints the new
+     board and prompt:
+     - `keep` | `mulligan`; the bottom cards: `choose ids=12`
+     - `play n=3`: a land, a spell or an ability from the numbered `plays`; `targets=45` | `"45,opp"` (two in one
+       step) | `"45;opp"` (one group per targeting step) | `x=3` | `modes=0,2` | `optional=0` (kicker...)
+     - `pass` (`until=turn`: no empty-stack stops until the next turn)
+     - `attack ids=12,14` (`at=opp` or a planeswalker's id) | `attack pairs="12:opp,14:88"` | `noattack`
+     - `block pairs="20:12,21:12"` (blocker:attacker; two on one attacker is fine) | `noblock`
+     - `choose ids=45,46` (lists, in order) | `choose yes=true` (confirms) | `choose n=2` (numbers) | `concede`
+  3. When it prints `gameOver`, `settle` takes the win/lose screen and the rewards, as for any duel.
+- **Read every prompt before the next verb.** After a land drop with nothing castable, the next prompt is the attack,
+  not main phase 1. Each verb names the prompt it answers and is refused at another one (nothing happens), but two
+  priority prompts look alike. `pass expect=` (empty) overrides the check.
+- **The default stops** ask only when you have a legal play: your main phases and after blocks on your turn; the
+  opponent's attack and block steps (when something attacks) and end step; any stack holding the opponent's spell or
+  ability. Your own spell resolves without a question. `duelmode stops=all` asks at every priority.
+- **Still the AI's:** mana payment (it taps the lands), the targets of your triggered abilities, combat damage
+  assignment, and rare choices (colors, card names, votes). The seat is an AI seat under the hood (`isAI()` is true).
+- **Cost:** about 25-50 decisions and 3-5 minutes a duel against Apprentice/Adept enemies (round 1023).
+- **Logs:** `[TFR-ManualSeat]` lines in forge.log and `/state`'s `agent.log`: the mode, every answer, every refusal and
+  what it did. `[TFR-Duel]` ends the duel as usual.
+- **Write down** every AI decision that looks exploitable, with the turn and the board, as a candidate puzzle. Never
+  build a rule from one duel.
 
 ## 5. A new game
 

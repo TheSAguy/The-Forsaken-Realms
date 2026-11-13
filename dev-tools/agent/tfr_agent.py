@@ -33,6 +33,30 @@ Then, from anywhere:
     python tfr_agent.py cmd holdalt on=true        # Alt for key polling (not a key event)
     python tfr_agent.py cmd clickenemy name="Boggart"   # a left click on it through the map scene
 
+Manual duels (round 1023: Claude plays the player's seat against Forge's AI - the agent game only, training and
+diagnosis, never live play). The seat waits for these verbs only after `duelmode mode=manual`; the AI's own turns
+still run at the duel's 50x speed. Each decision verb blocks until the game asks the next question (or the duel ends)
+and prints the new board and prompt:
+    python tfr_agent.py duelmode mode=manual [stops=all|default] [fallback=30]   # mode=auto: back to auto-battle
+    python tfr_agent.py duelmode autopilot=true   # the AI finishes the CURRENT duel (the next one is manual again)
+    python tfr_agent.py duel [--json]             # the waiting prompt and the board (compact text; --json raw)
+    python tfr_agent.py keep | mulligan           # the opening hand
+    python tfr_agent.py play n=3                  # a land, a spell or an ability from the prompt's numbered plays
+    python tfr_agent.py play n=5 targets=45       # one target; "45,opp" = two targets in one step;
+    python tfr_agent.py play n=5 targets="45;opp" #   "a;b" = one group per targeting step, in order
+    python tfr_agent.py play n=2 x=3 | modes=0,2 | optional=0   # X, modal spell modes, optional costs (kicker...)
+    python tfr_agent.py pass [until=turn]         # pass priority (until=turn: no empty-stack stops until next turn)
+    python tfr_agent.py attack ids=12,14 [at=opp|<planeswalker id>] | attack pairs="12:opp,14:88"
+    python tfr_agent.py block pairs="20:12,21:12" # blocker:attacker; two on one attacker is fine
+    python tfr_agent.py noattack | noblock        # no attack / no blocks (`pass expect=attack` does the same)
+    python tfr_agent.py choose ids=45,46 | choose yes=true | choose n=2   # a choice, a confirm, a number
+    python tfr_agent.py concede
+Targets and choices name cards by id and players as "me" / "opp". A rejected decision prints why, with the same prompt.
+Each verb names the prompt it answers (play/pass: priority, attack/noattack, block/noblock, keep/mulligan); one sent
+to another prompt is refused and nothing happens - add expect= (empty) to override, e.g. `pass expect=` anywhere.
+Default stops: your main phases and after blocks on your turn; the opponent's attackers, blockers and end step; any
+stack holding the opponent's spell or ability - and only when you have a legal play. After the duel: `settle`.
+
 Values: numbers and true/false are typed automatically; a,b lists become arrays; anything else is a string.
 Every command blocks until it finishes (a walk, a wait) or --timeout seconds pass.
 """
@@ -260,6 +284,119 @@ def settle(rounds=40, wait_each=60, ask_ante=False):
     return s
 
 
+DUEL_VERBS = ("play", "pass", "attack", "block", "choose", "keep", "mulligan", "concede", "order")
+RAW_KEYS = ("targets", "pairs", "ids", "modes", "optional", "at", "expect")
+EXPECT = {"play": "priority", "pass": "priority", "attack": "attack", "noattack": "attack", "block": "block",
+          "noblock": "block", "keep": "mulligan", "mulligan": "mulligan", "order": "order"}
+
+
+def _card(c):
+    t = "#%s %s" % (c.get("id"), c.get("name"))
+    if c.get("pt"):
+        t += " %s" % c["pt"]
+    if c.get("cost") and c.get("type") != "land":
+        t += " %s" % c["cost"]
+    flags = [k for k in ("tapped", "sick", "stolen") if c.get(k)]
+    if c.get("damage"):
+        flags.append("dmg %s" % c["damage"])
+    if c.get("counters"):
+        flags.append(",".join("%s:%s" % kv for kv in c["counters"].items()))
+    if c.get("attachedTo"):
+        flags.append("on #%s" % c["attachedTo"])
+    if c.get("kw"):
+        flags.append("/".join(c["kw"]))
+    if c.get("type") not in (None, "creature", "land"):
+        flags.append(c["type"])
+    return t + (" [" + "; ".join(flags) + "]" if flags else "")
+
+
+def _side(p, label):
+    head = "%s %s: life %s, library %s" % (label, p.get("name"), p.get("life"), p.get("library"))
+    if p.get("poison"):
+        head += ", poison %s" % p["poison"]
+    if "handSize" in p:
+        head += ", hand %s" % p["handSize"]
+    if "landsPlayed" in p:
+        head += ", lands played %s" % p["landsPlayed"]
+    out = [head]
+    lands, others = {}, []
+    for c in p.get("battlefield", []):
+        if c.get("type") == "land":
+            n, u, ids = lands.get(c["name"], (0, 0, []))
+            lands[c["name"]] = (n + 1, u + (0 if c.get("tapped") else 1), ids + [c["id"]])
+        else:
+            others.append(_card(c))
+    if lands:
+        out.append("   lands: " + ", ".join("%s x%d (%d untapped)" % (k, n, u) for k, (n, u, ids) in lands.items()))
+    for o in others:
+        out.append("   " + o)
+    if p.get("hand"):
+        out.append("   hand: " + " | ".join(_card(c) for c in p["hand"]))
+    if p.get("graveyard"):
+        out.append("   graveyard: " + ", ".join(p["graveyard"]))
+    if p.get("exile"):
+        out.append("   exile: " + ", ".join(p["exile"]))
+    return out
+
+
+def render_duel(r):
+    """A compact text view of /duel or a decision verb's answer: what happened, the board, the prompt."""
+    keys = ("ok", "mode", "decisions", "autoPasses", "minutes", "waiting", "gameOver", "winner", "turns", "error", "pending", "next")
+    lines = [json.dumps({k: r.get(k) for k in keys if r.get(k) is not None})]
+    for x in r.get("result") or []:
+        lines.append("  result: " + x)
+    p = r.get("prompt")
+    if not p:
+        return "\n".join(lines)
+    s = p.get("state") or {}
+    for e in s.get("events") or []:
+        lines.append("  . " + e)
+    lines.append("T%s %s turn, %s" % (s.get("turn"), s.get("active"), s.get("phase")))
+    if s.get("opp"):
+        lines += _side(s["opp"], "OPP")
+    if s.get("me"):
+        lines += _side(s["me"], "ME ")
+    for e in s.get("stack") or []:
+        lines.append("  STACK (%s) #%s %s: %s" % (e.get("by"), e.get("id"), e.get("card"), e.get("text")))
+    for a in s.get("combat") or []:
+        lines.append("  COMBAT #%s %s -> %s, blocked by %s" % (a.get("id"), a.get("card"), a.get("at"), a.get("blockedBy")))
+    for k, v in (s.get("oracle") or {}).items():
+        lines.append("  oracle %s: %s" % (k, v))
+    lines.append("PROMPT %s: %s" % (p.get("kind"), p.get("title")))
+    for k in ("message", "options" if p.get("kind") == "confirm" else None, "source", "onThePlay", "bottomIfKept", "min", "max", "defenders"):
+        if k and k in p:
+            lines.append("  %s: %s" % (k, p[k]))
+    for pl in p.get("plays") or []:
+        t = "  n%s %s #%s" % (pl["n"], pl["card"], pl["id"])
+        if pl.get("kind") != "land":
+            t += " %s %s" % (pl.get("cost"), pl.get("kind"))
+        else:
+            t += " (land)"
+        if pl.get("from"):
+            t += " from %s" % pl["from"]
+        if pl.get("x"):
+            t += " [X]"
+        if pl.get("kind") == "ability":
+            t += ": " + (pl.get("text") or "")
+        for g in pl.get("targets") or []:
+            t += " | targets %s-%s of %s" % (g["min"], g["max"], g["candidates"])
+        for m in pl.get("modes") or []:
+            t += " | mode %s: %s %s" % (m["i"], m["text"], m.get("targets", ""))
+        lines.append(t)
+    for a in p.get("attackers") or []:
+        lines.append("  attacker " + _card(a) + (" -> %s" % a["at"] if a.get("at") else ""))
+    for b in p.get("blockers") or []:
+        lines.append("  blocker " + _card(b) + " can block %s" % b.get("canBlock"))
+    if p.get("kind") != "confirm":
+        for o in p.get("options") or []:
+            if isinstance(o, dict) and "type" in o:
+                lines.append("  option " + _card(o) + " (%s, %s)" % (o.get("zone", "battlefield"), o.get("of")))
+            else:
+                lines.append("  option " + json.dumps(o))
+    lines.append("  answer: " + str(p.get("answer")))
+    return "\n".join(lines)
+
+
 def main(argv):
     global PORT
     args = [x for x in argv if not x.startswith("--port=")]
@@ -302,6 +439,30 @@ def main(argv):
         # a real choice and prints it. Round 535: a lost ante is accepted with OK; --ask-ante stops there.
         s = settle(ask_ante="--ask-ante" in rest)
         print(json.dumps(brief(s), indent=1))
+    elif verb == "duel":
+        # Round 1023: the manual seat's waiting prompt and the board.
+        r = call("GET", "/duel")
+        print(json.dumps(r, indent=1) if "--json" in rest else render_duel(r))
+    elif verb == "duelmode":
+        body = {"cmd": "duelmode"}
+        for kv in rest:
+            if "=" in kv:
+                k, v = kv.split("=", 1)
+                body[k] = typed(v)
+        print(json.dumps(call("POST", "/cmd", body), indent=1))
+    elif verb in DUEL_VERBS or verb in ("noattack", "noblock"):
+        # noattack / noblock: a pass that is only taken at that prompt. Every verb carries the prompt it is meant for
+        # (`expect`), so a blind chain never lands a `pass` on the attack prompt (round 1023's first duel lost an attack so).
+        body = {"cmd": "pass" if verb in ("noattack", "noblock") else verb,
+                "expect": EXPECT.get(verb, "")}
+        for kv in rest:
+            if "=" in kv:
+                k, v = kv.split("=", 1)
+                body[k] = v if k in RAW_KEYS else typed(v)
+        r = call("POST", "/cmd", body, timeout=int(body.get("timeout", 90)) + 30)
+        print(json.dumps(r, indent=1) if "--json" in rest else render_duel(r))
+        if r.get("ok") is False:
+            return 1
     elif verb == "shot":
         q = "?file=" + urllib.parse.quote(rest[0]) if rest else ""
         print(json.dumps(call("GET", "/screenshot" + q)))

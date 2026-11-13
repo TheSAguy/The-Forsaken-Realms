@@ -35,6 +35,21 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 1023 - the agent bridge's manual seat (Claude plays the player's side, dev tooling)
+- `forge-gui-mobile/src/forge/adventure/scene/DuelScene.java` (STOCK): the auto-battle arm of the player seat's
+  `LobbyPlayer` line wraps `GamePlayerUtil.createAiPlayer(...)` in `forge.adventure.agent.AgentBridge.pilotSeat(...,
+  aiControlsPlayerSide)` (marked `round 1023`). It returns the AI seat unchanged unless the agent bridge runs with
+  `duelmode mode=manual`, so release builds, Android and normal play are untouched. On a merge: keep the wrap on
+  whatever line upstream builds the player's `LobbyPlayer`.
+- New TFR files in `forge-gui-mobile/src/forge/adventure/agent/`: `ManualSeat.java` (the bridge/game-thread handoff,
+  the stops, `[TFR-ManualSeat]` lines), `ManualSeatController.java` (extends `forge.ai.PlayerControllerAi`: it
+  overrides `chooseSpellAbilityToPlay`, `playChosenSpellAbility`, `declareAttackers`, `declareBlockers`,
+  `orderBlockers`/`orderAttackers`, `mulliganKeepHand`, `tuckCardsViaMulligan`, the discard, sacrifice, scry,
+  choice, confirm and number methods, `chooseModeForAbility` and `chooseOptionalCosts`), and `DuelView.java` (the
+  state read; it uses `ComputerUtilAbility`, `ComputerUtilCost`, `CardUtil.getValidCardsToTarget`,
+  `CharmEffect.makePossibleOptions`). **On a merge:** a signature change in any of those `PlayerController` methods
+  fails this package's compile, which is the signal; fix the override, nothing else depends on it.
+
 ### Round 1020 - every AI timeout counted for the [TFR-Duel] line
 - `forge-ai/src/main/java/forge/ai/AiController.java` (STOCK): one line at the top of round 924's `noteLiteTimeout()`,
   `LiteTurnCap.noteTimeout(game.isSimulationCopy())` (marked `TFR round 1020`). It counts every real-game priority
