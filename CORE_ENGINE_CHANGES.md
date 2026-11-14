@@ -35,6 +35,18 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 1027 - the deck editor's refreshes fold into one per frame (logs-1113 P3-28)
+- `forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java` (STOCK): `refreshEditor()` calls the new
+  `requestEditorRefresh()` (one `Gdx.app.postRunnable` per frame, `[TFR-EditorRefresh]`) instead of
+  `DeckEditScene.getInstance(null).getScreen()).refresh()`; the static hooks `editorRefreshPoster` /
+  `editorRefreshTarget` for the test.
+- `forge-gui-mobile/src/forge/adventure/scene/DeckEditScene.java` (STOCK): new `public static existingEditor()` (the built
+  editor or null, no side effect).
+- `forge-gui-mobile/src/forge/adventure/scene/AdventureDeckEditor.java` (STOCK): `refresh()`'s background body runs in
+  `synchronized (refreshLock)`, one refresh at a time.
+- **On a merge:** if upstream reworks `refresh()` or `refreshEditor()`, keep one refresh per frame from `addReward`'s
+  per-card calls and the TFR sale; `EditorRefreshCoalesceTest` covers the folding.
+
 ### Round 1025 - this-turn-only attackers, Flat MC discovery, landfall land drop, fight targets (three upstream PR drafts); the finisher-pump-hold rule
 - `forge-ai/src/main/java/forge/ai/ComputerUtilCard.java` (STOCK): new public `leavesPlayAtEndStep`,
   `leavesPlayThisTurn`, `isThisTurnOnlyAttackerPlay`, `thisTurnOnlyAttackerAttacks` (with the per-thread cache

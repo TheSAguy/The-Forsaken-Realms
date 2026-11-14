@@ -815,8 +815,13 @@ public class AdventureDeckEditor extends FDeckEditor {
         }
     }
 
+    private static final Object refreshLock = new Object(); // TFR round 1027
+
     public void refresh() {
         FThreads.invokeInBackgroundThread(() -> {
+            // TFR round 1027: one refresh at a time. Each call starts its own thread, and two walking the same
+            // ItemManager at once (the editor's entry refresh and a reward's) can empty a selection under the other.
+            synchronized (refreshLock) {
             for (TabPage<FDeckEditor> page : tabPages) {
                 if (page instanceof CollectionAutoSellPage p)
                     p.refresh();
@@ -824,6 +829,7 @@ public class AdventureDeckEditor extends FDeckEditor {
                     p.scheduleRefresh();
                 else if (page instanceof CardManagerPage p)
                     p.refresh();
+            }
             }
         });
     }

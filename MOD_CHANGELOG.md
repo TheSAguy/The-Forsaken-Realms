@@ -14264,6 +14264,49 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 1027: the reward screen's auto-sell no longer races the deck editor's refresh (logs-1113 P3-28) (2026-11-14)
+
+From the log review `C:\CLAUDE\PROJECTS\TFR1\notes\logs-1113.md`, P3-28: on Android 1.28 (fb448b7a, Pixel 8, research
+v2), closing a reward screen with 5 auto-sell cards threw `IndexOutOfBoundsException` in
+`ItemListView.getSelectedIndex` on a background thread (`AdventureDeckEditor$CollectionAutoSellPage.refresh`), caught as
+`[TFR-Error] crash report not shown`, footer `errors=1`.
+
+- **Cause:** stock `AdventureDeckEditor.refresh()` starts a new background thread for every call, and stock
+  `AdventurePlayer.addReward` called it once per auto-sell card. Round 751's `sellAutoSellPile` then cleared the pile on
+  the GL thread while those threads walked it, and called it once more. The background read of the selection and the
+  GL thread's clear raced.
+- **Fix:** `AdventurePlayer.refreshEditor()` now calls `requestEditorRefresh()`. The first request in a frame posts
+  one `Gdx.app.postRunnable`; later ones only count. The posted runnable runs the editor's refresh once, after the
+  frame, so the reward's per-card requests and the sale's fold into one refresh that starts after `clear()`. It logs
+  `[TFR-EditorRefresh] N refresh request(s) folded into 1` when it folds more than one.
+- **The backdrop side effect:** the stock call read the scene through `DeckEditScene.getInstance(null).getScreen()`,
+  which set the scene's backdrop to null and built an editor when none existed (with that null backdrop). The new
+  `DeckEditScene.existingEditor()` returns the built editor or null, and changes nothing. With no editor built there
+  is nothing to refresh: `DeckEditScene.enter()` refreshes a new editor on entry.
+- **The overlap guard:** `DeckEditScene.enter()` (and the shop, `DeckPreviewScene`) start the editor's own refresh. A
+  coalesced refresh could still overlap one of those, two background threads on one `ItemManager`. The background body
+  of `AdventureDeckEditor.refresh()` now runs inside `synchronized (refreshLock)`, so two refreshes run one after the
+  other. No path in it waits on the GL thread (`scheduleRefresh` and `ItemManager` post with `invokeInEdtLater` /
+  `NowOrLater`), so the lock can't deadlock. Callers of `AdventureDeckEditor.refresh` in the code graph: 5
+  (`refreshEditor`, `DeckEditScene.enter`, `DeckPreviewScene.enter`, `ShopScene.enter`, `ShopScene.doAutosell`); none
+  depends on two refreshes running at once.
+- **Not done:** the GL thread can still change a pool while one background refresh reads it (stock's design, e.g. a
+  sale in the open editor). This round removes the TFR-made case, the reward screen's burst.
+- **Files:** `forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java` (STOCK; `requestEditorRefresh`, the
+  test hooks `editorRefreshPoster` / `editorRefreshTarget`), `forge-gui-mobile/src/forge/adventure/scene/DeckEditScene.java`
+  (STOCK; `existingEditor`), `forge-gui-mobile/src/forge/adventure/scene/AdventureDeckEditor.java` (STOCK; `refreshLock`),
+  `forge-gui-mobile/test/forge/adventure/player/EditorRefreshCoalesceTest.java` (new). No data change, no save change.
+- **Checked:**
+  - Maven `-o -pl forge-gui-mobile-dev -am package -Dtest='forge.adventure.**'` exit 0, 113/113 (log
+    `C:\CLAUDE\PROJECTS\TFR1\notes\r1027\mvn_test.log`). `EditorRefreshCoalesceTest`: 5 auto-sell requests plus the sale's
+    give 1 posted runnable and 1 refresh, not 6; a later frame refreshes again.
+  - Agent game (cheats, the round's classes ahead of the agent jar, the agent's research v2 auto save, the duel at 50x):
+    won against Ember Dwende, flipped the reward cards, ticked All, Done. forge.log:
+    `[TFR-Research] auto-sell (reward screen): 3 card(s) sold for 300 gold`, then
+    `[TFR-EditorRefresh] 4 refresh request(s) folded into 1`, footer `errors=0`. Shot:
+    `C:\CLAUDE\PROJECTS\TFR1\notes\r1027\reward_autosell.png`. A first try ticked All before the cards flipped:
+    `RewardActor.setAutoSell` skips an unflipped card (stock), so nothing was marked.
+
 ## Round 1025: the AI stops wasting cards and mana (this-turn-only attackers, a finishing pump spent on a wall, landfall, Kogla's fight); Artificial Evolution swapped out (2026-11-13)
 
 The user's words: "I'd like for you to continue work on improving the AI please." The main thread scoped it to the

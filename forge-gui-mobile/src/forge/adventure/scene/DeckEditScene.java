@@ -31,6 +31,12 @@ public class DeckEditScene extends ForgeScene {
         return object;
     }
 
+    /** TFR round 1027: the editor if one is built, else null. Unlike getInstance(null).getScreen(), it neither nulls the
+     *  backdrop nor builds an editor. */
+    public static AdventureDeckEditor existingEditor() {
+        return object == null ? null : object.screen;
+    }
+
     public void loadEvent(AdventureEventData event){
         currentEvent = event;
     }
