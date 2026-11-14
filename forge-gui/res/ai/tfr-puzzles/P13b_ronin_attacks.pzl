@@ -1,0 +1,18 @@
+[metadata]
+Name:P13b - guard: Reinforced Ronin is cast when it attacks (round 1025)
+Description:P13's guard. The same AI hand, but the opponent has no creature: the Ronin is cast and attacks for 2. Expect: cast, and the opponent at 18 or less.
+Turns:1
+Expect:aiplayed has Reinforced Ronin
+Expect:humanlife<=18
+[state]
+humanlife=20
+ailife=20
+turn=6
+activeplayer=ai
+activephase=MAIN1
+humanhand=
+humanlibrary=Forest;Forest;Forest;Forest;Forest
+humanbattlefield=Forest;Forest;Forest;Forest
+aihand=Reinforced Ronin
+ailibrary=Mountain;Mountain;Mountain;Mountain;Mountain
+aibattlefield=Mountain

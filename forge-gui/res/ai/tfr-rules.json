@@ -33,6 +33,14 @@
       "params": { "rounds": 3, "minLifeAfter": 1, "onlyWhenNoAttack": true },
       "test": ["P6_eldrazi_pressure", "P6b_lifelink_stall_hold", "P4_block_trigger_trap", "P5_crack_back_hold"],
       "retireWhen": "Round 1021: on the eldrazi_scion vs crocodile stall boards Forge declares no attack for 30+ turns: each token fails AiAttackController.shouldAttack (one blocker kills it), and the all-out level needs an attritional kill and a life-ratio lead the token side never has; nothing in between sends the surplus and keeps chump blockers home. The rule sends the surplus when its damage past the best blocks, minus lifelink (paid lifelink like Stonefare Crocodile's included), kills within 'rounds' turns at that rate, the opponent's all-out swing back into what stays home leaves the AI at 'minLifeAfter' or more, and that swing back costs no more than the chip. onlyWhenNoAttack: only when Forge declared no attack. Retire when P6 attacks at off, lite and max with the rules off (the puzzle test says RETIRE?)."
+    },
+    {
+      "id": "finisher-pump-hold",
+      "kind": "spell",
+      "enabled": ["Normal", "Hard", "Insane", "Other"],
+      "params": {},
+      "test": ["P15_infect_pumps_on_wall", "P15c_pump_no_kill_next_turn"],
+      "retireWhen": "Round 1025 (round 1023's study F5): Forge's pump AI judges each pump alone, so on the opponent's turn the infect deck spent Groundswell and then Primal Bellow on its 0/4 wall to kill a 2/2, and lost the poison kill they made next turn. The rule holds a pump on a blocker (no lifelink or trample involved, stack empty) when the AI's next attack kills with it kept and not with it spent, against every way the opponent's untapped creatures can block. Retire when P15 passes with the rules off at off, lite and max (the puzzle test says RETIRE?)."
     }
   ]
 }

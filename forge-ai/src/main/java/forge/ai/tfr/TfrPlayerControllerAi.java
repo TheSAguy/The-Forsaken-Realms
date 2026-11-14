@@ -31,7 +31,11 @@ public class TfrPlayerControllerAi extends PlayerControllerAi {
     @Override
     public List<SpellAbility> chooseSpellAbilityToPlay() {
         announce();
-        return super.chooseSpellAbilityToPlay();
+        final List<SpellAbility> chosen = super.chooseSpellAbilityToPlay();
+        if (TfrAiRules.holdFinisherPump(getPlayer(), chosen)) {
+            return null; // round 1025, finisher-pump-hold: keep the pump, pass priority
+        }
+        return chosen;
     }
 
     @Override

@@ -1,0 +1,18 @@
+[metadata]
+Name:P15c - guard: no kill next turn, so the pumps are Forge's call (round 1025)
+Description:P15's board with the opponent at 0 poison: Elf + Wolf + both pumps is 8 poison, no kill next turn, so finisher-pump-hold must stay out and Forge pumps its blocker as it likes. Expect: the rule never fires.
+Turns:2
+Expect:fired finisher-pump-hold=0
+[state]
+humanlife=20
+ailife=9
+humancounters=POISON=0
+turn=9
+activeplayer=ai
+activephase=END_OF_TURN
+humanhand=
+humanlibrary=Plains;Plains;Plains;Plains;Plains
+humanbattlefield=Moorland Inquisitor;Battershield Warrior;Celebrity Fencer;Plains;Plains;Plains;Plains
+aihand=Groundswell;Primal Bellow
+ailibrary=Forest;Forest;Forest;Forest;Forest
+aibattlefield=Overgrown Battlement;Glistener Elf|Tapped;Rot Wolf|Tapped;Forest;Forest;Forest|Tapped

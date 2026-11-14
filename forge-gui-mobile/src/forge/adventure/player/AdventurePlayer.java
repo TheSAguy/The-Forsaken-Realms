@@ -3070,9 +3070,44 @@ public class AdventurePlayer implements Serializable, SaveFileContent {
     private static boolean researchNoticeFailed; // round 926: its log line once per launch
 
     private void refreshEditor() {
-        AdventureDeckEditor editor = ((AdventureDeckEditor) DeckEditScene.getInstance(null).getScreen());
+        requestEditorRefresh();
+    }
+
+    // Round 1027 (logs-1113 P3-28: an IndexOutOfBoundsException in ItemListView.getSelectedIndex on a background thread
+    // as a research v2 reward screen closed). The editor's refresh() starts a NEW background thread per call; addReward
+    // asked for one per auto-sell card, and sellAutoSellPile then cleared the pile on the GL thread while those threads
+    // walked it, and asked for one more. Requests now fold into one refresh, posted after the current frame, so it runs
+    // once, after the clear(). The stock call read the scene through getInstance(null), which nulled its backdrop and
+    // built an editor when none existed; existingEditor() only reads it.
+    static java.util.function.Consumer<Runnable> editorRefreshPoster = r -> {
+        if (com.badlogic.gdx.Gdx.app == null)
+            r.run(); // no app (a tool): nothing to wait for
+        else
+            com.badlogic.gdx.Gdx.app.postRunnable(r);
+    };
+    static Runnable editorRefreshTarget = () -> {
+        AdventureDeckEditor editor = DeckEditScene.existingEditor();
         if (editor != null)
             editor.refresh();
+    };
+    private static int editorRefreshRequests;
+
+    static void requestEditorRefresh() {
+        synchronized (AdventurePlayer.class) {
+            if (editorRefreshRequests++ > 0)
+                return; // one is already posted for this frame
+        }
+        Runnable run = () -> {
+            int n;
+            synchronized (AdventurePlayer.class) {
+                n = editorRefreshRequests;
+                editorRefreshRequests = 0;
+            }
+            if (n > 1)
+                System.out.println("[TFR-EditorRefresh] " + n + " refresh request(s) folded into 1");
+            editorRefreshTarget.run();
+        };
+        editorRefreshPoster.accept(run);
     }
 
     // Round 230 (log review 2026-09-18: [TFR-DayTick] showed economy=~590ms on every 7th day and 1-3ms on

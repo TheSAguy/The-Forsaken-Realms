@@ -56,7 +56,9 @@ public class PermanentCreatureAi extends PermanentAi {
 
         // Prevent the computer from summoning Ball Lightning type creatures
         // after attacking
-        if (card.hasSVar("EndOfTurnLeavePlay")
+        // TFR round 1025: also a creature whose own end-step trigger takes it away (Reinforced Ronin's script has no SVar)
+        final boolean leavesThisTurn = ComputerUtilCard.leavesPlayThisTurn(card);
+        if (leavesThisTurn
                 && (!ph.isPlayerTurn(ai) || ph.getPhase().isAfter(PhaseType.COMBAT_DECLARE_ATTACKERS)
                 || game.getReplacementHandler().wouldPhaseBeSkipped(ai, PhaseType.COMBAT_BEGIN))) {
             // AiPlayDecision.AnotherTime
@@ -69,6 +71,21 @@ public class PermanentCreatureAi extends PermanentAi {
                     return false;
                 }
             }
+        }
+        // TFR round 1025: a haste creature that leaves at the end step is worth its cost only if it attacks this turn
+        // (as dash already checks above): Reinforced Ronin cast into an untapped 4/4 just sits there and goes back to hand.
+        // Not for blitz (it draws a card), nor a creature with an enter trigger (its value may be the trigger).
+        if (leavesThisTurn && !sa.isBlitz() && card.hasKeyword(Keyword.HASTE) && !card.hasETBTrigger(true)
+                && ph.isPlayerTurn(ai) && !ph.getPhase().isAfter(PhaseType.COMBAT_BEGIN)) {
+            final Card attacker = CardCopyService.getLKICopy(card);
+            attacker.setSickness(false);
+            if (!ComputerUtilCard.thisTurnOnlyAttackerAttacks(ai, attacker, card)) {
+                forge.ai.tfr.TfrAiRules.stockFix(ai, "temp-creature:" + card.getId(),
+                        card.getName() + ": not cast (it would not attack, leaves at the end step)");
+                return false;
+            }
+            forge.ai.tfr.TfrAiRules.stockFix(ai, "temp-creature-attacks:" + card.getId(),
+                    card.getName() + ": may be cast (it would attack this turn)");
         }
 
         // Flash logic

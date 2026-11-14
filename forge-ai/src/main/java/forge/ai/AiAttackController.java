@@ -939,6 +939,9 @@ public class AiAttackController {
                         if (attacker.getSVar("MustAttack").equals("True")) {
                             mustAttackDef = finalDefender;
                         } else if (attacker.hasSVar("EndOfTurnLeavePlay")
+                                // TFR round 1025: not a creature its own trigger returns to hand (Glitterfang, Viashino
+                                // Sandstalker): it is a card again at the end step, so it attacks only when that is good
+                                && ComputerUtilCard.leavesPlayAtEndStep(attacker) != ZoneType.Hand
                                 && isEffectiveAttacker(ai, attacker, combat, finalDefender)) {
                             mustAttackDef = finalDefender;
                         } else if (seasonOfTheWitch) {

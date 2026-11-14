@@ -14264,6 +14264,102 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 1027: the reward screen's auto-sell no longer races the deck editor's refresh (logs-1113 P3-28) (2026-11-14)
+
+From the log review `C:\CLAUDE\PROJECTS\TFR1\notes\logs-1113.md`, P3-28: on Android 1.28 (fb448b7a, Pixel 8, research
+v2), closing a reward screen with 5 auto-sell cards threw `IndexOutOfBoundsException` in
+`ItemListView.getSelectedIndex` on a background thread (`AdventureDeckEditor$CollectionAutoSellPage.refresh`), caught as
+`[TFR-Error] crash report not shown`, footer `errors=1`.
+
+- **Cause:** stock `AdventureDeckEditor.refresh()` starts a new background thread for every call, and stock
+  `AdventurePlayer.addReward` called it once per auto-sell card. Round 751's `sellAutoSellPile` then cleared the pile on
+  the GL thread while those threads walked it, and called it once more. The background read of the selection and the
+  GL thread's clear raced.
+- **Fix:** `AdventurePlayer.refreshEditor()` now calls `requestEditorRefresh()`. The first request in a frame posts
+  one `Gdx.app.postRunnable`; later ones only count. The posted runnable runs the editor's refresh once, after the
+  frame, so the reward's per-card requests and the sale's fold into one refresh that starts after `clear()`. It logs
+  `[TFR-EditorRefresh] N refresh request(s) folded into 1` when it folds more than one.
+- **The backdrop side effect:** the stock call read the scene through `DeckEditScene.getInstance(null).getScreen()`,
+  which set the scene's backdrop to null and built an editor when none existed (with that null backdrop). The new
+  `DeckEditScene.existingEditor()` returns the built editor or null, and changes nothing. With no editor built there
+  is nothing to refresh: `DeckEditScene.enter()` refreshes a new editor on entry.
+- **The overlap guard:** `DeckEditScene.enter()` (and the shop, `DeckPreviewScene`) start the editor's own refresh. A
+  coalesced refresh could still overlap one of those, two background threads on one `ItemManager`. The background body
+  of `AdventureDeckEditor.refresh()` now runs inside `synchronized (refreshLock)`, so two refreshes run one after the
+  other. No path in it waits on the GL thread (`scheduleRefresh` and `ItemManager` post with `invokeInEdtLater` /
+  `NowOrLater`), so the lock can't deadlock. Callers of `AdventureDeckEditor.refresh` in the code graph: 5
+  (`refreshEditor`, `DeckEditScene.enter`, `DeckPreviewScene.enter`, `ShopScene.enter`, `ShopScene.doAutosell`); none
+  depends on two refreshes running at once.
+- **Not done:** the GL thread can still change a pool while one background refresh reads it (stock's design, e.g. a
+  sale in the open editor). This round removes the TFR-made case, the reward screen's burst.
+- **Files:** `forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java` (STOCK; `requestEditorRefresh`, the
+  test hooks `editorRefreshPoster` / `editorRefreshTarget`), `forge-gui-mobile/src/forge/adventure/scene/DeckEditScene.java`
+  (STOCK; `existingEditor`), `forge-gui-mobile/src/forge/adventure/scene/AdventureDeckEditor.java` (STOCK; `refreshLock`),
+  `forge-gui-mobile/test/forge/adventure/player/EditorRefreshCoalesceTest.java` (new). No data change, no save change.
+- **Checked:**
+  - Maven `-o -pl forge-gui-mobile-dev -am package -Dtest='forge.adventure.**'` exit 0, 113/113 (log
+    `C:\CLAUDE\PROJECTS\TFR1\notes\r1027\mvn_test.log`). `EditorRefreshCoalesceTest`: 5 auto-sell requests plus the sale's
+    give 1 posted runnable and 1 refresh, not 6; a later frame refreshes again.
+  - Agent game (cheats, the round's classes ahead of the agent jar, the agent's research v2 auto save, the duel at 50x):
+    won against Ember Dwende, flipped the reward cards, ticked All, Done. forge.log:
+    `[TFR-Research] auto-sell (reward screen): 3 card(s) sold for 300 gold`, then
+    `[TFR-EditorRefresh] 4 refresh request(s) folded into 1`, footer `errors=0`. Shot:
+    `C:\CLAUDE\PROJECTS\TFR1\notes\r1027\reward_autosell.png`. A first try ticked All before the cards flipped:
+    `RewardActor.setAutoSell` skips an unflipped card (stock), so nothing was marked.
+
+## Round 1025: the AI stops wasting cards and mana (this-turn-only attackers, a finishing pump spent on a wall, landfall, Kogla's fight); Artificial Evolution swapped out (2026-11-13)
+
+The user's words: "I'd like for you to continue work on improving the AI please." The main thread scoped it to the
+rest of round 1023's human-seat study (F3, F4, F5, F8) and round 1022's Artificial Evolution swap, then added log lines
+players' logs can count. Findings, puzzles, cost and bench: `C:\CLAUDE\PROJECTS\TFR1\notes\r1025\report.md`; three
+upstream PR drafts (the user posts them) in `C:\CLAUDE\PROJECTS\TFR1\notes\r1025\upstream-pr\`.
+
+- **F3/F4, this-turn-only attackers (stock code):**
+  - `ComputerUtilCard.leavesPlayAtEndStep(card)`: where a card's own unconditional end-step trigger takes it (Hand for
+    Reinforced Ronin and Glitterfang, Graveyard for Ball Lightning), read from the script; `leavesPlayThisTurn` adds the
+    `EndOfTurnLeavePlay` SVar, which Reinforced Ronin and Viashino Cutthroat lack.
+  - `PermanentCreatureAi`: such a haste creature is cast in the AI's own turn before combat only if it would attack
+    (`doesSpecifiedCreatureAttackAI`, dash's own test). Not blitz, not a creature with an enter trigger.
+  - `TokenAi`: a creature token with `AtEOT` Exile/Sacrifice/Destroy, in the AI's own turn: only before attackers, only
+    with haste, only if it would attack; it then skips the 80% token chance. The opponent's turn is unchanged.
+  - `AiAttackController`: the forced attack for `EndOfTurnLeavePlay` skips a creature its own trigger returns to hand
+    (Viashino Sandstalker was thrown into a 4/4 and the card lost).
+  - `AiController.isLegalDiscovery`: Flat Monte Carlo's discovery no longer offers such a play the heuristics turned down
+    (`ComputerUtilCard.isThisTurnOnlyAttackerPlay`); at lite the rollouts picked the Hornet anyway.
+  - The "would it attack" answer is kept per thread while the position is unchanged
+    (`ComputerUtilCard.thisTurnOnlyAttackerAttacks`; key: game id, source, turn, step, life totals, hand size, game
+    timestamp, and a hash of every permanent's id, tapped state, power and toughness; strings and booleans only). The
+    uncached token check cost about 38 ms a call at lite; cached, the round's checks are 0.6% of game time.
+- **F5, the finishing pump (TFR rule `finisher-pump-hold`, no stock line):** on the opponent's turn the seat holds a
+  pump spell Forge chose for its blocker (stack empty, no lifelink or trample involved) when its next attack kills with
+  the pump kept and not with it spent, against every way the opponent's untapped creatures can block. Hook: the seat's
+  own `chooseSpellAbilityToPlay` override, which passes priority. On at Normal/Hard/Insane/Other.
+- **F5, landfall (stock `AiController.isSafeToHoldLandDropForMain2`):** a nonland card in hand with a `Count$Landfall`
+  SVar (Groundswell, Searing Blaze, Tomb Hex, Mysteries of the Deep, Rest for the Weary) means the land is played in
+  main 1.
+- **F8, fights (stock `FightAi`):** the Defined-fighter branch and the mandatory fallback try the best target first
+  (`sortByEvaluateCreature`): Kogla fought a 0/3 wall because it came first on the battlefield.
+- **Logging (the main thread's scope addition, from the 11-13 log review):** each stock fix logs
+  `[TFR-AiFix] <kind> turn N <player> <what>` once per game, turn and card (`TfrAiRules.stockFix`), never in game
+  copies: `temp-creature` / `temp-creature-attacks`, `temp-token` / `temp-token-attacks`, `landfall-hold`, and
+  `fight-target` (only when the best-first pick differs from the battlefield-order pick). The rule logs
+  `[TFR-AiRule] finisher-pump-hold ... -> holds it for next turn: ...`. Round 1020's
+  `C:\CLAUDE\PROJECTS\TFR1\notes\r1020\tools\duel_table.py` now ends with an "AI rule or fix" table: per rule or fix,
+  the duels it fired in, its lines, and the player's win % in those duels.
+- **Artificial Evolution** (a ChangeText spell the AI never casts) leaves 6 enemy decks: the two Aven U decks get Opt,
+  the two Driftbell Medusoid decks Force Spike, the Drowned Deckhand Siren Stormtamer, Kira Spectral Sailor (same color
+  and cost). The two `rewards/tier-B.dck` pools keep it (player rewards; one is the stock Shandalar plane).
+- **Puzzles:** P13, P13b, P13c, P13d, P14, P14b, P15, P15b, P15c, P16. `TfrAiPuzzleTest` learns `aiplayed has|lacks
+  NAME` (a spell cast or ability activated from that card).
+- **Proof:** each new puzzle fails 0/3 on stock and passes 3/3 fixed (guards pass both); `TfrAiPuzzleTest` passes all 30
+  puzzles at off, lite and max (rules on 3/3 everywhere, no RETIRE?). Bench (both arms at once): the round's decks won
+  100 -> 91 of 192 at off over three seeds (seed 1117 37 -> 28, then 30 -> 31 and 33 -> 32: noise) and 29 -> 32 at lite;
+  pairs14 51 -> 50 at off, 56 -> 50 at lite; per-turn time at lite 353 -> 352 ms, no AI timeouts.
+- **Open:** Forge's attack AI doesn't count a pump in hand toward a poison kill (P15 played on: the rule wins 2 of 3,
+  stock 0 of 3; the third run the AI didn't attack).
+- **Rules still live** (`TfrAiPuzzleTest`, off/lite/max): etb-drawback-allow, mc-attack-cut-guard, alpha-strike-count
+  (shadow), pressure-attack, finisher-pump-hold.
+
 ## Round 1028: the AI takes a draw offer when the duel has stopped moving (2026-11-13)
 
 The log review `C:\CLAUDE\PROJECTS\TFR1\notes\logs-1113.md` (P3-29) found a two-sided lifegain stall: a Linux 1.28
