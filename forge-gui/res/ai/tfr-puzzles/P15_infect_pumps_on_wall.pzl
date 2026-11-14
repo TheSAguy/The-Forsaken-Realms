@@ -1,0 +1,19 @@
+[metadata]
+Name:P15 - an infect deck spends its finishing pump on a 0-power wall (round 1025, from round 1023's study F5)
+Description:Duel 5, turn 10 of the study, with its cards. The opponent (5 poison) attacks with Moorland Inquisitor, Battershield Warrior (Boast {1}{W}: creatures you control get +1/+1) and Celebrity Fencer; the AI (9 life) has Overgrown Battlement (0/4 defender) untapped, its infect creatures (Glistener Elf, Rot Wolf) tapped, Forests, and Groundswell and Primal Bellow in hand. Stock Forge blocks the Warrior with the wall, casts Groundswell on it, and after the Boast casts Primal Bellow too: the wall survives the 3/3 without either, and the opponent's attackers stay tapped through the AI's turn, so Elf + Wolf + one pump is 10 poison. Rule finisher-pump-hold keeps the pump the kill needs. Expect: Primal Bellow still in hand after the opponent's turn. (Starts at the AI's end step: a land the puzzle puts down counts as landfall that turn. Played on to the AI's turn the rule wins 2 of 3 at off and stock 0 of 3; the third run the AI, at 2 life, does not attack: its attack AI does not count a pump in hand toward a poison kill.)
+Turns:2
+Expect:aihand has Primal Bellow
+RulesOff:fail
+[state]
+humanlife=20
+ailife=9
+humancounters=POISON=5
+turn=9
+activeplayer=ai
+activephase=END_OF_TURN
+humanhand=
+humanlibrary=Plains;Plains;Plains;Plains;Plains
+humanbattlefield=Moorland Inquisitor;Battershield Warrior;Celebrity Fencer;Plains;Plains;Plains;Plains
+aihand=Groundswell;Primal Bellow
+ailibrary=Forest;Forest;Forest;Forest;Forest
+aibattlefield=Overgrown Battlement;Glistener Elf|Tapped;Rot Wolf|Tapped;Forest;Forest;Forest|Tapped

@@ -55,10 +55,14 @@ public class FightAi extends SpellAbilityAi {
                 return new AiAbilityDecision(0, AiPlayDecision.MissingNeededCards);
             }
             Card fighter1 = fighter1List.get(0);
-            for (Card humanCreature : humCreatures) {
+            // TFR round 1025: best target first. Battlefield order made Kogla fight a 0/3 wall next to a 3/2 trampler.
+            final CardCollection byValue = new CardCollection(humCreatures);
+            ComputerUtilCard.sortByEvaluateCreature(byValue);
+            for (Card humanCreature : byValue) {
                 if (canKill(fighter1, humanCreature, 0)
                         && !canKill(humanCreature, fighter1, 0)) {
                     // todo: check min/max targets; see if we picked the best matchup
+                    noteTargetSwitch(ai, source, humCreatures, humanCreature, fighter1, false);
                     sa.getTargets().add(humanCreature);
                     return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
                 }
@@ -149,9 +153,15 @@ public class FightAi extends SpellAbilityAi {
                 return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
             }
             Card aiCreature = definedCards.get(0);
+            // TFR round 1025: best target first (see checkApiLogic)
+            final List<Card> inOrder = humCreatures;
+            final CardCollection byValue = new CardCollection(humCreatures);
+            ComputerUtilCard.sortByEvaluateCreature(byValue);
+            humCreatures = byValue;
             for (Card humanCreature : humCreatures) {
                 if (canKill(aiCreature, humanCreature, 0)
                         && ComputerUtilCard.evaluateCreature(humanCreature) > ComputerUtilCard.evaluateCreature(aiCreature)) {
+                    noteTargetSwitch(ai, source, inOrder, humanCreature, aiCreature, true);
                     sa.getTargets().add(humanCreature);
                     return new AiAbilityDecision(100, AiPlayDecision.MandatoryPlay);
                 }
@@ -168,6 +178,30 @@ public class FightAi extends SpellAbilityAi {
         return new AiAbilityDecision(50, AiPlayDecision.MandatoryPlay);
     }
     
+    /**
+     * TFR round 1025: logs [TFR-AiFix] fight-target when the best-first order picked another creature than the stock
+     * battlefield-order walk would have (the first one the fighter kills and survives, or for a mandatory trigger
+     * the first one it kills that is worth more).
+     */
+    private static void noteTargetSwitch(final Player ai, final Card source, final List<Card> inOrder, final Card picked,
+                                         final Card fighter, final boolean mandatory) {
+        if (ai.getGame().isSimulationCopy()) {
+            return;
+        }
+        for (final Card c : inOrder) {
+            final boolean stockPick = mandatory
+                    ? canKill(fighter, c, 0) && ComputerUtilCard.evaluateCreature(c) > ComputerUtilCard.evaluateCreature(fighter)
+                    : canKill(fighter, c, 0) && !canKill(c, fighter, 0);
+            if (stockPick) {
+                if (c != picked) {
+                    forge.ai.tfr.TfrAiRules.stockFix(ai, "fight-target:" + source.getId(),
+                            source.getName() + ": fights " + picked.getName() + ", not " + c.getName() + " (battlefield order)");
+                }
+                return;
+            }
+        }
+    }
+
     /**
      * Logic for evaluating fight effects
      * @param ai controlling player

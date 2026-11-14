@@ -844,6 +844,106 @@ public class ComputerUtilCard {
     }
 
     /**
+     * TFR round 1025: where a permanent's own unconditional "at the beginning of the end step, return / sacrifice /
+     * destroy / exile CARDNAME" trigger takes it (Ball Lightning: Graveyard, Reinforced Ronin and Glitterfang: Hand),
+     * or null when it has none. Unlike the EndOfTurnLeavePlay SVar this reads the script, so it also finds the cards
+     * whose script lacks the SVar (Reinforced Ronin, Viashino Cutthroat), and it tells a card that comes back to hand
+     * from one that is gone. A trigger with a condition (IsPresent, CheckSVar) or an UnlessCost (Lathnu Hellion) is not
+     * counted: the card may stay.
+     */
+    public static ZoneType leavesPlayAtEndStep(final Card c) {
+        for (final Trigger t : c.getTriggers()) {
+            if (t.getMode() != TriggerType.Phase || !"End of Turn".equals(t.getParam("Phase"))
+                    || t.hasParam("IsPresent") || t.hasParam("CheckSVar") || t.hasParam("Condition")
+                    || t.hasParam("OptionalDecider") || !"Battlefield".equals(t.getParam("TriggerZones"))) {
+                continue;
+            }
+            final SpellAbility exec = t.ensureAbility();
+            if (exec == null || exec.hasParam("UnlessCost") || exec.hasParam("Optional") || exec.hasParam("ConditionCheckSVar")) {
+                continue;
+            }
+            final String defined = exec.getParamOrDefault("Defined", "Self");
+            if (exec.getApi() == ApiType.ChangeZone && "Battlefield".equals(exec.getParam("Origin"))
+                    && "Self".equals(defined) && exec.hasParam("Destination")) {
+                return ZoneType.smartValueOf(exec.getParam("Destination"));
+            }
+            if (exec.getApi() == ApiType.Sacrifice && "Self".equals(exec.getParam("SacValid"))
+                    || exec.getApi() == ApiType.Destroy && "Self".equals(defined) && !exec.usesTargeting()) {
+                return ZoneType.Graveyard;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * TFR round 1025: a creature that will not be on the battlefield after this turn's end step, by the
+     * EndOfTurnLeavePlay SVar (dash, blitz, AtEOT tokens and most scripts) or by its own end-step trigger.
+     */
+    public static boolean leavesPlayThisTurn(final Card c) {
+        return c.hasSVar("EndOfTurnLeavePlay") || leavesPlayAtEndStep(c) != null;
+    }
+
+    /** TFR round 1025: the answers of {@link #thisTurnOnlyAttackerAttacks}, per thread, while the position is unchanged. */
+    private static final ThreadLocal<Map<String, Boolean>> THIS_TURN_ATTACKS = ThreadLocal.withInitial(
+            () -> new java.util.LinkedHashMap<String, Boolean>(32, 0.75f, true) {
+                @Override
+                protected boolean removeEldestEntry(final Map.Entry<String, Boolean> e) {
+                    return size() > 64;
+                }
+            });
+
+    /**
+     * TFR round 1025: {@link #doesSpecifiedCreatureAttackAI} for a creature or token that would leave at the end step,
+     * asked for the card or ability {@code source}. The AI asks the same question at every priority stop of its main
+     * phase (about 38 ms a time at lite on a big board), so the answer is kept while the position is the same: the
+     * key is the game (every game copy has its own id), the source, the turn and step, both life totals, the AI's hand
+     * size and the game's timestamp, and a hash of every permanent's id, tapped state, power and toughness (tapping does
+     * not move the timestamp). It holds strings and booleans only, never a card or game.
+     */
+    public static boolean thisTurnOnlyAttackerAttacks(final Player ai, final Card attacker, final Card source) {
+        final forge.game.Game game = ai.getGame();
+        long board = 17;
+        for (final Card c : game.getCardsIn(ZoneType.Battlefield)) {
+            board = board * 31 + c.getId();
+            board = board * 31 + (c.isTapped() ? 1 : 0);
+            if (c.isCreature()) {
+                board = board * 31 + c.getNetPower();
+                board = board * 31 + c.getNetToughness();
+            }
+        }
+        int oppLife = 0;
+        for (final Player o : ai.getOpponents()) {
+            oppLife = oppLife * 31 + o.getLife();
+        }
+        final String key = game.getId() + ":" + source.getId() + ":" + game.getPhaseHandler().getTurn() + ":"
+                + game.getPhaseHandler().getPhase() + ":" + ai.getLife() + ":" + oppLife + ":"
+                + ai.getCardsIn(ZoneType.Hand).size() + ":" + game.getTimestamp() + ":" + board;
+        final Map<String, Boolean> cache = THIS_TURN_ATTACKS.get();
+        final Boolean known = cache.get(key);
+        if (known != null) {
+            return known;
+        }
+        final boolean attacks = doesSpecifiedCreatureAttackAI(ai, attacker);
+        cache.put(key, attacks);
+        return attacks;
+    }
+
+    /**
+     * TFR round 1025: a play whose only worth is an attack this turn: casting a haste creature that leaves at the end
+     * step, or making a creature token destroyed, sacrificed or exiled at the next end step (not one made attacking).
+     */
+    public static boolean isThisTurnOnlyAttackerPlay(final SpellAbility sa) {
+        final Card host = sa.getHostCard();
+        if (sa.isSpell() && host != null && host.isCreature() && !sa.isBlitz() && host.hasKeyword(Keyword.HASTE)
+                && leavesPlayThisTurn(host)) {
+            return true;
+        }
+        final String eot = sa.getParam("AtEOT");
+        return sa.getApi() == ApiType.Token && !sa.isPwAbility() && !sa.hasParam("TokenAttacking")
+                && ("Exile".equals(eot) || "Sacrifice".equals(eot) || "Destroy".equals(eot));
+    }
+
+    /**
      * Create a mock combat where ai is being attacked and returns the list of likely blockers.
      *
      * @param ai       blocking player

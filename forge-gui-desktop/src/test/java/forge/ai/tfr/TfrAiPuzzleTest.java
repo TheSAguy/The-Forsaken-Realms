@@ -28,6 +28,7 @@ import forge.game.Match;
 import forge.game.card.Card;
 import forge.game.event.GameEvent;
 import forge.game.event.GameEventAttackersDeclared;
+import forge.game.event.GameEventSpellAbilityCast;
 import forge.game.event.GameEventTurnBegan;
 import forge.game.player.Player;
 import forge.game.player.RegisteredPlayer;
@@ -49,7 +50,9 @@ import static org.testng.Assert.fail;
  *   <li>{@code Turns:N}: stop after N turns;</li>
  *   <li>{@code Expect:...}: checked at the end: {@code winner=ai}, {@code humanlife<=N}, {@code ailife>=N},
  *   {@code <zone> has|lacks NAME} (zone = aibattlefield, humangraveyard, ...), {@code fired <rule id>=N},
- *   {@code aiattackers>=N} / {@code aiattackers<=N} (the most attackers the AI declared in one combat, round 1019);</li>
+ *   {@code aiattackers>=N} / {@code aiattackers<=N} (the most attackers the AI declared in one combat, round 1019),
+ *   {@code aiplayed has|lacks NAME} / {@code humanplayed ...} (a spell cast or ability activated from that card, round
+ *   1025);</li>
  *   <li>{@code RulesOff:pass|fail} or per strength {@code RulesOff:off=fail,lite=fail,max=pass}: what the puzzle does
  *   with the rules off (default pass). With the rules on every puzzle must pass every run.</li>
  * </ul>
@@ -184,6 +187,15 @@ public class TfrAiPuzzleTest extends AITest {
             game.AI_FLAT_MONTE_CARLO_LITE = "lite".equals(mc);
             final int limit = turns;
             final Map<String, Integer> mostAttackers = new HashMap<>();
+            final java.util.Set<String> played = java.util.Collections.synchronizedSet(new java.util.HashSet<>());
+            game.subscribeToEvents(new Object() {
+                @Subscribe
+                public void on(final GameEventSpellAbilityCast ev) {
+                    if (!ev.si().isTrigger() && ev.sa().getHostCard() != null) {
+                        played.add(ev.si().getActivatingPlayer().getName() + ":" + ev.sa().getHostCard().getName().toLowerCase());
+                    }
+                }
+            });
             game.subscribeToEvents(new Object() {
                 @Subscribe
                 public void on(final GameEventAttackersDeclared ev) {
@@ -217,7 +229,7 @@ public class TfrAiPuzzleTest extends AITest {
             boolean ok = true;
             final StringBuilder why = new StringBuilder();
             for (final String ex : expects) {
-                final boolean pass = check(ex, hp, ap, fired, mostAttackers.getOrDefault(ap.getName(), 0));
+                final boolean pass = check(ex, hp, ap, fired, mostAttackers.getOrDefault(ap.getName(), 0), played);
                 ok &= pass;
                 why.append(pass ? " pass: " : " FAIL: ").append(ex).append(';');
             }
@@ -231,7 +243,8 @@ public class TfrAiPuzzleTest extends AITest {
         return passes;
     }
 
-    static boolean check(final String ex, final Player hp, final Player ap, final Map<String, Integer> fired, final int aiAttackers) {
+    static boolean check(final String ex, final Player hp, final Player ap, final Map<String, Integer> fired, final int aiAttackers,
+                         final java.util.Set<String> played) {
         if (ex.startsWith("aiattackers>=")) {
             return aiAttackers >= Integer.parseInt(ex.substring(13).trim());
         }
@@ -252,6 +265,10 @@ public class TfrAiPuzzleTest extends AITest {
             return fired.getOrDefault(kv[0].trim(), 0) == Integer.parseInt(kv[1].trim());
         }
         final String[] w = ex.split(" ", 3);
+        if (w[0].endsWith("played")) {
+            final Player who = w[0].startsWith("human") ? hp : ap;
+            return w[1].equals("has") == played.contains(who.getName() + ":" + w[2].toLowerCase());
+        }
         final Player p = w[0].startsWith("human") ? hp : ap;
         final ZoneType z = ZoneType.smartValueOf(w[0].replaceFirst("^(human|ai)", ""));
         boolean has = false;

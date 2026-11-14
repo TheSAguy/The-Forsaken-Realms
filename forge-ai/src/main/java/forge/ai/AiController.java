@@ -1924,6 +1924,14 @@ public class AiController {
             return false;
         });
 
+        // TFR round 1025: a spell in hand that is stronger with landfall (Groundswell, Searing Blaze: Count$Landfall) needs
+        // the land first; held for main 2, the study's infect deck cast Groundswell in combat for +2/+2 instead of +4/+4
+        if (!hasLandBasedEffect && inHand.anyMatch(c -> c.getSVars().values().stream().anyMatch(v -> v.startsWith("Count$Landfall")))) {
+            hasLandBasedEffect = true;
+            forge.ai.tfr.TfrAiRules.stockFix(player, "landfall-hold:" + landToPlay.getId(),
+                    landToPlay.getName() + " played in main 1, not held for main 2 (a landfall spell in hand)");
+        }
+
         // TODO: add prediction for effects that will untap a tapland as it enters the battlefield
         if (!canCastWithLandDrop && cantCastAnythingNow && !hasLandBasedEffect && (!hasRelevantAbsOTB || isTapLand)) {
             // Hopefully there's not much to do with the extra mana immediately, can wait for Main 2
@@ -2733,6 +2741,11 @@ public class AiController {
                 return false;
             default:
                 break;
+        }
+        if (!opinion.willingToPlay() && ComputerUtilCard.isThisTurnOnlyAttackerPlay(sa)) {
+            // TFR round 1025: a creature or token gone at the end step is worth its cost only through this turn's
+            // attack, which the heuristics just judged; the rollouts cannot see the waste (Hornet Cannon at lite)
+            return false;
         }
         if (TimedAbilityGuard.isTimed(sa) && !opinion.willingToPlay()) {
             // a manland, crew, saddle or station is only worth its cost at one moment of the turn, and the heuristics

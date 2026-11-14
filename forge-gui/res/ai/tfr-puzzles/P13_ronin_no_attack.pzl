@@ -1,0 +1,17 @@
+[metadata]
+Name:P13 - Reinforced Ronin cast when it will not attack (round 1025, from round 1023's study F3)
+Description:The AI holds Reinforced Ronin (2/2 haste, returns to its owner's hand at its end step) and one Mountain; the opponent has an untapped Rumbling Baloth (4/4). The Ronin can't attack into the Baloth, so casting it buys nothing: it sits there and goes back to hand. The study's Crimson Burrower cast it on 5 of 7 turns it did not attack. Expect: the AI does not cast the Ronin.
+Turns:1
+Expect:aiplayed lacks Reinforced Ronin
+[state]
+humanlife=20
+ailife=20
+turn=6
+activeplayer=ai
+activephase=MAIN1
+humanhand=
+humanlibrary=Forest;Forest;Forest;Forest;Forest
+humanbattlefield=Rumbling Baloth;Forest;Forest;Forest;Forest
+aihand=Reinforced Ronin
+ailibrary=Mountain;Mountain;Mountain;Mountain;Mountain
+aibattlefield=Mountain

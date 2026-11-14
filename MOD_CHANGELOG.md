@@ -14264,6 +14264,59 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 1025: the AI stops wasting cards and mana (this-turn-only attackers, a finishing pump spent on a wall, landfall, Kogla's fight); Artificial Evolution swapped out (2026-11-13)
+
+The user's words: "I'd like for you to continue work on improving the AI please." The main thread scoped it to the
+rest of round 1023's human-seat study (F3, F4, F5, F8) and round 1022's Artificial Evolution swap, then added log lines
+players' logs can count. Findings, puzzles, cost and bench: `C:\CLAUDE\PROJECTS\TFR1\notes\r1025\report.md`; three
+upstream PR drafts (the user posts them) in `C:\CLAUDE\PROJECTS\TFR1\notes\r1025\upstream-pr\`.
+
+- **F3/F4, this-turn-only attackers (stock code):**
+  - `ComputerUtilCard.leavesPlayAtEndStep(card)`: where a card's own unconditional end-step trigger takes it (Hand for
+    Reinforced Ronin and Glitterfang, Graveyard for Ball Lightning), read from the script; `leavesPlayThisTurn` adds the
+    `EndOfTurnLeavePlay` SVar, which Reinforced Ronin and Viashino Cutthroat lack.
+  - `PermanentCreatureAi`: such a haste creature is cast in the AI's own turn before combat only if it would attack
+    (`doesSpecifiedCreatureAttackAI`, dash's own test). Not blitz, not a creature with an enter trigger.
+  - `TokenAi`: a creature token with `AtEOT` Exile/Sacrifice/Destroy, in the AI's own turn: only before attackers, only
+    with haste, only if it would attack; it then skips the 80% token chance. The opponent's turn is unchanged.
+  - `AiAttackController`: the forced attack for `EndOfTurnLeavePlay` skips a creature its own trigger returns to hand
+    (Viashino Sandstalker was thrown into a 4/4 and the card lost).
+  - `AiController.isLegalDiscovery`: Flat Monte Carlo's discovery no longer offers such a play the heuristics turned down
+    (`ComputerUtilCard.isThisTurnOnlyAttackerPlay`); at lite the rollouts picked the Hornet anyway.
+  - The "would it attack" answer is kept per thread while the position is unchanged
+    (`ComputerUtilCard.thisTurnOnlyAttackerAttacks`; key: game id, source, turn, step, life totals, hand size, game
+    timestamp, and a hash of every permanent's id, tapped state, power and toughness; strings and booleans only). The
+    uncached token check cost about 38 ms a call at lite; cached, the round's checks are 0.6% of game time.
+- **F5, the finishing pump (TFR rule `finisher-pump-hold`, no stock line):** on the opponent's turn the seat holds a
+  pump spell Forge chose for its blocker (stack empty, no lifelink or trample involved) when its next attack kills with
+  the pump kept and not with it spent, against every way the opponent's untapped creatures can block. Hook: the seat's
+  own `chooseSpellAbilityToPlay` override, which passes priority. On at Normal/Hard/Insane/Other.
+- **F5, landfall (stock `AiController.isSafeToHoldLandDropForMain2`):** a nonland card in hand with a `Count$Landfall`
+  SVar (Groundswell, Searing Blaze, Tomb Hex, Mysteries of the Deep, Rest for the Weary) means the land is played in
+  main 1.
+- **F8, fights (stock `FightAi`):** the Defined-fighter branch and the mandatory fallback try the best target first
+  (`sortByEvaluateCreature`): Kogla fought a 0/3 wall because it came first on the battlefield.
+- **Logging (the main thread's scope addition, from the 11-13 log review):** each stock fix logs
+  `[TFR-AiFix] <kind> turn N <player> <what>` once per game, turn and card (`TfrAiRules.stockFix`), never in game
+  copies: `temp-creature` / `temp-creature-attacks`, `temp-token` / `temp-token-attacks`, `landfall-hold`, and
+  `fight-target` (only when the best-first pick differs from the battlefield-order pick). The rule logs
+  `[TFR-AiRule] finisher-pump-hold ... -> holds it for next turn: ...`. Round 1020's
+  `C:\CLAUDE\PROJECTS\TFR1\notes\r1020\tools\duel_table.py` now ends with an "AI rule or fix" table: per rule or fix,
+  the duels it fired in, its lines, and the player's win % in those duels.
+- **Artificial Evolution** (a ChangeText spell the AI never casts) leaves 6 enemy decks: the two Aven U decks get Opt,
+  the two Driftbell Medusoid decks Force Spike, the Drowned Deckhand Siren Stormtamer, Kira Spectral Sailor (same color
+  and cost). The two `rewards/tier-B.dck` pools keep it (player rewards; one is the stock Shandalar plane).
+- **Puzzles:** P13, P13b, P13c, P13d, P14, P14b, P15, P15b, P15c, P16. `TfrAiPuzzleTest` learns `aiplayed has|lacks
+  NAME` (a spell cast or ability activated from that card).
+- **Proof:** each new puzzle fails 0/3 on stock and passes 3/3 fixed (guards pass both); `TfrAiPuzzleTest` passes all 30
+  puzzles at off, lite and max (rules on 3/3 everywhere, no RETIRE?). Bench (both arms at once): the round's decks won
+  100 -> 91 of 192 at off over three seeds (seed 1117 37 -> 28, then 30 -> 31 and 33 -> 32: noise) and 29 -> 32 at lite;
+  pairs14 51 -> 50 at off, 56 -> 50 at lite; per-turn time at lite 353 -> 352 ms, no AI timeouts.
+- **Open:** Forge's attack AI doesn't count a pump in hand toward a poison kill (P15 played on: the rule wins 2 of 3,
+  stock 0 of 3; the third run the AI didn't attack).
+- **Rules still live** (`TfrAiPuzzleTest`, off/lite/max): etb-drawback-allow, mc-attack-cut-guard, alpha-strike-count
+  (shadow), pressure-attack, finisher-pump-hold.
+
 ## Round 1028: the AI takes a draw offer when the duel has stopped moving (2026-11-13)
 
 The log review `C:\CLAUDE\PROJECTS\TFR1\notes\logs-1113.md` (P3-29) found a two-sided lifegain stall: a Linux 1.28

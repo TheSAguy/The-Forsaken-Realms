@@ -109,6 +109,24 @@ public class TokenAi extends SpellAbilityAi {
                 && sa.getSubAbility().getApi() == ApiType.DelayedTrigger;
         boolean isCreature = actualToken.isCreature();
 
+        // TFR round 1025: a creature token that leaves at the next end step, made in the AI's own turn, is worth its cost
+        // only if it attacks this turn. Stock fired Hornet Cannon into an untapped Serra Angel, and after combat.
+        if (isOwnTurnTemporaryToken(ai, sa, actualToken, ph)) {
+            if (!haste || ph.getPhase().isAfter(PhaseType.COMBAT_BEGIN)) {
+                forge.ai.tfr.TfrAiRules.stockFix(ai, "temp-token:" + source.getId(),
+                        source.getName() + ": no " + actualToken.getName() + " (" + (haste ? "after attackers" : "no haste") + ", leaves at the end step)");
+                return false;
+            }
+            actualToken.setSickness(false);
+            if (!ComputerUtilCard.thisTurnOnlyAttackerAttacks(ai, actualToken, source)) {
+                forge.ai.tfr.TfrAiRules.stockFix(ai, "temp-token:" + source.getId(),
+                        source.getName() + ": no " + actualToken.getName() + " (it would not attack, leaves at the end step)");
+                return false;
+            }
+            forge.ai.tfr.TfrAiRules.stockFix(ai, "temp-token-attacks:" + source.getId(),
+                    source.getName() + ": may make " + actualToken.getName() + " (it would attack this turn)");
+        }
+
         // Don't generate tokens without haste before main 2 if possible
         if (ph.getPhase().isBefore(PhaseType.MAIN2) && ph.isPlayerTurn(ai) && !haste && !sa.hasParam("ActivationPhases")
                 && !ComputerUtil.castSpellInMain1(ai, sa)) {
@@ -204,11 +222,29 @@ public class TokenAi extends SpellAbilityAi {
             return new AiAbilityDecision(0, AiPlayDecision.DoesntImpactCombat);
         }
 
+        // TFR round 1025: checkPhaseRestrictions let this token through only because it attacks this turn: no random chance
+        if (isOwnTurnTemporaryToken(ai, sa, actualToken, game.getPhaseHandler()) && actualToken.hasKeyword(Keyword.HASTE)
+                && !game.getPhaseHandler().getPhase().isAfter(PhaseType.COMBAT_BEGIN)) {
+            return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
+        }
+
         if (MyRandom.getRandom().nextFloat() <= chance) {
             return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
         }
 
         return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+    }
+
+    /**
+     * TFR round 1025: a creature token made in the AI's own turn that is gone at the next end step (AtEOT Exile,
+     * Sacrifice or Destroy: Hornet Cannon, Rakdos Guildmage, Feral Lightning). Not a token made attacking, nor a
+     * planeswalker's (its loyalty is the point), nor one that stays to the next upkeep or the next end step of yours.
+     */
+    private static boolean isOwnTurnTemporaryToken(final Player ai, final SpellAbility sa, final Card token, final PhaseHandler ph) {
+        final String eot = sa.getParam("AtEOT");
+        return token != null && token.isCreature() && ph.isPlayerTurn(ai) && !sa.isPwAbility()
+                && ("Exile".equals(eot) || "Sacrifice".equals(eot) || "Destroy".equals(eot))
+                && !sa.hasParam("TokenAttacking") && !sa.hasParam("Attacking");
     }
 
     /**

@@ -1,0 +1,17 @@
+[metadata]
+Name:P16 - Kogla fights the wall, not the threat (round 1025, from round 1023's study F8)
+Description:Duel 11 of the study. The AI casts Kogla, the Titan Ape (7/6, "fights up to one target creature you don't control" when it enters). The opponent has Wall of Wood (0/3 defender, first on the battlefield; the study's Portcullis Vine, whose sacrifice ability the opponent seat would use first), Battering Krasis (3/2 trample) and Devkarin Dissident (2/2). Forge's FightAi takes the first creature in battlefield order that Kogla kills and survives: the wall. Expect: Kogla fights a threat (the Krasis or the Dissident; Forge's creature score picks the Dissident for its pump ability), so the wall survives.
+Turns:1
+Expect:humanbattlefield has Wall of Wood
+[state]
+humanlife=20
+ailife=20
+turn=12
+activeplayer=ai
+activephase=MAIN1
+humanhand=
+humanlibrary=Forest;Forest;Forest;Forest;Forest
+humanbattlefield=Wall of Wood;Battering Krasis;Devkarin Dissident;Forest;Forest;Forest;Forest
+aihand=Kogla, the Titan Ape
+ailibrary=Forest;Forest;Forest;Forest;Forest
+aibattlefield=Forest;Forest;Forest;Forest;Forest;Forest

@@ -1,0 +1,17 @@
+[metadata]
+Name:P14 - Hornet Cannon fired when the Hornet will not attack (round 1025, from round 1023's study F4)
+Description:The AI has Hornet Cannon ({3}, {T}: a 1/1 flying haste Hornet, destroyed at the next end step) and three Mountains; the opponent has an untapped Serra Angel (4/4 flying, vigilance). The Hornet can't attack past the Angel, so the {3} buys nothing on the AI's own turn. Expect: the AI does not fire the Cannon this turn.
+Turns:1
+Expect:aiplayed lacks Hornet Cannon
+[state]
+humanlife=20
+ailife=20
+turn=8
+activeplayer=ai
+activephase=MAIN1
+humanhand=
+humanlibrary=Plains;Plains;Plains;Plains;Plains
+humanbattlefield=Serra Angel;Plains;Plains;Plains;Plains;Plains
+aihand=
+ailibrary=Mountain;Mountain;Mountain;Mountain;Mountain
+aibattlefield=Hornet Cannon;Mountain;Mountain;Mountain

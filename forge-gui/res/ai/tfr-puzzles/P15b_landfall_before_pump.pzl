@@ -1,0 +1,17 @@
+[metadata]
+Name:P15b - Groundswell cast before the land drop (round 1025, from round 1023's study F5, turn 11)
+Description:The AI holds a Forest and Groundswell (+2/+2, or +4/+4 with landfall) with three Forests open and a Grizzly Bears; the opponent is at 5 with no creature. Forge holds the land for main 2 (HOLD_LAND_DROP_FOR_MAIN2_IF_UNUSED=100) because it checks only the battlefield for landfall, so a pumped Bears hits for 4. With the land first, Groundswell gives +4/+4: 6, lethal. Expect: the AI wins. (The puzzle starts at the opponent's end step: a land the puzzle puts down counts as landfall that turn.)
+Turns:2
+Expect:winner=ai
+[state]
+humanlife=5
+ailife=20
+turn=6
+activeplayer=human
+activephase=END_OF_TURN
+humanhand=
+humanlibrary=Plains;Plains;Plains;Plains;Plains
+humanbattlefield=Plains;Plains;Plains
+aihand=Forest;Groundswell
+ailibrary=Forest;Forest;Forest;Forest;Forest
+aibattlefield=Grizzly Bears;Forest;Forest;Forest

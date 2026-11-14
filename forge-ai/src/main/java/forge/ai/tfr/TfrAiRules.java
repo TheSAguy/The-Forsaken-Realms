@@ -73,7 +73,7 @@ public final class TfrAiRules {
 
     /** The rules this build knows, by id. A rule in the file that is not here is ignored (with a log line). */
     static final Set<String> KNOWN = Collections.unmodifiableSet(new LinkedHashSet<>(List.of(
-            EtbDrawbackAllow.ID, AlphaStrikeCount.ID, McAttackCutGuard.ID, PressureAttack.ID)));
+            EtbDrawbackAllow.ID, AlphaStrikeCount.ID, McAttackCutGuard.ID, PressureAttack.ID, FinisherPumpHold.ID)));
 
     private static volatile Map<String, Entry> rules = Collections.emptyMap();
     private static volatile String version = "none";
@@ -301,7 +301,52 @@ public final class TfrAiRules {
         }
     }
 
+    /**
+     * Called by {@link TfrPlayerControllerAi#chooseSpellAbilityToPlay()} with Forge's choice (round 1025): true holds a
+     * pump that is next turn's kill (rule finisher-pump-hold), and the seat passes priority. Never throws.
+     */
+    static boolean holdFinisherPump(final Player ai, final List<SpellAbility> chosen) {
+        try {
+            return FinisherPumpHold.hold(ai, chosen);
+        } catch (final forge.util.AITimeoutTracker.Expired e) {
+            throw e;
+        } catch (final RuntimeException e) {
+            System.out.println(TAG + " " + FinisherPumpHold.ID + " error, Forge's play stands: " + e);
+            return false;
+        }
+    }
+
     // ---- logging and counts ----
+
+    /** game:turn:key of the stock-fix lines already logged, so a decision asked many times a turn logs once. */
+    private static final Map<String, Boolean> STOCK_LOGGED = new java.util.LinkedHashMap<>(64, 0.75f, true) {
+        @Override
+        protected boolean removeEldestEntry(final Map.Entry<String, Boolean> e) {
+            return size() > 512;
+        }
+    };
+
+    /**
+     * Round 1025: a TFR fix in a stock AI file (not a rule: it runs for every AI seat) logs
+     * {@code [TFR-AiFix] <kind> turn N <player> <what>} once per game, turn and key ({@code <kind>:<card id>}), never
+     * inside a game copy, so a player's forge.log can count each fix per duel (round 1020's duel_table.py). Counted
+     * under {@code fix:<kind>} for the puzzle tests.
+     */
+    public static void stockFix(final Player p, final String key, final String what) {
+        if (p == null || p.getGame().isSimulationCopy()) {
+            return;
+        }
+        final int turn = p.getGame().getPhaseHandler().getTurn();
+        synchronized (STOCK_LOGGED) {
+            if (STOCK_LOGGED.put(p.getGame().getId() + ":" + turn + ":" + key, Boolean.TRUE) != null) {
+                return;
+            }
+        }
+        final int colon = key.indexOf(':');
+        final String kind = colon < 0 ? key : key.substring(0, colon);
+        FIRES.computeIfAbsent("fix:" + kind, k -> new AtomicInteger()).incrementAndGet();
+        System.out.println("[TFR-AiFix] " + kind + " turn " + turn + " " + p.getName() + " " + what);
+    }
 
     static void fired(final String id, final String before, final String after) {
         FIRES.computeIfAbsent(id, k -> new AtomicInteger()).incrementAndGet();

@@ -35,6 +35,29 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 1025 - this-turn-only attackers, Flat MC discovery, landfall land drop, fight targets (three upstream PR drafts); the finisher-pump-hold rule
+- `forge-ai/src/main/java/forge/ai/ComputerUtilCard.java` (STOCK): new public `leavesPlayAtEndStep`,
+  `leavesPlayThisTurn`, `isThisTurnOnlyAttackerPlay`, `thisTurnOnlyAttackerAttacks` (with the per-thread cache
+  `THIS_TURN_ATTACKS`). Upstream draft 0001 carries all but the cache.
+- `forge-ai/src/main/java/forge/ai/ability/PermanentCreatureAi.java` (STOCK): `checkPhaseRestrictions` uses
+  `leavesPlayThisTurn` in the Ball Lightning check, and adds the "only if it attacks" check (draft 0001).
+- `forge-ai/src/main/java/forge/ai/ability/TokenAi.java` (STOCK): `checkPhaseRestrictions` and `checkApiLogic` call the
+  new private `isOwnTurnTemporaryToken` (draft 0001).
+- `forge-ai/src/main/java/forge/ai/AiAttackController.java` (STOCK, identical to upstream `7d0acc8aa92` before this
+  round): one condition in the `EndOfTurnLeavePlay` forced attack (draft 0001).
+- `forge-ai/src/main/java/forge/ai/AiController.java` (STOCK): `isSafeToHoldLandDropForMain2` reads landfall spells in
+  hand (draft 0003); `isLegalDiscovery` refuses a turned-down this-turn-only attacker (TFR only: upstream's
+  discovery is the same code, so draft 0001 could carry it too).
+- `forge-ai/src/main/java/forge/ai/ability/FightAi.java` (STOCK): best-first targets in two loops and the private
+  `noteTargetSwitch` log (draft 0002 without the log).
+- Every TFR fix logs through `forge.ai.tfr.TfrAiRules.stockFix` (`[TFR-AiFix]`); upstream drafts drop those calls.
+- TFR files (not stock): `forge-ai/src/main/java/forge/ai/tfr/FinisherPumpHold.java` (new), `TfrAiRules.java`
+  (`stockFix`, `holdFinisherPump`, the rule id), `TfrPlayerControllerAi.java` (the hook), `forge-gui/res/ai/tfr-rules.json`
+  (the rule entry), `forge-gui-desktop/src/test/java/forge/ai/tfr/TfrAiPuzzleTest.java` (`aiplayed`), 10 puzzles.
+- **On a merge:** if upstream merges a draft, take theirs and drop ours; P13/P13c/P14 (0001), P16 (0002) and P15b (0003)
+  failing in `TfrAiPuzzleTest` is the signal that a merge lost one. `finisher-pump-hold` is a TFR rule: RETIRE? on P15
+  means upstream's pump AI keeps the finisher.
+
 ### Round 1028 - the no-progress draw's per-turn snapshot
 - `forge-game/src/main/java/forge/game/phase/PhaseHandler.java` (STOCK): one line in `advanceToNextPhase`'s turn change, right
   after `game.fireEvent(new GameEventTurnBegan(...))`: `forge.game.LoopBreaker.onTurnBegan(game)`, marked `TFR round

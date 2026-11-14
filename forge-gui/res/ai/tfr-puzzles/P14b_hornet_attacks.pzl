@@ -1,0 +1,18 @@
+[metadata]
+Name:P14b - guard: Hornet Cannon fires when the Hornet attacks (round 1025)
+Description:P14's guard. The opponent has only a Grizzly Bears (no flyer, no reach): the Hornet is made before combat and attacks for 1. Expect: the Cannon fires and the opponent is at 19 or less.
+Turns:1
+Expect:aiplayed has Hornet Cannon
+Expect:humanlife<=19
+[state]
+humanlife=20
+ailife=20
+turn=8
+activeplayer=ai
+activephase=MAIN1
+humanhand=
+humanlibrary=Forest;Forest;Forest;Forest;Forest
+humanbattlefield=Grizzly Bears;Forest;Forest
+aihand=
+ailibrary=Mountain;Mountain;Mountain;Mountain;Mountain
+aibattlefield=Hornet Cannon;Mountain;Mountain;Mountain
