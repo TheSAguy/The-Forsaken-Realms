@@ -75,6 +75,26 @@ md` already gets updated after every change.
   change), `GamePlayerUtil` (untouched), `MyRandom` (#11285: per thread, inheritable), `AdventurePlayer` (modifiers
   saved under new keys), `EventScene`, `RewardScene`, `GameHUD`, `GameStage`, `ArenaScene`, `Forge.java`.
 
+### Round 1030 - Mirror Gear (util/MirrorGear); an event enemy item's opponent part reaches the player
+- `forge-gui-mobile/src/forge/adventure/scene/DuelScene.java` (STOCK): in the seat loop's enemy-equipment block (Inn and
+  Arena events), an item's `effect.opponent` now goes to a new `onPlayerEffects` list instead of `playerEffects` (which
+  `addEffects(humanPlayer, playerEffects)` had already applied, so it was lost; a `null` effect is skipped). After
+  `addEffects(aiPlayer, equipmentEffects)`, the Mirror Gear block adds a Master or Archmage seat's copied items
+  (`MirrorGear.forSeat`) and then applies `onPlayerEffects` to `humanPlayer`. `StreakBounty.scoreSeat` takes the seat's
+  `mirrorCopies` as a sixth argument. On a merge: if upstream fixes the opponent part its own way, take theirs and keep
+  the Mirror Gear block after it.
+- `forge-gui-mobile/src/forge/adventure/world/World.java` (STOCK, already TFR-edited): fields `mirrorGear`,
+  `mirrorGearNoticeShown` with getters/setters after `setWarIntroOldSave`; `load` reads both after round 1005's
+  `warIntroOldSave` (absent = false); `save` stores both after `WarIntro.KEY`; `generateNew` sets `mirrorGear` from
+  `MirrorGear.takePendingNewGame(mirrorGear)` and clears the notice flag, after `warIntroOldSave = false`.
+- `forge-gui-mobile/src/forge/adventure/scene/NewGameScene.java` (STOCK): the constructor ends with
+  `addMirrorGearBox()` after round 993's `addTooltipsButton()`; new `addMirrorGearBox`, `MirrorGearTip`,
+  `shownDifficultyName`, `refreshMirrorGearBox`, `mirrorGearChosen`; `openAdvanced`'s callback refreshes the box when the
+  level changed; `start()` and `enter()`'s `createNewAdventureMap` branch call `MirrorGear.setPendingNewGame` before
+  `WorldSave.generateNewWorld`.
+- TFR-only: `util/MirrorGear.java` (new), `util/StreakBounty.java`, `util/TfrPlates.java`,
+  `config tables/mirror_gear.json` (new), `config tables/tips.json`, `test/forge/adventure/util/MirrorGearTest.java` (new).
+
 ### Round 1027 - the deck editor's refreshes fold into one per frame (logs-1113 P3-28)
 - `forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java` (STOCK): `refreshEditor()` calls the new
   `requestEditorRefresh()` (one `Gdx.app.postRunnable` per frame, `[TFR-EditorRefresh]`) instead of

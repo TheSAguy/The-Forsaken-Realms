@@ -163,6 +163,27 @@ public class World implements Disposable, SaveFileContent {
         warIntroOldSave = oldSave;
     }
 
+    // Round 1030: Mirror Gear (util/MirrorGear) - switched on at this run's New Game (Hard and Insane by default), and
+    // whether its one-time notice was shown. An older save has neither key: off, and New Game+ keeps the save's choice.
+    private boolean mirrorGear = false;
+    private boolean mirrorGearNoticeShown = false;
+
+    public boolean isMirrorGear() {
+        return mirrorGear;
+    }
+
+    public void setMirrorGear(boolean on) {
+        mirrorGear = on;
+    }
+
+    public boolean isMirrorGearNoticeShown() {
+        return mirrorGearNoticeShown;
+    }
+
+    public void setMirrorGearNoticeShown(boolean shown) {
+        mirrorGearNoticeShown = shown;
+    }
+
     // Round 425: a New Game+ that took its invested resources back - the one-off mages each AI color still owes on
     // TuningData.ngPlusWaveDay (TerritoryControl.sendNewGamePlusWave). 0 = none owed, or already sent. Saved.
     private int ngPlusWaveMages = 0;
@@ -1322,6 +1343,10 @@ public class World implements Disposable, SaveFileContent {
         boolean[] warIntro = forge.adventure.util.WarIntro.readState(saveFileData); // round 1005
         warIntroShown = warIntro[0];
         warIntroOldSave = warIntro[1];
+        mirrorGear = saveFileData.containsKey(forge.adventure.util.MirrorGear.KEY)
+                && saveFileData.readBool(forge.adventure.util.MirrorGear.KEY); // round 1030: an older save is off
+        mirrorGearNoticeShown = saveFileData.containsKey(forge.adventure.util.MirrorGear.NOTICE_KEY)
+                && saveFileData.readBool(forge.adventure.util.MirrorGear.NOTICE_KEY);
 
         colorTerritoryRadius.clear();
         if (saveFileData.containsKey("colorTerritoryRadius")) {
@@ -1704,6 +1729,8 @@ public class World implements Disposable, SaveFileContent {
         data.store("openingWaveSent", openingWaveSent); // round 422
         data.store("ngPlusWaveMages", ngPlusWaveMages); // round 425
         data.store(forge.adventure.util.WarIntro.KEY, warIntroShown); // round 1005
+        data.store(forge.adventure.util.MirrorGear.KEY, mirrorGear); // round 1030
+        data.store(forge.adventure.util.MirrorGear.NOTICE_KEY, mirrorGearNoticeShown);
         if (history != null) { // round 626
             try {
                 byte[] blob = history.toBytes();
@@ -2995,6 +3022,9 @@ public class World implements Disposable, SaveFileContent {
             ngPlusWaveMages = 0; // round 425: New Game+ sets it after generateNew when the invested resources came back
             warIntroShown = false; // round 1005: a new run waits for its first attack (New Game+ carries it, SaveLoadScene)
             warIntroOldSave = false;
+            // Round 1030: the New Game screen's Mirror Gear choice; New Game+ (no choice made) keeps the save's.
+            mirrorGear = forge.adventure.util.MirrorGear.takePendingNewGame(mirrorGear);
+            mirrorGearNoticeShown = false;
             colorTerritoryRadius.clear();
             defeatedColors.clear();
             forcedPlayerTargetPending.clear();

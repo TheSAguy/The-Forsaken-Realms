@@ -19,7 +19,8 @@ import java.util.Locale;
  *   <li>a Notoriety Wall by size (0/1, 1/2, 2/4, 3/6 = TuningData.bountyPointsWall), each 45+/50+ flying Wall
  *   (bountyPointsBonusWall), the Notoriety deck card where its gate is met (bountyPointsDeckCard - the Wrath's own card
  *   below the gate is not one), each streak Wastes (bountyPointsStreakCard) and each win-ratio Clue/Treasure
- *   (bountyPointsHelpToken). The Archmage's own Wastes (round 390) is not a streak card and scores nothing.</li>
+ *   (bountyPointsHelpToken). The Archmage's own Wastes (round 390) is not a streak card and scores nothing. Round 1030:
+ *   each Mirror Gear copy (MirrorGear; mirror_gear.json's bountyPointsPerCopy).</li>
  *   <li>Bounty = points x the difficulty's share per point (bountySharePerPoint{D}), capped (bountyCap), in whole
  *   percent. A fight against several enemies pays its largest single seat's.</li>
  *   <li>The Temple's duels (WrathHunt's): no Arena, Inn tournament, guard's fight, fixed-deck enemy or Deck Tester.
@@ -107,6 +108,11 @@ public final class StreakBounty {
 
     /** What a seat that starts with these cards is worth. walls: notorietyWallsFor; streakCards: winStreakCards'. */
     public static Score score(List<String> walls, boolean deckCard, int streakCards, int helpTokens) {
+        return score(walls, deckCard, streakCards, helpTokens, 0);
+    }
+
+    /** Round 1030: and the seat's Mirror Gear copies (MirrorGear), each worth mirror_gear.json's bountyPointsPerCopy. */
+    public static Score score(List<String> walls, boolean deckCard, int streakCards, int helpTokens, int mirrorCopies) {
         Score s = new Score();
         TuningData t = tuning();
         if (t == null)
@@ -120,6 +126,11 @@ public final class StreakBounty {
             s.add(streakCards * Math.max(0, t.bountyPointsStreakCard), (streakCards > 1 ? streakCards + " " : "") + "Wastes");
         if (helpTokens > 0)
             s.add(helpTokens * Math.max(0, t.bountyPointsHelpToken), helpTokens > 1 ? helpTokens + " help tokens" : "help token");
+        if (mirrorCopies > 0) {
+            MirrorGear.Table m = MirrorGear.table();
+            s.add(mirrorCopies * Math.max(0, m == null ? 0 : m.bountyPointsPerCopy),
+                    mirrorCopies > 1 ? mirrorCopies + " mirrored items" : "mirrored item");
+        }
         return s;
     }
 
@@ -181,7 +192,8 @@ public final class StreakBounty {
         if (seat == null || p == null)
             return new Score();
         return score(p.notorietyWallsFor(seat), deckCardGateMet(), p.winStreakCards(seat.getName()).length,
-                seat.fixedDeck == null ? SpawnTierWeighting.winRatioEnemyTokens().length : 0);
+                seat.fixedDeck == null ? SpawnTierWeighting.winRatioEnemyTokens().length : 0,
+                seat.fixedDeck == null ? MirrorGear.copiesNow(seat) : 0); // round 1030
     }
 
     /**
@@ -210,10 +222,11 @@ public final class StreakBounty {
      * DuelScene, each enemy seat as it is set up, in the duels a bounty can be paid for (not the Arena, an Inn match, a
      * guard's fight, a fixed-deck enemy or Deck Tester). Logs "[TFR-Bounty] marked" for a seat worth anything.
      */
-    public static void scoreSeat(EnemyData seat, List<String> walls, boolean deckCard, int streakCards, int helpTokens) {
+    public static void scoreSeat(EnemyData seat, List<String> walls, boolean deckCard, int streakCards, int helpTokens,
+                                 int mirrorCopies) {
         if (seat == null || share() <= 0f)
             return;
-        Score s = score(walls, deckCard, streakCards, helpTokens);
+        Score s = score(walls, deckCard, streakCards, helpTokens, mirrorCopies);
         if (s.points <= 0)
             return;
         int pct = percent(s.points);

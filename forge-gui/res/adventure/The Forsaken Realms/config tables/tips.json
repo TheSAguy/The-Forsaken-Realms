@@ -37,6 +37,7 @@
   "newGame.startingSets": "Pick which of your race's sets you start with.\nA gold lock: open from day 1. Gray: research it later.",
   "newGame.help": "Click for details.",
   "newGame.advanced": "Custom difficulty: change the game's rules one by one.\nSome lock once the game starts.",
+  "newGame.mirrorGear": "Mirror Gear: Masters and Archmages copy one item you wear ({one}+ worn), two from {two}. Only once you win big:\nArchmages - Hard: Notoriety {aH}+ and {aHr}% wins. Insane: {aI}+ and {aIr}%.\nMasters - Hard: {mH}+, {mHr}% and {mHe}% against that enemy. Insane: {mI}+, {mIr}% and {mIe}%.\nHard and Insane only. It stays as set for the whole game.",
 
   // ---- Settings
   "settings.tooltips": "Hover tips like this one.\nAuto: on for Easy and Normal, off for Hard and Insane.\nOn or Off: always. One setting for every game.",

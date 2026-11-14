@@ -14337,6 +14337,92 @@ Game.
 - Shipping jar: Maven `-o -pl forge-gui-mobile-dev -am package -DskipTests`, exit 0 (`forge-gui-mobile-dev-2.0.17-SNAPSHOT-jar-with-dependencies.jar`, log `C:\CLAUDE\PROJECTS\TFR1\notes\r1031\mvn_jar.log`). Not packaged and no agent game:
   the main thread packages after it fast-forwards main.
 
+## Round 1030: Mirror Gear - Masters and Archmages copy the player's gear on Hard and Insane (2026-11-14)
+
+The user's idea ("if you are equipped with 3 items. Masters and Archmages also get 1 random item equipped on them. 5+
+they get 2. (So randomly from the equipment you are wearing, they get a duplicate)"), studied first in
+`C:\CLAUDE\PROJECTS\TFR1\notes\design-mirror-items\report.md`. That study found the plain item count fires in about 90%
+of Master and Archmage duels and hits the struggling players hardest. The user then settled it as a New Game checkbox
+with a gate: "Let's build this as a check-box you can check in the game advanced setup settings. By default it would be
+checked for Hard and Insane ... Grey it out / hide on Easy and Normal". The gate's numbers came in a follow-up, below.
+
+- **The switch:** a "Mirror Gear" checkbox on the New Game screen (`NewGameScene.addMirrorGearBox`).
+  - Landscape: above Start, between Back and Start. Portrait: to the right of Advanced....
+  - Checked on Hard and Insane. Greyed out and unchecked on Easy and Normal (any difficulty no gate lists).
+  - A new difficulty, in the box or through Advanced...'s Change level, puts its default back.
+  - The choice is the save's (World key `mirrorGear`), made once: Settings can't change it mid-game.
+  - An older save has no key, so it's off. New Game+ keeps the save's choice (`MirrorGear.takePendingNewGame`).
+- **The gate, per rank and difficulty** (`config tables/mirror_gear.json` `gates`, tunable without a build). The user:
+  "For Archmage opponents as is: 40+ Notoriety AND Win Ration of 75%+ - Insane / 50+ Notoriety AND Win Ration of 85%+ -
+  Hard. For Masters: 20+ Notoriety AND Win Ration of 75%+ AND a winning ratio of 51%+ against that specific enemy. -
+  Insane / 40+ Notoriety AND Win Ration of 85%+ AND a winning ratio of 75%+ against that specific enemy. - Hard".
+  | Rank | Insane | Hard |
+  |---|---|---|
+  | Archmage | Notoriety 40+, 75%+ wins | Notoriety 50+, 85%+ wins |
+  | Master | Notoriety 20+, 75%+ wins, 51%+ against that enemy | Notoriety 40+, 85%+ wins, 75%+ against that enemy |
+  - The win ratio is the save's whole record: `PlayerStatistic.totalWins / (totalWins + totalLoss)`. Draws aren't
+    counted, a concession is a loss, and Inn matches aren't in it; Arena duels and guard fights are.
+  - "Against that enemy" is the VS screen's record: `winLossRecord` by the enemy's name. A tier variant keeps its catalog
+    name, so one record covers all of that creature's ranks. No record (a first meeting) keeps the gate closed, and a
+    single 1-0 opens it (`minEnemyDuels` 1).
+  - Closed while Notoriety is off in Settings. The score still counts then, but the Settings text promises "no Walls
+    or stronger foes".
+- **The copies:** 3+ worn gear items give 1, 5+ give 2 (`itemsForOne`, `itemsForTwo`). Gear means Head, Neck, Body,
+  Left, Right, Legs and Boots; runes, staffs, Medals, Hearts, Blessings and Tokens don't count.
+  - Only items in the curated pool are copied: 350 items with their value to the enemy, in mana, from the study's table.
+  - Left out of the pool:
+    - Mana Shard items (an enemy has no shards, and the AI pays 0);
+    - fast mana (Sol Ring, the Moxen, Black Lotus, Lotus Petal);
+    - command-zone and choice cards;
+    - handicap and map-only items;
+    - items worth 0.5 mana or less to the enemy (tradeoff gear that would weaken it);
+    - Cheat, Jester's Cap and Armor of Horrors.
+  - Never the same item twice, and never two from the top band (value 4+, 42 items).
+  - The pick is seeded (`SeededRolls.seedOf`): the world seed, the enemy, the seat, the day and the duels played. A
+    reload before the duel gets the same copy; the next duel or day rolls again.
+- **Where it applies:** each Master or Archmage seat (`DuelScene`, after the Archmage's own start cards), chained fights
+  per seat. Not:
+  - a boss;
+  - an Inn or Arena event;
+  - a town, Ring City or Capitol fight;
+  - a guard's fight;
+  - Deck Tester, a chaos battle or a spectator duel.
+- **The copy plays like the player's own item:** the item's effect goes on the enemy seat (`applyEffects`), and its
+  `opponent` part goes on the player's seat.
+- **Seen in play:**
+  - A one-time notice per save (World key `mirrorGearNoticeShown`) on the duel's opening dialog, next to the win-streak
+    notice.
+  - The Alt plates' MIRRORS line names what an enemy would copy now.
+  - The Bounty counts each copy at `bountyPointsPerCopy` 3. Most such seats are already at the 30% cap.
+  - The New Game tooltip `newGame.mirrorGear` (tips.json) gives the numbers.
+- **Bug fix bundled:** an enemy item's `opponent` part (Inn and Arena events, `EnemyData.equipment`) was added to
+  `playerEffects` after `addEffects(humanPlayer, playerEffects)` had already applied that list, so it never reached the
+  duel. It now goes straight onto the player's seat, and so does a copied item's. Boss equipment still applies only in
+  events (unchanged; that question is with the user).
+- **Logging:**
+  - `[TFR-MirrorGear] table: ...` once.
+  - `[TFR-MirrorGear] New Game: Mirror Gear on|off (difficulty)` and `new world: on|off (New Game screen | kept: New Game+)`.
+  - Per seat: `<enemy> (<rank>, seat N) starts with a copy of A + B - open: <rank>, notoriety n/need, win ratio x%/y%
+    (w of d)[, vs this enemy z% (w-l)/need]; k gear worn, c in the pool -> 1|2 copies [(notice shown)]`.
+  - For a Master or Archmage that copies nothing: `copies nothing - <why>`.
+  - The Bounty's `marked:` line says `mirrored item(s)`.
+- **Files:**
+  - `util/MirrorGear.java` (new);
+  - `world/World.java` (the two keys);
+  - `scene/DuelScene.java` (the seat block and the opponent-part fix);
+  - `scene/NewGameScene.java` (the checkbox);
+  - `util/StreakBounty.java` (a 5-arg `score` and `scoreSeat`; the 4-arg `score` stays for the Journal);
+  - `util/TfrPlates.java` (the MIRRORS line);
+  - `config tables/mirror_gear.json` (new);
+  - `config tables/tips.json` (`newGame.mirrorGear`);
+  - `test/.../MirrorGearTest.java` (12 tests).
+- **Proof:** Maven `-o -pl forge-gui-mobile -am test -Dtest=MirrorGearTest,TfrTipsTest,SeededRollsTest,WarIntroTest`:
+  exit 0, 40/40. Jar `-o -pl forge-gui-mobile-dev -am package -DskipTests`: exit 0. The AI-vs-AI bench
+  (`C:\CLAUDE\PROJECTS\TFR1\notes\r1030\bench\`)
+  runs after this commit, from copies; any tuning lands in `mirror_gear.json` as Round 1030 (follow-up).
+- **Not done:** the GUIDE's What's New in 1.29 line (res is outside this round's write window), and an agent-game
+  look at the checkbox, the MIRRORS plate line and the notice (the agent window is queued).
+
 ## Round 1027: the reward screen's auto-sell no longer races the deck editor's refresh (logs-1113 P3-28) (2026-11-14)
 
 From the log review `C:\CLAUDE\PROJECTS\TFR1\notes\logs-1113.md`, P3-28: on Android 1.28 (fb448b7a, Pixel 8, research
