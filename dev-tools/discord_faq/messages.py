@@ -1,13 +1,14 @@
 """The Discord FAQ: (topic, short label, message). Each message must stay under Discord's 2,000 characters."""
 
 # The released version the FAQ describes; build_page.py shows it in the page header. One line to change per release.
-FAQ_VERSION = "v1.28"
+FAQ_VERSION = "v1.29"
 
 # What this version changed, by message number: EDITED are edited in place in Discord, ADDED are new topics. Support
 # is always the last message: new topics go before it, and the user reposts Support at the end of the channel.
 # build_page.py tags them. Reset both at the next release.
-# 1.29: nothing changed yet (round 1003 reset them after 1.28; v1.28's own set was {1, 3, 23}, none ADDED).
-EDITED = set()
+# 1.29 (round 1003 reset them after 1.28; v1.28's own set was {1, 3, 23}, none ADDED): round 1032 edits 1 (the
+# header's version), 7 (Mirror Gear, round 1030) and 23 (Offer Draw in a stalled duel, round 1028).
+EDITED = {1, 7, 23}
 ADDED = set()
 
 M = []
@@ -126,12 +127,13 @@ New in v1.24, in all three ranks: the Torchhead Stallion, Flamecrest Serpent, As
 **A:** In roaming fights, the time of day and the terrain you fight on: by day, plains enemies get +10% life and swamp enemies -10% (forest +5%, mountain -5%), and at night it flips. Raid the swamps at noon and the plains after dark."""))
 
 M.append(("Enemies that adapt to you", "Adapting enemies", r"""**Q: Why are the enemies getting tougher (or easier)?**
-**A:** On top of the weeks, the land's color and the fog, your own record shapes what you meet:
-- **Notoriety:** a score, +1 for every duel you win and -5 for every loss (never below 0). From 5, enemies start with a **Wall** in play (a 0/1 that grows to a 3/6 by 20, then a second one from 25). Which enemies bring one depends on the difficulty: Archmages on Easy, everyone on Insane. At 45 and 50 every enemy gets another flying Wall and +25% / +50% life. Notoriety also tilts roaming ranks toward Masters and Archmages, and steps up new dungeons' creatures. From notoriety 50 on Normal (45 on Hard, 40 on Insane, and 5 sooner while you've won 95%+ of your last 50 duels) every enemy also starts with one 1-3 cost permanent from its own deck in play - never on Easy or in the Arena. A loss takes it all down one step, not back to nothing. **Settings > Disable Notoriety** switches it off (the score still counts, so switching it back on brings your level back).
-- **Win ratio:** your last 50 duels. Once 25 are on record, a strong ratio (80%+ won) shifts the roaming ranks tougher and a weak one (20% or less) easier - up to 5 points, or 10 once 50 are on record. One loss doesn't wipe it.
-- **Help tokens:** once 50 duels are on record, the enemy starts with a Clue if you've won 75-89%, a Treasure at 90-94%, and both at 95%+. Win 50% or fewer and **you** get a Treasure (plus a Clue at 25% or less). Each card says why it's there.
+**A:** On top of the weeks and the land, your own record shapes what you meet:
+- **Notoriety:** a score, +1 for every duel you win and -5 for every loss (never below 0). From 5, enemies start with a **Wall** in play (a 0/1 that grows to a 3/6 by 20, then a second one from 25). Which enemies bring one depends on the difficulty: Archmages on Easy, everyone on Insane. At 45 and 50 every enemy gets another flying Wall and +25% / +50% life. Notoriety also tilts roaming ranks toward Masters and Archmages, and steps up new dungeons' creatures. From notoriety 50 on Normal (45 on Hard, 40 on Insane, and 5 sooner while you've won 95%+ of your last 50 duels) every enemy also starts with one 1-3 cost permanent from its own deck in play - never on Easy or in the Arena. A loss takes it all down one step, not back to nothing. **Settings > Disable Notoriety** switches it off (the score keeps counting).
+- **Win ratio:** your last 50 duels. Once 25 are on record, a strong ratio (80%+ won) shifts the roaming ranks tougher and a weak one (20% or less) easier - up to 5 points, or 10 once 50 are on record.
+- **Help tokens:** once 50 duels are on record, the enemy starts with a Clue if you've won 75-89%, a Treasure at 90-94%, and both at 95%+. Win 50% or fewer and **you** get a Treasure (plus a Clue at 25% or less).
 - **Enemies learn your tricks:** beat the same enemy 5 times in a row (4 on Hard, 3 on Insane) and it starts with a Wastes in play - up to three - until it beats you once. Easy is spared.
-- **The Bounty:** an enemy that started with any of these extra cards pays up to +30% more gold and resources when you beat it. Hold Alt to see it on its plate.
+- **Mirror Gear** (Hard and Insane, a New Game checkbox): once you dominate, Masters and Archmages copy 1-2 of your worn items (3+ worn).
+- **The Bounty:** an enemy that started with any of these extra cards or copies pays up to +30% more gold and resources when you beat it. Hold Alt to see it on its plate.
 Arena duels, Inn tournaments, the Deck Tester and your guards' fights don't count toward your notoriety or your ratio."""))
 
 M.append(("Legends and places that come with your level", "Legends & places", r"""**Legends, and places that come with your level**
@@ -456,7 +458,7 @@ M.append(("Achievements, enemy plates, loops and duel settings", "Achievements &
 **A:** Hold **Alt** (touch: the Units button; controller: R3). A plate over every enemy on screen shows its rank. Fought another rank of its kind? You see its deck colors too. Fought this exact rank? Also the life it would start with now, in orange when it's above normal.
 
 **Q: My duel is stuck in an endless loop. What now?**
-**A:** The AI can't repeat the same ability more than 25 times in a turn while you lose no life (300 at most), and a trigger that comes back 25 times with nobody acting and nobody losing life ends the game in a draw. A combo that drains or burns runs to the end. So does a big batch of triggers resolving one by one, as long as it's under about 1,000 at once: one that size (200 tokens with five "gain life when a creature enters" cards out) is still a draw. The AI accepts the duel menu's **Offer Draw** while a trigger loop is running (10+ repeats) or once it has had to stop repeating one of its own abilities that turn - never in an ordinary duel. A draw is nothing won or lost: no ante, no gold, no notoriety.
+**A:** The AI can't repeat the same ability more than 25 times in a turn while you lose no life (300 at most), and a trigger that comes back 25 times with nobody acting and nobody losing life ends the game in a draw. A combo that drains or burns runs to the end. So does a big batch of triggers resolving one by one, if under about 1,000 at once. The AI accepts the duel menu's **Offer Draw** while a trigger loop is running (10+ repeats), once it has had to stop repeating one of its own abilities that turn, or when the duel has stalled: 8 turns with no life lost, no poison, no library running out and the boards about the same. A draw is nothing won or lost: no ante, no gold, no notoriety.
 
 **Q: Which duel settings are worth knowing?**
 - **Show land drops in duels** (off by default): lands played this turn out of lands allowed, under each player's counts.

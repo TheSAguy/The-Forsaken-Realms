@@ -12,18 +12,17 @@ are in the [FAQ](#faq) at the end.
 
 1. [Introduction](#introduction)
 2. [What's New in 1.29](#whats-new-in-129)
-3. [What's New in 1.28](#whats-new-in-128)
-4. [Starting Out](#starting-out)
-5. [Changes from the Base Game](#changes-from-the-base-game)
-6. [Early Game Advice](#early-game-advice)
-7. [Mid and Late Game Advice](#mid-and-late-game-advice)
-8. [The World](#the-world)
-9. [Dungeon Guide, by Color](#dungeon-guide-by-color)
-10. [Item Guide](#item-guide)
-11. [Notes on Difficulty](#notes-on-difficulty)
-12. [Appendix: Mechanics in Detail](#appendix-mechanics-in-detail)
-13. [FAQ](#faq)
-14. [Support & Community](#support--community)
+3. [Starting Out](#starting-out)
+4. [Changes from the Base Game](#changes-from-the-base-game)
+5. [Early Game Advice](#early-game-advice)
+6. [Mid and Late Game Advice](#mid-and-late-game-advice)
+7. [The World](#the-world)
+8. [Dungeon Guide, by Color](#dungeon-guide-by-color)
+9. [Item Guide](#item-guide)
+10. [Notes on Difficulty](#notes-on-difficulty)
+11. [Appendix: Mechanics in Detail](#appendix-mechanics-in-detail)
+12. [FAQ](#faq)
+13. [Support & Community](#support--community)
 
 ---
 
@@ -44,19 +43,32 @@ version - playable, but it gets far less testing than the desktop builds.*
 
 ## What's New in 1.29
 
-The short version for returning players. Everything in 1.29 works on your current save.
+The short version for returning players. Each item links to where the guide covers it in full. Mirror Gear needs a new
+game on Hard or Insane; everything else in 1.29 works on your current save.
 
+- **Mirror Gear (Hard and Insane):** a New Game checkbox, on by default on Hard and Insane. Once you are dominating,
+  Masters and Archmages copy 1 of your worn gear items (3+ worn), or 2 (5+ worn) - fair items only, and each copy adds
+  to the Bounty. See [Enemies That Adapt to You](#enemies-that-adapt-to-you).
+- **A smarter AI:** enemies attack when they have the advantage, see your team pumps and Boast before they block, hold
+  a pump spell that would finish you, stop casting haste creatures that just sit at home, play their land before a
+  landfall spell, and play karoo lands and New Blood properly. Enemy decks lost almost 5,000 cards the AI couldn't use.
+- **Offer Draw in a stalled duel:** the enemy now also accepts when nothing has moved for 8 turns - see [A duel is
+  stuck in a loop](#a-duel-is-stuck-in-a-loop---what-do-i-do).
 - **The War Begins:** the first time a war mage marches on one of your towns, five short pages explain what "under
   attack" means, how to defend (beat the mage on the road, hire guards, the Rally rune, Roaming Guards), what the
   colors are after, and how a run is won and lost - see [Winning and Losing](#winning-and-losing) and [Territory, and
   Defending What's Yours](#territory-and-defending-whats-yours). A save that already holds a town shows them once
   when you load it. Read them again any time from World Standings (the map's **Info** button), **The War**, which
   replaces the old Expansion page.
+- **Polish:** pixel icons on dialog buttons; long enemy names fit the VS screen, in a cleaner font; more enemies get
+  real animations; World Standings' dialogs fit small windows; a second copy of the game warns "Already Running".
+- **Fixes:** the reward screen's auto-sell crash, a cause of garbled text in duels, Android quitting on the way back
+  from the update installer, an Inn or Arena enemy item's effect on you that never applied, and Kiora's Boss Effect
+  now says "end step".
+- **Engine:** Forge's 11.13 build. The Status page lists your "Active effects", the game backs up your adventure
+  folder once per new version, and Sealed events open faster.
 
-## What's New in 1.28
-
-The short version for returning players. Each item links to where the guide covers it in full. Everything in 1.28 works
-on your current save.
+Coming from 1.27? This is what 1.28 added. Everything in 1.28 works on your current save.
 
 - **Five new Ascendance perks:** Bounty Hunter (a bigger [Bounty](#enemies-that-adapt-to-you)), Legend Slayer (your
   first win over each [legend](#legends) pays its whole card list and a mythic), Treasure Seeker (more map pieces, and
@@ -1590,6 +1602,7 @@ pays a **Bounty**: more gold, shards, wood and stone, rounded up. It counts each
 | its own Notoriety card | 4 |
 | each Wastes from your win streak over it | 2 |
 | each Clue or Treasure from your win ratio | 1 |
+| each copy of your gear (Mirror Gear) | 3 |
 
 Each point adds 1% on Easy, 1.5% on Normal and Hard and 2% on Insane, up to +30% in all. Examples on Normal: a
 Master at notoriety 20 (one 3/6 Wall) pays +6%, at 40 (two) +12%, and at 50 - four Walls and its own card - the full
@@ -1605,6 +1618,24 @@ points by 1.5 and raises the cap to +40% (rank II: x2, up to +50%), so it pays m
   the Walls and the card, and their points with them; a win streak's Wastes and the help tokens still count.
 
 Custom difficulty sets the share per point and the cap (Loot & Rewards > Bounty).
+
+**Mirror Gear (Hard and Insane).** Once you are dominating, Masters and Archmages come wearing a copy of your own gear.
+It's a checkbox on the New Game screen: checked by default on Hard and Insane, greyed out on Easy and Normal, and fixed
+for the whole run (a save from before 1.29 has it off; New Game+ keeps the save's choice). The win ratio here is your
+whole record on this save, not the last 50 duels:
+
+| Rank | Insane | Hard |
+|---|---|---|
+| Archmage | notoriety 40+, 75%+ won | notoriety 50+, 85%+ won |
+| Master | notoriety 20+, 75%+ won, 51%+ against that enemy | notoriety 40+, 85%+ won, 75%+ against that enemy |
+
+"Against that enemy" is the record the VS screen shows for it; a first meeting keeps a Master's gate closed. With 3 or
+more gear items worn (Head, Neck, Body, both hands, Legs, Boots) the enemy copies 1 of them, with 5 or more it copies
+2 - never the same item twice. Only fair items are copied: no fast mana (Sol Ring, the Moxen, the Lotuses), no Mana
+Shard items and nothing that would weaken the enemy. The copy works for the enemy as the item works for you, including
+any part aimed at its opponent. Bosses, Inn and Arena events, town and Capitol fights and guard fights never mirror.
+Hold Alt to see an enemy's **MIRRORS** line on its plate; each copy adds 3 Bounty points. **Disable Notoriety** closes
+the gate.
 
 
 ---
@@ -2393,8 +2424,10 @@ If a trigger keeps coming back 25 times with nobody acting and nobody losing lif
 won or lost. A combo that drains or burns runs to the end, and so does a big batch of triggers resolving one by one
 (a hundred tokens entering with a life-gain payoff on the board), as long as it's under about 1,000 triggers at once: a batch that size
 (200 tokens with five "gain life when a creature enters" cards out) is still a draw. You can also open the duel menu > **Offer Draw**: the enemy
-accepts while a trigger loop is running (10 or more repeats) or once it has had to stop repeating one of its own
-abilities this turn - never in an ordinary duel.
+accepts while a trigger loop is running (10 or more repeats), once it has had to stop repeating one of its own
+abilities this turn, or when the duel has stopped moving: 8 turns with no life lost, no poison gained, no planeswalker
+growing, no library about to run out and both sides' creatures about where they were. In a duel that is still going
+somewhere it declines.
 
 ### Do I have to click Yes for every Valakut trigger?
 
@@ -2467,7 +2500,7 @@ session (grab it before restarting, or pick the matching dated file). Screenshot
 
 ---
 
-*This guide covers The Forsaken Realms v1.28, as of 2026-11-09. See `MOD_CHANGELOG.md` in the
+*This guide covers The Forsaken Realms v1.29, as of 2026-11-14. See `MOD_CHANGELOG.md` in the
 repository for the full history of how the game got here, if you're curious.*
 
 ## Support & Community

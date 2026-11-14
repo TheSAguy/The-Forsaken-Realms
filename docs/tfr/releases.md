@@ -160,3 +160,18 @@ from 1.26?". The Discord FAQ says v1.28 (`EDITED` {1, 3, 23}, nothing new; paste
 `EDITED`/`ADDED` reset by round 1003). Posts: `notes/release-1.28-posts.md`. The webhook URL was checked absent from the
 unpushed history and the tree before the push. No itch.io upload by the session; the user posts the zip and APK.
 NOTHING is unreleased. Next version: 1.29 / 12900. Next merge from upstream after `a8695ac23e2` (round 1031, the 11.13 daily, Forge 2.0.17-SNAPSHOT; its first commit is `3cfec26d1ed`, #12856).
+
+## STATE 2026-11-14: **v1.29 "Sharper Foes" READY FOR THE TAG** (round 1032; the RC is built and tested next)
+Rounds 1004-1031 on top of v1.28 (1029 a study, no code). Engine = the 11.13 daily (upstream `a8695ac23e2`, round 1031,
+Forge 2.0.17-SNAPSHOT) on the matching BASE_INSTALL. `modVersion` 1.29 / `modVersionDate` 11.14, Android `tfr.version`
+1.29 / versionCode 12900. Assets to come in `C:\CLAUDE\PROJECTS\TFR1\release\v1.29` (the round 1032 follow-up fills in
+sizes and bytes):
+- `The-Forsaken-Realms-v1.29.zip` - MB;
+- `forsaken-realms-1.29-signed-aligned.apk` - MB (com.thesaguy.forsakenrealms, versionCode 12900, signer EE:60:39:25);
+- `assets.zip` - MB (one `mvn` run in `C:\TFR-build` via R:; carries `log_share.txt`).
+
+Notes = `RELEASE_NOTES_v1.29.md` (title "The Forsaken Realms 1.29: Sharper Foes", the main thread's draft the user saw,
+checked against the changelog; 1.28's Android section). GUIDE What's New 1.29 above "Coming from 1.27?", and a Mirror
+Gear paragraph under Enemies That Adapt to You. The Discord FAQ says v1.29 (`EDITED` {1, 7, 23}, nothing new; paste list
+`notes/faq-1.29-edits.md`). Posts: `notes/release-1.29-posts.md`. The publish step tags, pushes, publishes and replaces
+this block with the RELEASED one.

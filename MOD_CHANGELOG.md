@@ -14264,6 +14264,35 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 1032: the version is 1.29, with its release notes, guide and FAQ (2026-11-14)
+
+Part 1 of the 1.29 release the user called ("Let's plan on doing the next release once these are all done"; "Let's
+release once the mirror gear check is done" - round 1030's check passed, `C:\CLAUDE\PROJECTS\TFR1\notes\r1030\check\check.md`).
+Name "Sharper Foes". The RC build and its test follow; nothing is tagged or pushed yet.
+
+- **Version** (as round 1002 did): the plane's `config.json` `modVersion` 1.29 and `modVersionDate` 11.14;
+  `forge-gui-android/pom.xml` `<tfr.version>` 1.29 and `<manifestVersionCode>` 12900.
+- **`RELEASE_NOTES_v1.29.md`**: the main thread's draft (the user saw it), title "The Forsaken Realms 1.29: Sharper
+  Foes", plus 1.28's Android section with the 1.29 APK name. Checked line by line against rounds 1004-1031; fixed:
+  - Mirror Gear's checkbox is on the New Game screen itself (round 1030: beside Start, or right of Advanced... in
+    portrait), not inside Advanced;
+  - the copies need 3+ worn gear items for 1 (5+ for 2); the draft read as if 1 came with any gear;
+  - "stops wasting attacks" is round 1025's "stops wasting cards and mana" (haste creatures that sit home, the land
+    before a landfall spell, Kogla's fight); the attack side (rounds 1019, 1021) reads "attacks when it has the advantage
+    instead of sitting back".
+  The rest holds: 985 + 1,807 + 2,101 = 4,893 swapped copies ("almost 5,000", round 1017); the draw after 8 turns
+  (round 1028); the Mirror Gear gates (round 1030's table); "removal at an empty board" is upstream #12857 (round 1031).
+- **GUIDE:** "What's New in 1.29" (round 1005's War line kept) gains Mirror Gear, the AI, the stalled-duel draw, polish,
+  fixes and the 11.13 engine; 1.28's list becomes "Coming from 1.27?" (contents renumbered). A **Mirror Gear**
+  paragraph and gate table under Enemies That Adapt to You (round 1030's "Not done"), a Bounty table row (3 points per
+  copy), the loop FAQ's Offer Draw answer takes round 1028's stalled-duel rule, footer v1.29 as of 2026-11-14.
+  `GUIDE.html` regenerated (`guide_html.py --check` OK).
+- **Discord FAQ** (`dev-tools/discord_faq/messages.py`): `FAQ_VERSION` "v1.29"; message 7 gains a Mirror Gear line
+  (1,986 characters after two trims: "the fog", the "One loss" and "Each card" sentences); message 23's Offer Draw
+  answer takes round 1028 (1,968). `EDITED` = {1, 7, 23}; nothing ADDED, so Support stays last. Paste list
+  `C:\CLAUDE\PROJECTS\TFR1\notes\faq-1.29-edits.md`.
+- **Ledger:** `docs/tfr/releases.md` gets a v1.29 "ready for the tag" STATE block.
+
 ## Round 1031: the engine to the 11.13 daily (upstream `a8695ac23e2`, Forge 2.0.17-SNAPSHOT) (2026-11-14)
 
 The user: "Update to the latest Forge: E:\GAMES\Forge_2" (the 11.13 daily installed as BASE_INSTALL). On the 1.29 release
