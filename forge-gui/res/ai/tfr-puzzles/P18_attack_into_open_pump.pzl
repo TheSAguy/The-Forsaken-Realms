@@ -1,0 +1,18 @@
+[metadata]
+Name:P18 - a first striker attacks into an even blocker and open pump mana (round 1029 study F13, Insane I1 T12; round 1035)
+Description:The AI's Dragonkin Berserker (2/2 first strike) can attack into the opponent's untapped Leonin Skyhunter (2/2 flying). On the board the attack is safe (first strike kills the blocker first). The opponent has Plains and Snow-Covered Forest untapped and Moment of Triumph plus three cards in hand; Moment (+2/+2) on the blocker kills the Berserker and the Skyhunter lives. The chip (2 damage into 21 life) is not worth the creature. The opponent seat is a Forge AI that would not block, so the puzzle checks the attack itself. Expect: no attack. Stock Forge attacks. Fixed by TRICK_ALLOWANCE_ON_ATTACK (Default.ai).
+Turns:1
+Expect:aiattackers<=0
+Expect:aibattlefield has Dragonkin Berserker
+[state]
+humanlife=21
+ailife=26
+turn=12
+activeplayer=ai
+activephase=MAIN1
+humanhand=Moment of Triumph;Giant Growth;Kalonian Tusker;Watchwolf
+humanlibrary=Plains;Plains;Plains;Plains;Plains
+humanbattlefield=Leonin Skyhunter;Plains;Snow-Covered Forest;Plains|Tapped;Plains|Tapped
+aihand=
+ailibrary=Swamp;Swamp;Swamp;Swamp;Swamp
+aibattlefield=Dragonkin Berserker;Swamp|Tapped;Swamp|Tapped;Dragonskull Summit|Tapped;Dragonskull Summit|Tapped

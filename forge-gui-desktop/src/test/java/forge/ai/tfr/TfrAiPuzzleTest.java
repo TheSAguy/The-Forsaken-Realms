@@ -49,7 +49,8 @@ import static org.testng.Assert.fail;
  * <ul>
  *   <li>{@code Turns:N}: stop after N turns;</li>
  *   <li>{@code Expect:...}: checked at the end: {@code winner=ai}, {@code humanlife<=N}, {@code ailife>=N},
- *   {@code <zone> has|lacks NAME} (zone = aibattlefield, humangraveyard, ...), {@code fired <rule id>=N},
+ *   {@code <zone> has|lacks NAME} (zone = aibattlefield, humangraveyard, ...; {@code NAME|NAME2} means any of them,
+ *   round 1035), {@code fired <rule id>=N},
  *   {@code aiattackers>=N} / {@code aiattackers<=N} (the most attackers the AI declared in one combat, round 1019),
  *   {@code aiplayed has|lacks NAME} / {@code humanplayed ...} (a spell cast or ability activated from that card, round
  *   1025);</li>
@@ -273,8 +274,10 @@ public class TfrAiPuzzleTest extends AITest {
         final ZoneType z = ZoneType.smartValueOf(w[0].replaceFirst("^(human|ai)", ""));
         boolean has = false;
         for (final Card c : p.getCardsIn(z)) {
-            if (c.getName().equalsIgnoreCase(w[2])) {
-                has = true;
+            for (final String name : w[2].split("\\|")) { // round 1035: "has A|B" is true when either is there
+                if (c.getName().equalsIgnoreCase(name.trim())) {
+                    has = true;
+                }
             }
         }
         return w[1].equals("has") == has;

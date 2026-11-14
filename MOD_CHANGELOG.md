@@ -14264,6 +14264,67 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 1035: the AI allows for the opponent's combat tricks when it blocks and attacks (2026-11-14)
+
+The main thread's scope: round 1029's top-ranked fix, F1 + F13 of its Hard/Insane study
+(`C:\CLAUDE\PROJECTS\TFR1\notes\r1029\study.md`; the original F1 in `C:\CLAUDE\PROJECTS\TFR1\notes\r1023\study.md`):
+"safe" blocks into open mana lost the AI its best creature to one pump in 4 of 10 Master duels, and a first striker
+attacked into an even blocker while the opponent held pump mana. Report, puzzles and bench:
+`C:\CLAUDE\PROJECTS\TFR1\notes\r1035\report.md`; upstream PR draft (the user posts it) in
+`C:\CLAUDE\PROJECTS\TFR1\notes\r1035\upstream-pr\`.
+
+- **The allowance (stock, new `CombatTrickAllowance`):** the +N/+N the AI assumes a player can add with a hidden trick:
+  0 with no cards in hand or no untapped mana; else 2, or 3 when green is open; once the player has shown a creature
+  trick (an instant or flash card in the graveyard that pumps, puts +1/+1 counters on or protects a creature), one more,
+  or that trick's own +N when larger. Cached per thread and position (game, player, turn, step, timestamp, hand,
+  graveyard, floating mana, every mana source's tapped state).
+- **Blocks (`TRICK_ALLOWANCE_ON_BLOCK`, `AiBlockController`):** a blocker that survives on the board is no "safe"
+  block when it dies to the attacker at +N/+N and is worth more than the attacker (`evaluateCreature`). That covers the
+  good blocks, the menace pair and the safe half of reinforce-to-kill; not the trade and chump steps, and not the AI's
+  predictions of the opponent's blocks. The block planner's danger checks count N more damage while an attacker is
+  unblocked (`lifeInDanger(..., payment)`): without that, the first bench showed the AI drifting into a life total a
+  pump finishes. Logs `[TFR-AiFix] trick-block`.
+- **Attacks (`TRICK_ALLOWANCE_ON_ATTACK`, `AiAttackController.SpellAbilityFactors`):** when the attacker survives a
+  blocker on the board but dies to it at +N/+N while the pumped blocker survives, it counts as killable by one blocker
+  and no longer "kills everything": aggression 2-4 keep it home unless it is unblockable; all-out attacks are unchanged;
+  a pump that only turns the attack into a trade changes nothing. Not tokens, `SacMe`, `EndOfTurnLeavePlay`, next-turn
+  predictions. Logs `[TFR-AiFix] trick-attack`.
+- **Engine:** `ComputerUtilCombat.canDestroyBlocker` / `canDestroyAttacker` overloads with an extra +N/+N per side (the
+  old signatures pass 0). `AiProps` gains both flags (default false); TFR's `forge-gui/res/ai/Default.ai` sets both
+  true (TFR plays Default at every difficulty).
+- **Puzzles:** P17 (Bladewing must not block into Giant Growth mana; 14 life, see below), P17b (guard: the opponent is
+  tapped out and empty-handed, so the block is right), P18 (Dragonkin Berserker must not attack into a 2/2 and Moment of
+  Triumph mana; checks the attack itself, since the opponent seat never blocks it). Stock: P17 and P18 0/3 at off, lite
+  and max; P17b 3/3. Fixed: 3/3 each. Round 1024's P11 guard passes both ways.
+- **P17 is at 14 life, not the study's 11:** at 11, 7 on the board plus a +3 pump on an unblocked attacker leaves 1,
+  so the new danger check calls the AI in danger and it still trade-blocks with Bladewing, as stock did in the study.
+  That is the rule working as designed (life at stake beats the creature), so the study's exact I1 position is not
+  "fixed"; the comfortable-life version is.
+- **P15 (round 1025) widened** to `Expect:aihand has Primal Bellow|Groundswell`: the opponent seat's new checks shift
+  the random rolls, and in one run of three Forge cast Primal Bellow first and kept Groundswell, which still makes next
+  turn's poison kill, so `finisher-pump-hold` rightly stays quiet. Flags off, P15 is 3/3 as before. `TfrAiPuzzleTest`
+  reads `has A|B` as "either".
+- **`AiProfileKeysTest` (new, the main thread's ask):** loads every shipped `.ai` profile through
+  `AiProfileUtil.loadAllProfiles` and checks Default.ai's two flags. A profile key the jar doesn't know throws
+  ("No enum constant forge.ai.AiProps.TRICK_ALLOWANCE_ON_BLOCK" from a stock jar with this Default.ai), so a
+  profile/jar mismatch fails a test, not the game.
+- **Proof:** `TfrAiPuzzleTest`, 38 puzzles, 3 runs, rules on and off: all pass at off, lite and max. Maven
+  `-pl forge-gui-desktop -am test -Dtest=AiProfileKeysTest,AiBlockControllerTradeChanceTest`: exit 0, 7/7.
+- **Bench** (HEAD vs HEAD + 1035 from copied classes and `res`, both seats Default, arms side by side; 64-112 games an
+  arm): first-deck wins move both ways as expected with the same AI on both seats. Suicide attacks fell in 5 of 6
+  runs, 66 -> 40 over all (0.08 -> 0.05, 0.08 -> 0.06, 0.20 -> 0.10, 0.12 -> 0.03, 0.14 -> 0.05, 0.15 -> 0.15 a game). Games got longer in 4
+  of 6 runs (off: 16.9 -> 16.2, 16.8 -> 18.1, 17.5 -> 18.6, 16.9 -> 18.7 turns; lite: 16.0 -> 18.9, 18.7 -> 17.9).
+  "Took lethal with idle blockers" (`NO_BLOCK_DIES`) is mixed: lower in 3 runs, higher in 3 (pump decks at off
+  0.20 -> 0.48, trick decks at lite 0.19 -> 0.36), 117 -> 133 events over all runs; most are blowouts an idle 1/1 or
+  2/2 could not have stopped. One 55-turn board stall (Karona vs Camel) carried 13 AI timeouts, in stock
+  `predictToughnessBonusOfBlocker` -> `canPayCost`. Per-turn time: off +11% (trick and wide sets) and +46% (pump decks),
+  lite +18% (trick decks) and -17% (wide set); game mix differs between arms, so these are not a clean cost measure.
+  The first version (no danger check, no prefilters) was worse on all three counts; its numbers are in the report.
+- Files: `forge-ai/src/main/java/forge/ai/` `AiProps.java`, `ComputerUtilCombat.java`, `AiBlockController.java`,
+  `AiAttackController.java`, `CombatTrickAllowance.java` (new); `forge-gui/res/ai/Default.ai`; puzzles P17, P17b, P18
+  (new), P15; `forge-gui-desktop/src/test/java/forge/ai/AiProfileKeysTest.java` (new), `tfr/TfrAiPuzzleTest.java`.
+  Ledger: `CORE_ENGINE_CHANGES.md` round 1035.
+
 ## Round 1034 (follow-up): Torment of Hailfire waits for X=3 (2026-11-14)
 
 The main thread approved round 1034's open question 1. `forge-gui/res/cardsfolder/t/torment_of_hailfire.txt` gets

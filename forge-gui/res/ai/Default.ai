@@ -30,6 +30,13 @@ TRY_TO_HOLD_COMBAT_TRICKS_UNTIL_BLOCK=true
 # Chance to hold combat tricks until blockers are declared. If -1 is specified, this chance is not used, and the standard
 # evaluation for offensive pump buff is used instead.
 CHANCE_TO_HOLD_COMBAT_TRICKS_UNTIL_BLOCK=65
+# Allow for the opponent's hidden combat tricks (TFR round 1035). When the opponent has cards in hand and untapped mana,
+# the AI assumes a pump of +2/+2 (+3/+3 with green open, more once the opponent has shown a creature trick).
+# On block: a blocker worth more than the attacker no longer counts as a safe block if it dies to the pumped attacker.
+TRICK_ALLOWANCE_ON_BLOCK=true
+# On attack: an attacker that survives a blocker on the board, but dies to the pumped blocker while the blocker
+# survives, counts as killable by that blocker.
+TRICK_ALLOWANCE_ON_ATTACK=true
 
 # Trade blocking preferences (enabling these will make the AI trade more aggressively when considering blocks,
 # but only with creatures that are worse in abilities and have lower or the same power as the attacker). Note

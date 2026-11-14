@@ -81,6 +81,23 @@ public class AiAttackController {
     private int aiAggression = 0; // how aggressive the ai is attack will be depending on circumstances
     private final boolean nextTurn; // include creature that can only attack/block next turn
 
+    // TFR round 1035: the defending player's combat trick allowance (CombatTrickAllowance), worked out once per player
+    private Player trickAllowanceOf = null;
+    private int trickAllowance = 0;
+
+    /** The +N/+N the defending player may give a blocker, with TRICK_ALLOWANCE_ON_ATTACK on; 0 otherwise. */
+    private int attackTrickAllowance() {
+        if (nextTurn || defendingOpponent == null || !ai.getController().isAI()
+                || !AiProfileUtil.getBoolProperty(ai, AiProps.TRICK_ALLOWANCE_ON_ATTACK)) {
+            return 0;
+        }
+        if (trickAllowanceOf != defendingOpponent) {
+            trickAllowanceOf = defendingOpponent;
+            trickAllowance = CombatTrickAllowance.of(defendingOpponent);
+        }
+        return trickAllowance;
+    }
+
     /**
      * <p>
      * Constructor for ComputerUtil_Attack2.
@@ -1444,6 +1461,24 @@ public class AiAttackController {
             attacker = c;
         }
 
+        /** TFR round 1035: true when only a trick on this blocker kills the attacker, and the blocker survives it. */
+        private boolean diesToBlockerTrick(final Card blocker, final Combat combat) {
+            final int trick = attackTrickAllowance();
+            if (trick <= 0 || attacker.isToken() || attacker.hasSVar("SacMe") || attacker.hasSVar("EndOfTurnLeavePlay")
+                    // cheap first: the pumped blocker's damage can't reach what kills the attacker
+                    || blocker.getNetCombatDamage() + trick < ComputerUtilCombat.getDamageToKill(attacker, false)
+                    || ComputerUtilCombat.canDestroyAttacker(ai, attacker, blocker, combat, false)
+                    || !ComputerUtilCombat.canDestroyAttacker(ai, attacker, blocker, combat, false, false, 0, trick)
+                    || ComputerUtilCombat.canDestroyBlocker(ai, blocker, attacker, combat, false, false, 0, trick)) {
+                return false;
+            }
+            forge.ai.tfr.TfrAiRules.stockFix(ai, "trick-attack:" + attacker.getId() + ":" + blocker.getId(),
+                    "counts " + attacker + " as killed by " + blocker + " at +" + trick + "/+" + trick + " ("
+                            + defendingOpponent.getName() + ": " + defendingOpponent.getCardsIn(ZoneType.Hand).size()
+                            + " cards in hand, mana open)");
+            return true;
+        }
+
         private boolean canBeBlocked() {
             return numberOfPossibleBlockers > 2
                     || (numberOfPossibleBlockers >= 1 && CombatUtil.canAttackerBeBlockedWithAmount(attacker, 1, defendingOpponent))
@@ -1516,6 +1551,15 @@ public class AiAttackController {
                             }
                         }
                     }
+                }
+                // TFR round 1035 (study F13): an attack that survives this blocker on the board can still lose the
+                // attacker to a pump on the blocker. When the blocker at +N/+N kills the attacker and survives, the
+                // attacker is lost for one card of theirs: count it as killable, and as no longer killing everything.
+                if (diesToBlockerTrick(blocker, combat)) {
+                    canBeKilled = true;
+                    canBeKilledByOne = true;
+                    canKillAll = false;
+                    isWorthLessThanAllKillers = false;
                 }
             }
 

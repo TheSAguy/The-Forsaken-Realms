@@ -116,12 +116,80 @@ public class AiBlockController {
 
         // Usually don't check attacker static abilities at this point since the attackers have already attacked and, thus,
         // their P/T modifiers are active and are counted as a part of getNetPower/getNetToughness unless we're simulating an outcome outside of real combat
+        final boolean inCombat = attacker.getGame().getPhaseHandler().inCombat();
         for (final Card b : blockersLeft) {
-            if (!ComputerUtilCombat.canDestroyBlocker(ai, b, attacker, combat, false, attacker.getGame().getPhaseHandler().inCombat())) {
+            if (!ComputerUtilCombat.canDestroyBlocker(ai, b, attacker, combat, false, inCombat)
+                    && !diesToTrick(combat, b, attacker, inCombat)) {
                 blockers.add(b);
             }
         }
         return blockers;
+    }
+
+    /**
+     * TFR round 1035 (study F1): a block that is safe on the board is not safe when the attacker's controller can pump
+     * the attacker. With {@link AiProps#TRICK_ALLOWANCE_ON_BLOCK}, a blocker worth more than the attacker that would die
+     * to the attacker at +N/+N ({@link CombatTrickAllowance}) does not count as safe. A blocker worth no more than the
+     * attacker still does: the trick costs the opponent a card for a creature no better than their own.
+     */
+    private boolean diesToTrick(final Combat combat, final Card blocker, final Card attacker, final boolean inCombat) {
+        final int trick = trickAllowance(attacker.getController());
+        if (trick <= 0
+                // cheap first: the pumped attacker's damage can't reach what kills the blocker (deathtouch and the
+                // like already made the block unsafe on the board)
+                || attacker.getNetCombatDamage() + trick < ComputerUtilCombat.getDamageToKill(blocker, false)
+                || !ComputerUtilCombat.canDestroyBlocker(ai, blocker, attacker, combat, false, inCombat, trick, 0)) {
+            return false;
+        }
+        final int blockerValue = ComputerUtilCard.evaluateCreature(blocker);
+        final int attackerValue = ComputerUtilCard.evaluateCreature(attacker);
+        if (blockerValue <= attackerValue) {
+            return false;
+        }
+        forge.ai.tfr.TfrAiRules.stockFix(ai, "trick-block:" + blocker.getId() + ":" + attacker.getId(),
+                "won't call " + blocker + " (value " + blockerValue + ") a safe block on " + attacker + " (value "
+                        + attackerValue + "): it dies to a +" + trick + "/+" + trick + " trick ("
+                        + attacker.getController().getName() + ": " + attacker.getController().getCardsIn(ZoneType.Hand).size()
+                        + " cards in hand, mana open)");
+        return true;
+    }
+
+    private final Map<Player, Integer> trickAllowances = new HashMap<>();
+
+    /** The trick allowance for blocks against this player's attackers, once per block assignment; 0 when off. */
+    private int trickAllowance(final Player attackingPlayer) {
+        if (checkingOther || attackingPlayer == null || !ai.getController().isAI()
+                || !AiProfileUtil.getBoolProperty(ai, AiProps.TRICK_ALLOWANCE_ON_BLOCK)) {
+            return 0;
+        }
+        return trickAllowances.computeIfAbsent(attackingPlayer, CombatTrickAllowance::of);
+    }
+
+    /**
+     * TFR round 1035: the danger checks with the same allowance. A trick that can pump a blocked attacker can as well
+     * pump an unblocked one, so while an attacker is unblocked the AI counts N more damage. Without this, keeping
+     * valuable blockers out of trick range drifts the AI into a life total a pump finishes.
+     */
+    private int trickDamage(final Combat combat) {
+        final Player attacking = combat.getAttackingPlayer();
+        final int trick = trickAllowance(attacking);
+        if (trick <= 0) {
+            return 0;
+        }
+        for (final Card a : combat.getAttackers()) {
+            if (!combat.isBlocked(a) && a.getNetCombatDamage() >= 0 && ai.equals(combat.getDefenderPlayerByAttacker(a))) {
+                return trick;
+            }
+        }
+        return 0;
+    }
+
+    private boolean inDanger(final Combat combat) {
+        return ComputerUtilCombat.lifeInDanger(ai, combat, trickDamage(combat));
+    }
+
+    private boolean inSeriousDanger(final Combat combat) {
+        return ComputerUtilCombat.lifeInSeriousDanger(ai, combat, trickDamage(combat));
     }
 
     // finds blockers that destroy the attacker
@@ -189,7 +257,7 @@ public class AiBlockController {
         }
         CardLists.sortByPowerDesc(firstAttacker);
 
-        if (!sortedAttackers.isEmpty() && !firstAttacker.isEmpty() && ComputerUtilCombat.lifeInDanger(ai, combat)) {
+        if (!sortedAttackers.isEmpty() && !firstAttacker.isEmpty() && inDanger(combat)) {
             // add creatures attacking the Player to the front of the list
             sortedAttackers.addAll(0, firstAttacker);
         } else {
@@ -491,7 +559,7 @@ public class AiBlockController {
                         // only one blocker can be killed
                         || currentValue + addedValue - 50 <= evalAttackerValue
                         // or attacker is worth more
-                        || (lifeInDanger && ComputerUtilCombat.lifeInDanger(ai, combat)))
+                        || (lifeInDanger && inDanger(combat)))
                         // or life is in danger
                         && CombatUtil.canBlock(attacker, blocker, combat)) {
                     // this is needed for attackers that can't be blocked by more than 1
@@ -546,7 +614,7 @@ public class AiBlockController {
                             // or attacker is worth more
                             || (thirdBlocker.isToken() && absorbedDamage2 + absorbedDamage > netCombatDamage)
                             // or third blocker is a token and no more than two blockers will die, one of which is the third blocker (token)
-                            || (lifeInDanger && ComputerUtilCombat.lifeInDanger(ai, combat)))
+                            || (lifeInDanger && inDanger(combat)))
                             // or life is in danger
                             && CombatUtil.canBlock(attacker, secondBlocker, combat)
                             && CombatUtil.canBlock(attacker, thirdBlocker, combat)) {
@@ -639,7 +707,7 @@ public class AiBlockController {
 
                 if (lifeInDanger && needsRefresh) {
                     // is it very likely to end up in danger again if we weren't already?
-                    lifeInDanger = ComputerUtilCombat.lifeInDanger(ai, combat);
+                    lifeInDanger = inDanger(combat);
                 }
 
                 // Randomly trade creatures with lower power and [hopefully] worse abilities, if enabled in profile
@@ -672,7 +740,7 @@ public class AiBlockController {
     // an attacker leaves the combat unchanged and the previous result still holds
     private void makeChumpBlocks(final Combat combat, List<Card> attackers, boolean recheckDanger) {
         AITimeoutTracker.check();
-        if (recheckDanger && !ComputerUtilCombat.lifeInDanger(ai, combat)) {
+        if (recheckDanger && !inDanger(combat)) {
             lifeInDanger = false;
             return;
         }
@@ -789,7 +857,7 @@ public class AiBlockController {
                 if (blocker.hasKeyword(Keyword.BANDING) || blocker.hasKeyword(Keyword.BANDSWITH)) {
                     if (ComputerUtilCombat.getAttack(attacker) > ComputerUtilCombat.totalShieldDamage(attacker, combat.getBlockers(attacker))
                             && ComputerUtilCombat.shieldDamage(attacker, blocker) > 0
-                            && CombatUtil.canBlock(attacker, blocker, combat) && ComputerUtilCombat.lifeInDanger(ai, combat)) {
+                            && CombatUtil.canBlock(attacker, blocker, combat) && inDanger(combat)) {
                         combat.addBlocker(attacker, blocker);
                         needsMoreChumpBlockers = false;
                         break;
@@ -807,7 +875,7 @@ public class AiBlockController {
                     // enough and the new one would suck some of the damage
                     if (ComputerUtilCombat.getAttack(attacker) > ComputerUtilCombat.totalShieldDamage(attacker, combat.getBlockers(attacker))
                             && ComputerUtilCombat.shieldDamage(attacker, blocker) > 0
-                            && CombatUtil.canBlock(attacker, blocker, combat) && ComputerUtilCombat.lifeInDanger(ai, combat)) {
+                            && CombatUtil.canBlock(attacker, blocker, combat) && inDanger(combat)) {
                         combat.addBlocker(attacker, blocker);
                     }
                 }
@@ -1058,7 +1126,7 @@ public class AiBlockController {
             }
         }
         attackersLeft = unblocked;
-        lifeInDanger = ComputerUtilCombat.lifeInDanger(ai, combat);
+        lifeInDanger = inDanger(combat);
         if (lifeInDanger && !unblocked.isEmpty()) {
             makeChumpBlocks(combat, new ArrayList<>(unblocked));
         }
@@ -1136,6 +1204,7 @@ public class AiBlockController {
         }
 
         clearBlockers(combat, possibleBlockers);
+        trickAllowances.clear(); // TFR round 1035: hands and mana may have changed since the last assignment
 
         diff = (ai.getLife() * 2) - 5; // This is the minimal gain for an unnecessary trade
         if (diff > 0 && AiProfileUtil.getBoolProperty(ai, AiProps.PLAY_AGGRO)) {
@@ -1169,7 +1238,7 @@ public class AiBlockController {
 
         // When the AI holds some Fog effect, don't bother about lifeInDanger
         if (!ComputerUtil.hasAFogEffect(ai, ai, checkingOther)) {
-            lifeInDanger = ComputerUtilCombat.lifeInDanger(ai, combat);
+            lifeInDanger = inDanger(combat);
             makeTradeBlocks(combat);
 
             if (lifeInDanger) {
@@ -1177,7 +1246,7 @@ public class AiBlockController {
             }
 
             // Reinforce blockers blocking attackers with trample if life is still in danger
-            if (lifeInDanger && ComputerUtilCombat.lifeInDanger(ai, combat)) {
+            if (lifeInDanger && inDanger(combat)) {
                 reinforceBlockersAgainstTrample(combat);
             } else {
                 lifeInDanger = false;
@@ -1190,7 +1259,7 @@ public class AiBlockController {
 
             // TODO could be made more accurate if this would be inside each blocker choosing loop instead
             if (removeUnpayableBlocks(combat) || lifeInDanger) {
-                lifeInDanger = ComputerUtilCombat.lifeInDanger(ai, combat);
+                lifeInDanger = inDanger(combat);
             }
 
             // == 2. If the AI life would still be in danger make a safer approach ==
@@ -1202,7 +1271,7 @@ public class AiBlockController {
                 makeChumpBlocks(combat);
 
                 // Reinforce blockers blocking attackers with trample if life is still in danger
-                if (lifeInDanger && ComputerUtilCombat.lifeInDanger(ai, combat)) {
+                if (lifeInDanger && inDanger(combat)) {
                     reinforceBlockersAgainstTrample(combat);
                 } else {
                     lifeInDanger = false;
@@ -1213,17 +1282,17 @@ public class AiBlockController {
             }
 
             // == 3. If the AI life would be in serious danger make an even safer approach ==
-            if (lifeInDanger && ComputerUtilCombat.lifeInSeriousDanger(ai, combat)) {
+            if (lifeInDanger && inSeriousDanger(combat)) {
                 clearBlockers(combat, possibleBlockers);
                 makeChumpBlocks(combat);
 
-                if (lifeInDanger && ComputerUtilCombat.lifeInDanger(ai, combat)) {
+                if (lifeInDanger && inDanger(combat)) {
                     makeTradeBlocks(combat);
                 } else {
                     lifeInDanger = false;
                 }
 
-                if (lifeInDanger && ComputerUtilCombat.lifeInDanger(ai, combat)) {
+                if (lifeInDanger && inDanger(combat)) {
                     reinforceBlockersAgainstTrample(combat);
                 } else {
                     lifeInDanger = false;

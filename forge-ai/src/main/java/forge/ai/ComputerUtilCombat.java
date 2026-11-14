@@ -1829,6 +1829,11 @@ public class ComputerUtilCombat {
     }
     public static boolean canDestroyAttacker(Player ai, Card attacker, Card blocker, final Combat combat,
             final boolean withoutAbilities, final boolean withoutAttackerStaticAbilities) {
+        return canDestroyAttacker(ai, attacker, blocker, combat, withoutAbilities, withoutAttackerStaticAbilities, 0, 0);
+    }
+    /** As above, with the attacker and the blocker each given an extra +N/+N (a combat trick the AI allows for). */
+    public static boolean canDestroyAttacker(Player ai, Card attacker, Card blocker, final Combat combat,
+            final boolean withoutAbilities, final boolean withoutAttackerStaticAbilities, final int attackerTrick, final int blockerTrick) {
         // Can activate transform ability
         if (!withoutAbilities) {
             attacker = canTransform(attacker);
@@ -1881,7 +1886,7 @@ public class ComputerUtilCombat {
         }
 
         // consider Damage Prevention/Replacement
-        defenderDamage = predictDamageTo(attacker, defenderDamage, possibleAttackerPrevention, blocker, true);
+        defenderDamage = predictDamageTo(attacker, defenderDamage + blockerTrick, possibleAttackerPrevention, blocker, true);
         if (defenderDamage > 0 && isCombatDamagePrevented(blocker, attacker, defenderDamage)) {
             return false;
         }
@@ -1894,12 +1899,12 @@ public class ComputerUtilCombat {
             attackerDamage = attacker.getNetPower()
                     + predictPowerBonusOfAttacker(attacker, blocker, combat, withoutAbilities, withoutAttackerStaticAbilities);
         }
-        attackerDamage = predictDamageTo(blocker, attackerDamage, possibleDefenderPrevention, attacker, true);
+        attackerDamage = predictDamageTo(blocker, attackerDamage + attackerTrick, possibleDefenderPrevention, attacker, true);
 
         final int defenderLife = getDamageToKill(blocker, false)
-                + predictToughnessBonusOfBlocker(attacker, blocker, withoutAbilities);
+                + predictToughnessBonusOfBlocker(attacker, blocker, withoutAbilities) + blockerTrick;
         final int attackerLife = getDamageToKill(attacker, false)
-                + predictToughnessBonusOfAttacker(attacker, blocker, combat, withoutAbilities, withoutAttackerStaticAbilities);
+                + predictToughnessBonusOfAttacker(attacker, blocker, combat, withoutAbilities, withoutAttackerStaticAbilities) + attackerTrick;
 
         // AI should be less worried about Deathtouch
         if (blocker.hasDoubleStrike()) {
@@ -2059,6 +2064,11 @@ public class ComputerUtilCombat {
     }
     public static boolean canDestroyBlocker(Player ai, Card blocker, Card attacker, final Combat combat,
             final boolean withoutAbilities, final boolean withoutAttackerStaticAbilities) {
+        return canDestroyBlocker(ai, blocker, attacker, combat, withoutAbilities, withoutAttackerStaticAbilities, 0, 0);
+    }
+    /** As above, with the attacker and the blocker each given an extra +N/+N (a combat trick the AI allows for). */
+    public static boolean canDestroyBlocker(Player ai, Card blocker, Card attacker, final Combat combat,
+            final boolean withoutAbilities, final boolean withoutAttackerStaticAbilities, final int attackerTrick, final int blockerTrick) {
         // Can activate transform ability
         if (!withoutAbilities) {
             attacker = canTransform(attacker);
@@ -2106,8 +2116,8 @@ public class ComputerUtilCombat {
         }
 
         // consider Damage Prevention/Replacement
-        defenderDamage = predictDamageTo(attacker, defenderDamage, possibleAttackerPrevention, blocker, true);
-        attackerDamage = predictDamageTo(blocker, attackerDamage, possibleDefenderPrevention, attacker, true);
+        defenderDamage = predictDamageTo(attacker, defenderDamage + blockerTrick, possibleAttackerPrevention, blocker, true);
+        attackerDamage = predictDamageTo(blocker, attackerDamage + attackerTrick, possibleDefenderPrevention, attacker, true);
 
         // Damage prevention might come from a static effect
         if (isCombatDamagePrevented(attacker, blocker, attackerDamage)) {
@@ -2126,9 +2136,9 @@ public class ComputerUtilCombat {
         }
 
         final int defenderLife = getDamageToKill(blocker, false)
-                + predictToughnessBonusOfBlocker(attacker, blocker, withoutAbilities);
+                + predictToughnessBonusOfBlocker(attacker, blocker, withoutAbilities) + blockerTrick;
         final int attackerLife = getDamageToKill(attacker, false)
-                + predictToughnessBonusOfAttacker(attacker, blocker, combat, withoutAbilities, withoutAttackerStaticAbilities);
+                + predictToughnessBonusOfAttacker(attacker, blocker, combat, withoutAbilities, withoutAttackerStaticAbilities) + attackerTrick;
 
         // AI should be less worried about deathtouch
         if (attacker.hasDoubleStrike()) {

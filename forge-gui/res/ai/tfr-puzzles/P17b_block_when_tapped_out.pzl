@@ -1,0 +1,17 @@
+[metadata]
+Name:P17b - the same block with the opponent tapped out and empty-handed (guard for P17; round 1035)
+Description:P17's board, but the opponent has no untapped land and no cards in hand: no trick is possible, so Bladewing blocking the Watchwolf is simply right. Expect: the Watchwolf dies (the trick allowance must not make the AI timid). Passes on stock Forge too.
+Turns:1
+Expect:humangraveyard has Watchwolf
+[state]
+humanlife=20
+ailife=11
+turn=13
+activeplayer=human
+activephase=COMBAT_DECLARE_ATTACKERS
+humanhand=
+humanlibrary=Plains;Plains;Plains;Plains;Plains
+humanbattlefield=Watchwolf|Attacking;Forest|Tapped;Plains|Tapped
+aihand=
+ailibrary=Swamp;Swamp;Swamp;Swamp;Swamp
+aibattlefield=Bladewing the Risen;Swamp|Tapped;Swamp|Tapped

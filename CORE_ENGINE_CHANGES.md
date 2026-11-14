@@ -35,6 +35,33 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 1035 - the combat trick allowance on blocks and attacks (one upstream PR draft)
+- `forge-ai/src/main/java/forge/ai/AiProps.java` (STOCK, identical to upstream `a8695ac23e2` before this round): two
+  keys after `CHANCE_TO_HOLD_COMBAT_TRICKS_UNTIL_BLOCK`: `TRICK_ALLOWANCE_ON_BLOCK ("false")`,
+  `TRICK_ALLOWANCE_ON_ATTACK ("false")`.
+- `forge-ai/src/main/java/forge/ai/CombatTrickAllowance.java` (NEW, stock package): `of(Player)`, the assumed +N/+N,
+  with a per-thread cache of numbers only (no game or card kept).
+- `forge-ai/src/main/java/forge/ai/ComputerUtilCombat.java` (STOCK, already TFR-edited): `canDestroyAttacker` and
+  `canDestroyBlocker` each gain an overload with `attackerTrick, blockerTrick` (added to that side's damage and
+  damage-to-kill); the existing 6-argument versions call it with 0, 0, so no caller changes.
+- `forge-ai/src/main/java/forge/ai/AiBlockController.java` (STOCK, already TFR-edited by rounds 1024 and 1034):
+  `getSafeBlockers` also drops a blocker for which the new `diesToTrick` holds (`[TFR-AiFix] trick-block` log);
+  `trickAllowance(Player)` (once per assignment, a map cleared at the start of `assignBlockers`); every
+  `ComputerUtilCombat.lifeInDanger(ai, combat)` / `lifeInSeriousDanger(ai, combat)` call in the class (15) is now the
+  private `inDanger(combat)` / `inSeriousDanger(combat)`, which pass `trickDamage(combat)` as the existing `payment`
+  argument (0 with the flag off).
+- `forge-ai/src/main/java/forge/ai/AiAttackController.java` (STOCK, already TFR-edited by round 1025): fields
+  `trickAllowanceOf` / `trickAllowance` and `attackTrickAllowance()`; `SpellAbilityFactors.diesToBlockerTrick` and a
+  check at the end of `calculate`'s per-blocker loop (`[TFR-AiFix] trick-attack` log).
+- `forge-gui/res/ai/Default.ai` (STOCK profile, the first TFR edit to it): both keys `=true`, with comments, after
+  `CHANCE_TO_HOLD_COMBAT_TRICKS_UNTIL_BLOCK`. **A key the jar doesn't know throws in `AiProfileUtil.loadProfile`**:
+  keep the keys and `AiProps` in the same commit; `AiProfileKeysTest` (new, TFR) fails on a mismatch.
+- TFR files (not stock): `forge-gui-desktop/src/test/java/forge/ai/AiProfileKeysTest.java` (new),
+  `tfr/TfrAiPuzzleTest.java` (`has A|B`), puzzles P17, P17b, P18 (new), P15 (Expect widened).
+- **On a merge:** upstream draft 0001 (`C:\CLAUDE\PROJECTS\TFR1\notes\r1035\upstream-pr\`) ships the flags off in
+  Default.ai; if upstream merges it, take theirs, keep TFR's two `=true` lines, and drop the log calls. P17 or P18
+  failing in `TfrAiPuzzleTest` means a merge lost the code or the profile lines.
+
 ### Round 1034 (follow-up) - Torment of Hailfire's AIMinX
 - `forge-gui/res/cardsfolder/t/torment_of_hailfire.txt` (STOCK card script): one line, `SVar:AIMinX:3`, after
   `SVar:AIPreference`. Read only by round 1034's `RepeatAi.minRepeatX` (the AI waits for X >= 3). In upstream draft
