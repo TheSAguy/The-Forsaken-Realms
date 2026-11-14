@@ -62,6 +62,9 @@ public class ChangeZoneAi extends SpellAbilityAi {
             if (!ComputerUtilCost.checkLifeCost(payer, cost, source, 4, sa)) {
                 return false;
             }
+            if (!forge.ai.tfr.TfrAiRules.allowLifeFetch(payer, cost, source, sa)) {
+                return false; // TFR round 1034: rule fetch-life-guard (a fetch's life into on-board lethal)
+            }
 
             if (!ComputerUtilCost.checkDiscardCost(payer, cost, source, sa)) {
                 for (final CostPart part : cost.getCostParts()) {

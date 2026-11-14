@@ -1,0 +1,18 @@
+[metadata]
+Name:P20 - fetchland cracked at 6 life into exactly lethal (round 1034, from round 1029's study F10, Hard H4 T14)
+Description:The AI is at 6 life with six lands and nothing in hand to cast; the opponent has Gurmag Angler (5/5) untapped. Cracking Bloodstained Mire (pay 1) for a land puts the AI at 5, exactly the Angler's damage. ChangeZoneAi only checks "life after paying >= 4". Rule fetch-life-guard keeps the land when life after paying is at most the opponent's on-board damage and no spell in hand needs the mana. Expect: the AI keeps 6 life. (The real game's AI kept a blocker home; this puzzle has none, so the life point decides.)
+Turns:1
+Expect:ailife>=6
+RulesOff:fail
+[state]
+humanlife=15
+ailife=6
+turn=14
+activeplayer=ai
+activephase=MAIN1
+humanhand=Counterspell
+humanlibrary=Island;Island;Island;Island;Island
+humanbattlefield=Gurmag Angler;Island;Island;Island;Swamp;Swamp;Swamp
+aihand=
+ailibrary=Savai Triome;Swamp;Mountain;Swamp;Mountain
+aibattlefield=Bloodstained Mire;Savai Triome;Savai Triome;Swamp;Plains;Mountain

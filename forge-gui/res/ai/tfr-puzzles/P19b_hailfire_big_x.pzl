@@ -1,0 +1,17 @@
+[metadata]
+Name:P19b - Torment of Hailfire with X=6 (round 1034, guard for P19)
+Description:Eight lands: X=6 against two creatures and three cards is the finisher working as meant. Expect: cast.
+Turns:1
+Expect:aiplayed has Torment of Hailfire
+[state]
+humanlife=20
+ailife=20
+turn=14
+activeplayer=ai
+activephase=MAIN1
+humanhand=Counterspell;Island;Doom Blade
+humanlibrary=Island;Island;Island;Island;Island
+humanbattlefield=Spectral Sailor;Brineborn Cutthroat;Island;Island;Swamp;Swamp
+aihand=Torment of Hailfire
+ailibrary=Swamp;Swamp;Swamp;Swamp;Swamp
+aibattlefield=Swamp;Swamp;Swamp;Swamp;Mountain;Mountain;Mountain;Mountain

@@ -41,6 +41,14 @@
       "params": {},
       "test": ["P15_infect_pumps_on_wall", "P15c_pump_no_kill_next_turn"],
       "retireWhen": "Round 1025 (round 1023's study F5): Forge's pump AI judges each pump alone, so on the opponent's turn the infect deck spent Groundswell and then Primal Bellow on its 0/4 wall to kill a 2/2, and lost the poison kill they made next turn. The rule holds a pump on a blocker (no lifelink or trample involved, stack empty) when the AI's next attack kills with it kept and not with it spent, against every way the opponent's untapped creatures can block. Retire when P15 passes with the rules off at off, lite and max (the puzzle test says RETIRE?)."
+    },
+    {
+      "id": "fetch-life-guard",
+      "kind": "spell",
+      "enabled": ["Normal", "Hard", "Insane", "Other"],
+      "params": {},
+      "test": ["P20_fetch_into_lethal"],
+      "retireWhen": "Round 1034 (round 1029's study F10): ChangeZoneAi pays a fetchland's life whenever 4 or more is left, so at 6 life the AI cracked Bloodstained Mire for a tapped Triome with nothing to cast and stood at 5 against a 5/5. The rule keeps the land when life after paying is at most the opponents' on-board damage (creatures without defender, unblocked, present power), unless it is the AI's main phase and a spell in hand needs one more mana or the fetched color. Hook: one line in ChangeZoneAi.willPayCosts. Retire when P20 passes with the rules off at off, lite and max (the puzzle test says RETIRE?); then delete the rule and its ChangeZoneAi line."
     }
   ]
 }

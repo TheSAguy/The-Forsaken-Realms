@@ -1,0 +1,17 @@
+[metadata]
+Name:P19 - Torment of Hailfire cast for X=1 (round 1034, from round 1029's study F9, Hard H4 T6)
+Description:The AI has three lands (B, B, R) and Torment of Hailfire. Cast now it is X=1: the opponent sacrifices a 1/1 or discards a card, and the deck's finisher is gone for less than a card. Stock RepeatAi (AILogic MaxX) casts at any X >= 1; round 1034 waits for X >= 2 (a card's AIMinX SVar overrides the 2). Expect: Hailfire is not cast this turn. Guard P19b: eight lands (X=6) -> it is cast.
+Turns:1
+Expect:aiplayed lacks Torment of Hailfire
+[state]
+humanlife=20
+ailife=20
+turn=6
+activeplayer=ai
+activephase=MAIN1
+humanhand=Counterspell;Island;Doom Blade
+humanlibrary=Island;Island;Island;Island;Island
+humanbattlefield=Spectral Sailor;Brineborn Cutthroat;Island;Island;Swamp;Swamp
+aihand=Torment of Hailfire
+ailibrary=Swamp;Swamp;Swamp;Swamp;Swamp
+aibattlefield=Swamp;Swamp;Mountain

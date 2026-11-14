@@ -35,6 +35,27 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 1034 - MaxX repeat minimum X, the trade that saves a planeswalker, the trade-chance step (three upstream PR drafts); the fetch-life-guard rule
+- `forge-ai/src/main/java/forge/ai/ability/RepeatAi.java` (STOCK, identical to upstream `a8695ac23e2` before this
+  round): `canPlay`'s `MaxX` branch holds the spell while the most X it can pay is under `minRepeatX(sa)` (new package
+  method: the host's `AIMinX` SVar, else 2), logging `[TFR-AiFix] repeat-min-x`. `MaxXAtOppEOT` (Helm of Obedience) is
+  unchanged. Upstream draft 0001 without the log.
+- `forge-ai/src/main/java/forge/ai/AiBlockController.java` (STOCK, already TFR-edited by round 1024):
+  - `wouldLikeToRandomlyTrade`'s return: the power gate and the creature-count gate are one `boardGates` boolean, and
+    `wantToSavePlaneswalker` passes it (`(boardGates || wantToSavePlaneswalker)`); a `[TFR-AiFix] pw-trade` log when the
+    planeswalker roll is what let the trade through (draft 0002 without the log).
+  - The trade chance is the new `public static randomTradeChance(min, max, startingLife, life)`, with a float step
+    (draft 0003). `forge-gui-desktop/src/test/java/forge/ai/AiBlockControllerTradeChanceTest.java` (new, TFR) tests it.
+- `forge-ai/src/main/java/forge/ai/ability/ChangeZoneAi.java` (STOCK): **a TFR rule hook, temporary**: in
+  `willPayCosts`' hidden branch, after `checkLifeCost`, `if (!forge.ai.tfr.TfrAiRules.allowLifeFetch(payer, cost,
+  source, sa)) return false;` (rule `fetch-life-guard`). It is the fourth rule hook (round 1018's three, round 1019's
+  one): re-apply it on a merge; delete it with the rule when P20 says RETIRE?.
+- TFR files (not stock): `forge-ai/src/main/java/forge/ai/tfr/FetchLifeGuard.java` (new), `TfrAiRules.java`
+  (`allowLifeFetch`, `firedOnce`, the rule id), `forge-gui/res/ai/tfr-rules.json` (the rule entry), puzzles P19, P19b,
+  P20, P21.
+- **On a merge:** if upstream merges a draft, take theirs and drop ours. P19 (0001) and P21 (0002) failing in
+  `TfrAiPuzzleTest`, or `AiBlockControllerTradeChanceTest` failing (0003), is the signal that a merge lost one.
+
 ### Round 1031 - the engine to the 11.13 daily (upstream `a8695ac23e2`, Forge 2.0.17-SNAPSHOT)
 - The version is now **2.0.17-SNAPSHOT** (upstream tagged `forge-2.0.16` in the range): the jar is
   `forge-gui-mobile-dev-2.0.17-SNAPSHOT-jar-with-dependencies.jar`; a target folder still holding the 2.0.16 jar fails
@@ -274,7 +295,8 @@ New files (no merge conflicts possible; listed so a merge round knows they exist
 
 #### The AI rules merge protocol (every engine merge, TFR 1 and TFR 2)
 1. Merge as usual. The stock lines are the only conflict points (round 1018's three, round 1019's one in
-   `AiController.refineAttackWithFlatMonteCarlo`); re-apply them on top of upstream.
+   `AiController.refineAttackWithFlatMonteCarlo`, round 1034's one in `ChangeZoneAi.willPayCosts`); re-apply them on
+   top of upstream.
 2. Run `TfrAiPuzzleTest` (`mvn -pl forge-gui-desktop -am test -Dtest=TfrAiPuzzleTest
    -Dsurefire.failIfNoSpecifiedTests=false`, under a minute: every puzzle with the rules on and off, 3 runs, at `off`, `lite` and `max`). The table goes to
    `forge-gui-desktop/target/tfr-ai-puzzles.txt`.

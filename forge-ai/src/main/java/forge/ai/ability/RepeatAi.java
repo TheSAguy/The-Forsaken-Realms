@@ -36,11 +36,35 @@ public class RepeatAi extends SpellAbilityAi {
             if (max <= 0) {
                 return new AiAbilityDecision(0, AiPlayDecision.CantAffordX);
             }
+            // TFR round 1034 (F9): a "repeat X times" card cast for X=1 spends a finisher (Torment of Hailfire) on one
+            // sacrifice or discard. Wait for a minimum X: the card's AIMinX SVar, else 2. Helm of Obedience
+            // (MaxXAtOppEOT, "X can't be 0") keeps its own timing.
+            if ("MaxX".equals(logic)) {
+                final int minX = minRepeatX(sa);
+                if (max < minX) {
+                    forge.ai.tfr.TfrAiRules.stockFix(ai, "repeat-min-x:" + sa.getHostCard().getId(),
+                            "holds " + sa.getHostCard() + ": X would be " + max + ", minimum " + minX);
+                    return new AiAbilityDecision(0, AiPlayDecision.CantAffordX);
+                }
+            }
             return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
         }
         return new AiAbilityDecision(100, AiPlayDecision.WillPlay);
     }
     
+    /** The smallest X the AI casts a MaxX repeat for: the host's {@code AIMinX} SVar when it is a number, else 2. */
+    static int minRepeatX(final SpellAbility sa) {
+        final Card host = sa.getHostCard();
+        if (host != null && host.hasSVar("AIMinX")) {
+            try {
+                return Math.max(1, Integer.parseInt(host.getSVar("AIMinX").trim()));
+            } catch (final NumberFormatException e) {
+                // not a number: the default
+            }
+        }
+        return 2;
+    }
+
     @Override
     public boolean confirmAction(Player player, SpellAbility sa, PlayerActionConfirmMode mode, String message, Map<String, Object> params) {
       //TODO add logic to have computer make better choice (ArsenalNut)

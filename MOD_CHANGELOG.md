@@ -14264,6 +14264,50 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 1034: the AI keeps its Hailfire, trades to save its planeswalker, trades by life at Insane, and keeps its life over a fetchland (2026-11-14)
+
+The main thread's scope: round 1029's second recommended round, the stock-fix bundle F9, F11 and F14 from its Hard and
+Insane study (`C:\CLAUDE\PROJECTS\TFR1\notes\r1029\study.md`), with F10 as a TFR rule. Findings, puzzles and bench:
+`C:\CLAUDE\PROJECTS\TFR1\notes\r1034\report.md`; three upstream PR drafts (the user posts them) in
+`C:\CLAUDE\PROJECTS\TFR1\notes\r1034\upstream-pr\`.
+
+- **F9, a "repeat X times" spell cast for X=1 (stock `RepeatAi`):** the `MaxX` logic cast Torment of Hailfire at any
+  X >= 1 (the study's Orc Brute spent it for one 1/1 on turn 6). It now waits while the most X it can pay is under the
+  card's `AIMinX` SVar, else 2. Torment of Hailfire, Another Round, Flock of Rabid Sheep and Whimsy use this logic; Helm
+  of Obedience (`MaxXAtOppEOT`) is unchanged. Logs `[TFR-AiFix] repeat-min-x`. Puzzles P19 (X=1: held) and P19b (X=6:
+  cast).
+- **F11, no trade block to save a planeswalker (stock `AiBlockController.wouldLikeToRandomlyTrade`):** the
+  `CHANCE_TO_TRADE_TO_SAVE_PLANESWALKER` roll (70) sat behind two gates meant for random trades: blocker power <=
+  attacker power, and as many creatures as the attacker. Frost Walker (4/1) would not block a 3/3 attacking Mu Yanling,
+  and the chump path skips a blocker that strong. The planeswalker roll now passes both gates (a one-for-one trade keeps
+  the creature difference). The study named only the power gate; the puzzle showed the creature-count gate stops it
+  too. Logs `[TFR-AiFix] pw-trade`. Puzzle P21.
+- **F14, the trade chance's int division (stock `AiBlockController`):** the "trade more as life gets low" step was an
+  int division: 2 instead of 2.67 at 20 starting life, and 0 from 41 on, so an Insane enemy (scaled starting life)
+  traded at 70% at full life. The chance is now `randomTradeChance(min, max, startingLife, life)` with a float step;
+  at full life it is 30% at every starting life. Unit test `AiBlockControllerTradeChanceTest`. Noted, not changed: the
+  formula's `Math.max(5, life - 5)` caps the chance below the profile's 70 (56 at 20 starting life).
+- **F10, a fetchland cracked into on-board lethal (TFR rule `fetch-life-guard`):** `ChangeZoneAi` pays a fetch's life
+  whenever 4 or more is left; the study's Orc Brute at 6 cracked Bloodstained Mire for a tapped Triome and stood at 5
+  against a 5/5. The rule keeps the land when life after paying is at most the opponents' on-board damage (creatures
+  without defender, unblocked, present power), unless it is the AI's main phase and a spell in hand needs one more mana
+  or the fetched color. Logs `[TFR-AiRule] fetch-life-guard turn N <player> <land> pays 1 life (6 -> 5) into 5 on-board
+  damage -> keeps the land`, once a game, turn and land. Hook: one temporary line in `ChangeZoneAi.willPayCosts` (the
+  fourth rule hook). On at Normal/Hard/Insane/Other. Puzzle P20.
+- **Proof:** `TfrAiPuzzleTest`, 3 runs, rules on and off: all 34 puzzles pass at off, lite and max. Stock (forge-ai from
+  the base jar) fails P19, P20 and P21 0/3 at all three strengths; the P19b guard passes both ways. P20 is
+  `RulesOff:fail` (a rule). `AiBlockControllerTradeChanceTest` 5/5.
+- **Bench:** a copy of the 10:03 agent jar against this round's classes, the round's 8 pairings (Hailfire,
+  fetchland and planeswalker decks first, with the rules seat) and pairs14 (two stock seats), run from a copied `res`.
+  First deck wins base / fix: off seed 1117 28 / 23, off seed 2027 21 / 30, lite 32 / 32 (64 games an arm each);
+  pairs14 off 50 / 54 of 112. Nothing worse beyond noise; per-turn time at lite 436 / 449 ms. Fires: `repeat-min-x`
+  15-21 a run (every hold at X=1; stock's earliest Hailfire turn 5, the fix's turn 7), `pw-trade` 3-8,
+  `fetch-life-guard` 0-2.
+- Files: `forge-ai/src/main/java/forge/ai/ability/RepeatAi.java`, `AiBlockController.java`, `ability/ChangeZoneAi.java`
+  (stock); `tfr/FetchLifeGuard.java` (new), `tfr/TfrAiRules.java`; `forge-gui/res/ai/tfr-rules.json`; puzzles P19,
+  P19b, P20, P21; `forge-gui-desktop/src/test/java/forge/ai/AiBlockControllerTradeChanceTest.java` (new). Ledger:
+  `CORE_ENGINE_CHANGES.md` round 1034.
+
 ## Round 1033: Felidar Sovereign and Test of Endurance out of the enemy decks (2026-11-14)
 
 - **Why:** round 1029's D1. Insane's x2.5 enemy life switches on life-threshold cards from turn 1; some enemies start

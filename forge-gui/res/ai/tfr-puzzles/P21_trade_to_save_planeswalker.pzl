@@ -1,0 +1,17 @@
+[metadata]
+Name:P21 - no trade block to save a planeswalker (round 1034, from round 1029's study F11, Insane I3 T12)
+Description:Watchwolf (3/3) and Leonin Skyhunter (2/2 flying) attack Mu Yanling, Sky Dancer (4 loyalty); the attacker is tapped out. The defender's Frost Walker (4/1) can block the Watchwolf: a trade that leaves Mu at 2. Stock Forge blocks nothing and Mu dies: the random-trade path (CHANCE_TO_TRADE_TO_SAVE_PLANESWALKER, 70 in Default.ai) also requires blocker power <= attacker power (4 > 3) and as many creatures as the attacker (1 < 2), and the chump-to-save path skips a blocker that evaluates over 120. Round 1034 lets the planeswalker roll pass both gates (it stays a 70% roll; the test's fixed seeds pass all three runs). Seats swapped from the study: the "human" seat (also a Forge AI) defends, because GameState resolves Attacking:<id> while it reads the cards, and the human's cards are read first. Expect: Mu Yanling survives.
+Turns:1
+Expect:humanbattlefield has Mu Yanling, Sky Dancer
+[state]
+humanlife=23
+ailife=20
+turn=12
+activeplayer=ai
+activephase=COMBAT_DECLARE_ATTACKERS
+humanhand=
+humanlibrary=Island;Island;Island;Island;Island
+humanbattlefield=Mu Yanling, Sky Dancer|Id:10|Counters:LOYALTY=4;Frost Walker;Island;Island;Island
+aihand=
+ailibrary=Plains;Plains;Plains;Plains;Plains
+aibattlefield=Watchwolf|Attacking:10;Leonin Skyhunter|Attacking:10;Plains|Tapped;Forest|Tapped

@@ -11,12 +11,14 @@ every round built. If you find something missing, fix the docs rather than going
 the round detail in `MOD_CHANGELOG.md`). `modVersion` 1.29 / `modVersionDate` 11.14, Android `tfr.version` 1.29 /
 versionCode 12900, `RELEASE_NOTES_v1.29.md`, GUIDE's What's New in 1.29, the Discord FAQ at v1.29 (`EDITED`/`ADDED`
 reset by round 1032's follow-up 2). Unreleased (for 1.30): round 1033 (Felidar Sovereign and Test of Endurance swapped
-out of the 8 TFR enemy decks that held them; `MOD_CHANGELOG.md`). Engine = the 11.13 daily (round 1031, upstream `a8695ac23e2`,
+out of the 8 TFR enemy decks that held them) and round 1034 (AI stock fixes: a MaxX repeat waits for X >= 2, a trade
+block saves a planeswalker, the trade chance's float step; rule `fetch-life-guard`, a fourth rule hook in
+`ChangeZoneAi`; three upstream drafts in `C:\CLAUDE\PROJECTS\TFR1\notes\r1034\upstream-pr\`); `MOD_CHANGELOG.md`. Engine = the 11.13 daily (round 1031, upstream `a8695ac23e2`,
 Forge 2.0.17-SNAPSHOT; round 769's R1-R4 still keep TFR's synchronous auto save, eager shops, Inn events and place
 entry; bosses keep the player's AI setting through `bossAiFollowsSetting`; the TFR AI rules and their stock hooks, round
 1018); next merge from upstream after `a8695ac23e2` (its first commit is `3cfec26d1ed`, #12856, edition fixes);
 BASE_INSTALL is that daily, so packages need no `--allow-base-mismatch`. Next version: 1.30 / 13000. Next free round:
-1035 (1034 = the AI stock-fix bundle). The agent profile's window is
+1035. The agent profile's window is
 1280x720 - at 3840x2160 it covered the screen, got minimized, and a minimized game stops (the bridge times out, shots
 come back 1x1). Agent games keep their own LOCALAPPDATA cache (round 860). Log sharing (round 698) posts to Discord
 through a webhook kept OUT of git in `C:\TFR\secrets\discord_log_webhook.txt` - never commit it; the packager and
@@ -91,7 +93,8 @@ we use that take priority").** Forge decides; the rules in `forge-gui/res/ai/tfr
 `forge-ai/src/main/java/forge/ai/tfr/`) review the decision and log every change as `[TFR-AiRule]`. Fix a dumb AI
 decision there, not in Forge's AI files: one rule per pattern, with a proving puzzle in `forge-gui/res/ai/tfr-puzzles/`
 and a `retireWhen` note. An engine merge keeps the stock hooks (`GamePlayerUtil.createAiPlayer`, the two temporary lines in `AiController`
-(`saSideEffects`, round 1018; `refineAttackWithFlatMonteCarlo`, round 1019), the `DuelScene` difficulty line) and runs `TfrAiPuzzleTest` before packaging: "RULES ON
+(`saSideEffects`, round 1018; `refineAttackWithFlatMonteCarlo`, round 1019), the temporary line in
+`ChangeZoneAi.willPayCosts` (round 1034), the `DuelScene` difficulty line) and runs `TfrAiPuzzleTest` before packaging: "RULES ON
 FAILS" blocks the package, "RETIRE?" means upstream fixed it (delete the rule in that round), and the changelog says
 which rules are still live. The full protocol, and TFR 2's part in it, is in `CORE_ENGINE_CHANGES.md` round 1018.
 

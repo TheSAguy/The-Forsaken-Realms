@@ -1457,12 +1457,7 @@ public class AiBlockController {
             return false;
         }
 
-        int numSteps = Math.max(1, ai.getStartingLife() - 5); // e.g. 15 steps between 5 life and 20 life
-        float chanceStep = (maxRandomTradeChance - minRandomTradeChance) / numSteps;
-        int chance = (int)Math.max(minRandomTradeChance, (maxRandomTradeChance - (Math.max(5, ai.getLife() - 5)) * chanceStep));
-        if (chance > maxRandomTradeChance) {
-            chance = maxRandomTradeChance;
-        }
+        int chance = randomTradeChance(minRandomTradeChance, maxRandomTradeChance, ai.getStartingLife(), ai.getLife());
 
         int evalAtk = ComputerUtilCard.evaluateCreature(attacker, true, false);
         boolean atkEmbalm = (attacker.hasKeyword(Keyword.EMBALM) || attacker.hasKeyword(Keyword.ETERNALIZE)) && !attacker.isToken();
@@ -1493,10 +1488,36 @@ public class AiBlockController {
                 && card.isPlaneswalker();
         boolean wantToTradeDownToSavePW = chanceToTradeDownToSaveWalker > 0;
 
+        // TFR round 1034 (F11): two gates meant for random trades also stopped a trade that saves a planeswalker. The
+        // power gate (no trading up) refused a 4/1 blocking a 3/3 that attacks it, and the creature-count gate (no
+        // trade while behind on board) refused it whenever the attacker had more creatures - but a one-for-one trade
+        // leaves the creature difference as it was, and the planeswalker is lost for nothing otherwise. The chump path
+        // doesn't cover it either: it skips any blocker over THRESHOLD_NONTOKEN_CHUMP_TO_SAVE_PLANESWALKER. The
+        // planeswalker roll (CHANCE_TO_TRADE_TO_SAVE_PLANESWALKER) now passes both gates.
+        final boolean boardGates = powerParityOrHigher && (creatureParityOrAllowedDiff || wantToTradeWithCreatInHand);
+        if (wantToSavePlaneswalker && !boardGates && !checkingOther
+                && ((evalBlk <= evalAtk + 1) || wantToTradeDownToSavePW)) {
+            forge.ai.tfr.TfrAiRules.stockFix(ai, "pw-trade:" + blocker.getId(),
+                    blocker + " (power " + blocker.getNetCombatDamage() + ") may trade with " + attacker + " (power "
+                            + attacker.getNetCombatDamage() + ") to save " + combat.getDefenderByAttacker(attacker)
+                            + " (creatures " + aiCreatureCount + " vs " + oppCreatureCount + ")");
+        }
         return ((evalBlk <= evalAtk + 1) || (wantToSavePlaneswalker && wantToTradeDownToSavePW)) // "1" accounts for tapped.
-                && powerParityOrHigher
-                && (creatureParityOrAllowedDiff || wantToTradeWithCreatInHand)
+                && (boardGates || wantToSavePlaneswalker)
                 && (MyRandom.percentTrue(chance) || wantToSavePlaneswalker);
+    }
+
+    /**
+     * The chance (percent) to take a favorable random trade on block: {@code max} at 5 life or less, falling by one
+     * step a life point to {@code min} at the starting life ({@code ENABLE_RANDOM_FAVORABLE_TRADES_ON_BLOCK}).
+     * TFR round 1034 (F14): the step was an int division, truncated before it became a float: 2 instead of 2.67 at 20
+     * starting life, and 0 from 41 starting life on (an enemy with scaled life traded at {@code max} at full life).
+     */
+    public static int randomTradeChance(final int min, final int max, final int startingLife, final int life) {
+        final int numSteps = Math.max(1, startingLife - 5); // e.g. 15 steps between 5 life and 20 life
+        final float chanceStep = (float) (max - min) / numSteps;
+        final int chance = (int) Math.max(min, (max - (Math.max(5, life - 5)) * chanceStep));
+        return Math.min(chance, max);
     }
 
     private boolean removeUnpayableBlocks(final Combat combat) {

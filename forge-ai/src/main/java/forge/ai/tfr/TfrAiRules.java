@@ -37,8 +37,9 @@ import forge.game.spellability.SpellAbility;
  * every rule in the file, or none, whatever the difficulty: the switch the puzzle test and the benches use.</p>
  *
  * <p>Stock hooks: {@code GamePlayerUtil.createAiPlayer} (the seat), one line in {@code AiController.saSideEffects}
- * (rule etb-drawback-allow) and one in {@code AiController.refineAttackWithFlatMonteCarlo} (rule mc-attack-cut-guard).
- * All three are in {@code CORE_ENGINE_CHANGES.md}.</p>
+ * (rule etb-drawback-allow), one in {@code AiController.refineAttackWithFlatMonteCarlo} (rule mc-attack-cut-guard) and,
+ * round 1034, one in {@code ChangeZoneAi.willPayCosts} (rule fetch-life-guard). All four are in
+ * {@code CORE_ENGINE_CHANGES.md}.</p>
  */
 public final class TfrAiRules {
     public static final String TAG = "[TFR-AiRule]";
@@ -73,7 +74,8 @@ public final class TfrAiRules {
 
     /** The rules this build knows, by id. A rule in the file that is not here is ignored (with a log line). */
     static final Set<String> KNOWN = Collections.unmodifiableSet(new LinkedHashSet<>(List.of(
-            EtbDrawbackAllow.ID, AlphaStrikeCount.ID, McAttackCutGuard.ID, PressureAttack.ID, FinisherPumpHold.ID)));
+            EtbDrawbackAllow.ID, AlphaStrikeCount.ID, McAttackCutGuard.ID, PressureAttack.ID, FinisherPumpHold.ID,
+            FetchLifeGuard.ID)));
 
     private static volatile Map<String, Entry> rules = Collections.emptyMap();
     private static volatile String version = "none";
@@ -316,6 +318,21 @@ public final class TfrAiRules {
         }
     }
 
+    /**
+     * The stock hook in {@code ChangeZoneAi.willPayCosts} (round 1034): false keeps a fetchland whose life payment
+     * walks into the opponents' on-board damage (rule fetch-life-guard). Never throws.
+     */
+    public static boolean allowLifeFetch(final Player ai, final forge.game.cost.Cost cost, final Card source, final SpellAbility sa) {
+        try {
+            return FetchLifeGuard.allow(ai, cost, source, sa);
+        } catch (final forge.util.AITimeoutTracker.Expired e) {
+            throw e;
+        } catch (final RuntimeException e) {
+            System.out.println(TAG + " " + FetchLifeGuard.ID + " error, Forge's play stands: " + e);
+            return true;
+        }
+    }
+
     // ---- logging and counts ----
 
     /** game:turn:key of the stock-fix lines already logged, so a decision asked many times a turn logs once. */
@@ -346,6 +363,20 @@ public final class TfrAiRules {
         final String kind = colon < 0 ? key : key.substring(0, colon);
         FIRES.computeIfAbsent("fix:" + kind, k -> new AtomicInteger()).incrementAndGet();
         System.out.println("[TFR-AiFix] " + kind + " turn " + turn + " " + p.getName() + " " + what);
+    }
+
+    /**
+     * Like {@link #fired} for a rule asked many times a turn (a cost check): logs and counts once per game, turn and
+     * key. Never inside a game copy (the rules don't run there).
+     */
+    static void firedOnce(final String id, final Player p, final String key, final String before, final String after) {
+        final int turn = p.getGame().getPhaseHandler().getTurn();
+        synchronized (STOCK_LOGGED) {
+            if (STOCK_LOGGED.put(p.getGame().getId() + ":" + turn + ":rule:" + key, Boolean.TRUE) != null) {
+                return;
+            }
+        }
+        fired(id, "turn " + turn + " " + p.getName() + " " + before, after);
     }
 
     static void fired(final String id, final String before, final String after) {
