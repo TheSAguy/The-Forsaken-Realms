@@ -67,7 +67,8 @@ public class RewardScene extends UIScene {
         Loot,
         QuestReward,
         RewardChoice,
-        EventReward
+        EventReward,
+        Lost
     }
 
     Type type;
@@ -737,7 +738,7 @@ public class RewardScene extends UIScene {
     public void enter() {
         autoSell = false;
         updateDetailButton();
-        if (type == Type.Loot && Forge.lastPreview != null) {
+        if ((type == Type.Loot || type == Type.Lost) && Forge.lastPreview != null) {
             setUIBackground(getLastPreviewDrawable(new TextureRegion(Forge.lastPreview)));
         } else {
             setUIBackground(origDrawable);
@@ -992,6 +993,8 @@ public class RewardScene extends UIScene {
         clearSelectable();
         this.type = type;
         doneClicked = false;
+        playerGold.setVisible(type != Type.Lost);
+        playerShards.setVisible(type != Type.Lost);
         updateCollectionPool();
         destroyButton.setVisible(false); // re-enabled by the Shop case below when applicable
         guardsButton.setVisible(false); // re-enabled by the Shop case below when applicable
@@ -1214,6 +1217,13 @@ public class RewardScene extends UIScene {
                 headerLabel.skipToTheEnd();
                 restockButton.setVisible(false);
                 break;
+            case Lost:
+                headerLabel.setPosition(restockButton.getX(), restockButton.getY());
+                headerLabel.setVisible(true);
+                headerLabel.setText("[%?SHINY]" + Forge.getLocalizer().getMessage("lblYouLost"));
+                headerLabel.skipToTheEnd();
+                restockButton.setVisible(false);
+                break;
             case RewardChoice:
                 restockButton.setVisible(false);
                 headerLabel.setVisible(remainingSelections > 0);
@@ -1237,13 +1247,17 @@ public class RewardScene extends UIScene {
             targetHeight -= modReserve;
             targetArea = targetHeight * targetWidth;
         }
+        // The stage is stretched over the window, so compensate to keep the card's real ratio at any screen size.
+        // Needed before the grid search so rows and columns are counted with the final card width.
+        float correction = ScreenAspectCorrection.widthCorrection(Scene.getIntendedWidth(), Scene.getIntendedHeight(),
+                Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         for (int h = 1; h < targetHeight; h++) {
             cardHeight = h;
             if (type == Type.Shop || type == Type.RewardChoice) {
                 cardHeight += doneButton.getHeight();
             }
             //cardHeight=targetHeight/i;
-            cardWidth = h / CARD_WIDTH_TO_HEIGHT;
+            cardWidth = h / CARD_WIDTH_TO_HEIGHT * correction;
             newArea = newRewards.size * cardWidth * cardHeight;
 
             int rows = (int) (targetHeight / cardHeight);
@@ -1255,41 +1269,8 @@ public class RewardScene extends UIScene {
                 bestCardHeight = h;
             }
         }
-        float AR = 480f / 270f;
-        int x = Forge.getDeviceAdapter().getRealScreenSize(false).getLeft();
-        int y = Forge.getDeviceAdapter().getRealScreenSize(false).getRight();
-        int realX = Forge.getDeviceAdapter().getRealScreenSize(true).getLeft();
-        int realY = Forge.getDeviceAdapter().getRealScreenSize(true).getRight();
-        float fW = Math.max(x, y);
-        float fH = Math.min(x, y);
-        float mul = fW / fH < AR ? AR / (fW / fH) : (fW / fH) / AR;
-        if (fW / fH >= 2f) {//tall display
-            mul = (fW / fH) - ((fW / fH) / AR);
-            if ((fW / fH) >= 2.1f && (fW / fH) < 2.2f)
-                mul *= 0.9f;
-            else if ((fW / fH) > 2.2f) //ultrawide 21:9 Galaxy Fold, Huawei X2, Xperia 1
-                mul *= 0.8f;
-        }
         cardHeight = bestCardHeight * 0.90f;
-        Float custom = Forge.isLandscapeMode()
-            ? Config.instance().getSettingData().rewardCardAdjLandscape
-            : Config.instance().getSettingData().rewardCardAdj;
-        if (custom != null && custom != 1f) {
-            mul *= custom;
-        } else {
-            if (realX > x || realY > y) {
-                mul *= Forge.isLandscapeMode() ? 0.95f : 1.05f;
-            } else {
-                //immersive | no navigation and/or showing cutout cam
-                if (fW / fH > 2.2f)
-                    mul *= Forge.isLandscapeMode() ? 1.1f : 1.6f;
-                else if (fW / fH >= 2.1f)
-                    mul *= Forge.isLandscapeMode() ? 1.05f : 1.5f;
-                else if (fW / fH >= 2f)
-                    mul *= Forge.isLandscapeMode() ? 1f : 1.4f;
-            }
-        }
-        cardWidth = (cardHeight / CARD_WIDTH_TO_HEIGHT) * mul;
+        cardWidth = (cardHeight / CARD_WIDTH_TO_HEIGHT) * correction;
 
         // Round 253 (Android report: "When trying to research/do upgrades, you need to buy the items in the way
         // before you can access it on android"). The loop above chose rows/columns to FIT - its own test is
@@ -1356,6 +1337,8 @@ public class RewardScene extends UIScene {
                 stage.addActor(chooseRewardButton);
                 addToSelectable(chooseRewardButton);
             } else {
+                if (type == Type.Lost)
+                    actor.sold();
                 addToSelectable(actor);
             }
             generated.add(actor);

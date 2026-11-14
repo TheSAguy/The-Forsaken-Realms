@@ -240,5 +240,9 @@ public class ConfigData {
     // Round 993: hover tips (util/TfrTips, TFR 2's Tfr2Tips ported) on the world-map HUD, New Game and Settings, and the
     // "Show tooltips: Auto / On / Off" setting (SettingData.tfrTooltips). False = no tips and no setting row (stock).
     public boolean tfrTooltips = false;
+    // Shards to reroll an offered inn event before joining it. 0 disables rerolls.
+    public int eventRerollPrice;
+    public EffectData globalEffect;
+    public ModifierData[] modifiers; //Optional rules the player can turn on at new game.
 
 }

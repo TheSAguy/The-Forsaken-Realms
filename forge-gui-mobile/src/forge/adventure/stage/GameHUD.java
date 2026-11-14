@@ -2001,6 +2001,10 @@ public class GameHUD extends Stage {
             touchpad.toFront();
     }
 
+    public boolean isShowingNotification() {
+        return notificationPane.hasActions();
+    }
+
     public void clearNotifications() {
         // ROUND 151 BUG FIX (user playtest: "I got several older Quest notifications... something
         // leaked through from my new games I was testing"). Every notification is a ~15 second

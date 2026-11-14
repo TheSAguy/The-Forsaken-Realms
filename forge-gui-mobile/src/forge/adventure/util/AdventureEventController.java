@@ -133,8 +133,16 @@ public class AdventureEventController implements Serializable {
             // No event currently available here
             return null;
         }
+        return createEvent(getEventSeed(pointID), playerTown, pointID);
+    }
 
-        long eventSeed = getEventSeed(pointID);
+    /** Upstream's (11.13, #12807) paid reroll of an offered event: a fresh seed, as for an Inn in a town the player does
+     *  not own. TFR round 1031: off in TFR (config.json has no eventRerollPrice); the Inn keeps its own re-roll. */
+    public AdventureEventData createEvent(long eventSeed) {
+        return createEvent(eventSeed, false, null);
+    }
+
+    private AdventureEventData createEvent(long eventSeed, boolean playerTown, String pointID) {
         Random random = new Random(eventSeed);
 
         AdventureEventData e;

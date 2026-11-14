@@ -74,6 +74,10 @@ public class EnemyData implements Serializable {
     // synthetic clone (see ArenaScene.launchDeckTester()). transient - never meant to survive a
     // save/load, and Deck isn't a type this class's declared Serializable contract should carry.
     public transient Deck fixedDeck = null;
+    public EffectData effect;
+    public boolean ignoreGlobalEffect = false;
+    public boolean ignoreBiomeEffect = false;
+    public boolean ignoreDungeonEffect = false;
 
     public EnemyData() {
     }
@@ -107,6 +111,10 @@ public class EnemyData implements Serializable {
         noAnte          = enemyData.noAnte;
         legend          = enemyData.legend;
         keepSize        = enemyData.keepSize;
+        effect          = enemyData.effect;
+        ignoreGlobalEffect  = enemyData.ignoreGlobalEffect;
+        ignoreBiomeEffect   = enemyData.ignoreBiomeEffect;
+        ignoreDungeonEffect = enemyData.ignoreDungeonEffect;
         if (enemyData.scale == 0.0f) {
             scale = 1.0f;
         }

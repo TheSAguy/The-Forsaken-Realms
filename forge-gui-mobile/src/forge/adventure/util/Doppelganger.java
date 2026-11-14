@@ -34,11 +34,12 @@ public final class Doppelganger {
     /** The Status page: heads the blessing box with "Doppelganger (as Kor)" or "(true form)" for a Doppelganger - the
      *  page's stat rows sit at fixed places with no room for another line. Rewrites what the page just set, at the page's
      *  own text size (round 903). */
-    public static void headBlessing(com.github.tommyettinger.textra.TextraLabel label, AdventurePlayer p, String size) {
+    public static void headBlessing(com.github.tommyettinger.textra.TextraLabel label, AdventurePlayer p, String size, String body) {
         String head = describe(p);
         if (head == null || label == null)
             return;
-        label.setText(size + "[BLACK]" + head + "\n[BLACK]" + (p.getBlessing() != null ? p.getBlessing().getDescription() : "No blessing."));
+        // Round 1031: body is the sheet's "Active effects" text (upstream's, the 11.13 merge), which names the blessing
+        label.setText(size + "[BLACK]" + head + "\n" + body);
     }
 
     /**

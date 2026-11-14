@@ -19,12 +19,16 @@ import com.github.tommyettinger.textra.TypingLabel;
 import forge.Adventure;
 import forge.Forge;
 import forge.adventure.character.EnemySprite;
+import forge.adventure.data.BiomeData;
+import forge.adventure.data.EffectData;
 import forge.adventure.data.EnemyData;
 import forge.adventure.data.ItemData;
 import forge.adventure.data.ItemListData;
 import forge.adventure.data.WorldData;
 import forge.adventure.player.AdventurePlayer;
 import forge.adventure.stage.GameHUD;
+import forge.adventure.stage.MapStage;
+import forge.adventure.stage.WorldStage;
 import forge.adventure.util.Config;
 import forge.adventure.util.Controls;
 import forge.adventure.util.Current;
@@ -344,12 +348,24 @@ public class PlayerStatisticScene extends UIScene {
             colorFrame.setDrawable(new TextureRegionDrawable(getColorFrame(Current.player().getColorIdentity())));
         }
         if (blessingScroll != null) {
-            if (Current.player().getBlessing() != null) {
-                blessingScroll.setText(size + "[BLACK]" + Current.player().getBlessing().getDescription()); // round 903
-            } else {
-                blessingScroll.setText(size + "[BLACK]No blessing.");
-            }
-            forge.adventure.util.Doppelganger.headBlessing(blessingScroll, Current.player(), size); // TFR round 879
+            MapStage map = MapStage.getInstance();
+            StringBuilder effects = new StringBuilder();
+            String modifiers = Current.player().getModifiersDescription();
+            if (!modifiers.isEmpty())
+                effects.append("\n").append(Forge.getLocalizer().getMessage("lblModifiers")).append("\n").append(modifiers);
+            BiomeData worldBiome = map.isInMap() ? null : WorldStage.getInstance().getStoredBiome();
+            boolean ignoreGlobal = map.isInMap() ? map.ignoresGlobalEffect() : worldBiome != null && worldBiome.ignoreGlobalEffect;
+            if (!ignoreGlobal)
+                appendEffect(effects, "lblPlaneEffect", Config.instance().getConfigData().globalEffect, false);
+            appendEffect(effects, "lblBiomeEffect", map.isInMap() ? map.getBiomeEffect() : worldBiome == null ? null : worldBiome.effect, false);
+            appendEffect(effects, "lblDungeonEffect", map.getDungeonEffect(), false);
+            appendEffect(effects, "lblBlessingEffect", Current.player().getBlessing(), true);
+            // TFR round 1031 (the 11.13 merge): upstream's "Active effects" list replaces the blessing text; round 903's
+            // portrait size and round 879's Doppelganger heading kept.
+            String active = "[BLACK]" + Forge.getLocalizer().getMessage("lblActiveEffects") + "\n"
+                    + (effects.length() == 0 ? Forge.getLocalizer().getMessage("lblNoActiveEffects") : effects.toString());
+            blessingScroll.setText(size + active);
+            forge.adventure.util.Doppelganger.headBlessing(blessingScroll, Current.player(), size, active); // TFR round 879
         }
         // Round 496 (the user: "On the character sheet is should show current level and progress, how much is needed for
         // next" and "We should add a Level sheet that shows what you picked on each level"): Ascendance heads the
@@ -459,6 +475,15 @@ public class PlayerStatisticScene extends UIScene {
         for (Achievement a : earned.subList(0, Math.min(RECENT_COUNT, earned.size())))
             addAchievementRow(a);
         System.out.println("[TFR-Achievement] character sheet: " + earned.size() + " earned, newest " + earned.get(0).getKey());
+    }
+
+    private static void appendEffect(StringBuilder text, String labelKey, EffectData effect, boolean playerSide) {
+        if (effect == null)
+            return;
+        text.append("\n").append(Forge.getLocalizer().getMessage(labelKey)).append("\n");
+        if (effect.description != null)
+            text.append(effect.description).append("\n");
+        text.append(playerSide ? effect.getPlayerSideDescription() : effect.getEnemySideDescription());
     }
 
     void updateAchievements(AchievementCollection achievementCollection, boolean isActive) {

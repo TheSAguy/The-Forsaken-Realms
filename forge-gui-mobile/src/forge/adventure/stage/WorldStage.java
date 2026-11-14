@@ -142,6 +142,11 @@ public class WorldStage extends GameStage implements SaveFileContent {
     private static final float TERRITORY_ARRIVAL_EPSILON = 8f; // MOD_SCOPE.md #7
     private Float globalTimer = 0f;
     private transient boolean enterSpawnPOI = false;
+    private boolean showGlobalEffectDialog = false;
+    private EffectData shownBiomeEffect; //Last biome effect shown, so walking back and forth does not repeat it.
+    private EffectData nextBiomeEffect;
+    private float nextBiomeEffectTimer = 0;
+    private static final float biomeEffectDelay = 1.5f; //Seconds of walking inside a biome before its effect is shown.
 
     NavArrowActor navArrow;
     final Rectangle tempBoundingRect = new Rectangle();
@@ -169,6 +174,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
     // which this plane does not use - ours also writes the territory-mage fields (territoryColors,
     // lastDuelDays, territoryTargetIds) that upstream's version drops. Round 289 took the five fields
     // anyway and nothing read them; do not re-add them on the next merge.
+    private final Vector2 biomePosition = new Vector2();
 
     public WorldStage() {
         super();
@@ -807,6 +813,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
             forge.adventure.util.TreasureHunt.tick(world, dayAfter); // round 478: obelisks, the X, the weekly moves
             forge.adventure.util.TownPillage.tick(world, dayAfter); // round 484: the weekly roll, the raiders, the deadline
             handleMonsterSpawn(delta);
+            handleBiomeEffect(delta);
             collided = collided || handlePointsOfInterestCollision();
             globalTimer += delta;
 
@@ -968,6 +975,8 @@ public class WorldStage extends GameStage implements SaveFileContent {
                             Forge.setTransitionScreen(new TransitionScreen(() -> {
                                 collided = false;
                                 duelScene.initDuels(player, mob);
+                                BiomeData biome = getBiome();
+                                duelScene.setEffectLayers(biome == null ? null : biome.effect, null, biome != null && biome.ignoreGlobalEffect);
                                 Forge.switchScene(duelScene);
                             }, ScreenUtil.getInstance().takeScreenshot(), true, false, false, false, "", Current.player().avatar(), mob.getAtlasPath(), Current.player().getName(), mob.getTieredDisplayName())
                                     .withEnemyStatKey(mob.getName()));
@@ -3210,6 +3219,42 @@ public class WorldStage extends GameStage implements SaveFileContent {
 
     public void enterSpawnPOI(){
         enterSpawnPOI = true; //On a new game, we want to automatically enter spawn POI the player overlaps with.
+        showGlobalEffectDialog = true;
+        shownBiomeEffect = null;
+    }
+
+    /** Returns true once after a new game starts, when the plane-wide effect should be shown. */
+    public boolean consumeGlobalEffectDialog() {
+        boolean show = showGlobalEffectDialog;
+        showGlobalEffectDialog = false;
+        return show;
+    }
+
+    private BiomeData getBiome() {
+        return GameScene.instance().getBiomeDataByPosition(biomePosition.set(player.getX(), player.getY()));
+    }
+
+    /** Returns the biome at the world position stored when the player last left the world map. */
+    public BiomeData getStoredBiome() {
+        return GameScene.instance().getBiomeDataByPosition(biomePosition.set(Current.player().getWorldPosX(), Current.player().getWorldPosY()));
+    }
+
+    private void handleBiomeEffect(float delta) {
+        BiomeData biome = getBiome();
+        EffectData biomeEffect = biome == null ? null : biome.effect;
+        if (biomeEffect != nextBiomeEffect) {
+            nextBiomeEffect = biomeEffect;
+            nextBiomeEffectTimer = 0;
+        }
+        if (biomeEffect == null || biomeEffect == shownBiomeEffect)
+            return;
+        nextBiomeEffectTimer += delta;
+        //Notifications queue, so waiting avoids showing an effect after the player has left its biome.
+        if (nextBiomeEffectTimer < biomeEffectDelay || GameHUD.getInstance().isShowingNotification())
+            return;
+        shownBiomeEffect = biomeEffect;
+        GameHUD.getInstance().addNotification(biomeEffect.getIntro(Forge.getLocalizer().getMessage("lblBiomeEffectDescription"))
+                + "\n" + biomeEffect.getEnemySideDescription());
     }
 
     public PointOfInterestMapSprite getMapSprite(PointOfInterest poi) {
@@ -3299,6 +3344,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
     public void load(SaveFileData data) {
         try {
             clearCache();
+            showGlobalEffectDialog = false;
             MapStage.getInstance().clearIsInMap();
             GameHUD.getInstance().clearNotifications();
             // Round 711: the notice log comes back with the save (see save()). Its own try - this method's catch below is
@@ -3410,6 +3456,8 @@ public class WorldStage extends GameStage implements SaveFileContent {
                 System.err.println("[TFR-CapitolDefense] restoring the waiting Capitol mage failed: " + e);
             }
             globalTimer = data.readFloat("globalTimer");
+            BiomeData biome = getStoredBiome();
+            shownBiomeEffect = biome == null ? null : biome.effect;
         } catch (Exception e) {
 
         }
