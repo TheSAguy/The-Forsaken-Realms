@@ -14264,6 +14264,32 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 1037: the AI no longer skips a priority over Giant Koi (EffectAi's Pump logic on an untargeted Effect) (2026-11-14)
+
+From the checked log review `C:\CLAUDE\PROJECTS\TFR1\notes\logs-1114b.md`, finding P3-32: a player's 1.28 Ooze
+(Adept) duel threw a caught NullPointerException 8 times, 6 of them in the AI's real decisions. Each one threw away the
+AI's whole candidate list, so the AI passed that priority. The bug was still in 1.29.
+
+- **Cause (stock):** `EffectAi.checkApiLogic`'s `AILogic$ Pump` branch called `CardUtil.getValidCardsToTarget(sa)`,
+  which reads the target restrictions with no null check. Giant Koi's "This creature can't be blocked this turn"
+  (`AB$ Effect | Defined$ Self | ... | AILogic$ Pump`) has none. Giant Koi is the only card in cardsfolder with an
+  untargeted Effect and `AILogic$ Pump`; every other one has `ValidTgts`.
+- **Fix (`forge-ai/src/main/java/forge/ai/ability/EffectAi.java`, stock):** an ability that doesn't target goes to
+  the new `pumpDefinedCards`. On the AI's own turn before blockers, it plays the ability when a `Defined$` card is a
+  creature the AI controls that can still attack (before attackers) or is attacking. It skips the ability when an effect
+  from the same card (same game timestamp) is already in the command zone, so the Koi doesn't waterbend a second time
+  for nothing. The targeted path is unchanged. Waterbend's payment needed no change: before attacks the AI's payment
+  code doesn't tap its own creatures, so lands pay. No log line: this check runs many times each priority, rollouts
+  included.
+- **Test:** `forge-gui-desktop/src/test/java/forge/ai/ability/EffectAiPumpUntargetedTest.java` (new, 6 tests): the
+  Koi is played in main 1 and while attacking, but not on the opponent's turn, not while summoning-sick and not twice
+  in a turn. A targeted Pump (Artful Dodge) still picks its target.
+- **Proof:** before the fix, 5 of the 6 tests fail with the log's NullPointerException (`TargetRestrictions.getZone()`
+  because "tgt" is null); the Artful Dodge control passes. After the fix, Maven `-o -pl forge-gui-desktop -am test
+  -Dtest=EffectAiPumpUntargetedTest,TfrAiPuzzleTest` exits 0, 7/7. `TfrAiPuzzleTest`: 37 puzzles, 3 runs, rules on,
+  all pass at off, lite and max (333 runs, 0 fails). Not seen in a duel.
+- Upstream PR draft (the user posts it): `C:\CLAUDE\PROJECTS\TFR1\notes\r1037\upstream-pr\`.
+
 ## Round 1035 (follow-up): the block half off until it handles team pumps (2026-11-14)
 
 - **Why:** round 1035's bench was clear on the attack half (suicide attacks 66 -> 40) and mixed on the block half

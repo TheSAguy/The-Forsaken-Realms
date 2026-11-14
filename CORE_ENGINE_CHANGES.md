@@ -35,6 +35,16 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 1037 - EffectAi's Pump logic on an untargeted Effect (one upstream PR draft)
+- `forge-ai/src/main/java/forge/ai/ability/EffectAi.java` (STOCK, identical to upstream `a8695ac23e2` before this
+  round): the `AILogic$ Pump` branch of `checkApiLogic` sends an ability that doesn't target (`!sa.usesTargeting()`) to
+  the new private `pumpDefinedCards` before it calls `CardUtil.getValidCardsToTarget`, which threw a
+  NullPointerException with no target restrictions (Giant Koi). No log line.
+- TFR test (stock package): `forge-gui-desktop/src/test/java/forge/ai/ability/EffectAiPumpUntargetedTest.java` (new).
+- **On a merge:** upstream draft 0001 (`C:\CLAUDE\PROJECTS\TFR1\notes\r1037\upstream-pr\`) is this edit plus the
+  test; if upstream merges it or fixes the branch its own way, take theirs. `EffectAiPumpUntargetedTest` failing with
+  the NullPointerException means a merge lost the guard.
+
 ### Round 1035 (follow-up) - the block half off
 - `forge-gui/res/ai/Default.ai` (STOCK profile): `TRICK_ALLOWANCE_ON_BLOCK=false` (with a two-line comment why);
   `TRICK_ALLOWANCE_ON_ATTACK=true` unchanged. The block-half code stays in `AiBlockController` and does nothing while

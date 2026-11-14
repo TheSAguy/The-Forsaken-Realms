@@ -314,6 +314,10 @@ public class EffectAi extends SpellAbilityAi {
                 return FightAi.canFight(ai, sa, 0, 0);
             } else if (logic.equals("Pump")) {
                 sa.resetTargets();
+                if (!sa.usesTargeting()) {
+                    // e.g. Giant Koi (Defined$ Self): no target restrictions for getValidCardsToTarget to read
+                    return pumpDefinedCards(ai, sa, phase);
+                }
                 List<Card> options = CardUtil.getValidCardsToTarget(sa);
                 options = CardLists.filterControlledBy(options, ai);
                 if (sa.getPayCosts().hasTapCost()) {
@@ -641,6 +645,34 @@ public class EffectAi extends SpellAbilityAi {
         }
 
         return randomReturn ? new AiAbilityDecision(100, AiPlayDecision.WillPlay) : new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+    }
+
+    /**
+     * AILogic$ Pump without targets: the effect goes on the Defined cards. Worth it on the AI's own turn before
+     * blockers, for a creature of its own that can still attack or is attacking, unless this ability's effect from the
+     * same creature is already in place.
+     */
+    private static AiAbilityDecision pumpDefinedCards(final Player ai, final SpellAbility sa, final PhaseHandler phase) {
+        if (!phase.isPlayerTurn(ai) || !phase.getPhase().isBefore(PhaseType.COMBAT_DECLARE_BLOCKERS)) {
+            return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+        }
+        final Card host = sa.getHostCard();
+        for (Card eff : ai.getCardsIn(ZoneType.Command)) {
+            if (host.equalsWithGameTimestamp(eff.getEffectSource())) {
+                return new AiAbilityDecision(0, AiPlayDecision.CantPlayAi);
+            }
+        }
+        final boolean beforeAttacks = phase.getPhase().isBefore(PhaseType.COMBAT_DECLARE_ATTACKERS);
+        final Combat combat = phase.getCombat(); // null outside combat, where Card.isAttacking() would throw
+        CardCollection options = AbilityUtils.getDefinedCards(host, sa.getParam("Defined"), sa);
+        options = CardLists.filterControlledBy(options, ai);
+        options = CardLists.filter(options, c -> c.isCreature()
+                && ((combat != null && combat.isAttacking(c)) || (beforeAttacks && CombatUtil.canAttack(c))));
+        if (sa.getPayCosts().hasTapCost()) {
+            options.remove(host);
+        }
+        return options.isEmpty() ? new AiAbilityDecision(0, AiPlayDecision.CantPlayAi)
+                : new AiAbilityDecision(100, AiPlayDecision.WillPlay);
     }
 
     @Override
