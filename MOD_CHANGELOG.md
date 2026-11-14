@@ -14336,6 +14336,11 @@ Game.
   TFR AI rule stays live.
 - Shipping jar: Maven `-o -pl forge-gui-mobile-dev -am package -DskipTests`, exit 0 (`forge-gui-mobile-dev-2.0.17-SNAPSHOT-jar-with-dependencies.jar`, log `C:\CLAUDE\PROJECTS\TFR1\notes\r1031\mvn_jar.log`). Not packaged and no agent game:
   the main thread packages after it fast-forwards main.
+- After main (round 1030, Mirror Gear) came in (`f2e8f7ea604`; code merged clean, docs side by side): Maven `-o -pl
+  forge-gui-mobile-dev,forge-gui-desktop -am` exit 0 through the jar (forge-gui-mobile 239, `MirrorGearTest` included),
+  then `-o -pl forge-gui-desktop -am test` exit 0: desktop 2538 (0 failed, 7 skipped), `LoopBreakerTest` 28/28,
+  `TfrAiPuzzleTest` 90/90 at off, lite and max (no rules-on failure, no RETIRE?). Logs `mvn_test2.log`, `mvn_test3.log`
+  in `C:\CLAUDE\PROJECTS\TFR1\notes\r1031\`.
 
 ## Round 1030: Mirror Gear - Masters and Archmages copy the player's gear on Hard and Insane (2026-11-14)
 
