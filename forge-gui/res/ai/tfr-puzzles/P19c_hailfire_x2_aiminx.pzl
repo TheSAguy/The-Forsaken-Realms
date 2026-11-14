@@ -1,0 +1,17 @@
+[metadata]
+Name:P19c - Torment of Hailfire held at X=2 by its AIMinX:3 (round 1034 follow-up, guard for the card's SVar)
+Description:Four lands (B, B, R, B): X=2. RepeatAi's default minimum is 2, so without the card's SVar:AIMinX:3 the AI casts it here. Round 1034's bench: at X=2 the opponent gave up about two cheap permanents or cards and almost never paid life; at X=3 every repeat takes a real resource (a 3-for-1 for 5 mana). Expect: Hailfire is not cast this turn. P19 (X=1) and P19b (X=6, cast) are the other two.
+Turns:1
+Expect:aiplayed lacks Torment of Hailfire
+[state]
+humanlife=20
+ailife=20
+turn=8
+activeplayer=ai
+activephase=MAIN1
+humanhand=Counterspell;Island;Doom Blade
+humanlibrary=Island;Island;Island;Island;Island
+humanbattlefield=Spectral Sailor;Brineborn Cutthroat;Island;Island;Swamp;Swamp
+aihand=Torment of Hailfire
+ailibrary=Swamp;Swamp;Swamp;Swamp;Swamp
+aibattlefield=Swamp;Swamp;Mountain;Swamp

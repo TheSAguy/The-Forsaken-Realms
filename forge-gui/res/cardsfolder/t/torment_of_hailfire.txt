@@ -8,4 +8,5 @@ SVar:SacNonland:DB$ LoseLife | Defined$ Remembered | LifeAmount$ 3 | UnlessCost$
 SVar:LoseLifeFallback:DB$ LoseLife | Defined$ Remembered | LifeAmount$ 3
 SVar:X:Count$xPaid
 SVar:AIPreference:SacCost$Permanent.nonLand | DiscardCost$Card
+SVar:AIMinX:3
 Oracle:Repeat the following process X times. Each opponent loses 3 life unless that player sacrifices a nonland permanent or discards a card.

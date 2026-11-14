@@ -14264,6 +14264,18 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 1034 (follow-up): Torment of Hailfire waits for X=3 (2026-11-14)
+
+The main thread approved round 1034's open question 1. `forge-gui/res/cardsfolder/t/torment_of_hailfire.txt` gets
+`SVar:AIMinX:3`, so the AI casts it from 5 mana, not 4. From round 1034's bench (every Hailfire cast in the round
+pairings, base and fix arms, `C:\CLAUDE\PROJECTS\TFR1\notes\r1034\bench\hx.txt`): at X=2 the opponent gave up about
+two cheap permanents or cards and almost never paid life; at X=3 every repeat takes a real resource (a 3-for-1); from
+X=4 the opponent runs out of fodder and pays 3 life. The caster won 54% of games with an X=2 cast and 64% (base) / 80%
+(fix) with an X=3 cast (correlation, not cause). 4 was not picked: the decks run 3 copies, and X>=4 casts came only
+around turns 17-20, so a 6-mana floor would strand copies in hand. New puzzle P19c (four lands, X=2: held) fails 0/3
+without the SVar and passes 3/3 with it at off, lite and max; P19 and P19b still pass 3/3 at all three. 13 TFR enemy
+decks hold Hailfire. Upstream draft 0001 now carries the card hunk too.
+
 ## Round 1034: the AI keeps its Hailfire, trades to save its planeswalker, trades by life at Insane, and keeps its life over a fetchland (2026-11-14)
 
 The main thread's scope: round 1029's second recommended round, the stock-fix bundle F9, F11 and F14 from its Hard and

@@ -35,6 +35,11 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 1034 (follow-up) - Torment of Hailfire's AIMinX
+- `forge-gui/res/cardsfolder/t/torment_of_hailfire.txt` (STOCK card script): one line, `SVar:AIMinX:3`, after
+  `SVar:AIPreference`. Read only by round 1034's `RepeatAi.minRepeatX` (the AI waits for X >= 3). In upstream draft
+  0001. **On a merge:** if upstream changes the card, keep the line; P19c failing in `TfrAiPuzzleTest` means it was lost.
+
 ### Round 1034 - MaxX repeat minimum X, the trade that saves a planeswalker, the trade-chance step (three upstream PR drafts); the fetch-life-guard rule
 - `forge-ai/src/main/java/forge/ai/ability/RepeatAi.java` (STOCK, identical to upstream `a8695ac23e2` before this
   round): `canPlay`'s `MaxX` branch holds the spell while the most X it can pay is under `minRepeatX(sa)` (new package
@@ -52,7 +57,7 @@ md` already gets updated after every change.
   one): re-apply it on a merge; delete it with the rule when P20 says RETIRE?.
 - TFR files (not stock): `forge-ai/src/main/java/forge/ai/tfr/FetchLifeGuard.java` (new), `TfrAiRules.java`
   (`allowLifeFetch`, `firedOnce`, the rule id), `forge-gui/res/ai/tfr-rules.json` (the rule entry), puzzles P19, P19b,
-  P20, P21.
+  P19c (follow-up), P20, P21.
 - **On a merge:** if upstream merges a draft, take theirs and drop ours. P19 (0001) and P21 (0002) failing in
   `TfrAiPuzzleTest`, or `AiBlockControllerTradeChanceTest` failing (0003), is the signal that a merge lost one.
 
