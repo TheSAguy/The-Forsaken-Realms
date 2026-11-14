@@ -159,4 +159,4 @@ Notes = `RELEASE_NOTES_v1.28.md` (the user's text of 2026-11-09, title "The Fors
 from 1.26?". The Discord FAQ says v1.28 (`EDITED` {1, 3, 23}, nothing new; paste list `notes/faq-1.28-edits.md`;
 `EDITED`/`ADDED` reset by round 1003). Posts: `notes/release-1.28-posts.md`. The webhook URL was checked absent from the
 unpushed history and the tree before the push. No itch.io upload by the session; the user posts the zip and APK.
-NOTHING is unreleased. Next version: 1.29 / 12900. Next merge from upstream after `7d0acc8aa92`.
+NOTHING is unreleased. Next version: 1.29 / 12900. Next merge from upstream after `a8695ac23e2` (round 1031, the 11.13 daily, Forge 2.0.17-SNAPSHOT; its first commit is `3cfec26d1ed`, #12856).

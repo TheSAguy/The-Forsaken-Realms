@@ -14264,6 +14264,79 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 1031: the engine to the 11.13 daily (upstream `a8695ac23e2`, Forge 2.0.17-SNAPSHOT) (2026-11-14)
+
+The user: "Update to the latest Forge: E:\GAMES\Forge_2" (the 11.13 daily installed as BASE_INSTALL). On the 1.29 release
+path. 49 first-parent commits, 401 files since round 994's `7d0acc8aa92` (#12773 to #12859). Merged on the branch
+`engine-merge-1031` in the worktree `C:\CLAUDE\PROJECTS\TFR1\merge-1031`, then main (rounds 1025, 1027) brought in.
+Conflicts, impact and the user's questions: `C:\CLAUDE\PROJECTS\TFR1\notes\r1031\conflicts.md`.
+
+- **Matched**: BASE_INSTALL's `CHANGES.txt` is headed by #12859 "Fix Self DiscardAI for random mode" (`a8695ac23e2`,
+  17:44:54 UTC); `.installationinformation` says `APP_VER 11.13`, the jar manifest `2.0.17-SNAPSHOT-11.13`; `build.txt`
+  18:15:27. The next upstream commit, `3cfec26d1ed` (#12856, merged 18:39:48 UTC), is not taken: its 14 edition files
+  match `a8695ac23e2` in BASE_INSTALL byte for byte and differ from `3cfec26d1ed`.
+- **The version is 2.0.17-SNAPSHOT** (upstream released 2.0.16 in the range): the jar is
+  `forge-gui-mobile-dev-2.0.17-SNAPSHOT-jar-with-dependencies.jar`. The first package after this round needs a `clean`
+  build (the packager wants exactly one mobile-dev jar in `forge-gui-mobile-dev\target`). No new dependency: the build
+  stayed offline. `engineBuildVersion` `2.0.17-SNAPSHOT-11.13`; GUIDE's FAQ names Forge 2.0.17 (the 11.13 build).
+- **Upstream brought**:
+  - **AI**: Flat Monte Carlo fixes (#12809, #12850, the committed attack), PumpAi targets the opponent (#12855), "X of
+    nothing, sacrifice-unless ETBs, dormant lands, chosen numbers" (#12857: no Journey to Nowhere into an empty board, a
+    temporary attacker not cast into protection), self-discard in random mode (#12859), combos and not-really-Pump cards
+    (#12858), conditional mana abilities in payment (#12828).
+  - **Rules**: priority for objects that reach the stack while nobody has priority (#12785), uncounterable mana for {C}
+    (#12364), hidden-zone ChangeZone in APNAP order (#12773), Commander with Two-Headed Giant, card fixes.
+  - **Adventure**: duel effects in layers - a plane-wide `globalEffect`, a biome's `effect`, the dungeon's, the enemy's,
+    with opt-outs (#12823); run modifiers at New Game - rarity and color limits, card loss on defeat (#12836, Realm of
+    Legends' challenges); a paid reroll of an Inn's event (#12807); sealed opponents' decks built when faced (#12782); the
+    adventure folder backed up on a version change (#12822); Old Border's Dwarven Hold quest; Realm of Legends 1.094.
+  - **Other**: per-thread `MyRandom` (#11285), card and tooltip sizes by screen (#12793), the mobile lobby header, a
+    picks-per-pack draft choice, net deck archive lists.
+
+### The conflicts
+
+Ten text conflicts. Q1 and Q2 are with the user, resolved as recommended until they answer.
+
+| File / feature | Upstream changed | Kept vs took | Impact |
+|---|---|---|---|
+| `DuelScene` (#12823, #12836) | Effect layers (global, modifiers, biome, dungeon, enemy) through `setEffectLayers`, reset in `initDuels`; modifier card loss; deck limits; sealed opponents built lazily | **Took the layers; kept every TFR seat rule** (round 375's legend effect, round 163's guard gear, round 156's spectator gate on the enemy effect, round 927's exit guard, round 994's deck-gen rules); modifier card loss also skips a draw and a spectated duel; upstream's `arenaBattleChallenge` tests read `eventData != null` (round 125) | None today: TFR sets no global, biome or modifier data; the dungeon effect reaches the duel as before |
+| `AdventureEventData` (#12782) | Sealed opponents' decks built the first time each is faced | **Took it; kept round 387's `cleanPack` and round 972's seed** (`openingRandom("sealed opponent N")`, one stream per seat) | Sealed events open faster; a reload deals the same opponent decks |
+| `NewGameScene` (#12836) | A Modifiers button and dialog | **Both, with a null guard**: TFR's own `ui/new_game*.json` has no Modifiers button, and upstream's code would have thrown | Without the guard New Game would not open |
+| `PlayerStatisticScene` (#12823), Q1 | The blessing box becomes "Active effects" (modifiers, plane, biome, dungeon, blessing) | **Took it; kept round 903's size, round 879's Doppelganger heading (`headBlessing` now takes the text), round 496's Ascendance box** | The Status page names the dungeon effect you fight under; "No active effects." replaces "No blessing." |
+| `AiController` (#12857) | `LegalityGuard.etbWithoutTarget` veto | **Both**: upstream's veto, then round 1018's `etb-drawback-allow` line | Trivial |
+| `ConfigData`, `EnemyData`, `MapStage`, `ConsoleCommandInterpreter` | New fields, map properties, `modifier` commands | **Both** (pinned UIDs unchanged) | None |
+| `WorldStage` fields | `biomePosition` beside the `cachedSave*` lists | **Took `biomePosition` only** (round 290's rule) | None |
+| `PermanentCreatureAi`, `TokenAi` (main merge: #12857 vs round 1025) | A temporary attacker not cast into protection; The Underworld Cookbook | **Both**, beside round 1025's this-turn-only checks | None |
+
+Compile fix: `AdventureEventController.createEvent(long)` (#12807's reroll entry) is upstream's split of TFR's
+`createEvent(pointID, playerTown)`; TFR's body is a private `createEvent(seed, playerTown, pointID)`, the reroll passes
+"not the player's town". Unused in TFR (no `eventRerollPrice`).
+
+**Q2, the version backup (#12822, merged clean).** Upstream zips the whole adventure folder the first time a new build
+opens Adventure, keeps the newest two in `adventure_backups`, and shows a "Forge has updated" dialog. It keys "new
+build" on the jar's `build.txt`, the Maven build time, so as merged every TFR package would zip the folder (the user's is
+202 MB) and show the dialog. **As resolved now**: a plane with `modVersion` keys it on `TFR <modVersion> engine
+<engineBuildVersion>`, so it runs once per release and per engine merge; `[TFR-Backup] new version ...` and `done: <zip>,
+<KB>` lines. The first launch of this build backs up once.
+
+**Merged clean beside our edits** (checked): the stock hooks - `PhaseHandler`'s `LoopBreaker.onTurnBegan` (round 1028),
+`GamePlayerUtil.createAiPlayer` and the `DuelScene` difficulty line (round 1018), `AiController`'s
+`refineAttackWithFlatMonteCarlo` guard (round 1019), rounds 708/924/1020 - and `EffectData`'s pinned UID (round 90).
+`AdventurePlayer` saves the run's modifiers under two new keys (old saves load; none are set in TFR). `MyRandom` is per
+thread now: TFR's seeded rolls set and restore it on the GL thread as before, and round 994's deck thread inherits it.
+Dormant in TFR: the biome notice on the world map, the Inn's reroll button (price 0), the global-effect dialog at New
+Game.
+
+### Tests
+
+- Maven `-o -pl forge-gui-mobile,forge-gui-desktop -am test`: exit 0. forge-game 32, forge-gui 29, forge-gui-mobile 227,
+  forge-gui-desktop 2538 (0 failed, 7 skipped), `LoopBreakerTest` 28/28 and upstream's
+  `FlatMonteCarloLoopRunnerTest` included. Log `C:\CLAUDE\PROJECTS\TFR1\notes\r1031\mvn_test.log`.
+- `TfrAiPuzzleTest` (off, lite and max, 3 runs each): 30 puzzles, 90/90 rows ok, no rules-on failure, no RETIRE?. Every
+  TFR AI rule stays live.
+- Shipping jar: Maven `-o -pl forge-gui-mobile-dev -am package -DskipTests`, exit 0 (`forge-gui-mobile-dev-2.0.17-SNAPSHOT-jar-with-dependencies.jar`, log `C:\CLAUDE\PROJECTS\TFR1\notes\r1031\mvn_jar.log`). Not packaged and no agent game:
+  the main thread packages after it fast-forwards main.
+
 ## Round 1027: the reward screen's auto-sell no longer races the deck editor's refresh (logs-1113 P3-28) (2026-11-14)
 
 From the log review `C:\CLAUDE\PROJECTS\TFR1\notes\logs-1113.md`, P3-28: on Android 1.28 (fb448b7a, Pixel 8, research

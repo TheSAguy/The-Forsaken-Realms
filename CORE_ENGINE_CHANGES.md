@@ -35,6 +35,46 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 1031 - the engine to the 11.13 daily (upstream `a8695ac23e2`, Forge 2.0.17-SNAPSHOT)
+- The version is now **2.0.17-SNAPSHOT** (upstream tagged `forge-2.0.16` in the range): the jar is
+  `forge-gui-mobile-dev-2.0.17-SNAPSHOT-jar-with-dependencies.jar`; a target folder still holding the 2.0.16 jar fails
+  the packager's one-jar check until `clean`.
+- `forge-ai/src/main/java/forge/ai/AiController.java` (STOCK): upstream's #12857 `LegalityGuard.etbWithoutTarget` veto
+  sits just before round 1018's temporary `etb-drawback-allow` line; both kept, ours unchanged.
+- `forge-ai/src/main/java/forge/ai/ability/PermanentCreatureAi.java`, `TokenAi.java` (STOCK): upstream's #12857 hunks (a
+  temporary attacker against a protected opponent; The Underworld Cookbook's `DiscardFattyForReanimation`) beside round
+  1025's; both kept.
+- `forge-gui-mobile/src/forge/adventure/data/AdventureEventData.java` (STOCK): upstream #12782 builds each sealed
+  opponent's deck the first time it is faced (`generateOpponentDeck`). Round 387's `CommanderCards.cleanPack` moved into
+  it, and round 972's seeded opening with it: `openingRandom("sealed opponent N")` (the seat's index), set and restored
+  around the build.
+- `forge-gui-mobile/src/forge/adventure/util/AdventureEventController.java` (STOCK): upstream #12807 split
+  `createEvent(long seed)` out for its paid reroll; TFR's body is the private `createEvent(seed, playerTown, pointID)`
+  (round 954's Inn town), the public `createEvent(long)` passes `false, null`.
+- `forge-gui-mobile/src/forge/adventure/scene/DuelScene.java` (STOCK), #12823 (global/biome effect layers) and #12836
+  (run modifiers):
+  - `setDungeonEffect` is gone: `setEffectLayers(biome, dungeon, ignoreGlobal)`, reset in `initDuels`. Callers:
+    `MapStage`, `WorldStage` (overworld), `ArenaScene`, `EventScene`; TFR's other `initDuels` callers get no layers.
+  - The enemy's own `effect` keeps round 156's gate: `!aiControlsPlayerSide && (eventData == null || allowsBlessings)`.
+    Round 375's legend effect sits before upstream's global/modifier layers.
+  - `modifierLosses` also skips a draw and a spectated duel (`drawn || aiControlsPlayerSide`).
+  - The sealed branches test `eventData != null` (TFR has no `arenaBattleChallenge`, round 125).
+- `forge-gui-mobile/src/forge/adventure/scene/NewGameScene.java` (STOCK): upstream's `modifiersButton` code runs only when
+  `ui.findActor("modifiers")` is not null - the plane's own `ui/new_game*.json` has no Modifiers button.
+- `forge-gui-mobile/src/forge/adventure/scene/PlayerStatisticScene.java` (STOCK): upstream's "Active effects" text
+  (`appendEffect`) replaces the blessing text, with round 903's `size` prefix; round 879's
+  `Doppelganger.headBlessing(label, player, size, body)` now takes that text; round 496's Ascendance box unchanged.
+- `forge-gui-mobile/src/forge/adventure/world/WorldSave.java` (STOCK): upstream #12822's `backupOnVersionChange` keys a
+  plane with `modVersion` on `"TFR <modVersion> engine <engineBuildVersion>"` instead of the jar's `build.txt` (the build
+  time); `[TFR-Backup]` lines.
+- `forge-gui-mobile/src/forge/adventure/data/ConfigData.java`, `EnemyData.java` (STOCK): upstream's new fields beside ours;
+  `EnemyData`'s and `EffectData`'s pinned UIDs unchanged. `MapStage`, `ConsoleCommandInterpreter`: both sides kept.
+  `WorldStage`: upstream's `biomePosition` taken, the `cachedSave*` lists still left out (round 290).
+- `forge-gui/res/adventure/The Forsaken Realms/config.json`: `engineBuildVersion` `2.0.17-SNAPSHOT-11.13`.
+- Merged clean beside our edits: `PhaseHandler` (round 1028's `LoopBreaker.onTurnBegan`, apart from #12785's priority
+  change), `GamePlayerUtil` (untouched), `MyRandom` (#11285: per thread, inheritable), `AdventurePlayer` (modifiers
+  saved under new keys), `EventScene`, `RewardScene`, `GameHUD`, `GameStage`, `ArenaScene`, `Forge.java`.
+
 ### Round 1027 - the deck editor's refreshes fold into one per frame (logs-1113 P3-28)
 - `forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java` (STOCK): `refreshEditor()` calls the new
   `requestEditorRefresh()` (one `Gdx.app.postRunnable` per frame, `[TFR-EditorRefresh]`) instead of
@@ -5515,6 +5555,12 @@ from the plane's `config tables/settings.json`).
   0.25 -> 0.12.
 
 ## Upstream merge log
+
+- **2026-11-14 - merged upstream `master` @ `a8695ac23e2` (Forge 2.0.17-SNAPSHOT, 11.13 daily; 49 first-parent commits
+  since `7d0acc8aa92`; round 1031).** Ten text conflicts - see "Round 1031" above. Base install `E:\GAMES\Forge_2`:
+  `build.txt` `2026-11-13 18:15:27`, jars `2.0.17-SNAPSHOT-11.13`, `CHANGES.txt` headed by #12859 (`a8695ac23e2`). The
+  next upstream commit, `3cfec26d1ed` (#12856, 18:39:48 UTC), is not in the install (its 14 edition files match
+  `a8695ac23e2`); the next merge starts after `a8695ac23e2`. (Rounds 978 and 994 are recorded in their own entries above.)
 
 - **2026-11-04 - merged upstream `master` @ `a4281f7e58b` (Forge 2.0.16-SNAPSHOT, 11.04 daily; 36 commits since
   `5a09fa8cc5d`; round 961).** One conflict (`RewardData.java`, ours kept) - see "Round 961" above. Base install

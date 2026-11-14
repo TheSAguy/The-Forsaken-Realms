@@ -2439,7 +2439,7 @@ game built on the Forge rules engine.
 ### How do I update the game to the latest version of Forge?
 
 You can't, and you don't need to. Each release is pinned to one tested Forge build, named in its release
-notes - this version runs on Forge 2.0.16 (the 11.09 build). Forge's own updater is switched off on purpose,
+notes - this version runs on Forge 2.0.17 (the 11.13 build). Forge's own updater is switched off on purpose,
 because a different engine underneath can break your world. Engine updates come to you with new Forsaken
 Realms releases.
 
