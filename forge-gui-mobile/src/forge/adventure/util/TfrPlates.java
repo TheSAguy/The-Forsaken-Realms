@@ -582,7 +582,7 @@ public final class TfrPlates {
     }
 
     public static final class Plate {
-        private TextraLabel rank, life, raider, bounty;
+        private TextraLabel rank, life, raider, bounty, mirror;
         private String key = "", colors = "";
         /** Round 866: the town this raider pillages (TownPillage.raiderTown), or null - its plate's RAIDER line. */
         private String raiderTown;
@@ -595,6 +595,8 @@ public final class TfrPlates {
         /** Round 943: the Bounty a win would pay now (StreakBounty.percentFor), 0 for none; read twice a second. */
         private int bountyPct;
         private long bountyAt;
+        /** Round 1030: the gear this enemy would copy now (MirrorGear.forSeat), "" for none; read with the Bounty. */
+        private String mirrorItems = "";
 
         void update(EnemySprite sprite) {
             EnemyData d = sprite.getData();
@@ -634,12 +636,13 @@ public final class TfrPlates {
             if (bountyAt == 0 || nowB - bountyAt > 500) {
                 bountyPct = StreakBounty.percentFor(d);
                 bountyAt = nowB;
+                mirrorItems = MirrorGear.copiesNow(d) > 0 ? String.join(" + ", MirrorGear.forSeat(d, 0).items) : "";
             }
             if (bountyPct > 0)
                 bounties++;
             int r = Math.max(0, Math.min(3, EnemyData.tierRank(d.tier)));
             String k = r + "/" + d.boss + "/" + showLife + "/" + lifeNow + "/" + buffed + "/" + raiderTown + "/" + quest
-                    + "/" + bountyPct;
+                    + "/" + bountyPct + "/" + mirrorItems;
             if (k.equals(key))
                 return;
             key = k;
@@ -648,6 +651,11 @@ public final class TfrPlates {
                 life = Controls.newTextraLabel("");
                 raider = Controls.newTextraLabel("");
                 bounty = Controls.newTextraLabel("");
+                mirror = Controls.newTextraLabel("");
+            }
+            if (!mirrorItems.isEmpty()) { // round 1030: the gear it copies, above the BOUNTY line
+                mirror.setText("[%55][#9fc5e8]MIRRORS[#a8a296] - [#9fc5e8]" + mirrorItems.toUpperCase(Locale.ROOT));
+                mirror.pack();
             }
             if (bountyPct > 0) { // round 943: the Bounty, in the RAIDER/QUEST line's slot, above it when both show; the
                 // gold coin is drawn after it at the plate's icon size (a [+Gold] glyph keeps its full size at [%55])
@@ -686,10 +694,12 @@ public final class TfrPlates {
             // placed as one box. Round 943: the BOUNTY line above that (or in its place).
             float step = hi - lo + 2f;
             boolean showBounty = bountyPct > 0;
-            int lines = (line ? 1 : 0) + (showBounty ? 1 : 0);
+            boolean showMirror = !mirrorItems.isEmpty(); // round 1030: the MIRRORS line on top
+            int lines = (line ? 1 : 0) + (showBounty ? 1 : 0) + (showMirror ? 1 : 0);
             float extra = lines * step, raw = line ? raider.getWidth() : 0f;
             float bwid = showBounty ? bounty.getWidth() + GAP + ICON : 0f;
-            float x = cx - w / 2f, bw = Math.max(w, Math.max(raw, bwid));
+            float mwid = showMirror ? mirror.getWidth() : 0f;
+            float x = cx - w / 2f, bw = Math.max(Math.max(w, mwid), Math.max(raw, bwid));
             float y = placeBox(cx - bw / 2f, foot + 1f - lo, bw, lo, hi + extra);
             Color was = batch.getColor().cpy();
             drawBox(batch, parentAlpha, x, y, w, lo, hi);
@@ -741,13 +751,19 @@ public final class TfrPlates {
                 raider.draw(batch, parentAlpha);
             }
             if (showBounty) {
-                float bx = cx - bwid / 2f, by = y + lines * step;
+                float bx = cx - bwid / 2f, by = y + ((line ? 1 : 0) + 1) * step;
                 drawBox(batch, parentAlpha, bx, by, bwid, lo, hi);
                 bounty.setPosition(bx, by);
                 bounty.draw(batch, parentAlpha);
                 TextureRegion gold = items.findRegion("Gold");
                 if (gold != null)
                     batch.draw(gold, bx + bounty.getWidth() + GAP, by + mid - (ICON - 1f) / 2f, ICON - 1f, ICON - 1f);
+            }
+            if (showMirror) {
+                float mx = cx - mwid / 2f, my = y + lines * step;
+                drawBox(batch, parentAlpha, mx, my, mwid, lo, hi);
+                mirror.setPosition(mx, my);
+                mirror.draw(batch, parentAlpha);
             }
             batch.setColor(was);  // the HUD shares the batch: no color left behind (GameHUD.draw, round 329)
         }

@@ -1361,20 +1361,52 @@ public class DuelScene extends ForgeScene {
             aiPlayer.setStartingLife(eventData != null ? eventData.eventRules.startingLife : enemyStartingLife);
 
             Array<EffectData> equipmentEffects = new Array<>();
+            // Round 1030: an enemy item's opponent part goes straight onto the player's seat. It used to be added to
+            // playerEffects, which addEffects(humanPlayer, ...) had already applied above, so it never reached the duel.
+            Array<EffectData> onPlayerEffects = new Array<>();
             if (eventData != null && eventData.eventRules.allowsItems) {
                 if (currentEnemy.equipment != null) {
                     for (String oppItem : currentEnemy.equipment) {
                         ItemData item = ItemListData.getItem(oppItem);
-                        if (item == null)
+                        if (item == null || item.effect == null)
                             continue;
                         equipmentEffects.add(item.effect);
                         if (item.effect.opponent != null)
-                            playerEffects.add(item.effect.opponent);
+                            onPlayerEffects.add(item.effect.opponent);
                     }
                 }
             }
             addEffects(aiPlayer, oppEffects);
             addEffects(aiPlayer, equipmentEffects);
+            // Round 1030: Mirror Gear (util/MirrorGear) - a Master or Archmage seat starts with a copy of one or two of
+            // the player's worn items once the save's gate is met. The duels of the Walls (not Inn or Arena events, not a
+            // guard's fight), and not a boss, a town or Capitol fight, Deck Tester, a chaos battle or a spectator duel.
+            int mirrorCopies = 0;
+            if (eventData == null && !isArena && guardDeck == null && !aiControlsPlayerSide && !chaosBattle
+                    && currentEnemy.fixedDeck == null && !forge.adventure.stage.WorldStage.getInstance().isTownOrCapitolFight()
+                    && forge.adventure.util.MirrorGear.table() != null) {
+                forge.adventure.util.MirrorGear.SeatCopies mirror = forge.adventure.util.MirrorGear.forSeat(currentEnemy, i);
+                if (!mirror.items.isEmpty()) {
+                    Array<EffectData> mirrored = new Array<>();
+                    for (ItemData item : forge.adventure.util.MirrorGear.items(mirror.items)) {
+                        mirrored.add(item.effect);
+                        if (item.effect.opponent != null)
+                            onPlayerEffects.add(item.effect.opponent);
+                    }
+                    addEffects(aiPlayer, mirrored);
+                    mirrorCopies = mirrored.size;
+                    String note = forge.adventure.util.MirrorGear.noticeOnce(currentEnemy.getTieredDisplayName(), mirror.items);
+                    if (note != null)
+                        winStreakNote = (winStreakNote == null ? "" : winStreakNote + "\n\n") + note;
+                    System.out.println("[TFR-MirrorGear] " + currentEnemy.getName() + " (" + EnemyData.tierDisplayName(currentEnemy.tier)
+                            + ", seat " + i + ") starts with a copy of " + String.join(" + ", mirror.items) + " - " + mirror.why
+                            + (note != null ? " (notice shown)" : ""));
+                } else if (EnemyData.tierRank(currentEnemy.tier) >= 2 && !currentEnemy.boss)
+                    System.out.println("[TFR-MirrorGear] " + currentEnemy.getName() + " (" + EnemyData.tierDisplayName(currentEnemy.tier)
+                            + ") copies nothing - " + mirror.why);
+            }
+            if (onPlayerEffects.size > 0)
+                addEffects(humanPlayer, onPlayerEffects);
             // Round 390: an Archmage seat starts with TuningData.archmageStartCards in play - per seat, so only the
             // Archmages of a chained fight get them. Not in a town/Ring City/capital assault or the Capitol defense
             // (WorldStage.isTownOrCapitolFight), nor in Inn/Arena events, which play by their own rules.
@@ -1482,7 +1514,8 @@ public class DuelScene extends ForgeScene {
                         deckCard != null && deckCard.card != null && forge.adventure.util.StreakBounty.deckCardGateMet(),
                         Current.player().winStreakReached(currentEnemy.getName())
                                 ? Current.player().winStreakCards(currentEnemy.getName()).length : 0,
-                        currentEnemy.fixedDeck == null ? forge.adventure.util.SpawnTierWeighting.winRatioEnemyTokens().length : 0);
+                        currentEnemy.fixedDeck == null ? forge.adventure.util.SpawnTierWeighting.winRatioEnemyTokens().length : 0,
+                        mirrorCopies); // round 1030
 
             //add extra cards for challenger mode
             if (chaosBattle) {

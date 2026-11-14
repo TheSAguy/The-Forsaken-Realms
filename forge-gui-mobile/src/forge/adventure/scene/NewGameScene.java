@@ -304,6 +304,85 @@ public class NewGameScene extends MenuScene {
             }
         });
         addTooltipsButton(); // TFR round 993
+        addMirrorGearBox(); // TFR round 1030
+    }
+
+    // ---- round 1030: Mirror Gear ----------------------------------------------------------------------------------
+
+    /** The "Mirror Gear" checkbox (util/MirrorGear): checked by default on Hard and Insane, greyed out and unchecked on
+     *  Easy and Normal; a new difficulty puts the default back. Only on a plane with config tables/mirror_gear.json. The
+     *  choice is the save's, made here once: Settings cannot change it mid-game. */
+    private com.badlogic.gdx.scenes.scene2d.ui.CheckBox mirrorGearBox;
+
+    private void addMirrorGearBox() {
+        if (MirrorGear.table() == null)
+            return;
+        mirrorGearBox = Controls.newCheckBox("Mirror Gear");
+        mirrorGearBox.setName("mirrorGear");
+        mirrorGearBox.pack();
+        float h = 22;
+        if (Forge.isLandscapeMode()) { // the free space between Back and Start, centered on Start
+            Actor start = ui.findActor("start");
+            mirrorGearBox.setBounds(start.getX() + (start.getWidth() - mirrorGearBox.getWidth()) / 2f,
+                    start.getY() + start.getHeight() + 8, mirrorGearBox.getWidth(), h);
+        } else { // portrait: right of Advanced...
+            Actor advanced = ui.findActor("advanced");
+            Actor anchor = advanced != null ? advanced : ui.findActor("start");
+            mirrorGearBox.setBounds(anchor.getX() + anchor.getWidth() + 4,
+                    anchor.getY() + (anchor.getHeight() - h) / 2f, mirrorGearBox.getWidth(), h);
+        }
+        ui.addActor(mirrorGearBox);
+        refreshMirrorGearBox();
+        difficulty.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                refreshMirrorGearBox();
+            }
+        });
+        TfrTips.region(this, mirrorGearBox, "newGame.mirrorGear", MirrorGearTip::text);
+    }
+
+    /** The tooltip, with the table's gates filled in. */
+    private static final class MirrorGearTip {
+        static String text() {
+            MirrorGear.Table t = MirrorGear.table();
+            Object[] kv = new Object[]{"one", t == null ? 3 : t.itemsForOne, "two", t == null ? 5 : t.itemsForTwo};
+            java.util.List<Object> all = new java.util.ArrayList<>(java.util.Arrays.asList(kv));
+            String[][] keys = {{"Archmage", "Hard", "aH"}, {"Archmage", "Insane", "aI"}, {"Master", "Hard", "mH"},
+                    {"Master", "Insane", "mI"}};
+            for (String[] k : keys) {
+                float[] g = MirrorGear.gateOf(t, k[0], k[1]);
+                all.add(k[2]);
+                all.add(g == null ? "-" : Math.round(g[0]));
+                all.add(k[2] + "r");
+                all.add(g == null ? "-" : Math.round(g[1] * 100f));
+                all.add(k[2] + "e");
+                all.add(g == null || g[2] < 0f ? "-" : Math.round(g[2] * 100f));
+            }
+            return TfrTips.text("newGame.mirrorGear", all.toArray());
+        }
+    }
+
+    private String shownDifficultyName() {
+        return Config.instance().getConfigData().difficulties[difficulty.getCurrentIndex()].name;
+    }
+
+    /** The difficulty's default: checked where Mirror Gear is available, greyed out and unchecked where it is not. */
+    private void refreshMirrorGearBox() {
+        if (mirrorGearBox == null)
+            return;
+        boolean available = MirrorGear.availableOn(shownDifficultyName());
+        mirrorGearBox.setChecked(MirrorGear.defaultOn(shownDifficultyName()));
+        mirrorGearBox.setDisabled(!available);
+        mirrorGearBox.getLabel().setColor(available ? com.badlogic.gdx.graphics.Color.WHITE
+                : new com.badlogic.gdx.graphics.Color(0.55f, 0.55f, 0.55f, 1f));
+    }
+
+    /** What a Start creates: the box, and never on a difficulty without it. */
+    private boolean mirrorGearChosen() {
+        if (mirrorGearBox == null)
+            return false;
+        return mirrorGearBox.isChecked() && MirrorGear.availableOn(shownDifficultyName());
     }
 
     /** TFR round 993: the "Tooltips: Auto (on)" button under Advanced..., cycling Auto, On, Off (TfrTips' one global
@@ -361,8 +440,11 @@ public class NewGameScene extends MenuScene {
     /** Round 823: the Advanced panel on the box's preset and the pending changes; Done brings the preset back. */
     private boolean openAdvanced() {
         CustomDifficultyScene.instance().open(difficulty.getCurrentIndex(), CustomDifficulty.pending(), index -> {
+            boolean changed = index != difficulty.getCurrentIndex();
             difficulty.setCurrentIndex(index);
             refreshDifficultyLabels();
+            if (changed)
+                refreshMirrorGearBox(); // round 1030: a new difficulty, its default
         });
         return true;
     }
@@ -811,7 +893,11 @@ public class NewGameScene extends MenuScene {
             generateName();
         }
         takeStartingSets(); // round 873
+        final boolean mirrorGear = mirrorGearChosen(); // round 1030
         Runnable runnable = () -> {
+            MirrorGear.setPendingNewGame(mirrorGear);
+            System.out.println("[TFR-MirrorGear] New Game: Mirror Gear " + (mirrorGear ? "on" : "off") + " ("
+                    + shownDifficultyName() + (MirrorGear.availableOn(shownDifficultyName()) ? "" : ", not available") + ")");
             started = false;
             //FModel.getPreferences().setPref(ForgePreferences.FPref.UI_ENABLE_MUSIC, false);
             WorldSave.generateNewWorld(selectedName.getText(),
@@ -864,6 +950,7 @@ public class NewGameScene extends MenuScene {
         refreshDifficultyLabels(); // round 823: a started game took the pending changes
         if (Forge.createNewAdventureMap) {
             takeStartingSets(); // round 873
+            MirrorGear.setPendingNewGame(mirrorGearChosen()); // round 1030
             FModel.getPreferences().setPref(ForgePreferences.FPref.UI_ENABLE_MUSIC, false);
             WorldSave.generateNewWorld(selectedName.getText(),
                     gender.getCurrentIndex() == 0,
