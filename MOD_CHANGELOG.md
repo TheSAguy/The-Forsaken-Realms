@@ -14264,6 +14264,22 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 1035 (follow-up): the block half off until it handles team pumps (2026-11-14)
+
+- **Why:** round 1035's bench was clear on the attack half (suicide attacks 66 -> 40) and mixed on the block half
+  ("took lethal with idle blockers" 117 -> 133 over all runs; pump decks at off 0.20 -> 0.48 a game). The user chose
+  "Attack fix only".
+- `forge-gui/res/ai/Default.ai`: `TRICK_ALLOWANCE_ON_BLOCK=false` (with a two-line comment why);
+  `TRICK_ALLOWANCE_ON_ATTACK=true` stays. The block-half code (`AiBlockController`'s safe-block check and the
+  trick term in its danger checks) stays and does nothing while the key is false.
+- P17 (needs the block half) moved out of `forge-gui/res/ai/tfr-puzzles/` to
+  `C:\CLAUDE\PROJECTS\TFR1\notes\r1035\puzzles\`; bring it back with the key. P17b and P18 stay.
+- `AiProfileKeysTest`: checks that `TRICK_ALLOWANCE_ON_BLOCK` is set (any value) and `TRICK_ALLOWANCE_ON_ATTACK=true`.
+- **Proof:** `TfrAiPuzzleTest`, 37 puzzles, 3 runs, rules on and off, with this Default.ai: all pass at off, lite and
+  max. Maven `-pl forge-gui-desktop -am test -Dtest=AiProfileKeysTest,AiBlockControllerTradeChanceTest`: exit 0, 7/7.
+- The attack-only bench next to stock and both halves, and what a block-half round needs:
+  `C:\CLAUDE\PROJECTS\TFR1\notes\r1035\report.md` ("Follow-up").
+
 ## Round 1035: the AI allows for the opponent's combat tricks when it blocks and attacks (2026-11-14)
 
 The main thread's scope: round 1029's top-ranked fix, F1 + F13 of its Hard/Insane study

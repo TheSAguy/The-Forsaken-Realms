@@ -35,6 +35,12 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 1035 (follow-up) - the block half off
+- `forge-gui/res/ai/Default.ai` (STOCK profile): `TRICK_ALLOWANCE_ON_BLOCK=false` (with a two-line comment why);
+  `TRICK_ALLOWANCE_ON_ATTACK=true` unchanged. The block-half code stays in `AiBlockController` and does nothing while
+  the key is false. P17 moved out of `forge-gui/res/ai/tfr-puzzles/` to `C:\CLAUDE\PROJECTS\TFR1\notes\r1035\puzzles\`
+  (it needs the block half); bring it back with the key.
+
 ### Round 1035 - the combat trick allowance on blocks and attacks (one upstream PR draft)
 - `forge-ai/src/main/java/forge/ai/AiProps.java` (STOCK, identical to upstream `a8695ac23e2` before this round): two
   keys after `CHANCE_TO_HOLD_COMBAT_TRICKS_UNTIL_BLOCK`: `TRICK_ALLOWANCE_ON_BLOCK ("false")`,

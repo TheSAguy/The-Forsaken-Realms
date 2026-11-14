@@ -14,9 +14,11 @@ reset by round 1032's follow-up 2). Unreleased (for 1.30): round 1033 (Felidar S
 out of the 8 TFR enemy decks that held them) and round 1034 (AI stock fixes: a MaxX repeat waits for X >= 2, a trade
 block saves a planeswalker, the trade chance's float step; rule `fetch-life-guard`, a fourth rule hook in
 `ChangeZoneAi`; three upstream drafts in `C:\CLAUDE\PROJECTS\TFR1\notes\r1034\upstream-pr\`) and round 1035 (stock
-combat trick allowance: blocks and attacks allow for a pump when the opponent has cards and open mana, profile flags
-`TRICK_ALLOWANCE_ON_BLOCK`/`_ON_ATTACK` on in TFR's Default.ai - a profile key the jar lacks throws, so `AiProfileKeysTest`
-guards it; draft in `C:\CLAUDE\PROJECTS\TFR1\notes\r1035\upstream-pr\`); `MOD_CHANGELOG.md`. Engine = the 11.13 daily (round 1031, upstream `a8695ac23e2`,
+combat trick allowance: attacks allow for a pump when the opponent has cards and open mana, `TRICK_ALLOWANCE_ON_ATTACK`
+on in TFR's Default.ai; **the block half, `TRICK_ALLOWANCE_ON_BLOCK`, is off since its follow-up** (more deaths with idle
+blockers against team-pump decks) until a block-half round fixes it - its puzzle P17 waits in
+`C:\CLAUDE\PROJECTS\TFR1\notes\r1035\puzzles\`; a profile key the jar lacks throws, so `AiProfileKeysTest` guards it; draft
+in `C:\CLAUDE\PROJECTS\TFR1\notes\r1035\upstream-pr\`); `MOD_CHANGELOG.md`. Engine = the 11.13 daily (round 1031, upstream `a8695ac23e2`,
 Forge 2.0.17-SNAPSHOT; round 769's R1-R4 still keep TFR's synchronous auto save, eager shops, Inn events and place
 entry; bosses keep the player's AI setting through `bossAiFollowsSetting`; the TFR AI rules and their stock hooks, round
 1018); next merge from upstream after `a8695ac23e2` (its first commit is `3cfec26d1ed`, #12856, edition fixes);
