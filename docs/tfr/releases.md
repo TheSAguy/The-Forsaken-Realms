@@ -161,8 +161,10 @@ from 1.26?". The Discord FAQ says v1.28 (`EDITED` {1, 3, 23}, nothing new; paste
 unpushed history and the tree before the push. No itch.io upload by the session; the user posts the zip and APK.
 NOTHING is unreleased. Next version: 1.29 / 12900. Next merge from upstream after `a8695ac23e2` (round 1031, the 11.13 daily, Forge 2.0.17-SNAPSHOT; its first commit is `3cfec26d1ed`, #12856).
 
-## STATE 2026-11-14: **v1.29 "Sharper Foes" READY FOR THE TAG** (round 1032; RC built and tested 09:21-09:56 PST)
-Rounds 1004-1031 on top of v1.28 (1029 a study, no code). Engine = the 11.13 daily (upstream `a8695ac23e2`, round 1031,
+## STATE 2026-11-14 (18:00 UTC): **v1.29 "Sharper Foes" RELEASED** - tag `tfr-v1.29` @ `1a42b93c2a7` (annotated),
+published 18:00:09 UTC (10:00 Pacific), Latest. Rounds 1004-1032 on top of v1.28 (1029 a study, no code); `main` was
+pushed at `1a42b93c2a7` (the tag commit, a fast-forward from `77a3012a272`; round 1032's follow-up 2 after it). RC built
+and tested 09:21-09:56 PST. Engine = the 11.13 daily (upstream `a8695ac23e2`, round 1031,
 Forge 2.0.17-SNAPSHOT) on the matching BASE_INSTALL. `modVersion` 1.29 / `modVersionDate` 11.14, Android `tfr.version`
 1.29 / versionCode 12900. Assets in `C:\CLAUDE\PROJECTS\TFR1\release\v1.29`, built from `e08ef0931c0` (round 1032; the
 follow-up after it is docs only):
@@ -171,7 +173,8 @@ follow-up after it is docs only):
   com.thesaguy.forsakenrealms, versionCode 12900, signer EE:60:39:25);
 - `assets.zip` 428.8 MB (428,845,716 bytes; SHA-256 `c62770844e62...`; build.txt pair 2026-11-14 17:21:53, one `mvn`
   run in `C:\TFR-build` via R:; carries `log_share.txt`, no `pc_*.ogg`). Round 792's prompts ("430MB" / "16MB") still
-  fit, so unchanged.
+  fit, so unchanged; the APK's download URL `releases/download/tfr-v1.29/assets.zip` answers with the full size. Each
+  asset's size and SHA-256 digest on GitHub match these.
 
 RC test (`C:\CLAUDE\PROJECTS\TFR1\notes\release-1.29-rc-checklist.md`): all pass - the desktop zip fresh (1.29 on
 screen, the version backup once, log sharing No, the Mirror Gear checkbox, a new game on Hard, 4 duels at 50x, a shop,
@@ -181,5 +184,7 @@ a new game, save/load); the Android 50x duel on a test-only autopilot build of t
 Notes = `RELEASE_NOTES_v1.29.md` (title "The Forsaken Realms 1.29: Sharper Foes", the main thread's draft the user saw,
 checked against the changelog; 1.28's Android section). GUIDE What's New 1.29 above "Coming from 1.27?", and a Mirror
 Gear paragraph under Enemies That Adapt to You. The Discord FAQ says v1.29 (`EDITED` {1, 7, 23}, nothing new; paste list
-`notes/faq-1.29-edits.md`). Posts: `notes/release-1.29-posts.md`. The publish step tags, pushes, publishes and replaces
-this block with the RELEASED one.
+`notes/faq-1.29-edits.md`; `EDITED`/`ADDED` reset by round 1032's follow-up 2). Posts: `notes/release-1.29-posts.md`.
+The webhook token was checked absent from the unpushed history and the tree before the push. The main thread packages
+live from the tag commit. No itch.io upload by the session; the user posts the zip and APK. NOTHING is unreleased. Next
+version: 1.30 / 13000. Next merge from upstream after `a8695ac23e2` (its first commit is `3cfec26d1ed`, #12856).

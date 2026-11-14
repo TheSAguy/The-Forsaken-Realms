@@ -14264,6 +14264,21 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 1032 (follow-up 2): 1.29 released (2026-11-14)
+
+- **Published** 2026-11-14 18:00:09 UTC (10:00 Pacific) on the user's call ("Let's release once the mirror gear check
+  is done") and the main thread's GO after it checked the RC: tag `tfr-v1.29` @ `1a42b93c2a7` (annotated), Latest, title
+  "The Forsaken Realms v1.29 — Sharper Foes", body `RELEASE_NOTES_v1.29.md`; `main` pushed to `origin master` at
+  `1a42b93c2a7` (a fast-forward from `77a3012a272`, 45 first-parent commits), with the Windows zip (518.4 MB), the APK
+  (16.1 MB, versionCode 12900) and `assets.zip` (428.8 MB). GitHub's SHA-256 digest and byte size of each asset match
+  the ledger, and the APK's `assets.zip` URL answers with the full size. Before the push the unpushed history and the
+  tree were checked for the log-sharing webhook token: none. Ledger: `docs/tfr/releases.md`.
+- **FAQ**: `EDITED` and `ADDED` in `dev-tools/discord_faq/messages.py` are empty sets again, v1.29's set kept in the
+  comment.
+- **Docs**: the v1.29 RELEASED block in `docs/tfr/releases.md`; the NOW block is rewritten short (rounds 1004-1032 now
+  released; their detail stays in this file). Next version 1.30 / 13000, next free round 1033, next engine merge after
+  `a8695ac23e2`. No code change, no build.
+
 ## Round 1032 (follow-up): the 1.29 RC is built and tested - sizes and hashes in the ledger (2026-11-14)
 
 Built from `e08ef0931c0` under `locks\build` (Maven through `runlock.sh`): the Android release build in `C:\TFR-build`
