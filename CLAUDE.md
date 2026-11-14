@@ -8,7 +8,7 @@ every round built. If you find something missing, fix the docs rather than going
 
 **v1.29 "Sharper Foes" is in release (round 1032)**: `modVersion` 1.29 / 11.14, Android `tfr.version` 1.29 /
 versionCode 12900, `RELEASE_NOTES_v1.29.md`, GUIDE's What's New in 1.29, the Discord FAQ at v1.29 (`EDITED` {1, 7, 23});
-the RC is built and tested next, then the tag `tfr-v1.29` (rounds 1004-1031 on top of v1.28). **v1.28 "Perks & Pointers" was the
+the RC is built and tested (`C:\CLAUDE\PROJECTS\TFR1\notes\release-1.29-rc-checklist.md`, all pass), then the tag `tfr-v1.29` (rounds 1004-1031 on top of v1.28). **v1.28 "Perks & Pointers" was the
 last release before it** (tag `tfr-v1.28` @ `21d9d577ba4`, published 2026-11-10
 01:55 UTC (11.09 Pacific); rounds 981-1002 on top of v1.27; assets, notes and the tag commit in `docs/tfr/releases.md`;
 the round detail in `MOD_CHANGELOG.md`). `modVersion` 1.28 / `modVersionDate` 11.09, Android `tfr.version` 1.28 /

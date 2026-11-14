@@ -14264,6 +14264,19 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 1032 (follow-up): the 1.29 RC is built and tested - sizes and hashes in the ledger (2026-11-14)
+
+Built from `e08ef0931c0` under `locks\build` (Maven through `runlock.sh`): the Android release build in `C:\TFR-build`
+via R: (exit 0, 4:08), the desktop jar with `clean` (exit 0, 1:16), `build_standalone.py --zip` into
+`C:\CLAUDE\PROJECTS\TFR1\release\v1.29\pkg` (exit 0, `PACKAGE_OK.txt` read), and a test-only autopilot APK for the
+Android 50x duel (exit 0; the patch never committed, the clone reset). Zip 518,406,647 bytes, APK 16,093,036 (12900,
+EE:60:39:25), `assets.zip` 428,845,716 (stamp pair 2026-11-14 17:21:53); SHA-256s in `docs/tfr/releases.md` and the
+checklist `C:\CLAUDE\PROJECTS\TFR1\notes\release-1.29-rc-checklist.md`. All checks pass: the desktop zip fresh (1.29,
+round 1031's backup dialog once, log sharing No, the Mirror Gear checkbox greyed on Normal and checked on Hard and
+Insane, 4 duels at 50x, a shop, save/load, a pre-1.29 save, `errors=0`) and the signed APK over 1.28 on LDPlayer (assets,
+log sharing No, a new game, save/load), plus the 50x duel on the test build. The device and LDPlayer's config were put
+back as they were. The webhook token is absent from the unpushed history and the tree.
+
 ## Round 1032: the version is 1.29, with its release notes, guide and FAQ (2026-11-14)
 
 Part 1 of the 1.29 release the user called ("Let's plan on doing the next release once these are all done"; "Let's

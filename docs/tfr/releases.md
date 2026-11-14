@@ -161,14 +161,22 @@ from 1.26?". The Discord FAQ says v1.28 (`EDITED` {1, 3, 23}, nothing new; paste
 unpushed history and the tree before the push. No itch.io upload by the session; the user posts the zip and APK.
 NOTHING is unreleased. Next version: 1.29 / 12900. Next merge from upstream after `a8695ac23e2` (round 1031, the 11.13 daily, Forge 2.0.17-SNAPSHOT; its first commit is `3cfec26d1ed`, #12856).
 
-## STATE 2026-11-14: **v1.29 "Sharper Foes" READY FOR THE TAG** (round 1032; the RC is built and tested next)
+## STATE 2026-11-14: **v1.29 "Sharper Foes" READY FOR THE TAG** (round 1032; RC built and tested 09:21-09:56 PST)
 Rounds 1004-1031 on top of v1.28 (1029 a study, no code). Engine = the 11.13 daily (upstream `a8695ac23e2`, round 1031,
 Forge 2.0.17-SNAPSHOT) on the matching BASE_INSTALL. `modVersion` 1.29 / `modVersionDate` 11.14, Android `tfr.version`
-1.29 / versionCode 12900. Assets to come in `C:\CLAUDE\PROJECTS\TFR1\release\v1.29` (the round 1032 follow-up fills in
-sizes and bytes):
-- `The-Forsaken-Realms-v1.29.zip` - MB;
-- `forsaken-realms-1.29-signed-aligned.apk` - MB (com.thesaguy.forsakenrealms, versionCode 12900, signer EE:60:39:25);
-- `assets.zip` - MB (one `mvn` run in `C:\TFR-build` via R:; carries `log_share.txt`).
+1.29 / versionCode 12900. Assets in `C:\CLAUDE\PROJECTS\TFR1\release\v1.29`, built from `e08ef0931c0` (round 1032; the
+follow-up after it is docs only):
+- `The-Forsaken-Realms-v1.29.zip` 518.4 MB (518,406,647 bytes; SHA-256 `78e8c9671f51...`);
+- `forsaken-realms-1.29-signed-aligned.apk` 16.1 MB (16,093,036 bytes; SHA-256 `02c59577f1d9...`;
+  com.thesaguy.forsakenrealms, versionCode 12900, signer EE:60:39:25);
+- `assets.zip` 428.8 MB (428,845,716 bytes; SHA-256 `c62770844e62...`; build.txt pair 2026-11-14 17:21:53, one `mvn`
+  run in `C:\TFR-build` via R:; carries `log_share.txt`, no `pc_*.ogg`). Round 792's prompts ("430MB" / "16MB") still
+  fit, so unchanged.
+
+RC test (`C:\CLAUDE\PROJECTS\TFR1\notes\release-1.29-rc-checklist.md`): all pass - the desktop zip fresh (1.29 on
+screen, the version backup once, log sharing No, the Mirror Gear checkbox, a new game on Hard, 4 duels at 50x, a shop,
+save/load, a pre-1.29 save, `errors=0`); the signed APK over 1.28 on LDPlayer (assets, 1.29 on screen, log sharing No,
+a new game, save/load); the Android 50x duel on a test-only autopilot build of the same commit.
 
 Notes = `RELEASE_NOTES_v1.29.md` (title "The Forsaken Realms 1.29: Sharper Foes", the main thread's draft the user saw,
 checked against the changelog; 1.28's Android section). GUIDE What's New 1.29 above "Coming from 1.27?", and a Mirror
