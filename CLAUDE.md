@@ -10,12 +10,13 @@ every round built. If you find something missing, fix the docs rather than going
 18:00 UTC (10:00 Pacific); rounds 1004-1032 on top of v1.28; assets, notes and the tag commit in `docs/tfr/releases.md`;
 the round detail in `MOD_CHANGELOG.md`). `modVersion` 1.29 / `modVersionDate` 11.14, Android `tfr.version` 1.29 /
 versionCode 12900, `RELEASE_NOTES_v1.29.md`, GUIDE's What's New in 1.29, the Discord FAQ at v1.29 (`EDITED`/`ADDED`
-reset by round 1032's follow-up 2). NOTHING is unreleased. Engine = the 11.13 daily (round 1031, upstream `a8695ac23e2`,
+reset by round 1032's follow-up 2). Unreleased (for 1.30): round 1033 (Felidar Sovereign and Test of Endurance swapped
+out of the 8 TFR enemy decks that held them; `MOD_CHANGELOG.md`). Engine = the 11.13 daily (round 1031, upstream `a8695ac23e2`,
 Forge 2.0.17-SNAPSHOT; round 769's R1-R4 still keep TFR's synchronous auto save, eager shops, Inn events and place
 entry; bosses keep the player's AI setting through `bossAiFollowsSetting`; the TFR AI rules and their stock hooks, round
 1018); next merge from upstream after `a8695ac23e2` (its first commit is `3cfec26d1ed`, #12856, edition fixes);
 BASE_INSTALL is that daily, so packages need no `--allow-base-mismatch`. Next version: 1.30 / 13000. Next free round:
-1033. The agent profile's window is
+1035 (1034 = the AI stock-fix bundle). The agent profile's window is
 1280x720 - at 3840x2160 it covered the screen, got minimized, and a minimized game stops (the bridge times out, shots
 come back 1x1). Agent games keep their own LOCALAPPDATA cache (round 860). Log sharing (round 698) posts to Discord
 through a webhook kept OUT of git in `C:\TFR\secrets\discord_log_webhook.txt` - never commit it; the packager and

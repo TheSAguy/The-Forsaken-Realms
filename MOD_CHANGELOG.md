@@ -14264,6 +14264,26 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 1033: Felidar Sovereign and Test of Endurance out of the enemy decks (2026-11-14)
+
+- **Why:** round 1029's D1. Insane's x2.5 enemy life switches on life-threshold cards from turn 1; some enemies start
+  at 60-90 life, so Felidar Sovereign won on the upkeep after it was cast, with no play from the player. The user:
+  "Yes, swap those two" (Felidar Sovereign and Test of Endurance); Serra Ascendant and Aetherflux Reservoir stay as
+  Insane's teeth.
+- **The swaps** (10 copies in 8 TFR `.dck` files, round 1017's rules: mono-white, mana value within 1, no
+  `AI:RemoveDeck:All`, a loadable edition, not restricted, never a duplicate in a singleton deck; lifegain decks get a
+  lifegain payoff that is not an alternate win):
+  - Grakk: Felidar -> Sun Titan (returns the deck's cheap prison Auras); Test of Endurance -> Cast Out. Grakk's
+    Master tier deck: Test of Endurance -> Cast Out.
+  - Heliod: Felidar -> Angelic Accord (lifegain payoff; `RemoveDeck:Random`, on theme). Kenrith: Felidar -> Baneslayer
+    Angel, Test of Endurance -> Cast Out. Oloro: Felidar -> Archangel of Thune. Will: Felidar -> Lyra Dawnbringer.
+  - Sunmare and Moonhorn Unicorn: Felidar -> Crested Sunmare (a Horse lifegain payoff).
+- **Not changed:** the tier-B reward pool's Test of Endurance (a card the player wins) and the other planes' decks.
+  Approach of the Second Sun (Grakk) and Angel of Destiny (Heliod, Will) are alternate wins outside this decision.
+- **Checked:** no TFR enemy deck holds either card; every card line in the 8 decks resolves; `mvn -pl
+  forge-gui-mobile -am test -o -Dtest=forge/adventure/**/*Test` exit 0, 224 tests pass. Not seen in a duel: data only.
+  Table: `C:\CLAUDE\PROJECTS\TFR1\notes\r1033\swaps.md`.
+
 ## Round 1032 (follow-up 2): 1.29 released (2026-11-14)
 
 - **Published** 2026-11-14 18:00:09 UTC (10:00 Pacific) on the user's call ("Let's release once the mirror gear check
