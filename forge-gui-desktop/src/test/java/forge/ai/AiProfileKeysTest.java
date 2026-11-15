@@ -26,14 +26,11 @@ public class AiProfileKeysTest {
         assertTrue(profiles.contains("Default"), "no Default profile in " + new File(DIR).getAbsolutePath() + ": " + profiles);
     }
 
-    /**
-     * The attack half is on; the block half's key is there but off (round 1035's follow-up: team-pump decks), so this
-     * only checks that the key is set, not its value.
-     */
+    /** Both halves are on (the block half back on since round 1036; puzzles P17 and P17c need it). */
     @Test
     public void defaultSetsTheTrickAllowance() throws Exception {
         final List<String> lines = Files.readAllLines(new File(DIR, "Default.ai").toPath(), StandardCharsets.UTF_8);
-        assertTrue(lines.stream().anyMatch(l -> l.trim().startsWith("TRICK_ALLOWANCE_ON_BLOCK=")), "TRICK_ALLOWANCE_ON_BLOCK");
+        assertTrue(lines.stream().anyMatch(l -> l.trim().equals("TRICK_ALLOWANCE_ON_BLOCK=true")), "TRICK_ALLOWANCE_ON_BLOCK");
         assertTrue(lines.stream().anyMatch(l -> l.trim().equals("TRICK_ALLOWANCE_ON_ATTACK=true")), "TRICK_ALLOWANCE_ON_ATTACK");
     }
 }

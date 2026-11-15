@@ -33,9 +33,10 @@ CHANCE_TO_HOLD_COMBAT_TRICKS_UNTIL_BLOCK=65
 # Allow for the opponent's hidden combat tricks (TFR round 1035). When the opponent has cards in hand and untapped mana,
 # the AI assumes a pump of +2/+2 (+3/+3 with green open, more once the opponent has shown a creature trick).
 # On block: a blocker worth more than the attacker no longer counts as a safe block if it dies to the pumped attacker.
-# Off in TFR since round 1035's follow-up: the bench showed more "took lethal with idle blockers" against team-pump
-# decks with it on. A later round fixes the block half before it is turned back on.
-TRICK_ALLOWANCE_ON_BLOCK=false
+# The danger checks count the same pump on an unblocked attacker, and a team pump the opponent has shown on every
+# unblocked attacker (round 1036). Back on since round 1036: a fixed-vs-stock strength bench found it no worse than
+# stock (C:\CLAUDE\PROJECTS\TFR1\notes\r1036\report.md).
+TRICK_ALLOWANCE_ON_BLOCK=true
 # On attack: an attacker that survives a blocker on the board, but dies to the pumped blocker while the blocker
 # survives, counts as killable by that blocker.
 TRICK_ALLOWANCE_ON_ATTACK=true

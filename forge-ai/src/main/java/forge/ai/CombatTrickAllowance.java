@@ -82,6 +82,58 @@ public final class CombatTrickAllowance {
         return allowance;
     }
 
+    /**
+     * TFR round 1036: the +N power of the biggest team pump this player has shown (an instant or flash in the graveyard
+     * whose spell gives the player's own or attacking creatures +N/+X: Inspired Charge, Trumpet Blast), when they still
+     * have cards in hand and the mana to cast it again; 0 otherwise. A single-target trick adds its +N to one creature,
+     * a team pump to every attacker, so the block half's danger term counts this one on every unblocked attacker.
+     * On-board team pumps (Boast, activated PumpAll) need no allowance: the danger checks already count them through
+     * {@link ComputerUtilCombat#predictTeamPumpOfAttacker} (round 1024).
+     */
+    public static int shownTeamPump(final Player trickster) {
+        if (trickster == null || trickster.getCardsIn(ZoneType.Hand).isEmpty()) {
+            return 0;
+        }
+        int best = 0;
+        int cost = 0;
+        for (final Card c : trickster.getCardsIn(ZoneType.Graveyard)) {
+            if (!c.isInstant() && !c.hasKeyword(forge.game.keyword.Keyword.FLASH)) {
+                continue;
+            }
+            for (final SpellAbility sa : c.getSpells()) {
+                final int size = teamPumpSize(sa);
+                if (size > best) {
+                    best = size;
+                    cost = c.getCMC();
+                }
+            }
+        }
+        if (best <= 0 || ComputerUtilMana.getAvailableManaEstimate(trickster) < Math.max(1, cost)) {
+            return 0;
+        }
+        return best;
+    }
+
+    /** The +N power of a team pump spell for the caster's own or attacking creatures, or 0. */
+    private static int teamPumpSize(final SpellAbility sa) {
+        if (sa.getApi() != ApiType.PumpAll || sa.usesTargeting() || sa.isCurse()) {
+            return 0;
+        }
+        final String valid = sa.getParamOrDefault("ValidCards", "");
+        if (!valid.startsWith("Creature") || !(valid.contains("YouCtrl") || valid.contains("attacking"))) {
+            return 0;
+        }
+        final String att = sa.getParamOrDefault("NumAtt", "");
+        if (!att.startsWith("+")) {
+            return 0;
+        }
+        try {
+            return Integer.parseInt(att.substring(1).trim());
+        } catch (final NumberFormatException e) {
+            return 0; // +X: unknown size
+        }
+    }
+
     /** The +N of a creature trick (0 for protection or a counter), or -1 when the spell is no creature trick. */
     private static int trickSize(final SpellAbility sa) {
         if (!sa.usesTargeting() || !sa.getParamOrDefault("ValidTgts", "").startsWith("Creature")) {

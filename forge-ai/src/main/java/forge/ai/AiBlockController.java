@@ -176,12 +176,36 @@ public class AiBlockController {
         if (trick <= 0) {
             return 0;
         }
+        int unblocked = 0;
         for (final Card a : combat.getAttackers()) {
             if (!combat.isBlocked(a) && a.getNetCombatDamage() >= 0 && ai.equals(combat.getDefenderPlayerByAttacker(a))) {
-                return trick;
+                unblocked++;
             }
         }
-        return 0;
+        if (unblocked == 0) {
+            return 0;
+        }
+        // TFR round 1036: a team pump the attacking player has shown grows every unblocked attacker, not one
+        final int team = teamTrickAllowance(attacking) * unblocked;
+        if (team > trick) {
+            forge.ai.tfr.TfrAiRules.stockFix(ai, "trick-team:" + unblocked,
+                    "counts " + team + " more damage in the danger check: " + attacking.getName()
+                            + " has shown a +" + teamTrickAllowance(attacking) + " team pump, " + unblocked
+                            + " attackers unblocked (" + attacking.getCardsIn(ZoneType.Hand).size()
+                            + " cards in hand, mana open)");
+            return team;
+        }
+        return trick;
+    }
+
+    private final Map<Player, Integer> teamTrickAllowances = new HashMap<>();
+
+    /** The shown team pump ({@link CombatTrickAllowance#shownTeamPump}), once per block assignment; 0 when off. */
+    private int teamTrickAllowance(final Player attackingPlayer) {
+        if (trickAllowance(attackingPlayer) <= 0) {
+            return 0;
+        }
+        return teamTrickAllowances.computeIfAbsent(attackingPlayer, CombatTrickAllowance::shownTeamPump);
     }
 
     private boolean inDanger(final Combat combat) {
@@ -1205,6 +1229,7 @@ public class AiBlockController {
 
         clearBlockers(combat, possibleBlockers);
         trickAllowances.clear(); // TFR round 1035: hands and mana may have changed since the last assignment
+        teamTrickAllowances.clear();
 
         diff = (ai.getLife() * 2) - 5; // This is the minimal gain for an unnecessary trade
         if (diff > 0 && AiProfileUtil.getBoolProperty(ai, AiProps.PLAY_AGGRO)) {

@@ -35,6 +35,23 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 1036 - the block half's danger term counts a shown team pump; the block half back on (one upstream PR draft)
+- `forge-ai/src/main/java/forge/ai/CombatTrickAllowance.java` (NEW in round 1035, stock package): `shownTeamPump(Player)`
+  and the private `teamPumpSize(SpellAbility)`: the +N power of the biggest instant/flash team pump (untargeted,
+  non-curse `PumpAll` on `Creature...YouCtrl` or `Creature.attacking`, fixed `NumAtt$ +N`) in the player's graveyard,
+  while they have cards in hand and mana for its mana value.
+- `forge-ai/src/main/java/forge/ai/AiBlockController.java` (STOCK, already TFR-edited by rounds 1024, 1034, 1035):
+  `trickDamage` counts the unblocked attackers and returns `max(trick, teamTrickAllowance x unblocked)`
+  (`[TFR-AiFix] trick-team` log); new `teamTrickAllowances` map and `teamTrickAllowance(Player)`, cleared in
+  `assignBlockers` next to `trickAllowances`. Still 0 with `TRICK_ALLOWANCE_ON_BLOCK=false`.
+- `forge-gui/res/ai/Default.ai` (STOCK profile): `TRICK_ALLOWANCE_ON_BLOCK=true` again, comment rewritten.
+- TFR files (not stock): `AiProfileKeysTest` (both keys `=true`), puzzles P17 (back) and P17c (new).
+- **On a merge:** upstream draft 0002 (`C:\CLAUDE\PROJECTS\TFR1\notes\r1036\upstream-pr\`) sits on top of round 1035's
+  0001 (upstream ships both keys off); if upstream merges them, take theirs, then put back TFR's two `=true` lines in
+  Default.ai and the `[TFR-AiFix]` log calls. P17c
+  failing means a merge lost `shownTeamPump` or the `trickDamage` change; P17 failing means the block half or its
+  profile line.
+
 ### Round 1038 - the Android asset download's keep-on-screen line and failure message (logs-1114c P3-34)
 - `forge-gui-mobile/src/forge/assets/AssetsDownloader.java` (STOCK, already TFR-edited): the resource prompt appends
   `ASSETS_KEEP_ON_SCREEN`; `downloadAndUnzipLogged` returns a boolean (false on a failed download) and both its calls

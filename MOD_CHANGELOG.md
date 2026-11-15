@@ -14264,6 +14264,43 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 1036: the trick allowance's block half back on, after a strength bench and a team-pump fix (2026-11-14)
+
+Round 1035's block half (`TRICK_ALLOWANCE_ON_BLOCK`: a blocker worth more than the attacker isn't a "safe" block if it
+dies to the attacker plus a hidden pump) was turned off when a bench with the same AI on both seats showed more
+"took lethal with idle blockers" against team-pump decks. That bench couldn't measure strength (a change helps and
+hurts both seats). This round built one that can, fixed the block half's danger term for team pumps, and turned it
+back on. Report: `C:\CLAUDE\PROJECTS\TFR1\notes\r1036\report.md`.
+
+- **The strength bench** (`C:\CLAUDE\PROJECTS\TFR1\notes\r1036\bench\`, README for reuse): the profile under test on one
+  seat, stock on the other, in one build; `AuditHarness -Dbench.swapProfiles=true` swaps which deck each profile plays
+  every second game, so every deck x first/second x profile combination plays equally. Profiles are copies of
+  Default.ai with only the keys under test changed. 1216 games an arm (pairs14, pump and trick decks, at off and lite).
+- **Score against stock, 95% interval:** attack half alone (today's ship) 48.8 +- 2.8; block half 49.3 +- 2.8, and
+  49.5 +- 2.8 with this round's fix; both halves 48.9 +- 2.8 (twice). **A/A control** (stock against a renamed copy of
+  itself): 48.1 +- 2.3 over 1824 games (its first seed alone, 608 games at off: 46.5 +- 4.0), the size of the noise.
+  Every arm is within 1.5 points of the control, so none is measurably different from stock; effects under about 3
+  points can't be seen.
+  On the pump decks the block half scores 49.7 +- 3.5, and its seat takes lethal with idle blockers no more than
+  stock's (0.13 vs 0.17 a game).
+- **The fix** (stock, opt-in): on-board team pumps were already counted (round 1024's `predictTeamPumpOfAttacker`
+  feeds both the lethal check and `canDestroyBlocker`). The gap was a team-pump instant the opponent has shown:
+  `CombatTrickAllowance.shownTeamPump(player)` (new) is the +N of the biggest one in their graveyard (Inspired Charge,
+  Trumpet Blast) while they hold cards and its mana; `AiBlockController.trickDamage` now counts
+  `max(trick, shownTeamPump x unblocked attackers)` instead of the trick once. Log
+  `[TFR-AiFix] trick-team turn N <player> counts D more damage in the danger check: ...`.
+- `forge-gui/res/ai/Default.ai`: `TRICK_ALLOWANCE_ON_BLOCK=true` again (comment updated). `AiProfileKeysTest` now
+  requires both keys `=true`.
+- Puzzles: **P17** back from `C:\CLAUDE\PROJECTS\TFR1\notes\r1035\puzzles\`; **P17c** (new): three Silvercoat Lions
+  attack, the AI at 12 holds two Serra Angels, the opponent has four Plains open and Inspired Charge in the graveyard.
+  Without the fix the Angels stay home (0/3 at off, lite and max); with it they block (3/3); stock blocks too.
+- Dropped on purpose: counting the bigger of an on-board pump and the hidden trick instead of their sum; the block
+  check's prefilter already needs the trick alone to kill, so it never changed a block (guard puzzle P17d passed on
+  the old code).
+- **Proof:** `TfrAiPuzzleTest`, 39 puzzles, 3 runs, rules on and off: all pass at off, lite and max. Maven
+  `-o -pl forge-gui-desktop -am test -Dtest=AiProfileKeysTest,AiBlockControllerTradeChanceTest`: exit 0, 7/7.
+- Upstream draft (on top of round 1035's 0001): `C:\CLAUDE\PROJECTS\TFR1\notes\r1036\upstream-pr\`.
+
 ## Round 1038: the Android asset download says keep the game on screen, and says so when it stops (2026-11-14)
 
 From the checked log review `C:\CLAUDE\PROJECTS\TFR1\notes\logs-1114c.md`, finding P3-34: a player's 1.29 asset

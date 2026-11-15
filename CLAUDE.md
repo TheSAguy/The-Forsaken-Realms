@@ -14,11 +14,13 @@ reset by round 1032's follow-up 2). Unreleased (for 1.30): round 1033 (Felidar S
 out of the 8 TFR enemy decks that held them) and round 1034 (AI stock fixes: a MaxX repeat waits for X >= 2, a trade
 block saves a planeswalker, the trade chance's float step; rule `fetch-life-guard`, a fourth rule hook in
 `ChangeZoneAi`; three upstream drafts in `C:\CLAUDE\PROJECTS\TFR1\notes\r1034\upstream-pr\`) and round 1035 (stock
-combat trick allowance: attacks allow for a pump when the opponent has cards and open mana, `TRICK_ALLOWANCE_ON_ATTACK`
-on in TFR's Default.ai; **the block half, `TRICK_ALLOWANCE_ON_BLOCK`, is off since its follow-up** (more deaths with idle
-blockers against team-pump decks) until a block-half round fixes it - its puzzle P17 waits in
-`C:\CLAUDE\PROJECTS\TFR1\notes\r1035\puzzles\`; a profile key the jar lacks throws, so `AiProfileKeysTest` guards it; draft
-in `C:\CLAUDE\PROJECTS\TFR1\notes\r1035\upstream-pr\`) and round 1037 (stock `EffectAi`: the `AILogic$ Pump` branch
+combat trick allowance: blocks and attacks allow for a pump when the opponent has cards and open mana,
+`TRICK_ALLOWANCE_ON_ATTACK` and `TRICK_ALLOWANCE_ON_BLOCK` in TFR's Default.ai; a profile key the jar lacks throws, so
+`AiProfileKeysTest` guards it; draft in `C:\CLAUDE\PROJECTS\TFR1\notes\r1035\upstream-pr\`) and round 1036 (**the block
+half back on**: the danger term counts a team pump the opponent has shown on every unblocked attacker, puzzles P17 and
+P17c; a fixed-vs-stock **strength bench** for AI rounds, `C:\CLAUDE\PROJECTS\TFR1\notes\r1036\bench\README.md`, found
+no arm measurably different from stock (all 48.8-49.5% vs Stock; A/A control 48.1 +- 2.3); draft 0002 in
+`C:\CLAUDE\PROJECTS\TFR1\notes\r1036\upstream-pr\`) and round 1037 (stock `EffectAi`: the `AILogic$ Pump` branch
 no longer throws on an untargeted Effect (Giant Koi), which made the AI pass its priority; `EffectAiPumpUntargetedTest`;
 draft in `C:\CLAUDE\PROJECTS\TFR1\notes\r1037\upstream-pr\`) and round 1038 (Android asset download: a
 keep-on-screen line on its prompt, a "Download Stopped" message before the restart when it fails, no `version.txt`
@@ -27,7 +29,7 @@ Forge 2.0.17-SNAPSHOT; round 769's R1-R4 still keep TFR's synchronous auto save,
 entry; bosses keep the player's AI setting through `bossAiFollowsSetting`; the TFR AI rules and their stock hooks, round
 1018); next merge from upstream after `a8695ac23e2` (its first commit is `3cfec26d1ed`, #12856, edition fixes);
 BASE_INSTALL is that daily, so packages need no `--allow-base-mismatch`. Next version: 1.30 / 13000. Next free round:
-1039 (round 1036 is out). The agent profile's window is
+1039. The agent profile's window is
 1280x720 - at 3840x2160 it covered the screen, got minimized, and a minimized game stops (the bridge times out, shots
 come back 1x1). Agent games keep their own LOCALAPPDATA cache (round 860). Log sharing (round 698) posts to Discord
 through a webhook kept OUT of git in `C:\TFR\secrets\discord_log_webhook.txt` - never commit it; the packager and

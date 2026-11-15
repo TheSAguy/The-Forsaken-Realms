@@ -1,0 +1,19 @@
+[metadata]
+Name:P17c - staying home loses to a team pump the opponent has shown (round 1036)
+Description:Three Silvercoat Lions (2/2) attack. The AI, at 12 life, has two Serra Angels (4/4) untapped. The opponent has four Plains untapped, two cards in hand, and Inspired Charge (instant, creatures you control get +2/+1) in the graveyard. Each Angel is worth more than a Lion and dies to a Lion at +2/+2, so with TRICK_ALLOWANCE_ON_BLOCK neither is a "safe" block. Round 1035's danger term added the trick once (6 on the board + 2 leaves 4: not in danger), so the AI kept both Angels home, and a second Inspired Charge deals 12. Round 1036 counts a shown team pump on every unblocked attacker (6 + 3 x 2 leaves 0: in danger), so the Angels block. Expect: a Lion dies and the AI lives. Stock Forge passes (the Angels are safe blocks on the board).
+Turns:1
+Expect:humangraveyard has Silvercoat Lion
+Expect:ailife>=1
+[state]
+humanlife=20
+ailife=12
+turn=9
+activeplayer=human
+activephase=COMBAT_DECLARE_ATTACKERS
+humanhand=Inspired Charge;Plains
+humangraveyard=Inspired Charge
+humanlibrary=Plains;Plains;Plains;Plains;Plains
+humanbattlefield=Silvercoat Lion|Attacking;Silvercoat Lion|Attacking;Silvercoat Lion|Attacking;Plains;Plains;Plains;Plains
+aihand=
+ailibrary=Plains;Plains;Plains;Plains;Plains
+aibattlefield=Serra Angel;Serra Angel;Plains|Tapped;Plains|Tapped;Plains|Tapped;Plains|Tapped;Plains|Tapped
