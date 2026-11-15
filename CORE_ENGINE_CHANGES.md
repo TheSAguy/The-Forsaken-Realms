@@ -35,6 +35,14 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 1039 - the version backup waits in a second copy (logs-1114d P3-35)
+- `forge-gui-mobile/src/forge/adventure/world/WorldSave.java` (STOCK): in `backupOnVersionChange()`, after the marker
+  check, a return when `SecondCopy.holdsVersionBackup()` is true (`[TFR-Backup] skipped` line, no zip, no marker). The
+  `new version` log line gains a play-anyway suffix. Upstream's code around it is unchanged.
+- `forge-gui-mobile/src/forge/adventure/scene/StartScene.java` (STOCK): round 1013's Play-anyway branch in
+  `warnSecondCopy()` (TFR's own method) calls `WorldSave.backupOnVersionChange()` before `askOrShareLogs()`.
+- TFR's own files: `util/SecondCopy.java` (`holdsVersionBackup`, `playingAnyway`), `test/.../SecondCopyTest.java`.
+
 ### Round 1036 - the block half's danger term counts a shown team pump; the block half back on (one upstream PR draft)
 - `forge-ai/src/main/java/forge/ai/CombatTrickAllowance.java` (NEW in round 1035, stock package): `shownTeamPump(Player)`
   and the private `teamPumpSize(SpellAbility)`: the +N power of the biggest instant/flash team pump (untargeted,

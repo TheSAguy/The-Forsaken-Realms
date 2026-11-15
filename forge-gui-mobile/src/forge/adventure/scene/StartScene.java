@@ -446,6 +446,9 @@ public class StartScene extends UIScene {
                 }, () -> {
                     forge.adventure.util.SecondCopy.answered(false);
                     removeDialog();
+                    // round 1039: the version backup skipped at launch runs now, in the copy that plays (zips on the
+                    // save thread, off the GL thread)
+                    forge.adventure.world.WorldSave.backupOnVersionChange();
                     askOrShareLogs();
                 }, false, "", true);
         showDialog(dialog);

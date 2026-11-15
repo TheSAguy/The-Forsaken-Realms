@@ -14264,6 +14264,37 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 1039: the version backup runs in the copy that plays, not in a second copy told to quit (2026-11-14)
+
+From the log review `C:\CLAUDE\PROJECTS\TFR1\notes\logs-1114d.md`, finding P3-35. A desktop player started 1.29 while
+their 1.28 copy was still open. Round 1031's version backup zipped the adventure folder and wrote its marker in the 1.29
+copy, the one the start screen (round 1013) then told to quit. The other copy could still have saved after that zip, and
+the copy that played later never backed up, because the marker was already written.
+- **Skip:** `WorldSave.backupOnVersionChange()` writes neither the zip nor the marker while `SecondCopy` saw
+  `lastexit.lock` held by another live copy (`Lock.HELD_ELSEWHERE`). It logs
+  `[TFR-Backup] skipped: another copy is open (new version ...); the copy that plays backs up`. The check comes after the
+  marker check, so a launch that has nothing to back up logs nothing. The order holds: `StartScene.enter` ->
+  `SessionLog.onStart` -> `LastExit.onStart` -> `SecondCopy.record` runs inside `switchScene`, before `openAdventure`
+  calls the backup (the log in the review shows the same order, L28 then L34).
+- **Play anyway** (the main thread agreed): the copy the player keeps open is the one that writes saves, so
+  `SecondCopy.answered(false)` lifts the hold and StartScene's Play-anyway branch calls `backupOnVersionChange()` again.
+  The `new version` line then says `, play anyway beside another copy`. **Quit** exits with no backup and no marker. The
+  next copy that opens alone backs up as before.
+- **No hang:** the zip runs on `SAVE_EXECUTOR`, the save thread, as it does at launch, and its result dialog is posted
+  back to the GL thread. The Play-anyway click only queues it. The load path doesn't use that executor, so a load isn't
+  held up either. An async autosave waits behind the zip, as it already does at launch.
+- **Rule:** `SecondCopy.holdsVersionBackup(Lock, playAnyway)` is the pure rule, and `holdsVersionBackup()` reads this
+  launch. Android and iOS never record a lock (`NOT_CHECKED`), so phones back up as before.
+- **Doc:** `docs/tfr/build-and-deploy.md`'s engine-merge list now says to bump `engineBuildVersion` in the plane's
+  config.json in the merge round. It feeds the packager's BASE_INSTALL check (which already refuses a stale value once
+  BASE_INSTALL is reinstalled), the start screen, and this backup's key.
+- **Test:** `SecondCopyTest.theVersionBackupWaitsInASecondCopyUntilPlayAnyway` covers the five lock states with and
+  without Play anyway. Maven `-o -pl forge-gui-mobile -am test -Dtest=SecondCopyTest` exits 0, 4/4; the three changed
+  classes were recompiled in that run. **Not run in a real launch:** the agent profile's marker is already at 1.29, so
+  no backup would fire. For a manual check: hold `lastexit.lock` from another copy, change the marker in
+  `adventure_backups\build.txt`, launch, and look for the `skipped` line; then pick Play anyway and look for the
+  `play anyway` line and a new `.adv`.
+
 ## Round 1036: the trick allowance's block half back on, after a strength bench and a team-pump fix (2026-11-14)
 
 Round 1035's block half (`TRICK_ALLOWANCE_ON_BLOCK`: a blocker worth more than the attacker isn't a "safe" block if it

@@ -17,6 +17,10 @@ release.** It has to be its own round, planned ahead of the release rather than 
 - **Upstream clobbers our Android branding and version stamps** - `forge-gui-android/pom.xml`, the
   launcher icons, the splash art, `Zone.java`. `ANDROID_RELEASE.md` carries the revert-watch list;
   read it as part of the merge, not afterwards.
+- **Bump `engineBuildVersion`** in `forge-gui/res/adventure/The Forsaken Realms/config.json` to the merged daily
+  (`<ver>-SNAPSHOT-MM.DD`) in the merge round. The packager checks it against BASE_INSTALL, the start screen shows it,
+  and the automatic save backup (`WorldSave.backupOnVersionChange`, round 1031) is keyed on `modVersion` +
+  `engineBuildVersion`: a merge that forgets it skips that backup when no release bumps `modVersion` with it.
 - Resolve `README.md` conflicts to OURS (it is the game's readme, not upstream Forge's).
   `CORE_ENGINE_CHANGES.md` exists to make the conflict pass fast - grep it per conflicting file.
 

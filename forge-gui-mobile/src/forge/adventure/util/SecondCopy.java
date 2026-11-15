@@ -34,6 +34,7 @@ public final class SecondCopy {
 
     private static volatile Lock state = Lock.NOT_CHECKED;
     private static boolean asked;
+    private static volatile boolean playingAnyway;
 
     private SecondCopy() {
     }
@@ -55,6 +56,25 @@ public final class SecondCopy {
         return state;
     }
 
+    /**
+     * Round 1039 (logs-1114d P3-35: 1.29's version backup ran in the copy the start screen then told to quit, and wrote
+     * the marker, so the copy that played never backed up): the version backup waits while another copy is open,
+     * until the player picks Play anyway in this one. The pure rule; {@link #holdsVersionBackup()} reads this launch.
+     */
+    public static boolean holdsVersionBackup(Lock lock, boolean playAnyway) {
+        return lock == Lock.HELD_ELSEWHERE && !playAnyway;
+    }
+
+    /** WorldSave.backupOnVersionChange: true while this copy may still be the one told to quit. */
+    public static boolean holdsVersionBackup() {
+        return holdsVersionBackup(state, playingAnyway);
+    }
+
+    /** True once the player kept this copy open beside the other one. */
+    public static boolean playingAnyway() {
+        return playingAnyway;
+    }
+
     /** StartScene.enter: true once per launch when the warning should show now (and marks it shown). */
     public static synchronized boolean takeWarning() {
         if (asked)
@@ -73,6 +93,8 @@ public final class SecondCopy {
 
     /** The player's answer, for the log. */
     public static void answered(boolean quit) {
+        if (!quit)
+            playingAnyway = true; // round 1039: the version backup may run in this copy now
         System.out.println("[TFR-SecondCopy] " + (quit ? "quit: the player closed this copy"
                 : "play anyway: the player kept this copy open beside the other one"));
     }

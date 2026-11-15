@@ -26,6 +26,16 @@ public class SecondCopyTest {
         AssertJUnit.assertFalse(SecondCopy.shouldWarn(null, false));
     }
 
+    /** Round 1039 (logs-1114d P3-35): the version backup waits in a second copy until the player picks Play anyway. */
+    @Test
+    public void theVersionBackupWaitsInASecondCopyUntilPlayAnyway() {
+        AssertJUnit.assertTrue("another copy is open", SecondCopy.holdsVersionBackup(SecondCopy.Lock.HELD_ELSEWHERE, false));
+        AssertJUnit.assertFalse("play anyway: this copy plays", SecondCopy.holdsVersionBackup(SecondCopy.Lock.HELD_ELSEWHERE, true));
+        for (SecondCopy.Lock lock : new SecondCopy.Lock[] {SecondCopy.Lock.TAKEN, SecondCopy.Lock.SAME_PROCESS,
+                SecondCopy.Lock.UNSUPPORTED, SecondCopy.Lock.NOT_CHECKED, null})
+            AssertJUnit.assertFalse("alone (" + lock + "): backs up as before", SecondCopy.holdsVersionBackup(lock, false));
+    }
+
     @Test
     public void aStaleLockFileIsTakenAndTheSameProcessIsNotASecondCopy() throws Exception {
         File dir = Files.createTempDirectory("tfr-secondcopy").toFile();

@@ -569,8 +569,16 @@ public class WorldSave {
         File marker = new File(backupDir, "build.txt");
         if (build.equals(FileUtil.readFileToString(marker)))
             return;
+        // TFR round 1039 (logs-1114d P3-35): not in a second copy the start screen may tell to quit - no zip, no marker, so
+        // the copy that plays backs up: this one after Play anyway (StartScene calls this again), or the next one alone.
+        if (forge.adventure.util.SecondCopy.holdsVersionBackup()) {
+            System.out.println("[TFR-Backup] skipped: another copy is open (new version " + build + "); the copy that plays"
+                    + " backs up");
+            return;
+        }
         System.out.println("[TFR-Backup] new version " + build + " (last backed-up " + FileUtil.readFileToString(marker).trim()
-                + "): zipping " + ForgeConstants.USER_ADVENTURE_DIR + " into " + backupDir + ", the newest "
+                + ")" + (forge.adventure.util.SecondCopy.playingAnyway() ? ", play anyway beside another copy" : "")
+                + ": zipping " + ForgeConstants.USER_ADVENTURE_DIR + " into " + backupDir + ", the newest "
                 + VERSION_BACKUPS_KEPT + " kept");
         // Queued ahead of any async autosave, which runs on the same single thread
         SAVE_EXECUTOR.execute(() -> {
