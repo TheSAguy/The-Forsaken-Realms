@@ -522,6 +522,9 @@ public class WorldSave {
     }
 
     public static boolean isSafeFile(String name) {
+        // TFR round 1040 (logs-1115 P2-4): null after Data > Restore clears lastActiveSave; Continue's call threw an NPE
+        if (name == null)
+            return false;
         return filenameToSlot(name) != INVALID_SAVE_SLOT;
     }
 

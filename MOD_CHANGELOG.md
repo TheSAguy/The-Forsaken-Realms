@@ -14264,6 +14264,35 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 1040: Continue after Data > Restore no longer crashes the game (2026-11-15)
+
+From the log review `C:\CLAUDE\PROJECTS\TFR1\notes\logs-1115.md`, finding P2-4. A Fairphone player on 1.29 tapped
+Continue right after Data > Restore and the app closed; nothing was lost. Stock code, but 1.29's version backup notice
+(round 1031) told every updating player to restore from Data, which led them into it.
+- **The bug:** `StartScene.extract()` sets `lastActiveSave = null` in its `finally` and saves settings, but never
+  refreshed the buttons, so Continue stayed on screen. `Continue()` then called `WorldSave.isSafeFile(null)`, and
+  `filenameToSlot` threw `NullPointerException` on `name.equals(...)`. On Android the GL thread dies and the app closes.
+- **Fix (stock, two lines):** `isSafeFile` returns false for null; `extract()`'s `finally` calls
+  `updateResumeContinue()`. `extract` already runs on the GL thread: it is a `Timer` task, and libGDX 1.14.2's
+  `Timer$TimerThread` posts tasks with `postRunnable` (checked in the jar), the same thread the dialog it builds needs.
+- **Log:** `[TFR-Restore] restored <zip> into <folder>: N files`, or `[TFR-Restore] restore of <zip> failed: <error>`.
+  Before this round a restore left no line in forge.log.
+- **Notice text (my call):** the plane's tips.json key `versionBackup.done` replaces the notice in TFR: "The game has
+  updated. Your saves are safe, and a backup copy was made as well. You don't need to do anything. Data > Restore is
+  only for when a save goes wrong." Other planes keep `lblVersionBackupDone`; the failure text is unchanged.
+- **Test:** `WorldSaveSafeFileTest` (the Localizer is set up first, as `QuestOfferEffectsTest` does, since `WorldSave`'s
+  static save builds an `AdventurePlayer`): null is not a safe file; the written names are, an Explorer copy is not.
+  With the null guard taken out it fails with the player's exact NPE; with it, 2/2. Maven `-o -pl forge-gui-mobile-dev
+  -am package -Dtest=WorldSaveSafeFileTest,TfrTipsTest` exits 0, 15/15.
+- **Agent game (both ways, shots in `C:\CLAUDE\PROJECTS\TFR1\notes\r1040\shots\`):** before, on the 1.29 jar, Data >
+  Restore then Continue: Continue still showed and the click threw `NullPointerException: Cannot invoke
+  "String.equals(Object)" because "name" is null`. After, with this round's classes ahead of the jar: the new notice
+  showed, Continue showed at launch, Restore logged `restored forge_261115_085454.adv into ForsakenRealms: 118 files`,
+  Continue was gone afterward, and Load of the auto save reached the map.
+- **Not changed (stock, noted):** a restore while a game is loaded leaves Resume on screen with the old world in memory;
+  resuming and saving would write that world over the restored files. Not touched here.
+- **Upstream draft:** `C:\CLAUDE\PROJECTS\TFR1\notes\r1040\upstream-pr\` (the two stock lines and the test, no TFR text).
+
 ## Round 1039: the version backup runs in the copy that plays, not in a second copy told to quit (2026-11-14)
 
 From the log review `C:\CLAUDE\PROJECTS\TFR1\notes\logs-1114d.md`, finding P3-35. A desktop player started 1.29 while

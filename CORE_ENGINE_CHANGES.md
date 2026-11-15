@@ -35,6 +35,17 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 1040 - Continue after Data > Restore no longer throws (logs-1115 P2-4; one upstream PR draft)
+- `forge-gui-mobile/src/forge/adventure/world/WorldSave.java` (STOCK): `isSafeFile(String)` returns false for null
+  before calling `filenameToSlot` (which does `name.equals(...)`).
+- `forge-gui-mobile/src/forge/adventure/scene/StartScene.java` (STOCK): `extract()`'s `finally` calls
+  `updateResumeContinue()` after clearing `lastActiveSave`, so Continue hides; `[TFR-Restore]` lines for a restore and
+  a failed one. `showVersionBackupResult` shows the plane's `versionBackup.done` text from tips.json when it has one
+  (TFR does; other planes keep upstream's `lblVersionBackupDone`).
+- TFR's own files: `test/forge/adventure/world/WorldSaveSafeFileTest.java`, the plane's tips.json key.
+- **On a merge:** draft `C:\CLAUDE\PROJECTS\TFR1\notes\r1040\upstream-pr\` holds the two stock lines; if upstream takes
+  them, keep theirs and put back only the `[TFR-Restore]` lines and the tips.json lookup.
+
 ### Round 1039 - the version backup waits in a second copy (logs-1114d P3-35)
 - `forge-gui-mobile/src/forge/adventure/world/WorldSave.java` (STOCK): in `backupOnVersionChange()`, after the marker
   check, a return when `SecondCopy.holdsVersionBackup()` is true (`[TFR-Backup] skipped` line, no zip, no marker). The

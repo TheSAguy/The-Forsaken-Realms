@@ -242,7 +242,18 @@ public class StartScene extends UIScene {
         return true;
     }
     public void showVersionBackupResult(boolean backedUp) {
-        TextraLabel message = Controls.newTextraLabel(Forge.getLocalizer().getMessage(backedUp ? "lblVersionBackupDone" : "lblVersionBackupFailed"));
+        // TFR round 1040 (logs-1115 P2-4): the stock text sends every updating player to Data > Restore; the plane's
+        // tips.json says the saves are safe and Restore is for when something goes wrong (stock text elsewhere)
+        String tfrText = null;
+        if (backedUp) {
+            try {
+                tfrText = forge.adventure.util.TfrTips.text("versionBackup.done");
+            } catch (RuntimeException e) {
+                System.err.println("[TFR-Restore] tips.json versionBackup.done failed: " + e);
+            }
+        }
+        TextraLabel message = Controls.newTextraLabel(tfrText != null ? tfrText
+                : Forge.getLocalizer().getMessage(backedUp ? "lblVersionBackupDone" : "lblVersionBackupFailed"));
         message.setWrap(true);
         Dialog dialog = createGenericDialog("", null, Forge.getLocalizer().getMessage("lblOK"), null, this::removeDialog, null);
         dialog.getContentTable().add(message).width(Forge.isLandscapeMode() ? 250f : 150f);
@@ -317,14 +328,22 @@ public class StartScene extends UIScene {
         //boolean isError = false;
 
         try {
-            val = Forge.getLocalizer().getMessage("lblFiles") + ":\n" + ZipUtil.unzip(source, target);
+            String files = ZipUtil.unzip(source, target);
+            val = Forge.getLocalizer().getMessage("lblFiles") + ":\n" + files;
+            // TFR round 1040 (logs-1115 P2-4): a restore used to leave no trace in forge.log
+            System.out.println("[TFR-Restore] restored " + source.getName() + " into " + target.getName()
+                    + ": " + (files.split(" \\* ", -1).length - 1) + " files");
         } catch (IOException e) {
             title = Forge.getLocalizer().getMessage("lblError");
             val = e.getMessage();
+            System.err.println("[TFR-Restore] restore of " + source.getName() + " failed: " + e);
             //isError = true;
         } finally {
             Config.instance().getSettingData().lastActiveSave = null;
             Config.instance().saveSettings();
+            // TFR round 1040 (logs-1115 P2-4): Continue stayed on screen with no save to continue, and tapping it threw
+            // (the Android app closed). Timer tasks run on the GL thread, so the buttons can change here.
+            updateResumeContinue();
 
             TextraLabel messageLabel = Controls.newTextraLabel(val);
             messageLabel.setWrap(true);
