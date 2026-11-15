@@ -405,6 +405,7 @@ public class AssetsDownloader {
         } else {
             message += "so it's highly recommended that you connect to wifi first.";
         }
+        message += "\n\n" + ASSETS_KEEP_ON_SCREEN; // TFR round 1038 (logs-1114c P3-34)
         // Round 284: a hand-placed, build-matched assets.zip makes the whole download moot - prompt
         // included. Computed here rather than at the extract site so the tester is not asked to approve
         // a download that is not going to happen.
@@ -451,8 +452,9 @@ public class AssetsDownloader {
                 : GITHUB_FORGE_URL + "releases/download/tfr-v" + versionString + "/assets.zip";
         GuiDownloadZipService assets = new GuiDownloadZipService("", "resource files", assetURL,
                 ASSETS_DIR, RES_DIR, Forge.getSplashScreen().getProgressBar(), allowDeletion);
+        boolean downloadFailed = false; // TFR round 1038: no version.txt stamp, and a message before the restart
         if (localZip == null) {
-            downloadAndUnzipLogged(assets, assetURL);
+            downloadFailed = !downloadAndUnzipLogged(assets, assetURL);
         } else {
             // extract() DELETES the zip it is handed (it is normally a temp download), so the tester's
             // own file is copied first - otherwise a 210MB file has to be re-copied after every run,
@@ -464,7 +466,7 @@ public class AssetsDownloader {
             } catch (IOException e) {
                 System.out.println("[TFR-Assets] could not stage " + localZip + " (" + e
                         + ") - falling back to the download");
-                downloadAndUnzipLogged(assets, assetURL);
+                downloadFailed = !downloadAndUnzipLogged(assets, assetURL);
                 scratch = null;
             }
             if (scratch != null) {
@@ -493,7 +495,8 @@ public class AssetsDownloader {
         // built in separate mvn runs into a permanent forced-160MB-redownload loop with no
         // Ignore button. Corollary for releases: ALWAYS build the APK and assets.zip in the
         // same mvn invocation and upload them together.
-        if (connectedToInternet) {
+        // TFR round 1038: a failed download installed nothing, so it never stamps - the next launch asks again.
+        if (connectedToInternet && !downloadFailed) {
             boolean provenMismatch = false;
             try {
                 FileHandle extractedBuild = resDir.child("build.txt");
@@ -515,6 +518,12 @@ public class AssetsDownloader {
                 versionFile.delete();
             check.delete();
         }
+        // TFR round 1038 (logs-1114c P3-34): a failed download used to fall straight through to the restart, so a player
+        // who left the game mid-download (onPause, then "Software caused connection abort") saw it just close.
+        if (downloadFailed) {
+            System.out.println("[TFR-Assets] download-failed message shown; the game restarts and asks again");
+            SOptionPane.showOptionDialog(ASSETS_DOWNLOAD_FAILED, ASSETS_DOWNLOAD_FAILED_TITLE, null, ImmutableList.of("Ok"));
+        }
         // auto restart after update
         Forge.isMobileAdventureMode = Forge.advStartup;
         Forge.exitAnimation(true);
@@ -523,21 +532,23 @@ public class AssetsDownloader {
     /**
      * Round 735: GuiDownloadZipService.downloadAndUnzip() - download, then extract - with a [TFR-Assets] line for the
      * start, the end (size and seconds) or the failure, and the files unzipped. The service logs a failure's own cause
-     * (the HTTP status, or the exception through Logger.error) just before.
+     * (the HTTP status, or the exception through Logger.error) just before. Round 1038: returns false when the download
+     * failed (nothing was unzipped), true otherwise.
      */
-    private static void downloadAndUnzipLogged(GuiDownloadZipService assets, String url) {
+    private static boolean downloadAndUnzipLogged(GuiDownloadZipService assets, String url) {
         System.out.println("[TFR-Assets] download started: " + url);
         long start = System.currentTimeMillis();
         String zip = assets.download("temp.zip");
         long seconds = (System.currentTimeMillis() - start) / 1000;
         if (zip == null || zip.isEmpty()) {
             System.out.println("[TFR-Assets] download FAILED after " + seconds + " s - nothing to unzip");
-            return;
+            return false;
         }
         System.out.println("[TFR-Assets] download finished in " + seconds + " s (" + new File(zip).length() / (1024 * 1024)
                 + " MB)");
         assets.extract(zip);
         System.out.println("[TFR-Assets] unzipped " + assets.getFilesExtracted() + " files");
+        return true;
     }
 
     /**
@@ -559,6 +570,15 @@ public class AssetsDownloader {
     /** Added to "Update Failed". */
     static final String KEEP_ON_SCREEN_FAILED = "If you left the game during the download, Android may have stopped it. "
             + "Next time, keep the game on screen until the installer opens.";
+    // TFR round 1038 (logs-1114c P3-34): the same advice for the resource download (430 MB, 7-10 minutes on a slow line).
+    /** Added to the resource-download prompt. */
+    static final String ASSETS_KEEP_ON_SCREEN = "Keep the game on screen until the download finishes; "
+            + "leaving it can stop the download.";
+    /** Shown when the resource download fails, just before the game restarts and offers it again. */
+    static final String ASSETS_DOWNLOAD_FAILED = "The download stopped before it finished. "
+            + "If you left the game during the download, Android may have stopped it.\n\n"
+            + "The game will restart and offer the download again. Keep the game on screen until it finishes.";
+    static final String ASSETS_DOWNLOAD_FAILED_TITLE = "Download Stopped";
     static final String OPEN_INSTALLER_AGAIN = "Open Installer Again";
     static final String KEEP_PLAYING = "Keep Playing";
 

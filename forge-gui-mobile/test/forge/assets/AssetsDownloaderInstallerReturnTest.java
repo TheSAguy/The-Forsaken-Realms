@@ -60,4 +60,15 @@ public class AssetsDownloaderInstallerReturnTest {
         AssertJUnit.assertTrue(AssetsDownloader.KEEP_ON_SCREEN.contains("Keep the game on screen"));
         AssertJUnit.assertTrue(AssetsDownloader.KEEP_ON_SCREEN_FAILED.contains("keep the game on screen"));
     }
+
+    /** TFR round 1038 (logs-1114c P3-34): the resource download gets the same advice, and a message when it fails. */
+    @Test
+    public void assetDownloadAdviceAndFailureMessage() {
+        AssertJUnit.assertTrue(AssetsDownloader.ASSETS_KEEP_ON_SCREEN.startsWith("Keep the game on screen until the download finishes"));
+        String m = AssetsDownloader.ASSETS_DOWNLOAD_FAILED;
+        AssertJUnit.assertTrue(m, m.contains("If you left the game during the download"));
+        AssertJUnit.assertTrue(m, m.contains("offer the download again"));
+        AssertJUnit.assertFalse(m, m.contains("colour"));
+        AssertJUnit.assertEquals("Download Stopped", AssetsDownloader.ASSETS_DOWNLOAD_FAILED_TITLE);
+    }
 }

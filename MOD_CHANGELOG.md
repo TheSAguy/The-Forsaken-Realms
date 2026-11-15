@@ -14264,6 +14264,32 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 1038: the Android asset download says keep the game on screen, and says so when it stops (2026-11-14)
+
+From the checked log review `C:\CLAUDE\PROJECTS\TFR1\notes\logs-1114c.md`, finding P3-34: a player's 1.29 asset
+download (430 MB, 7 to 10 minutes on a slow line) died when they left the app: `onPause`, 5 s later `SocketException:
+Software caused connection abort`, `[TFR-Assets] download FAILED`, then a silent restart. To the player the game just
+closed. Round 1008 warned on the APK prompt only.
+
+- **Prompt (`forge-gui-mobile/src/forge/assets/AssetsDownloader.java`, stock, already TFR-edited):** the resource
+  download prompt gains a paragraph, `ASSETS_KEEP_ON_SCREEN`: "Keep the game on screen until the download finishes;
+  leaving it can stop the download." Round 1008's `KEEP_ON_SCREEN` names the installer, so it did not fit.
+- **Failure message:** `downloadAndUnzipLogged` now returns whether the download worked. When it failed, a one-button
+  dialog, "Download Stopped", shows just before the restart: "The download stopped before it finished. If you left the
+  game during the download, Android may have stopped it." then "The game will restart and offer the download again.
+  Keep the game on screen until it finishes." The restart (`exitAnimation(true)`, a relaunch on Android) is unchanged,
+  so the text says "restart" rather than "next time you open the game". New log line: `[TFR-Assets] download-failed
+  message shown; the game restarts and asks again`.
+- **No stamp:** a failed download now skips the `version.txt` stamp outright. Before, a first install whose download
+  failed with no `temp.zip` left behind (a 404 or a refused connection) was stamped, and only the missing-skin check
+  undid it at the next launch; now nothing is stamped, so the retry never depends on that.
+- **Desktop:** unaffected; `checkForUpdates` returns at its top for non-Android, before any of this.
+- **Test:** `forge-gui-mobile/test/forge/assets/AssetsDownloaderInstallerReturnTest.java` gains
+  `assetDownloadAdviceAndFailureMessage` (the two strings and the title). Maven `-o -pl forge-gui-mobile -am test
+  -Dtest=AssetsDownloaderInstallerReturnTest` exits 0, 6/6. Not run on a phone: the dialog showing after a return from
+  the background, and its look, are unverified until the next Android build (no Android build this round; a text
+  change rides the next release APK).
+
 ## Round 1037: the AI no longer skips a priority over Giant Koi (EffectAi's Pump logic on an untargeted Effect) (2026-11-14)
 
 From the checked log review `C:\CLAUDE\PROJECTS\TFR1\notes\logs-1114b.md`, finding P3-32: a player's 1.28 Ooze

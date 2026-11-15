@@ -35,6 +35,15 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 1038 - the Android asset download's keep-on-screen line and failure message (logs-1114c P3-34)
+- `forge-gui-mobile/src/forge/assets/AssetsDownloader.java` (STOCK, already TFR-edited): the resource prompt appends
+  `ASSETS_KEEP_ON_SCREEN`; `downloadAndUnzipLogged` returns a boolean (false on a failed download) and both its calls
+  set a local `downloadFailed`; the `version.txt` stamp block's condition becomes `connectedToInternet &&
+  !downloadFailed`; before the final restart, a failed download prints one `[TFR-Assets]` line and shows a one-button
+  `SOptionPane` ("Download Stopped"). Three new package-private strings. On a merge: if upstream reworks the asset
+  download block, keep the failure flag, the skipped stamp and the dialog before its restart.
+- Test: `forge-gui-mobile/test/forge/assets/AssetsDownloaderInstallerReturnTest.java` gains one test.
+
 ### Round 1037 - EffectAi's Pump logic on an untargeted Effect (one upstream PR draft)
 - `forge-ai/src/main/java/forge/ai/ability/EffectAi.java` (STOCK, identical to upstream `a8695ac23e2` before this
   round): the `AILogic$ Pump` branch of `checkApiLogic` sends an ability that doesn't target (`!sa.usesTargeting()`) to
