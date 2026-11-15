@@ -45,6 +45,14 @@ md` already gets updated after every change.
 - TFR's own files: `test/forge/adventure/world/WorldSaveSafeFileTest.java`, the plane's tips.json key.
 - **On a merge:** draft `C:\CLAUDE\PROJECTS\TFR1\notes\r1040\upstream-pr\` holds the two stock lines; if upstream takes
   them, keep theirs and put back only the `[TFR-Restore]` lines and the tips.json lookup.
+- **Follow-up (Resume after a restore):** `StartScene.java` (STOCK) `extract()` calls `WorldSave.blockSavesAfterRestore()`
+  after an unzip, and after a failed one when `WorldSave.filesWrittenSince` finds files written; its `finally` hides Save
+  while saves are blocked. `WorldSave.java` (STOCK) gains `saveBlockReason`, `getSaveBlockReason()`,
+  `blockSavesAfterRestore()` and `filesWrittenSince()` (all TFR, next to round 183's `saveBlocked`; `writeSave`'s
+  refusal line names the reason). `SettingsScene.java` (STOCK): `restartSaveBlocker` says the reason. New test
+  `WorldSaveRestoreBlockTest`. Draft 0002 in the same folder does the same for upstream with its own
+  `staleAfterRestore` flag (upstream has no save block); if upstream takes it, keep TFR's `saveBlocked` path and drop
+  theirs, or map their flag onto `blockSavesAfterRestore()`.
 
 ### Round 1039 - the version backup waits in a second copy (logs-1114d P3-35)
 - `forge-gui-mobile/src/forge/adventure/world/WorldSave.java` (STOCK): in `backupOnVersionChange()`, after the marker

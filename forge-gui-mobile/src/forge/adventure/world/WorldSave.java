@@ -155,6 +155,8 @@ public class WorldSave {
     /** Round 183: a load failed after touching the live game and the rollback failed too - the in-memory
      *  game is a hybrid of two saves, so nothing may be written until a load or a new game succeeds. */
     private static boolean saveBlocked = false;
+    /** Round 1040 (follow-up): why saving is off, for the log and Settings' restart question; null = a failed load. */
+    private static String saveBlockReason = null;
     /** Round 898. */
     private static final String SAVE_OUT_OF_MEMORY = "The game ran out of memory.\nYour last save is safe, but nothing since it is saved.\nRestart the game soon.";
     private String saveFailure;
@@ -325,6 +327,7 @@ public class WorldSave {
             }
         }
         saveBlocked = true;
+        saveBlockReason = null;
         System.err.println("[TFR-Load] the running game could NOT be restored - saving is OFF until a load or a new game succeeds");
         lastLoadError = (lastLoadError == null ? "" : lastLoadError + "\n\n")
                 + "Your current game could not be restored, so saving is switched off until you load a save or start a new game.";
@@ -519,6 +522,43 @@ public class WorldSave {
     /** TFR round 931 (Fable P2-14): true while a failed load left a half-loaded game that must not be resumed or saved. */
     public static boolean isSaveBlocked() {
         return saveBlocked;
+    }
+
+    /** Round 1040 (follow-up): why saving is off, in a few words; null while it is on. */
+    public static String getSaveBlockReason() {
+        if (!saveBlocked)
+            return null;
+        return saveBlockReason != null ? saveBlockReason : "a failed load could not be rolled back";
+    }
+
+    /**
+     * TFR round 1040 (follow-up): Data > Restore replaced the save files under a game still loaded in memory. Resume went
+     * back to that old game, and its next save or autosave wrote it over the files just restored. The loaded game is
+     * marked stale the way round 183 marks a half-loaded one: Resume and Save hide, every save is refused, and a Load or
+     * a New Game ends it. False when no game was loaded (nothing to drop).
+     */
+    public static boolean blockSavesAfterRestore() {
+        if (!liveGame)
+            return false;
+        saveBlocked = true;
+        saveBlockReason = "the save files were restored from a backup";
+        return true;
+    }
+
+    /**
+     * TFR round 1040 (follow-up): true when a file under dir was written at or after since (a failed restore's unzip
+     * writes file by file, so one that stopped partway may have replaced some saves). File times on some file systems
+     * step by 2 seconds; the caller passes a time with that margin, and a false true only hides Resume.
+     */
+    public static boolean filesWrittenSince(File dir, long since) {
+        File[] files = dir == null ? null : dir.listFiles();
+        if (files == null)
+            return false;
+        for (File f : files) {
+            if (f.isDirectory() ? filesWrittenSince(f, since) : f.lastModified() >= since)
+                return true;
+        }
+        return false;
     }
 
     public static boolean isSafeFile(String name) {
@@ -1036,7 +1076,7 @@ public class WorldSave {
 
     private boolean writeSave(String text, int currentSlot) {
         if (saveBlocked) { // round 183 (E4): the in-memory game is two saves mixed - never write it over a real file
-            System.err.println("[TFR-Save] refused \"" + text + "\": a failed load could not be rolled back -"
+            System.err.println("[TFR-Save] refused \"" + text + "\": " + getSaveBlockReason() + " -"
                     + " load a save or start a new game first");
             return false;
         }

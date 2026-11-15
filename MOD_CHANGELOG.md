@@ -14289,9 +14289,41 @@ Continue right after Data > Restore and the app closed; nothing was lost. Stock 
   "String.equals(Object)" because "name" is null`. After, with this round's classes ahead of the jar: the new notice
   showed, Continue showed at launch, Restore logged `restored forge_261115_085454.adv into ForsakenRealms: 118 files`,
   Continue was gone afterward, and Load of the auto save reached the map.
-- **Not changed (stock, noted):** a restore while a game is loaded leaves Resume on screen with the old world in memory;
-  resuming and saving would write that world over the restored files. Not touched here.
 - **Upstream draft:** `C:\CLAUDE\PROJECTS\TFR1\notes\r1040\upstream-pr\` (the two stock lines and the test, no TFR text).
+
+### Round 1040 (follow-up): a restore under a loaded game no longer lets Resume save the old game over it
+
+The user said "Yes, follow-up" to the gap round 1040 left (stock code). Data > Restore with a game loaded left Resume
+and Save on the start menu; Resume went back to the world from before the restore, and its next save or autosave wrote
+it over the files just restored.
+- **Fix (reuses round 183's save block):** after a restore, `WorldSave.blockSavesAfterRestore()` marks a loaded game
+  stale through the same `saveBlocked` a failed load's rollback uses. So Resume and Save hide (`updateResumeContinue`,
+  `enter`, and Save in `extract()`'s `finally` at once), `writeSave` refuses every save and autosave, and a successful
+  Load or a New Game ends it. With no game loaded it does nothing. Continue was already hidden (round 1040).
+- **A failed restore (my call):** `ZipUtil.unzip` writes file by file, so an `IOException` partway may already have
+  replaced some saves. `WorldSave.filesWrittenSince(<profile>\adventure, start - 2 s)` checks the file times: anything
+  written drops the game as above; nothing written leaves it as it was, Resume included. The 2 s margin is for file
+  systems with 2-second times; a false "written" only hides Resume.
+- **Why the block says so:** `WorldSave.getSaveBlockReason()` ("the save files were restored from a backup", or "a
+  failed load could not be rolled back") goes into `writeSave`'s refusal line and Settings' restart question
+  (`restartSaveBlocker`).
+- **Log:** `[TFR-Restore] restored <zip> into <folder>: N files; loaded world dropped, Resume hidden, saves off until a
+  Load or a New Game` (or `; no world was loaded`); a failure says whether files were written and whether the game was
+  dropped. A refused save: `[TFR-Save] refused "<name>": the save files were restored from a backup - ...`.
+- **Test:** `WorldSaveRestoreBlockTest` (4): no loaded game, nothing dropped; a loaded game is dropped and
+  `save("test", 1)` is refused; a failed load keeps its own reason; `filesWrittenSince` (older, newer, missing, null).
+  Maven `-o -pl forge-gui-mobile -am test -Dtest=WorldSaveRestoreBlockTest,WorldSaveSafeFileTest` exits 0, 6/6
+  (`C:\CLAUDE\PROJECTS\TFR1\notes\r1040\mvn-fu-test.log`).
+- **Agent game (both ways, shots `C:\CLAUDE\PROJECTS\TFR1\notes\r1040\shots\fu-*.png`, logs `forge-fu-before.log` and
+  `forge-fu-after.log` there):** slot 1 loaded, gold raised by console, saved, Escape to the start menu, Data > Restore
+  of `forge_261115_085454.adv` (slot 1 at 238 gold). Before, on the jar: Save and Resume still showed; Resume returned to
+  the 5238-gold world and its save wrote over the restored slot 1. After, with the classes ahead of the jar: only New
+  Game, New Game +, Load, Settings, Data and Exit showed; a bridge save was refused and slot 1 kept the restore's file
+  time; Load of slot 1 showed 238 gold, and Save and Resume came back.
+- **Files:** `StartScene.java`, `WorldSave.java`, `SettingsScene.java` (one line), the new test.
+- **Upstream draft 0002:** `C:\CLAUDE\PROJECTS\TFR1\notes\r1040\upstream-pr\0002-adventure-resume-after-restore.diff`,
+  on top of 0001. Upstream has no save block, so it adds a `staleAfterRestore` flag (checked by `save()`,
+  `autoSaveAsync()`, Resume and Save) and sets it after a failed restore too. Not compiled on upstream's tree.
 
 ## Round 1039: the version backup runs in the copy that plays, not in a second copy told to quit (2026-11-14)
 

@@ -326,17 +326,30 @@ public class StartScene extends UIScene {
     public boolean extract(File source, File target) {
         String title = "", val = "";
         //boolean isError = false;
+        // TFR round 1040 (follow-up): file times step by 2 s on some file systems; a false "written" only hides Resume
+        long restoreStarted = System.currentTimeMillis() - 2000L;
 
         try {
             String files = ZipUtil.unzip(source, target);
             val = Forge.getLocalizer().getMessage("lblFiles") + ":\n" + files;
             // TFR round 1040 (logs-1115 P2-4): a restore used to leave no trace in forge.log
+            // Round 1040 (follow-up): the game still loaded is the one from before the restore - Resume went back to it
+            // and its next save wrote it over the restored files. It is dropped: Resume and Save hide, saves are refused.
+            boolean dropped = WorldSave.blockSavesAfterRestore();
             System.out.println("[TFR-Restore] restored " + source.getName() + " into " + target.getName()
-                    + ": " + (files.split(" \\* ", -1).length - 1) + " files");
+                    + ": " + (files.split(" \\* ", -1).length - 1) + " files; "
+                    + (dropped ? "loaded world dropped, Resume hidden, saves off until a Load or a New Game"
+                               : "no world was loaded"));
         } catch (IOException e) {
             title = Forge.getLocalizer().getMessage("lblError");
             val = e.getMessage();
-            System.err.println("[TFR-Restore] restore of " + source.getName() + " failed: " + e);
+            // Round 1040 (follow-up): the unzip writes file by file, so a failure partway may have replaced some saves;
+            // then the loaded world is dropped as above. One that wrote nothing leaves the game as it was.
+            boolean partial = WorldSave.filesWrittenSince(new File(target, "adventure"), restoreStarted);
+            boolean dropped = partial && WorldSave.blockSavesAfterRestore();
+            System.err.println("[TFR-Restore] restore of " + source.getName() + " failed: " + e + "; "
+                    + (partial ? "some files were written" : "no file was written") + ", "
+                    + (dropped ? "loaded world dropped, Resume hidden" : "the game is as it was"));
             //isError = true;
         } finally {
             Config.instance().getSettingData().lastActiveSave = null;
@@ -344,6 +357,7 @@ public class StartScene extends UIScene {
             // TFR round 1040 (logs-1115 P2-4): Continue stayed on screen with no save to continue, and tapping it threw
             // (the Android app closed). Timer tasks run on the GL thread, so the buttons can change here.
             updateResumeContinue();
+            saveButton.setVisible(saveButton.isVisible() && !WorldSave.isSaveBlocked()); // round 1040 (follow-up)
 
             TextraLabel messageLabel = Controls.newTextraLabel(val);
             messageLabel.setWrap(true);

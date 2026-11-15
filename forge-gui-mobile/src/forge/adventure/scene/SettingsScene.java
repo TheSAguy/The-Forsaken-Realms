@@ -907,7 +907,7 @@ public class SettingsScene extends UIScene {
         if (save == null || save.getWorld() == null || save.getWorld().getData() == null)
             return "";
         if (WorldSave.isSaveBlocked())
-            return "saving is off after a failed load";
+            return "saving is off: " + WorldSave.getSaveBlockReason(); // round 1040 (follow-up): a restore too
         if (TileMapScene.instance().currentMap().isInMap()) {
             PointOfInterest place = TileMapScene.instance().rootPoint;
             return "inside a map (" + (place == null ? "?" : place.getDisplayName()) + ")";
