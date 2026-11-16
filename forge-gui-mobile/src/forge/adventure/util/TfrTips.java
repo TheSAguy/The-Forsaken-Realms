@@ -48,6 +48,15 @@ public final class TfrTips {
     private TfrTips() {
     }
 
+    // Round 1041: every literal } and ] escaped. Desktop Java takes a bare one; Android's ICU regex throws
+    // PatternSyntaxException on the bare } (1.29: every tip text failed there). RegexAndroidSafeTest guards the source.
+    /** A [+Glyph] resource icon. */
+    static final java.util.regex.Pattern GLYPH = java.util.regex.Pattern.compile("(\\[\\+\\w+\\])");
+    /** A {name} the call site left for {@link #fill}. */
+    static final java.util.regex.Pattern FIELD = java.util.regex.Pattern.compile("\\{([\\w.]+)\\}");
+    /** Any [COLOR] / [] markup tag, for the log lines and the width count. */
+    static final java.util.regex.Pattern MARKUP = java.util.regex.Pattern.compile("\\[[^\\]]*\\]");
+
     // ------------------------------------------------------------------ the setting
 
     /** The plane has tips at all (ConfigData.tfrTooltips; stock planes no). */
@@ -195,12 +204,12 @@ public final class TfrTips {
 
     /** Each [+Glyph] drawn in its own colors on the tip's ink. */
     static String ink(String s) {
-        return s.replaceAll("(\\[\\+\\w+])", "[WHITE]$1" + java.util.regex.Matcher.quoteReplacement(INK));
+        return GLYPH.matcher(s).replaceAll("[WHITE]$1" +java.util.regex.Matcher.quoteReplacement(INK));
     }
 
     /** Every {name} the call site left: {@link #number}, or "?" (logged once) when nothing knows it. */
     static String fill(String raw) {
-        java.util.regex.Matcher m = java.util.regex.Pattern.compile("\\{([\\w.]+)}").matcher(raw);
+        java.util.regex.Matcher m = FIELD.matcher(raw);
         StringBuffer out = new StringBuffer();
         while (m.find()) {
             String v = number(m.group(1));
@@ -482,7 +491,7 @@ public final class TfrTips {
             box = build(t);
             hud.addActor(box);
             if (!same)
-                System.out.println("[TFR-Tips] tip " + h.tag + ": " + t.replaceAll("\\[[^\\]]*]", "").replace('\n', ' '));
+                System.out.println("[TFR-Tips] tip " + h.tag + ": " + MARKUP.matcher(t).replaceAll("").replace('\n', ' '));
         }
         if (boxAge >= 0.5f)
             boxAge = 0;
@@ -511,7 +520,7 @@ public final class TfrTips {
                 out.append('\n');
             int len = 0;
             for (String word : para.split(" ")) {
-                int wl = word.replaceAll("\\[[^\\]]*]", "").length();
+                int wl = MARKUP.matcher(word).replaceAll("").length();
                 if (len > 0 && len + 1 + wl > max) {
                     out.append('\n');
                     len = 0;
@@ -567,7 +576,7 @@ public final class TfrTips {
             box = build(t);
             a.getStage().addActor(box);
             if (fresh)
-                System.out.println("[TFR-Tips] tip " + r.tag + ": " + t.replaceAll("\\[[^\\]]*]", "").replace('\n', ' '));
+                System.out.println("[TFR-Tips] tip " + r.tag + ": " + MARKUP.matcher(t).replaceAll("").replace('\n', ' '));
         }
         if (boxAge >= 0.5f)
             boxAge = 0;

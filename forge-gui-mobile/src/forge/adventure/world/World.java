@@ -1728,7 +1728,7 @@ public class World implements Disposable, SaveFileContent {
         data.storeObject("colorNextAttackDay", colorNextAttackDay);
         data.store("openingWaveSent", openingWaveSent); // round 422
         data.store("ngPlusWaveMages", ngPlusWaveMages); // round 425
-        data.store(forge.adventure.util.WarIntro.KEY, warIntroShown); // round 1005
+        forge.adventure.util.WarIntro.store(data, warIntroShown); // round 1005; round 1041 adds WarIntro.RETRIED_KEY
         data.store(forge.adventure.util.MirrorGear.KEY, mirrorGear); // round 1030
         data.store(forge.adventure.util.MirrorGear.NOTICE_KEY, mirrorGearNoticeShown);
         if (history != null) { // round 626

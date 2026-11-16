@@ -35,6 +35,14 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 1041 - TfrTips' regex on Android; The War Begins re-armed (logs-1116 P2-5)
+- `forge-gui-mobile/src/forge/adventure/world/World.java` (STOCK, already TFR-edited): `save` stores round 1005's flag
+  through `WarIntro.store(data, warIntroShown)` (which adds `warIntroRetried`) instead of `data.store(WarIntro.KEY, ...)`.
+  `load` is unchanged (`WarIntro.readState` does the re-arm).
+- TFR's own files: `util/TfrTips.java`, `util/TfrHudTips.java`, `util/WarIntro.java`, `test/.../WarIntroTest.java`,
+  new `test/.../RegexAndroidSafeTest.java` (scans the stock modules' sources too; stock `CardDetailUtil`'s two bare-`]`
+  lines are allow-listed by text, so an upstream edit there shows up as a failure to look at, not a silent pass).
+
 ### Round 1040 - Continue after Data > Restore no longer throws (logs-1115 P2-4; one upstream PR draft)
 - `forge-gui-mobile/src/forge/adventure/world/WorldSave.java` (STOCK): `isSafeFile(String)` returns false for null
   before calling `filenameToSlot` (which does `name.equals(...)`).

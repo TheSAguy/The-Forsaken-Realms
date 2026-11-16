@@ -65,6 +65,42 @@ public class WarIntroTest {
     }
 
     @Test
+    public void androidSpentFlagIsReArmedOnce() throws Exception {
+        SaveFileData spent = new SaveFileData(); // 1.29 on Android: flag set, pages threw
+        spent.store(WarIntro.KEY, true);
+        boolean[] state = WarIntro.readState(roundTrip(spent), true);
+        AssertJUnit.assertFalse("re-armed", state[0]);
+        AssertJUnit.assertTrue("through the old-save path", state[1]);
+        AssertJUnit.assertEquals(Reason.OLD_SAVE, WarIntro.decide(state[0], state[1], 2, 0));
+
+        SaveFileData after = new SaveFileData(); // the next save, after the pages showed
+        WarIntro.store(after, true);
+        state = WarIntro.readState(roundTrip(after), true);
+        AssertJUnit.assertTrue("not a second time", state[0]);
+        AssertJUnit.assertFalse(state[1]);
+    }
+
+    @Test
+    public void desktopReaderIsNotShownTwice() throws Exception {
+        SaveFileData read = new SaveFileData(); // 1.29 on desktop: the pages did show
+        read.store(WarIntro.KEY, true);
+        boolean[] state = WarIntro.readState(roundTrip(read), false);
+        AssertJUnit.assertTrue(state[0]);
+        AssertJUnit.assertFalse(state[1]);
+    }
+
+    @Test
+    public void androidUnshownSaveUnchanged() throws Exception {
+        SaveFileData waiting = new SaveFileData();
+        waiting.store(WarIntro.KEY, false);
+        boolean[] state = WarIntro.readState(roundTrip(waiting), true);
+        AssertJUnit.assertFalse(state[0]);
+        AssertJUnit.assertFalse("waits for its attack", state[1]);
+        state = WarIntro.readState(roundTrip(new SaveFileData()), true);
+        AssertJUnit.assertTrue("a save from before 1.29 is still old", state[1]);
+    }
+
+    @Test
     public void saveWithoutKeyIsOld() throws Exception {
         boolean[] state = WarIntro.readState(roundTrip(new SaveFileData()));
         AssertJUnit.assertFalse(state[0]);

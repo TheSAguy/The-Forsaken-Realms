@@ -49,20 +49,50 @@ public final class WarIntro {
     /** The saved key. */
     public static final String KEY = "warIntroShown";
 
-    /** What a save says: {shown, oldSave}. A save without the key is from before the round: not shown, old. */
+    /**
+     * Round 1041: written beside {@link #KEY} by every build that can show the pages on Android. A save without it was
+     * written by 1.29 or a build before round 1041, where TfrTips.fill threw on Android (ICU regex) after the flag was
+     * already set: the pages never showed.
+     */
+    public static final String RETRIED_KEY = "warIntroRetried";
+
+    /** What a save says: {shown, oldSave}, on this platform. */
     public static boolean[] readState(SaveFileData data) {
+        return readState(data, forge.gui.GuiBase.isAndroid());
+    }
+
+    /**
+     * What a save says: {shown, oldSave}. A save without the key is from before the round: not shown, old. Round 1041:
+     * on Android, a save that has the pages as shown but no {@link #RETRIED_KEY} spent them on the regex crash, so they
+     * are armed again through the old-save path (once: the next save writes the key). Desktop never failed, so a desktop
+     * player who read them is not shown them twice.
+     */
+    public static boolean[] readState(SaveFileData data, boolean android) {
         if (data == null || !data.containsKey(KEY))
             return new boolean[]{false, true};
-        return new boolean[]{data.readBool(KEY), false};
+        boolean shown = data.readBool(KEY);
+        if (shown && android && !data.containsKey(RETRIED_KEY)) {
+            System.out.println("[TFR-WarIntro] re-armed: this save marked The War Begins shown under the Android regex crash (1.29) - showing it once");
+            return new boolean[]{false, true};
+        }
+        return new boolean[]{shown, false};
+    }
+
+    /** World.save: the flag, and the round-1041 mark that this build's pages work everywhere. */
+    public static void store(SaveFileData data, boolean shown) {
+        data.store(KEY, shown);
+        data.store(RETRIED_KEY, true);
     }
 
     // ------------------------------------------------------------------ the world-map check
 
     private static int frame;
+    /** Round 1041: the pages threw this launch; stop looking until the next one (the flag stays armed). */
+    private static boolean failed;
 
     /** WorldStage.onActing, every frame past its dialog and pause guards; looks twice a second. */
     public static void check(World world) {
-        if (world == null || world.isWarIntroShown() || !Config.instance().getConfigData().territoryControlEnabled)
+        if (world == null || failed || world.isWarIntroShown() || !Config.instance().getConfigData().territoryControlEnabled)
             return;
         if (++frame % 30 != 0)
             return;
@@ -77,14 +107,23 @@ public final class WarIntro {
         }
         if (reason == Reason.NONE)
             return;
+        String[] attack = firstAttack(underAttack);
+        // round 1041: the pages first - a text that throws leaves the intro armed (1.29 set the flag, then threw on Android)
+        String[][] pages;
+        try {
+            pages = pages(reason == Reason.FIRST_ATTACK ? attack : null);
+        } catch (RuntimeException e) {
+            failed = true; // armed for the next launch, quiet for this one
+            System.err.println("[TFR-WarIntro] pages failed - left armed for the next launch: " + e);
+            return;
+        }
         world.setWarIntroShown(true);
         world.setWarIntroOldSave(false);
-        String[] attack = firstAttack(underAttack);
         if (reason == Reason.FIRST_ATTACK)
             System.out.println("[TFR-WarIntro] shown (first attack: " + attack[0] + " -> " + attack[1] + ")");
         else
             System.out.println("[TFR-WarIntro] shown on load (save from before 1.29, " + held + " town(s) held)");
-        WorldStage.getInstance().showWarIntro(pages(reason == Reason.FIRST_ATTACK ? attack : null));
+        WorldStage.getInstance().showWarIntro(pages);
     }
 
     /** {color, town} of the first mage marching on one of the player's towns, or {"?", "?"}. */

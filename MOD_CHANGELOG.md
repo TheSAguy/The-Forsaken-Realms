@@ -14264,6 +14264,53 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 1041: The War Begins on Android - TfrTips' regex no longer throws, and the saves 1.29 spent see it once (2026-11-16)
+
+From the log review `C:\CLAUDE\PROJECTS\TFR1\notes\logs-1116.md`, finding P2-5. `TfrTips.fill` compiled
+`"\\{([\\w.]+)}"`: desktop Java reads the bare `}` as a literal, Android's ICU regex throws `PatternSyntaxException ...
+near index 11`. Every `TfrTips.text()` / `fill` on Android threw, so 1.29's War Begins pages never showed on Android (5
+of 5 installs that loaded a pre-1.29 save), and World Standings' "The War" closed the app (`WarIntro.reopen` <-
+`WorldStandingsScene:60`). The same path served the no-progress draw notice (`DuelScene:563`), round 1040's
+`versionBackup.done` notice (caught: Android fell back to stock's text) and the Custom difficulty reset.
+- **Fix:** every literal `}` and `]` in TfrTips' patterns escaped and hoisted to `static final Pattern`s: `FIELD`
+  (`\{([\w.]+)\}`, fill), `GLYPH` (`(\[\+\w+\])`, ink) and `MARKUP` (`\[[^\]]*\]`, the tip log lines and the width
+  count, three call sites). `TfrHudTips`' shard-cost strip gets the same (`SHARD_COST`, `\d+ \[\+Shards\]\s*$`).
+- **Audit:** every regex string literal (`Pattern.compile`, `replaceAll`, `replaceFirst`, `split`, `matches`) in the
+  modules an Android build runs (`forge-gui-mobile`, `forge-gui`, `forge-core`, `forge-game`, `forge-ai`,
+  `forge-gui-android`) and every `cardText` / `*regex*` / `*pattern*` string in the adventure JSON (4,564). Found only
+  the six TFR lines above, plus stock `CardDetailUtil.java:316/318` (a bare `]` in the level-up text pattern, which
+  upstream ships to Android as it is; ICU's error is the bare `}`, so it is left alone and allow-listed). No
+  `\p{java...}` or other Java-only class; `\p{M}` is fine in ICU. Patterns built from variables (`CardUtil`'s
+  `cardText`) are data, covered by the JSON check.
+- **Guard test `RegexAndroidSafeTest`:** scans those modules' main sources for regex string literals and fails on a
+  bare `}` outside a `{n,m}` quantifier or a bare `]` outside a character class (`\Q..\E`, `\p{..}` and a leading `]`
+  in a class understood). It checks itself on the 1.29 line (`\\{([\\w.]+)}` fails, the escaped form passes) and
+  refuses to pass if it found fewer than 100 literals (a wrong working directory).
+- **`WarIntro.check`:** builds the pages before it sets `warIntroShown`, so a text that throws leaves the intro armed;
+  a throw logs `[TFR-WarIntro] pages failed - left armed for the next launch` once and stops looking until the next
+  launch (no retry every half second).
+- **Re-arm (my call: Android only):** `WarIntro.RETRIED_KEY` (`warIntroRetried`) is written beside `warIntroShown` by
+  every save (`WarIntro.store`, World.save's one line). On load, a save with `warIntroShown=true` and no
+  `warIntroRetried` was written by 1.29 or a build before this round; on Android (`GuiBase.isAndroid()`) its flag was
+  spent on the throw, so `readState` returns not shown + old save and logs `[TFR-WarIntro] re-armed: ...`: the old-save
+  path shows the pages once (or waits for the first attack when the save holds no town), and the next save writes the
+  key. On desktop the pages always worked, so a desktop player who read them is never shown them twice. Saves without
+  either key load as before (round 1005's old-save path).
+- **Tests:** `WarIntroTest` +3 (Android re-arm once, then not after a save; desktop not re-armed; an unshown or
+  pre-1.29 save unchanged). Maven `-o -pl forge-gui-mobile -am test -Dtest=RegexAndroidSafeTest,WarIntroTest,
+  TfrTipsTest,TfrHudTest` exits 0, 30/30.
+- **Android (LDPlayer instance 1; shots `C:\CLAUDE\PROJECTS\TFR1\notes\r1041\shots\`, logcats beside them):** before,
+  on the shipped 1.29 APK: loading the pre-1.29 slot "rc save test" (20 towns) logged `shown on load` then the swallowed
+  `PatternSyntaxException ... \{([\w.]+)}` at `TfrTips.fill:203`, no pages (`b03`); saved to slot 8 "r1041 spent129";
+  "The War" closed the app (`b05`, `[TFR-Session] end (crash) ... errors=1`). After, on a test APK built from this
+  round's tree in `C:\TFR-build` (with its own assets.zip): slot 8 logged `re-armed` and showed all five pages, numbers
+  filled (`a01`-`a05`); "The War" opened (`a06`); saved to slot 8 and loaded again: no re-arm, no pages (`a07`); the
+  untouched pre-1.29 slot 7 showed them on load (`a08`). The emulator was put back on the shipped 1.29 pair after.
+- **Desktop (agent game, classes ahead of the jar):** a pre-1.29 save (slot 28) logged `shown on load ... 1 town(s)
+  held` and the pages drew (`d02`); no regex error.
+- **Files:** `TfrTips.java`, `TfrHudTips.java`, `WarIntro.java`, `World.java` (stock, one line), `WarIntroTest.java`,
+  the new `RegexAndroidSafeTest.java`.
+
 ## Round 1040: Continue after Data > Restore no longer crashes the game (2026-11-15)
 
 From the log review `C:\CLAUDE\PROJECTS\TFR1\notes\logs-1115.md`, finding P2-4. A Fairphone player on 1.29 tapped

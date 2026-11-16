@@ -12,6 +12,9 @@ public final class TfrHudTips {
     private TfrHudTips() {
     }
 
+    /** An item description's trailing "5 [+Shards]" cost; round 1041: ] escaped for Android's ICU regex. */
+    private static final java.util.regex.Pattern SHARD_COST = java.util.regex.Pattern.compile("\\d+ \\[\\+Shards\\]\\s*$");
+
     /** GameHUD's constructor: every HUD part with a tip. A null part (a plane without it) is skipped. */
     public static void register(Actor miniMap, Actor clock, Actor speedUp, Actor waitBox, Actor resources, Actor ascendance,
                                 Actor avatar, Actor gold, Actor shards, Actor life, Actor treasureMaps, Actor info, Actor log,
@@ -49,7 +52,7 @@ public final class TfrHudTips {
             return;
         TfrTips.region(null, button, "hud.ability", () -> {
             // the item's own text without its trailing "5 [+Shards]" cost (the tip says the cost, icon first)
-            String desc = item.getDescription() == null ? "" : item.getDescription().replaceAll("\\d+ \\[\\+Shards]\\s*$", "").trim();
+            String desc = item.getDescription() == null ? "" : SHARD_COST.matcher(item.getDescription()).replaceAll("").trim();
             String where = item.usableOnWorldMap && item.usableInPoi ? TfrTips.text("hud.abilityAnywhere")
                     : item.usableInPoi ? TfrTips.text("hud.abilityInPlaces") : TfrTips.text("hud.abilityWorldMap");
             return TfrTips.text("hud.ability", "name", item.getDisplayName(), "effect", desc.isEmpty() ? "" : "\n" + desc,
