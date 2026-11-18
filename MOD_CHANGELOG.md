@@ -14264,6 +14264,30 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 1042: the Magma Ogre loses a stray "for" from its death and idles with a calm hammer bob (2026-11-18)
+
+This is an Art main thread round. The user, with a VS-screen shot of "Master Magma Ogre": "Can you confirm the animation
+for this guy is correct. It might be off just a little." Then: "Yes, install both". The review is in
+`C:\CLAUDE\PROJECTS\ART\notes\magma_ogre_check\findings.md`, and the previews and scripts are in its `fix\` and
+`fix\idle\` folders.
+
+- **Death:** the last frame (cell 552,664) carried the dark text "for", left over from the rip, floating above the
+  corpse.
+  - On the map it was a 2-4 px smudge over the body, on the frame that stays up while the reward is handed out.
+  - `magma_ogre.png` now has that background box, (641,685)-(677,707), cleared. No other pixel changed.
+- **Idle:** it was 0-1-2-3-4-5-4-3-2-1, which swapped between a wide front stance (frames 0, 4 and 5) and a forward
+  lean (1-3). That swap threw the bright hammer head up to 11 px across the body at game size.
+  - Idle is now 1-1-2-3-3-2: the lean only, with holds. The hammer bobs about 3 px every 0.6 s, and the feet stay
+    within about 1 px.
+  - This is atlas data only. Walk, Attack, Hit, Death's frame order and the Avatar are unchanged, so there was no
+    avatar bake.
+- **Checked and left alone:**
+  - The VS-screen portrait: already head and shoulders, on its own orange background.
+  - The unused sheet row y=214: just Idle reversed.
+  - Attack frames 5-6: a borrowed pose with no hammer, but enemies never play Attack on the map.
+- **Files:** `forge-gui/res/adventure/The Forsaken Realms/sprites/enemy/tfr/magma_ogre.png` and `magma_ogre.atlas`.
+- **TFR 2:** gets an identical-blob port on branch `magma-ogre-fix`.
+
 ## Round 1041: The War Begins on Android - TfrTips' regex no longer throws, and the saves 1.29 spent see it once (2026-11-16)
 
 From the log review `C:\CLAUDE\PROJECTS\TFR1\notes\logs-1116.md`, finding P2-5. `TfrTips.fill` compiled

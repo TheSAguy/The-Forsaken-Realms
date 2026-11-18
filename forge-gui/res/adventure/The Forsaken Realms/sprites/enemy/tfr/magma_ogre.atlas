@@ -7,7 +7,7 @@ Avatar
   xy: 0, 0
   size: 64, 64
 Idle
-  xy: 0, 64
+  xy: 138, 64
   size: 138, 150
 Idle
   xy: 138, 64
@@ -19,22 +19,10 @@ Idle
   xy: 414, 64
   size: 138, 150
 Idle
-  xy: 552, 64
-  size: 138, 150
-Idle
-  xy: 690, 64
-  size: 138, 150
-Idle
-  xy: 552, 64
-  size: 138, 150
-Idle
   xy: 414, 64
   size: 138, 150
 Idle
   xy: 276, 64
-  size: 138, 150
-Idle
-  xy: 138, 64
   size: 138, 150
 Walk
   xy: 414, 64
