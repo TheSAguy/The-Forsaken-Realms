@@ -29,7 +29,7 @@ Forge 2.0.17-SNAPSHOT; round 769's R1-R4 still keep TFR's synchronous auto save,
 entry; bosses keep the player's AI setting through `bossAiFollowsSetting`; the TFR AI rules and their stock hooks, round
 1018); next merge from upstream after `a8695ac23e2` (its first commit is `3cfec26d1ed`, #12856, edition fixes);
 BASE_INSTALL is that daily, so packages need no `--allow-base-mismatch`. Next version: 1.30 / 13000. Next free round:
-1043. The agent profile's window is
+1045. The agent profile's window is
 1280x720 - at 3840x2160 it covered the screen, got minimized, and a minimized game stops (the bridge times out, shots
 come back 1x1). Agent games keep their own LOCALAPPDATA cache (round 860). Log sharing (round 698) posts to Discord
 through a webhook kept OUT of git in `C:\TFR\secrets\discord_log_webhook.txt` - never commit it; the packager and
