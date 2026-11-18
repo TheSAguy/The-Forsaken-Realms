@@ -632,6 +632,7 @@ public class WorldSave {
                     throw new IOException("Could not create backup directory: " + backupDir);
                 if (!hasSaveFiles()) {
                     FileUtil.writeFile(marker, build);
+                    System.out.println("[TFR-Backup] nothing to back up: no saves yet (marker set to " + build + ")"); // TFR round 1043
                     return;
                 }
                 ZipUtil.zip(new File(ForgeConstants.USER_ADVENTURE_DIR), backupDir, backup.getName());
@@ -650,7 +651,7 @@ public class WorldSave {
                 e.printStackTrace();
             }
             boolean result = backedUp;
-            System.out.println("[TFR-Backup] " + (backedUp ? "done: " + backup.getName() + ", " + (backup.length() / 1024) + " KB" : "failed or nothing to back up"));
+            System.out.println("[TFR-Backup] " + (backedUp ? "done: " + backup.getName() + ", " + (backup.length() / 1024) + " KB" : "failed"));
             Gdx.app.postRunnable(() -> StartScene.instance().showVersionBackupResult(result));
         });
     }

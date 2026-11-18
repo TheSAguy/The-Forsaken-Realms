@@ -14264,6 +14264,47 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 1043: the AI no longer drops a priority over a face-down spell on the stack; two clearer log lines (2026-11-18)
+
+From the log reviews `C:\CLAUDE\PROJECTS\TFR1\notes\logs-1118.md` (P3-38) and `C:\CLAUDE\PROJECTS\TFR1\notes\logs-1116.md`
+(its small optional items). The user: "Let's do these".
+
+- **P3-38 cause (stock):** a face-down cast (Morph, Disguise) is a plain `Spell` with no API
+  (`CardFactoryUtil.abilityCastFaceDown`). When the AI weighed a copy spell (Twincast) against one on the stack,
+  `CopySpellAbilityAi.checkApiLogic:82` asked `SpellApiToAi.Converter.get(top.getApi())`. `get(null)` found no class,
+  picked `CannotPlayAi`, then threw an NPE when it cached it (`EnumMap.put(null, ...)`, `SpellApiToAi.java:240`). The
+  throw was caught, but it threw away the AI's choice for that priority (4fb442f9's 1.29 log, Water Elemental (Master)
+  against a Doppelganger).
+- **Fix (`forge-ai/src/main/java/forge/ai/SpellApiToAi.java`, stock, 1 line):** `get(ApiType)` skips the cache when
+  the API is null, so a no-API spell gets `CannotPlayAi` and the AI declines to copy it. **Why there and not at the call
+  site (my call):** it covers both null-API callers, `CopySpellAbilityAi:82` and `:133` (a `TriggeredSpellAbility`
+  copy can be a face-down spell too). It's a 2017 method in a file TFR already edits (map lines), so it adds no new
+  stock file to merge, while `CopySpellAbilityAi` is upstream-identical and was edited upstream in 2025. The other
+  `Converter.get(` calls (36 in `forge-ai` main code by Grep; the code graph lists none for the enum's `get`) pass a `SpellAbility` (whose overload still throws its own
+  `InvalidParameterException` on a null API, unchanged), a constant, or `AiController.confirmAction`'s API, which it
+  null-checks first. `get(null)` still prints stock's `No AI assigned for API: null` line, once per ask.
+- **Test `forge-gui-desktop/src/test/java/forge/ai/ability/CopySpellNoApiTest.java` (new, 2 tests):**
+  `get(null)` is `CannotPlayAi` twice over, and a real API is still cached. An AI Twincast declines the opponent's
+  face-down Exalted Angel on the stack (its Morph spell's API asserted null). **Before the fix, both fail** with the
+  log's NPE (`SpellApiToAi.java:240` <- `CopySpellAbilityAi.java:82`). After it, 2/2 pass.
+- **`[TFR-Backup] nothing to back up` (logs-1116):** on the no-saves path (a fresh install) `backupOnVersionChange`
+  set the marker and returned with no line after `zipping`, so the log looked cut off. It now logs `[TFR-Backup]
+  nothing to back up: no saves yet (marker set to <build>)`. The closing line's other branch says just `failed` (it
+  can no longer mean "nothing to back up"). `WorldSave.java` is stock; the line sits in upstream #12822's branch.
+- **War Begins re-arm (logs-1116 / round 1041):** a 1.29 Android save that round 1041 re-armed logged `shown on load
+  (save from before 1.29, N town(s) held)`, though it isn't from before 1.29. `WarIntro.readState` now remembers the
+  re-arm for the loaded save (reset on every load and by `war old`). The line reads `shown on load (re-armed: 1.29
+  marked it shown without the pages, N town(s) held)`; with no town, `re-armed save (1.29 marked it shown without the
+  pages) holds no town - waiting for the first attack`. A save really from before 1.29 logs exactly as before, so the
+  greps in the log reviews (`shown on load (`, `save from before 1.29`, `re-armed:`) still match. `WarIntroTest` +1.
+- **Maven:** `-o -pl forge-gui-desktop,forge-gui-mobile -am test -Dtest=CopySpellNoApiTest,WarIntroTest,
+  EffectAiPumpUntargetedTest,RecruitAiTest,ChangeZoneAiTest` exits 0, 25/25 (desktop 15, mobile 10). The run compiled
+  round 1044's uncommitted `forge-ai` edits too (shared tree). `TfrAiPuzzleTest` not run: the change only touches a
+  null key that threw before. Not seen in a duel or a live log yet.
+- Upstream PR draft (the user posts it): `C:\CLAUDE\PROJECTS\TFR1\notes\r1043\upstream-pr\`.
+- **Files:** `SpellApiToAi.java` (stock, 1 line), `WorldSave.java` (stock, 1 line + 1 word), `WarIntro.java`,
+  `WarIntroTest.java`, the new `CopySpellNoApiTest.java`.
+
 ## Round 1042: the Magma Ogre loses a stray "for" from its death and idles with a calm hammer bob (2026-11-18)
 
 This is an Art main thread round. The user, with a VS-screen shot of "Master Magma Ogre": "Can you confirm the animation

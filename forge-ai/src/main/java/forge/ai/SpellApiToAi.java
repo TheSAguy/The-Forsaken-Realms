@@ -237,7 +237,8 @@ public enum SpellApiToAi {
                 clz = CannotPlayAi.class;
             }
             result = ReflectionUtil.makeDefaultInstanceOf(clz);
-            apiToInstance.put(api, result);
+            if (api != null) // a spell with no API (a face-down cast) gets CannotPlayAi; an EnumMap takes no null key
+                apiToInstance.put(api, result);
         }
         return result;
     }

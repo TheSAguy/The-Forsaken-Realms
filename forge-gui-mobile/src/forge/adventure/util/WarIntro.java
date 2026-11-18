@@ -68,14 +68,27 @@ public final class WarIntro {
      * player who read them is not shown them twice.
      */
     public static boolean[] readState(SaveFileData data, boolean android) {
+        rearmed = false;
         if (data == null || !data.containsKey(KEY))
             return new boolean[]{false, true};
         boolean shown = data.readBool(KEY);
         if (shown && android && !data.containsKey(RETRIED_KEY)) {
             System.out.println("[TFR-WarIntro] re-armed: this save marked The War Begins shown under the Android regex crash (1.29) - showing it once");
+            rearmed = true;
             return new boolean[]{false, true};
         }
         return new boolean[]{shown, false};
+    }
+
+    /**
+     * Round 1043: the loaded save is on the old-save path because {@link #readState} re-armed it (a 1.29 Android save),
+     * not because it is from before 1.29. Set by every load; only the old-save log lines read it.
+     */
+    private static boolean rearmed;
+
+    /** Why the loaded save is on the old-save path, for the [TFR-WarIntro] lines. */
+    static String oldSaveLabel() {
+        return rearmed ? "re-armed: 1.29 marked it shown without the pages" : "save from before 1.29";
     }
 
     /** World.save: the flag, and the round-1041 mark that this build's pages work everywhere. */
@@ -102,7 +115,8 @@ public final class WarIntro {
         Reason reason = decide(false, oldSave, held, underAttack.size());
         if (oldSave && reason == Reason.NONE) {
             world.setWarIntroOldSave(false); // an old save with no town yet waits for its first real attack
-            System.out.println("[TFR-WarIntro] save from before 1.29 holds no town - waiting for the first attack");
+            System.out.println("[TFR-WarIntro] " + (rearmed ? "re-armed save (1.29 marked it shown without the pages)"
+                    : "save from before 1.29") + " holds no town - waiting for the first attack");
             return;
         }
         if (reason == Reason.NONE)
@@ -122,7 +136,7 @@ public final class WarIntro {
         if (reason == Reason.FIRST_ATTACK)
             System.out.println("[TFR-WarIntro] shown (first attack: " + attack[0] + " -> " + attack[1] + ")");
         else
-            System.out.println("[TFR-WarIntro] shown on load (save from before 1.29, " + held + " town(s) held)");
+            System.out.println("[TFR-WarIntro] shown on load (" + oldSaveLabel() + ", " + held + " town(s) held)");
         WorldStage.getInstance().showWarIntro(pages);
     }
 
@@ -229,6 +243,7 @@ public final class WarIntro {
             case "old":
                 world.setWarIntroShown(false);
                 world.setWarIntroOldSave(true);
+                rearmed = false;
                 System.out.println("[TFR-WarIntro] console: playing a save from before 1.29");
                 return "War intro: old-save check armed";
             case "attack": { // war attack <color>: an Apprentice from that color's castle at the player's first town

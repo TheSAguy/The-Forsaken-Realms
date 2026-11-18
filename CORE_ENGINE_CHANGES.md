@@ -35,6 +35,19 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 1043 - a null API no longer throws in SpellApiToAi; two TFR log lines (logs-1118 P3-38, logs-1116)
+- `forge-ai/src/main/java/forge/ai/SpellApiToAi.java` (STOCK, already TFR-edited for map lines): in `get(ApiType)`,
+  `apiToInstance.put(api, result)` runs only when `api != null`, so a spell with no API (a face-down cast) gets a
+  fresh `CannotPlayAi` instead of an NPE from the `EnumMap`. One line in a 2017 method; it covers
+  `CopySpellAbilityAi:82` and `:133`, so `CopySpellAbilityAi` stays upstream-identical. Upstream draft
+  `C:\CLAUDE\PROJECTS\TFR1\notes\r1043\upstream-pr\`; if upstream takes it (or guards the call site instead), take
+  theirs and drop ours.
+- `forge-gui-mobile/src/forge/adventure/world/WorldSave.java` (STOCK): in upstream #12822's `backupOnVersionChange`, the
+  no-saves branch logs `[TFR-Backup] nothing to back up: no saves yet (...)` before its `return`; TFR's closing
+  `[TFR-Backup]` line (round 1031) says `failed` instead of `failed or nothing to back up`.
+- TFR's own files: `util/WarIntro.java` (the re-armed label), `test/.../WarIntroTest.java`, new
+  `forge-gui-desktop/src/test/java/forge/ai/ability/CopySpellNoApiTest.java`.
+
 ### Round 1041 - TfrTips' regex on Android; The War Begins re-armed (logs-1116 P2-5)
 - `forge-gui-mobile/src/forge/adventure/world/World.java` (STOCK, already TFR-edited): `save` stores round 1005's flag
   through `WarIntro.store(data, warIntroShown)` (which adds `warIntroRetried`) instead of `data.store(WarIntro.KEY, ...)`.

@@ -80,6 +80,21 @@ public class WarIntroTest {
         AssertJUnit.assertFalse(state[1]);
     }
 
+    /** Round 1043: the log says why a save is on the old-save path - re-armed, or really from before 1.29. */
+    @Test
+    public void reArmedSaveIsLoggedApartFromAnOldOne() throws Exception {
+        SaveFileData spent = new SaveFileData();
+        spent.store(WarIntro.KEY, true);
+        WarIntro.readState(roundTrip(spent), true);
+        AssertJUnit.assertEquals("re-armed: 1.29 marked it shown without the pages", WarIntro.oldSaveLabel());
+
+        WarIntro.readState(roundTrip(new SaveFileData()), true); // the next load: a save from before 1.29
+        AssertJUnit.assertEquals("save from before 1.29", WarIntro.oldSaveLabel());
+
+        WarIntro.readState(roundTrip(spent), false); // desktop never re-arms
+        AssertJUnit.assertEquals("save from before 1.29", WarIntro.oldSaveLabel());
+    }
+
     @Test
     public void desktopReaderIsNotShownTwice() throws Exception {
         SaveFileData read = new SaveFileData(); // 1.29 on desktop: the pages did show
