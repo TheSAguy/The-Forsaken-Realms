@@ -238,10 +238,13 @@ public final class SessionLog {
             }
             int turns = -1, mulligans = -1;
             String life = "?", enemyLife = "?";
+            forge.game.player.GameLossReason lossReason = null; // round 1047: the loser's, read below
             if (game != null) {
                 turns = game.getPhaseHandler().getTurn();
                 // registered players, not getPlayers(): the loser has already left getPlayers() (round 802)
                 for (Player p : game.getRegisteredPlayers()) {
+                    if (p.getOutcome() != null && p.getOutcome().lossState != null && lossReason == null)
+                        lossReason = p.getOutcome().lossState;
                     String l = p.getLife() + "/" + p.getStartingLife();
                     if (p.getRegisteredPlayer() == human) {
                         life = l;
@@ -255,9 +258,13 @@ public final class SessionLog {
                 for (GameOutcome go : match.getOutcomes())
                     last = go;
                 turns = last.getLastTurnNumber();
-                for (Map.Entry<RegisteredPlayer, PlayerStatistics> e : last)
+                for (Map.Entry<RegisteredPlayer, PlayerStatistics> e : last) {
                     if (e.getKey() == human)
                         mulligans = e.getValue().getMulliganCount();
+                    forge.game.player.PlayerOutcome po = e.getValue().getOutcome();
+                    if (po != null && po.lossState != null && lossReason == null)
+                        lossReason = po.lossState;
+                }
                 // The usual case: HostedMatch has already let go of the game. The match screen keeps its view.
                 GameView view = MatchController.instance.getGameView();
                 String humanName = human == null || human.getPlayer() == null ? null : human.getPlayer().getName();
@@ -274,7 +281,8 @@ public final class SessionLog {
                     + "\" boss=" + (enemy != null && enemy.getData().boss) + " arena=" + arena + " event=" + event
                     + (watched ? " watched=true" : "") + " where=" + where() + " day=" + day() + " turns=" + turns
                     + " life=" + life + " enemyLife=" + enemyLife + " mulligans=" + mulligans + " secs=" + secs
-                    + aiFields(enemy, game, match, human, aiTimeouts)); // round 1020: new fields go at the end only
+                    + aiFields(enemy, game, match, human, aiTimeouts) // round 1020: new fields go at the end only
+                    + " reason=" + (drawn ? "other" : lossReason(lossReason))); // round 1047: how the loser lost
         } catch (Exception e) {
             System.out.println("[TFR-Duel] line failed: " + e);
         }
@@ -306,6 +314,23 @@ public final class SessionLog {
         return " difficulty=" + token(difficulty) + " ai=" + (profiles.isEmpty() ? "?" : token(String.join("+", profiles)))
                 + " mc=" + mcMode(game) + " aiRules=" + token(forge.ai.tfr.TfrAiRules.version())
                 + " aiTimeouts=" + aiTimeouts + " enemyTier=" + token(tier);
+    }
+
+    /**
+     * Round 1047: the loser's GameLossReason as one word - life, conceded, decked, poison, or other (a spell's own loss,
+     * commander damage, a draw); "?" when the game kept no outcome. Concessions were invisible before: a duel conceded at
+     * full life read like any other loss (the new-player study, notes\newplayer-1118.md).
+     */
+    static String lossReason(forge.game.player.GameLossReason r) {
+        if (r == null)
+            return "?";
+        switch (r) {
+            case LifeReachedZero: return "life";
+            case Conceded:        return "conceded";
+            case Milled:          return "decked";
+            case Poisoned:        return "poison";
+            default:              return "other";
+        }
     }
 
     /** HostedMatch.startGame's choice: off when the preference is off, else lite on a phone or tablet and max on a PC. */

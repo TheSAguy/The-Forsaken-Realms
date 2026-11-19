@@ -35,6 +35,19 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 1047 - "How a Duel Works" before a new save's first duel; reason= on [TFR-Duel] (the new-player study)
+- `forge-gui-mobile/src/forge/adventure/stage/WorldStage.java` (STOCK, already TFR-edited): the world-map collision's
+  `startPause(attackDuration, () -> { ... })` body is now the third argument of `DuelPrimer.beforeDuel(this, foe name,
+  () -> { ... })`; the body itself is unchanged. A merge that rewrites the fight start keeps that one wrapping call.
+- `forge-gui-mobile/src/forge/adventure/stage/MapStage.java` (STOCK, already TFR-edited): `beginDuel`'s pause callback,
+  after the `started` guard, wraps the rest of its body the same way (re-indented, otherwise unchanged).
+- `forge-gui-mobile/src/forge/adventure/scene/SettingsScene.java` (STOCK, already TFR-edited): a "Duel help" row with a
+  How a Duel Works button before the Support row, only when `DuelPrimer.available()`.
+- `forge-gui-mobile/src/forge/adventure/stage/ConsoleCommandInterpreter.java` (STOCK, already TFR-edited): the `primer`
+  command beside `war`.
+- TFR's own files: new `util/DuelPrimer.java`, `util/SessionLog.java` (`reason=`, `lossReason`), `config tables/tips.json`
+  (`duel.*`), `dev-tools/agent/tfr_agent.py` (`page_pick`), new `test/.../DuelPrimerTest.java`.
+
 ### Round 1046 - no ante in week 1 on Easy and Normal (the new-player study)
 - `forge-gui-mobile/src/forge/adventure/scene/DuelScene.java` (STOCK, already TFR-edited): the `rules.setPlayForAnte(...)`
   line in the match setup became a local `playForAnte` (the same stock condition), turned off when

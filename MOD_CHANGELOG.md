@@ -14264,6 +14264,102 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 1047: "How a Duel Works" before a new save's first duel, and how each duel was lost (2026-11-18)
+
+From the new-player study, `C:\CLAUDE\PROJECTS\TFR1\notes\newplayer-1118.md` (proposal 2, picked by the user). New
+players get no duel help at all on Android: TFR's hover tips need a mouse (`TfrTips`, `!GuiBase.isAndroid()`), and stock
+Forge's tutorial sits behind the Classic menu that TFR locks. Stock End Turn also skips declaring attackers. The players
+who left had lost or conceded early duels at full life, and the logs could not tell a concession from a loss.
+
+Files:
+- new `forge-gui-mobile/src/forge/adventure/util/DuelPrimer.java`;
+- `stage/WorldStage.java` and `stage/MapStage.java` (stock: the fight starts);
+- `scene/SettingsScene.java` (stock);
+- `stage/ConsoleCommandInterpreter.java` (stock);
+- `util/SessionLog.java`;
+- `config tables/tips.json`;
+- `dev-tools/agent/tfr_agent.py`;
+- new `forge-gui-mobile/test/forge/adventure/util/DuelPrimerTest.java`.
+
+- **The pages:** five, in `tips.json` `duel.*`, built like The War Begins (`WarIntro.fill`: Back / Next / Understood).
+  1. **How a Duel Works:** life totals, a land a turn, Auto pays the mana, press and hold to read a card.
+  2. **Your Turn:** OK moves the turn on; **End Turn ends your turn at once and skips your attack**.
+  3. **Attack and Block:** tap the attackers or Alpha Strike, then OK; to block, tap the attacker, then your blocker, then OK.
+  4. **Losing a Duel:** the run goes on; what a loss costs on this difficulty, filled from the game. That is the gold
+     percent and its minimum ([+Gold]), the life percent, and the ante line: "from day 8" in the round 1046 grace, "the
+     card you put up for ante" after it, and nothing with Play for Ante off.
+  5. **Stuck?:** Concede is in the duel's Game menu; the pages are in Settings.
+
+  The button words are the duel screen's own (`lblOK`, `lblEndTurn`, `lblAlphaStrike`, `lblAuto`, `lblConcede`).
+- **When:** the world map's fight start (`WorldStage`, an overworld foe) and a map's (`MapStage.beginDuel`, a town or
+  dungeon foe). The pages come after the attack animation and before the transition screen.
+  - The duel does not exist yet, so nothing waits on the duel thread (round 161's Android ante-prompt stall). The fight
+    starts 0.35 s after the last page closes, once the dialog's hide is over, so the transition's screenshot has no
+    half-hidden dialog.
+  - Arena, Inn, guard and Capitol fights never show the pages. A new player meets an overworld foe first.
+- **Who:** a save with no `duelPrimerShown` character flag and no duel on its record (wins + losses = 0, `PlayerStatistic`).
+  - **Existing saves:** one that has fought never gets the pages, and needs no version check. One that has not fought
+    yet gets them once, which is right for it.
+  - **New Game+:** never.
+  - **Arena or Inn first:** a save whose only duels were Arena or Inn matches gets the pages only if the win/loss record
+    has not counted those matches (not checked).
+  - **No reload repeat:** the flag is set when the pages show, and the fight start autosaves right after, so a reload
+    never shows them again.
+  - **Every platform:** desktop players also lacked the End Turn warning.
+  - **Not on a stock plane:** `DuelPrimer.available()` needs the `duel.*` texts.
+- **Reopen:** Settings has a "Duel help" row with a **How a Duel Works** button (TFR only).
+  - Not in the duel's Game menu: that menu draws Forge's own widgets, not scene2d, so the pages would need a second
+    renderer. They are a Settings tap away between duels.
+- **`reason=` on `[TFR-Duel]`:** the loser's `GameLossReason` as one word: `life`, `conceded`, `decked`, `poison`, or
+  `other` (a card's own loss, commander damage, a draw), and `?` when the game kept no outcome.
+  - It is read from the game's registered players, or from the match's last `GameOutcome` (`PlayerStatistics.getOutcome`)
+    when the game has been let go.
+  - It is appended at the END of the line, as round 1020's rule asks. Round 1020's
+    `C:\CLAUDE\PROJECTS\TFR1\notes\r1020\tools\duel_table.py` parses a line with it, and `--by reason` splits by it.
+- **Log:**
+  - `[TFR-DuelPrimer] shown before the first duel (vs <foe>, day N, Android|desktop)`;
+  - `... closed - the duel starts`;
+  - `... reopened from Settings`;
+  - `... pages failed - duel starts without them, left armed for the next launch` (never blocks a fight).
+- **Console (cheats):** `primer` (state) and `primer reset` (clears the flag; the pages are due again only while no duel
+  is on record).
+- **Agent client:** `settle` and `walk_dialogs` read on through a page dialog (only Back / Next / Understood buttons:
+  Next, then Understood), so unattended runs on a new save are not stopped by the pages. This also covers The War Begins.
+- **Tests:** `DuelPrimerTest`:
+  - due only for an unflagged save with no duel on record, not in New Game+;
+  - all 13 `duel.*` texts are present and name only `{difficulty}`, `{lossPct}`, `{lossMin}`, `{lifePct}`, `{ante}` and
+    `{anteDay}`;
+  - page 2 carries the End Turn warning, and page 4's gold uses the icon;
+  - the reason word for each `GameLossReason`.
+
+  `TfrTipsTest` caught a 184-character line on page 4 (the 125 limit), now broken into a list.
+- **Maven:** `-o -pl forge-gui-mobile-dev -am package -Dtest=DuelPrimerTest,AnteGraceTest,RegexAndroidSafeTest,TfrTipsTest,WarIntroTest -Dsurefire.failIfNoSpecifiedTests=false` exits 0, 34/34.
+- **Agent game** (the round's jar ahead of the agent jar; the round's res files copied in and put back after; log, shots and
+  the slot-70 save in `C:\CLAUDE\PROJECTS\TFR1\notes\r1047\`), a fresh Normal world, at 50x:
+  - **First duel (a Badger, day 1):** `primer shown=false duels=0 due=true` before it. The five pages showed on the world
+    map before the duel (shots `01`-`05`: page 4 reads "On Normal ... 5% of the [+Gold] you carry (at least [+Gold] 100
+    after your first week), 20% of your life, and from day 8 the card you put up for ante"). Then
+    `[TFR-DuelPrimer] shown before the first duel (vs Badger (Adept), day 1, desktop)` and, after Understood,
+    `... closed - the duel starts`, then the duel.
+  - **Concede:** in manual mode the seat conceded at its first priority:
+    `[TFR-Duel] lost ... turns=2 life=20 enemyLife=19 ... reason=conceded`. That was the bridge's `concede` verb, which
+    calls the same `Player.concede()` as the Game menu's Concede. The bridge cannot open the duel's Game menu (its tabs
+    are not FButtons, and posted mouse clicks never reach the window), so the menu click itself was not driven.
+  - **Second duel (a Dog):** no pages; straight to the duel, `reason=life`.
+  - **Save to slot 70, load:** `primer shown=true duels=2 due=false`, and the third duel had no pages (`reason=life`).
+  - **Settings > How a Duel Works:** the pages open over Settings (shot `07`), page through, and Understood closes them;
+    `[TFR-DuelPrimer] reopened from Settings`.
+  - **Old agent saves:** slot 31 (day 12, 165 duels) and slot 1 (1 duel) read `due=false` with no flag. Slot 10 (day 1,
+    no duel yet) reads `due=true`, as intended.
+  - `duel_table.py --by reason` on that log splits life 2 / conceded 1.
+- **Not done or not verified:**
+  - **Android:** the APK build in the clone, the 428 MB asset push and a touch-bot drive were not cheap. The pages use
+    the same `GameStage` dialog, `WarIntro.fill` and `TfrTips.fill` path that round 1041 proved on LDPlayer, and they
+    open before the duel exists.
+  - **A dungeon or town first fight (`MapStage`):** the same call, not played.
+  - **A Game menu entry for the pages** (above).
+  - **Portrait:** the dialog is War Begins' (240 px wide in portrait), not looked at in portrait.
+
 ## Round 1046: no ante in the first week on Easy and Normal (2026-11-18)
 
 From the new-player study, `C:\CLAUDE\PROJECTS\TFR1\notes\newplayer-1118.md` (proposal 1, picked by the user). Of 60

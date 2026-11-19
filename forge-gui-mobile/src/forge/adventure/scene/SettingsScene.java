@@ -182,6 +182,12 @@ public class SettingsScene extends UIScene {
                 }
             });
         }
+        // Round 1047: "How a Duel Works" again (util/DuelPrimer; shown once before a new save's first duel). TFR only.
+        if (forge.adventure.util.DuelPrimer.available()) {
+            addLabel("Duel help");
+            settingGroup.add(Controls.newTextButton("How a Duel Works",
+                    () -> forge.adventure.util.DuelPrimer.reopen(this))).align(Align.right).pad(2);
+        }
         // Round 756: the tip page, always here - the play-time asks (util/SupportPrompt) are not the only way.
         if (forge.adventure.util.SupportPrompt.supportLink() != null) {
             addLabel("Support the developer");

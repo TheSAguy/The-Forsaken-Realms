@@ -3198,20 +3198,23 @@ public class MapStage extends GameStage {
             if (started)
                 return;
             started = true;
-            Forge.setCursor(null, Forge.magnifyToggle ? "1" : "2");
-            SoundSystem.instance.play(SoundEffectType.ManaBurn, false);
-            DuelScene duelScene = DuelScene.instance();
-            FThreads.invokeInEdtNowOrLater(() -> {
-                if (!isLoadingMatch) {
-                    isLoadingMatch = true;
-                    Forge.setTransitionScreen(new TransitionScreen(() -> {
-                        started = false;
-                        duelScene.initDuels(player, mob);
-                        duelScene.setEffectLayers(getBiomeEffect(), getDungeonEffect(), ignoresGlobalEffect());
-                        Forge.switchScene(duelScene);
-                    }, ScreenUtil.getInstance().takeScreenshot(), true, false, false, false, "", Current.player().avatar(), mob.getAtlasPath(), Current.player().getName(), mob.getTieredDisplayName())
-                            .withEnemyStatKey(mob.getName()));
-                }
+            // Round 1047: a new save's first duel shows "How a Duel Works" first (util/DuelPrimer), as on the world map
+            forge.adventure.util.DuelPrimer.beforeDuel(this, mob.getTieredDisplayName(), () -> {
+                Forge.setCursor(null, Forge.magnifyToggle ? "1" : "2");
+                SoundSystem.instance.play(SoundEffectType.ManaBurn, false);
+                DuelScene duelScene = DuelScene.instance();
+                FThreads.invokeInEdtNowOrLater(() -> {
+                    if (!isLoadingMatch) {
+                        isLoadingMatch = true;
+                        Forge.setTransitionScreen(new TransitionScreen(() -> {
+                            started = false;
+                            duelScene.initDuels(player, mob);
+                            duelScene.setEffectLayers(getBiomeEffect(), getDungeonEffect(), ignoresGlobalEffect());
+                            Forge.switchScene(duelScene);
+                        }, ScreenUtil.getInstance().takeScreenshot(), true, false, false, false, "", Current.player().avatar(), mob.getAtlasPath(), Current.player().getName(), mob.getTieredDisplayName())
+                                .withEnemyStatKey(mob.getName()));
+                    }
+                });
             });
         });
     }

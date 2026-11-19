@@ -143,6 +143,22 @@ def say(*parts):
     print(time.strftime("%H:%M:%S ") + " ".join(str(p) for p in parts), flush=True)
 
 
+PAGE_BUTTONS = {"back", "next", "understood"}
+
+
+def page_pick(opts):
+    """Round 1047: a page dialog (How a Duel Works before a new save's first duel, The War Begins) - Back / Next /
+    Understood. Reading on is not a choice: the option to take is Next, or Understood on the last page; None otherwise."""
+    texts = [(o.get("text") or "").strip().lower() for o in opts]
+    if not texts or not set(texts) <= PAGE_BUTTONS:
+        return None
+    for want in ("next", "understood"):
+        for o, t in zip(opts, texts):
+            if t == want:
+                return o
+    return None
+
+
 def walk_dialogs(choose=None, rounds=40):
     """Click through single-option dialogs (advancing typing text). At a real choice: take the option whose
     text contains `choose` when given, else stop and return the state with the dialog still open."""
@@ -159,7 +175,9 @@ def walk_dialogs(choose=None, rounds=40):
             s = call("GET", "/state")
             continue
         pick = opts[0]
-        if len(opts) > 1:
+        if len(opts) > 1 and page_pick(opts) is not None:
+            pick = page_pick(opts)
+        elif len(opts) > 1:
             if choose is None:
                 return s
             pick = next((o for o in opts if choose.lower() in (o.get("text") or "").lower()), None)
@@ -274,7 +292,7 @@ def settle(rounds=40, wait_each=60, ask_ante=False):
         d = s.get("dialog")
         if d:
             opts = d.get("options") or []
-            if len(opts) > 1:
+            if len(opts) > 1 and page_pick(opts) is None:
                 return s  # a real choice - the caller decides
             s = walk_dialogs()
             if s.get("dialog"):

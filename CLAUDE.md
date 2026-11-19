@@ -31,12 +31,17 @@ with TFR 2's fix alone); `[TFR-AiFix] equip-wearer` / `equip-move`; `FlatMonteCa
 `C:\CLAUDE\PROJECTS\TFR1\notes\r1045\`) and round 1046 (**no ante in week 1 on Easy and Normal**, the new-player
 study `C:\CLAUDE\PROJECTS\TFR1\notes\newplayer-1118.md`: `anteGraceWeeks{D}` in settings.json (1/1/0/0), the Custom knob
 "Weeks without ante", `util/AnteGrace` turns the duel's ante rule off through day 7 (no ante card, no Re-roll prompt),
-New Game+ never; `[TFR-AnteGrace]`; `AnteGraceTest`); `MOD_CHANGELOG.md`. Engine = the 11.13 daily (round 1031, upstream `a8695ac23e2`,
+New Game+ never; `[TFR-AnteGrace]`; `AnteGraceTest`) and round 1047 (**"How a Duel Works"**: `util/DuelPrimer`, five pages
+(tips.json `duel.*`, End Turn skips the attack) shown once before a save's first ordinary duel - unflagged and no duel on
+record, so a save that has fought never sees them - at the world-map and map fight starts, before the duel exists;
+Settings > How a Duel Works; `[TFR-DuelPrimer]`; **`reason=life|conceded|decked|poison|other` at the end of
+`[TFR-Duel]`**, `duel_table.py --by reason`; `tfr_agent.py settle` reads on through page dialogs; `DuelPrimerTest`);
+`MOD_CHANGELOG.md`. Engine = the 11.13 daily (round 1031, upstream `a8695ac23e2`,
 Forge 2.0.17-SNAPSHOT; round 769's R1-R4 still keep TFR's synchronous auto save, eager shops, Inn events and place
 entry; bosses keep the player's AI setting through `bossAiFollowsSetting`; the TFR AI rules and their stock hooks, round
 1018); next merge from upstream after `a8695ac23e2` (its first commit is `3cfec26d1ed`, #12856, edition fixes);
 BASE_INSTALL is that daily, so packages need no `--allow-base-mismatch`. Next version: 1.30 / 13000. Next free round:
-1048 (1047 is handed out). The agent profile's window is
+1048. The agent profile's window is
 1280x720 - at 3840x2160 it covered the screen, got minimized, and a minimized game stops (the bridge times out, shots
 come back 1x1). Agent games keep their own LOCALAPPDATA cache (round 860). Log sharing (round 698) posts to Discord
 through a webhook kept OUT of git in `C:\TFR\secrets\discord_log_webhook.txt` - never commit it; the packager and

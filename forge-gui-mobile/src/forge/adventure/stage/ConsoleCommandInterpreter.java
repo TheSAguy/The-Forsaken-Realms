@@ -831,6 +831,7 @@ public class ConsoleCommandInterpreter {
         // Capitol needs a Temple; "wrath start red force" skips that), "wrath stop" ends it.
         registerCommand(new String[]{"wrath"}, forge.adventure.util.WrathHunt::console);
         registerCommand(new String[]{"war"}, forge.adventure.util.WarIntro::console); // round 1005: war show|reset|old|attack <color>
+        registerCommand(new String[]{"primer"}, forge.adventure.util.DuelPrimer::console); // round 1047: primer [reset]
         // Round 465: test cheat - 'winstreak "Wild Rat" 3' sets your wins in a row over one enemy (by name).
         registerCommand(new String[]{"winstreak"}, s -> {
             if (s.length < 1) return "Give an enemy name, and a number to set its streak.";

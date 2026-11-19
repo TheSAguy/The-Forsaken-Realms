@@ -967,7 +967,9 @@ public class WorldStage extends GameStage implements SaveFileContent {
                     float attackDuration = Math.max(
                             player.getActionAnimationDuration(CharacterSprite.AnimationTypes.Attack, 0.8f),
                             mob.getActionAnimationDuration(CharacterSprite.AnimationTypes.Attack, 0.8f));
-                    startPause(attackDuration, () -> {
+                    // Round 1047: a new save's first duel shows "How a Duel Works" first (util/DuelPrimer) - before the
+                    // duel exists, so nothing waits on the duel thread; the fight starts when its last page closes.
+                    startPause(attackDuration, () -> forge.adventure.util.DuelPrimer.beforeDuel(this, mob.getTieredDisplayName(), () -> {
                         Forge.setCursor(null, Forge.magnifyToggle ? "1" : "2");
                         SoundSystem.instance.play(SoundEffectType.ManaBurn, false);
                         DuelScene duelScene = DuelScene.instance();
@@ -984,7 +986,7 @@ public class WorldStage extends GameStage implements SaveFileContent {
                             currentMobIsCapitolDefense = false; // round 931 (Fable P1-2): never a stale Capitol flag
                             autoSaveHere();
                         });
-                    });
+                    }));
                     break;
                 }
             }
