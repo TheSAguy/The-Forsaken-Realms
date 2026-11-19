@@ -387,6 +387,8 @@ public class AdventureQuestController implements Serializable {
             }
 
             Current.player().removeQuest(toRemove);
+            if (!toRemove.failed)
+                Current.player().addUnseenFinishedQuest(toRemove); // TFR round 1049: capped (upstream: getUnseenFinishedQuests().add)
             //Todo: Add quest to a separate "completed / failed" log?
         }
     }

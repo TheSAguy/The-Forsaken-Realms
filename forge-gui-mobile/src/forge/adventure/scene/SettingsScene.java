@@ -41,6 +41,7 @@ public class SettingsScene extends UIScene {
     private final Table settingGroup;
     /** TFR round 993: the "Show tooltips" box, kept in step with New Game's button on entry. */
     private SelectBox<String> tfrTipsBox;
+    private boolean rebuildOnEnter;
     TextraButton backButton;
     TextraButton newPlane;
     ScrollPane scrollPane;
@@ -108,12 +109,46 @@ public class SettingsScene extends UIScene {
 
     private SettingsScene() {
         super(Forge.isLandscapeMode() ? "ui/settings.json" : "ui/settings_portrait.json");
-        Localizer localizer = Forge.getLocalizer();
 
         settingGroup = new Table();
         selectSourcePlane = Controls.newComboBox();
         newPlaneName = Controls.newTextField("");
         selectSourcePlane.setItems(Config.instance().getAllAdventures());
+        fillSettings();
+
+        backButton = ui.findActor("return");
+        ui.onButtonPress("return", SettingsScene.this::back);
+        ui.onButtonPress("general", () -> {
+            rebuildOnEnter = true;
+            Forge.switchScene(GeneralSettingsScene.instance());
+        });
+        TextraButton general = ui.findActor("general");
+        if (general != null) {
+            general.getTextraLabel().setWrap(true);
+            general.getTextraLabel().setAlignment(Align.center);
+            // TFR round 1049 (the user: hide it): Forge's classic preferences hold Selector Mode, Forge's own bug
+            // reports and rows TFR doesn't manage; a plane that is Adventure only (round 945) has no way to Classic.
+            if (Forge.isClassicLocked()) {
+                general.setVisible(false);
+                general.setTouchable(com.badlogic.gdx.scenes.scene2d.Touchable.disabled);
+                // portrait halved Back for it (settings_portrait.json): Back takes the whole row again
+                if (backButton != null && Math.abs(backButton.getY() - general.getY()) < 1f) {
+                    float left = Math.min(backButton.getX(), general.getX());
+                    float right = Math.max(backButton.getX() + backButton.getWidth(), general.getX() + general.getWidth());
+                    backButton.setBounds(left, backButton.getY(), right - left, backButton.getHeight());
+                }
+                System.out.println("[TFR-Classic] Settings: General Settings hidden (adventureOnly plane)");
+            }
+        }
+
+        scrollPane = ui.findActor("settings");
+        scrollPane.setActor(settingGroup);
+        addToSelectable(settingGroup);
+    }
+
+    private void fillSettings() {
+        Localizer localizer = Forge.getLocalizer();
+        settingGroup.clear();
         // 2026-08-29 fix (user report: a crash traced back to the wrong plane's assets loading
         // for a whole session): the 3-arg newComboBox persists+saves via its own internal
         // ChangeListener on every selection, UNCONDITIONALLY - firing BEFORE this widget's own
@@ -661,12 +696,6 @@ public class SettingsScene extends UIScene {
         addCheckBox(localizer.getMessage("lblVibrateOnShopAction"), ForgePreferences.FPref.UI_VIBRATE_ON_SHOP_ACTION);
 
         settingGroup.row();
-        backButton = ui.findActor("return");
-        ui.onButtonPress("return", SettingsScene.this::back);
-
-        scrollPane = ui.findActor("settings");
-        scrollPane.setActor(settingGroup);
-        addToSelectable(settingGroup);
     }
 
 
@@ -717,6 +746,12 @@ public class SettingsScene extends UIScene {
     /** Round 825: the rows show what the running save plays with (its own rules, else the profile's). */
     @Override
     public void enter() {
+        // upstream #12896: General Settings can change preferences that rows here also show (round 1049 merge; on an
+        // adventureOnly plane the button is hidden, so this stays false there)
+        if (rebuildOnEnter) {
+            rebuildOnEnter = false;
+            fillSettings();
+        }
         if (tfrTipsBox != null) // TFR round 993: New Game's button may have changed the value
             tfrTipsBox.setSelected(forge.adventure.util.TfrTips.mode());
         refreshingRules = true;

@@ -38,13 +38,17 @@ Settings > How a Duel Works; `[TFR-DuelPrimer]`; **`reason=life|conceded|decked|
 `[TFR-Duel]`**, `duel_table.py --by reason`; `tfr_agent.py settle` reads on through page dialogs; `DuelPrimerTest`) and
 round 1048 (the pages also in the **duel's Game menu**, "How a Duel Works" in stock `VGameMenu`, shown in Forge's popup
 over the match, `source=game-menu`; the pages name the pointer: Tap/press and hold on touch, Click/point at on desktop
-(right-click does not zoom); page 5 names the three-line Game button; bridge `click text=` taps Forge menu tabs and items);
-`MOD_CHANGELOG.md`. Engine = the 11.13 daily (round 1031, upstream `a8695ac23e2`,
+(right-click does not zoom); page 5 names the three-line Game button; bridge `click text=` taps Forge menu tabs and items)
+and round 1049 (**the engine to the 11.18 daily**: upstream's two-column quest journal with TFR's legends, raids and
+their mini-map page, timers, progress, hints and tips ported onto it; its finished-quests list capped at 10; upstream's
+General Settings button hidden on an adventureOnly plane; a scrolling reward grid; upstream's large Flat MC / mana / AI
+range under TFR's rules, all hooks intact, no rule retired; `C:\CLAUDE\PROJECTS\TFR1\notes\r1049\conflicts.md`);
+`MOD_CHANGELOG.md`. Engine = the 11.18 daily (round 1049, upstream `d9ae6615afc`,
 Forge 2.0.17-SNAPSHOT; round 769's R1-R4 still keep TFR's synchronous auto save, eager shops, Inn events and place
 entry; bosses keep the player's AI setting through `bossAiFollowsSetting`; the TFR AI rules and their stock hooks, round
-1018); next merge from upstream after `a8695ac23e2` (its first commit is `3cfec26d1ed`, #12856, edition fixes);
+1018); next merge from upstream after `d9ae6615afc` (its first commit is `2d8fef80a0a`, #12942, pain lands);
 BASE_INSTALL is that daily, so packages need no `--allow-base-mismatch`. Next version: 1.30 / 13000. Next free round:
-1049. The agent profile's window is
+1050. The agent profile's window is
 1280x720 - at 3840x2160 it covered the screen, got minimized, and a minimized game stops (the bridge times out, shots
 come back 1x1). Agent games keep their own LOCALAPPDATA cache (round 860). Log sharing (round 698) posts to Discord
 through a webhook kept OUT of git in `C:\TFR\secrets\discord_log_webhook.txt` - never commit it; the packager and

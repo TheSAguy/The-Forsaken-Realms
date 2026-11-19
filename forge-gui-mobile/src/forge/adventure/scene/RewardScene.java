@@ -3,13 +3,22 @@ package forge.adventure.scene;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.Controllers;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Timer;
 import com.github.tommyettinger.textra.TextraButton;
@@ -30,7 +39,9 @@ import forge.adventure.stage.GameHUD;
 import forge.adventure.util.*;
 import forge.adventure.world.WorldSave;
 import forge.assets.ImageCache;
+import forge.deck.CardPool;
 import forge.deck.Deck;
+import forge.deck.DeckSection;
 import forge.item.PaperCard;
 import forge.sound.SoundEffectType;
 import forge.sound.SoundSystem;
@@ -39,6 +50,7 @@ import forge.util.ItemPool;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Displays the rewards of a fight or a treasure
@@ -87,6 +99,17 @@ public class RewardScene extends UIScene {
     public Image marketBackgroundImg = null;
     private Actor cachedCardsContainerActor = null;
     private Drawable origDrawable = null;
+    // Below this card height the grid stops shrinking and scrolls instead, so screens of up to about 24 cards keep their layout.
+    private static final float MIN_CARD_HEIGHT = 60f;
+    // Room under a scrolling grid for the more-cards arrow, which is 6 units tall at the top of its bob, with 10 clear above and 6 below.
+    private static final float CHEVRON_SPACE = 22f;
+    private final Group cardGroup = new Group();
+    private final ScrollPane cardScroller = new ScrollPane(cardGroup);
+    private final MoreArrow cardArrow = new MoreArrow(cardScroller);
+    private final TypingLabel deckSlotLabel;
+    private final Array<Deck> pendingDecks = new Array<>();
+    private ShopActor deckShop;
+    private String deckSlotMessage;
 
     private RewardScene() {
         super(Forge.isLandscapeMode() ? "ui/items.json" : "ui/items_portrait.json");
@@ -179,6 +202,19 @@ public class RewardScene extends UIScene {
         storageButton.setVisible(false);
         ui.addActor(storageButton);
         origDrawable = getBGDrawable(); // round 385 (09.30 merge): upstream keeps the page background for enter()
+        // upstream #12922/#12879 (round 1049 merge): the card grid scrolls inside cardScroller; deck rewards
+        cardGroup.setTouchable(Touchable.childrenOnly);
+        cardScroller.setScrollingDisabled(true, false);
+        cardScroller.setOverscroll(false, false);
+        stage.addActor(cardScroller);
+        stage.addActor(cardArrow);
+        deckSlotLabel = Controls.newTypingLabel("");
+        deckSlotLabel.setX(cachedCardsContainerActor.getX());
+        deckSlotLabel.setWidth(cachedCardsContainerActor.getWidth());
+        deckSlotLabel.setWrap(true);
+        deckSlotLabel.setAlignment(Align.center);
+        deckSlotLabel.setVisible(false);
+        stage.addActor(deckSlotLabel);
         // TFR round 999: hover tips on the shop's buttons (TfrPlaceTips; tips.json)
         forge.adventure.util.TfrPlaceTips.shop(this, restockButton, rerollButton, buyBlueprintButton, shopTypeRerollButton,
                 upgradeButton, guardsButton, storageButton, destroyButton, this::restockPriceNow,
@@ -677,7 +713,7 @@ public class RewardScene extends UIScene {
         }
         shown = false;
         clearGenerated();
-        quitScene();
+        quitOrRevealDeck();
         return true;
     }
 
@@ -688,17 +724,113 @@ public class RewardScene extends UIScene {
                 continue;
             }
             if (type == Type.Loot || type == Type.EventReward)
-                AdventurePlayer.current().addReward(rewardActor.getReward());
+                claimReward(rewardActor.getReward());
             if (type == Type.QuestReward)
-                AdventurePlayer.current().addReward(rewardActor.getReward()); // TODO Want to customize this soon to have selectable rewards which will be handled different here
+                claimReward(rewardActor.getReward()); // TODO Want to customize this soon to have selectable rewards which will be handled different here
             rewardActor.clearLabel();
-            try {
-                stage.getActors().removeValue(rewardActor, true);
-            } catch (Exception e) {
-            }
+            rewardActor.remove();
         }
         // Round 751: a research v2 game sells the auto-sell pile as this screen closes (a classic save: at the next shop).
         AdventurePlayer.current().sellAutoSellPile("reward screen");
+    }
+
+    /** The bobbing down-arrow from the item preview, shown while its pane has more below. */
+    private static class MoreArrow extends Actor {
+        private final ScrollPane pane;
+        private float elapsed;
+
+        MoreArrow(ScrollPane pane) {
+            this.pane = pane;
+            setSize(7, 6);
+        }
+
+        @Override
+        public void act(float delta) {
+            elapsed += delta;
+        }
+
+        @Override
+        public void draw(Batch batch, float parentAlpha) {
+            if (pane.getScrollY() < pane.getMaxY() - 1)
+                RewardActor.drawMoreArrow(batch, getX() + getWidth() / 2, getY(), 1, elapsed, parentAlpha);
+        }
+    }
+
+    private static boolean isDeckReward(Reward reward) {
+        return reward.getDeck() != null && reward.getDeck().getTags().contains(Reward.DECK_TAG);
+    }
+
+    private void showDecklist(Deck deck) {
+        List<DeckSection> sections = new ArrayList<>(List.of(DeckSection.values()));
+        sections.remove(DeckSection.Commander);
+        sections.add(0, DeckSection.Commander);
+        StringBuilder list = new StringBuilder();
+        for (DeckSection section : sections) {
+            CardPool pool = deck.get(section);
+            if (pool == null || pool.isEmpty())
+                continue;
+            list.append("[%?SHINY]").append(section.getLocalizedName()).append(" (").append(pool.countAll()).append(")[%]\n");
+            List<Map.Entry<PaperCard, Integer>> entries = new ArrayList<>();
+            pool.forEach(entries::add);
+            entries.sort(Comparator.comparing(entry -> entry.getKey().getName()));
+            for (Map.Entry<PaperCard, Integer> entry : entries)
+                list.append(entry.getValue()).append(' ').append(entry.getKey().getName().replace("[", "[[")).append('\n');
+            list.append('\n');
+        }
+        TextraLabel label = Controls.newTextraLabel(list.toString().stripTrailing());
+        label.setWrap(true);
+        TextureRegionDrawable white = new TextureRegionDrawable(new TextureRegion(Forge.getAssets().getWhiteTexture()));
+        ScrollPane.ScrollPaneStyle barStyle = new ScrollPane.ScrollPaneStyle();
+        barStyle.vScroll = white.tint(new Color(1, 1, 1, 0.15f));
+        barStyle.vScroll.setMinWidth(2);
+        barStyle.vScrollKnob = white.tint(new Color(1, 1, 1, 0.7f));
+        barStyle.vScrollKnob.setMinWidth(2);
+        barStyle.vScrollKnob.setMinHeight(8);
+        ScrollPane pane = new ScrollPane(label, barStyle);
+        pane.setScrollingDisabled(true, false);
+        pane.setFadeScrollBars(false);
+        Dialog dialog = createGenericDialog("", null, Forge.getLocalizer().getMessage("lblClose"), null, this::removeDialog, null);
+        Table content = dialog.getContentTable();
+        content.add(Controls.newTextraLabel("[%?SHINY]" + deck.getName().replace("[", "[[") + "[%]\n"
+                + Forge.getLocalizer().getMessage("lblNCards", deck.getAllCardsInASinglePool(true, true).countAll()))).left().padTop(4).padBottom(4);
+        content.row();
+        content.add(pane).width(stage.getWidth() * (Forge.isLandscapeMode() ? 0.6f : 0.8f)).height(stage.getHeight() * 0.55f).padRight(4);
+        content.row();
+        content.add(new MoreArrow(pane)).padTop(4);
+        showDialog(dialog);
+    }
+
+    private void claimReward(Reward reward) {
+        if (isDeckReward(reward))
+            pendingDecks.add(reward.getDeck());
+        else
+            AdventurePlayer.current().addReward(reward);
+    }
+
+    /** Reveals any decks claimed on this screen before leaving, then returns to the shop they were bought in. */
+    private void quitOrRevealDeck() {
+        if (pendingDecks.notEmpty()) {
+            revealDeck(pendingDecks.removeIndex(0));
+        } else if (deckShop != null) {
+            ShopActor shop = deckShop;
+            deckShop = null;
+            loadRewards(shop.getRewardData(), Type.Shop, shop);
+        } else {
+            quitScene();
+        }
+    }
+
+    private void revealDeck(Deck reward) {
+        // The shop keeps the reward, and an unlimited shop sells it again, so the slot gets its own copy
+        Deck deck = (Deck) reward.copyTo(reward.getName());
+        deck.getTags().remove(Reward.DECK_TAG);
+        int slot = AdventurePlayer.current().addDeckToEmptySlot(deck);
+        // Textra reads square brackets as markup, and commander precon names carry set and year in brackets
+        String name = deck.getName().replace("[", "[[");
+        deckSlotMessage = slot >= 0
+                ? Forge.getLocalizer().getMessage("lblDeckAddedToSlot", name, slot + 1)
+                : Forge.getLocalizer().getMessage("lblDeckSlotsFull", name);
+        loadRewards(deck, Type.EventReward, null, deck.getTags().contains("noSell"));
     }
 
     public List<RewardActor> getGeneratedRewards() {
@@ -992,6 +1124,7 @@ public class RewardScene extends UIScene {
         }));
         clearSelectable();
         this.type = type;
+        autoSell = false;
         doneClicked = false;
         playerGold.setVisible(type != Type.Lost);
         playerShards.setVisible(type != Type.Lost);
@@ -1061,8 +1194,18 @@ public class RewardScene extends UIScene {
 
         float targetWidth = card.getWidth();
         float targetHeight = card.getHeight();
-        float xOff = card.getX();
-        float yOff = card.getY();
+        deckSlotLabel.setVisible(deckSlotMessage != null);
+        if (deckSlotMessage != null) {
+            deckSlotLabel.setText("[%?SHINY]" + deckSlotMessage);
+            deckSlotLabel.layout();
+            deckSlotLabel.setHeight(deckSlotLabel.getPrefHeight());
+            deckSlotLabel.setY(headerLabelOrigPos.y + headerLabel.getHeight() - deckSlotLabel.getHeight());
+            targetHeight = Math.min(targetHeight, deckSlotLabel.getY() - card.getY());
+            deckSlotMessage = null;
+        }
+        float xOff;
+        float yOff;
+        float gridBottom = card.getY(); // round 1049 merge: round 285's portrait mod-button block raises it
 
         int numberOfRows = 0;
         float cardWidth = 0;
@@ -1243,7 +1386,7 @@ public class RewardScene extends UIScene {
         // actually gets, in one pass, with no re-layout.
         float modReserve = layoutPortraitModButtons();
         if (modReserve > 0f) {
-            yOff += modReserve;
+            gridBottom += modReserve;
             targetHeight -= modReserve;
             targetArea = targetHeight * targetWidth;
         }
@@ -1251,11 +1394,15 @@ public class RewardScene extends UIScene {
         // Needed before the grid search so rows and columns are counted with the final card width.
         float correction = ScreenAspectCorrection.widthCorrection(Scene.getIntendedWidth(), Scene.getIntendedHeight(),
                 Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        boolean sellsDeck = false;
+        if (type == Type.Shop) {
+            for (Reward reward : new Array.ArrayIterator<>(newRewards))
+                sellsDeck |= isDeckReward(reward);
+        }
+        // A deck for sale gets a decklist button under its price, so every cell in that shop reserves two button rows
+        float buttonHeight = type == Type.Shop || type == Type.RewardChoice ? doneButton.getHeight() * (sellsDeck ? 2 : 1) : 0;
         for (int h = 1; h < targetHeight; h++) {
-            cardHeight = h;
-            if (type == Type.Shop || type == Type.RewardChoice) {
-                cardHeight += doneButton.getHeight();
-            }
+            cardHeight = h + buttonHeight;
             //cardHeight=targetHeight/i;
             cardWidth = h / CARD_WIDTH_TO_HEIGHT * correction;
             newArea = newRewards.size * cardWidth * cardHeight;
@@ -1269,6 +1416,9 @@ public class RewardScene extends UIScene {
                 bestCardHeight = h;
             }
         }
+        boolean scrolls = bestCardHeight < MIN_CARD_HEIGHT;
+        if (scrolls)
+            bestCardHeight = MIN_CARD_HEIGHT;
         cardHeight = bestCardHeight * 0.90f;
         cardWidth = (cardHeight / CARD_WIDTH_TO_HEIGHT) * correction;
 
@@ -1280,19 +1430,39 @@ public class RewardScene extends UIScene {
         // Armory, Expand Inventory, Storage, Re-roll), swallowing their taps. The reporter's workaround - the
         // rewardCardAdj size setting - works because it replaces `mul` outright. Shrink back into the region,
         // keeping the card aspect; where the row already fits this changes nothing.
-        float rowWidth = cardWidth * numberOfColumns;
-        if (rowWidth > targetWidth && rowWidth > 0f) {
-            float shrink = targetWidth / rowWidth;
-            cardWidth *= shrink;
-            cardHeight *= shrink;
-            System.out.println("[TFR-RewardGrid] " + numberOfColumns + " card column(s) overflowed the "
-                    + String.format("%.0f", targetWidth) + "px card region by "
-                    + String.format("%.0f", rowWidth - targetWidth) + "px - shrunk to fit (x"
-                    + String.format("%.2f", shrink) + ") so the shop's buttons stay reachable");
+        if (!scrolls) { // round 1049 merge: a scrolling grid fits its columns itself
+            float rowWidth = cardWidth * numberOfColumns;
+            if (rowWidth > targetWidth && rowWidth > 0f) {
+                float shrink = targetWidth / rowWidth;
+                cardWidth *= shrink;
+                cardHeight *= shrink;
+                System.out.println("[TFR-RewardGrid] " + numberOfColumns + " card column(s) overflowed the "
+                        + String.format("%.0f", targetWidth) + "px card region by "
+                        + String.format("%.0f", rowWidth - targetWidth) + "px - shrunk to fit (x"
+                        + String.format("%.2f", shrink) + ") so the shop's buttons stay reachable");
+            }
         }
-
-        yOff += (targetHeight - (cardHeight * numberOfRows)) / 2f;
-        xOff += (targetWidth - (cardWidth * numberOfColumns)) / 2f;
+        if (scrolls) {
+            numberOfColumns = Math.max(1, (int) (targetWidth / cardWidth));
+            numberOfRows = (int) Math.ceil(newRewards.size / (double) numberOfColumns);
+            yOff = buttonHeight;
+        } else {
+            yOff = (targetHeight - (cardHeight * numberOfRows)) / 2f;
+        }
+        xOff = (targetWidth - (cardWidth * numberOfColumns)) / 2f;
+        float viewBottom = gridBottom;
+        if (scrolls) {
+            Actor gold = ui.findActor("playerGold");
+            // The portrait layout puts the gold counter inside the card area, which a full scrolling grid would cover
+            if (gold.getX() < card.getX() + targetWidth)
+                viewBottom = Math.max(viewBottom, gold.getY() + gold.getHeight());
+            viewBottom += CHEVRON_SPACE;
+        }
+        // The card area overlaps buttons in portrait, so only the cards themselves take touches unless the grid scrolls
+        cardScroller.setTouchable(scrolls ? Touchable.enabled : Touchable.childrenOnly);
+        cardScroller.setBounds(card.getX(), viewBottom, targetWidth, gridBottom + targetHeight - viewBottom);
+        cardArrow.setPosition(card.getX() + (targetWidth - cardArrow.getWidth()) / 2, viewBottom - CHEVRON_SPACE + 6);
+        cardGroup.setSize(targetWidth, scrolls ? numberOfRows * (cardHeight + buttonHeight) : targetHeight);
 
         float spacing = 2;
         int i = 0;
@@ -1321,20 +1491,31 @@ public class RewardScene extends UIScene {
 
             if (type == Type.Shop) {
                 if (currentRow != ((i + 1) / numberOfColumns))
-                    yOff += doneButton.getHeight();
+                    yOff += buttonHeight;
 
                 BuyButton buyCardButton = new BuyButton(shopActor.getObjectId(), i, actor, reward, doneButton, shopActor.getPriceModifier());
                 generated.add(buyCardButton);
                 if (!skipCard) {
-                    stage.addActor(buyCardButton);
+                    cardGroup.addActor(buyCardButton);
                     addToSelectable(buyCardButton);
+                }
+                if (isDeckReward(reward)) {
+                    TextraButton decklistButton = Controls.newTextButton(Forge.getLocalizer().getMessage("lblViewDecklist"),
+                            () -> showDecklist(reward.getDeck()));
+                    decklistButton.setBounds(buyCardButton.getX(), buyCardButton.getY() - doneButton.getHeight(),
+                            buyCardButton.getWidth(), doneButton.getHeight());
+                    generated.add(decklistButton);
+                    if (!skipCard) {
+                        cardGroup.addActor(decklistButton);
+                        addToSelectable(decklistButton);
+                    }
                 }
             } else if (type == Type.RewardChoice) {
                 if (currentRow != ((i + 1) / numberOfColumns))
                     yOff += doneButton.getHeight();
                 ChooseRewardButton chooseRewardButton = new ChooseRewardButton(i, actor, reward, doneButton);
                 generated.add(chooseRewardButton);
-                stage.addActor(chooseRewardButton);
+                cardGroup.addActor(chooseRewardButton);
                 addToSelectable(chooseRewardButton);
             } else {
                 if (type == Type.Lost)
@@ -1343,10 +1524,14 @@ public class RewardScene extends UIScene {
             }
             generated.add(actor);
             if (!skipCard) {
-                stage.addActor(actor);
+                cardGroup.addActor(actor);
             }
             i++;
         }
+        cardScroller.layout();
+        cardScroller.setScrollY(0);
+        cardScroller.updateVisualScroll();
+        stage.setScrollFocus(cardScroller);
         liftModButtonsAboveCards(); // round 253 (Android): see the method
         if (type == Type.Shop) {
             if (floorRaised > 0)
@@ -1489,7 +1674,7 @@ public class RewardScene extends UIScene {
                         PlaceRewards.noteShopLifeBought(shopActor, rewardActor.getReward()); // round 752
 
                         Current.player().takeGold(price);
-                        Current.player().addReward(rewardActor.getReward());
+                        claimReward(rewardActor.getReward());
 
                         // Guaranteed-Torch fulfillment (2026-08-14 redesign - see EconomyBuildings.
                         // injectGuaranteedTorchIfOwed()'s own comment): the moment the player buys
@@ -1516,6 +1701,10 @@ public class RewardScene extends UIScene {
                         updateCollectionPool();
                         updateBuyButtons();
                         removeListener(this);
+                        if (pendingDecks.notEmpty()) {
+                            deckShop = shopActor;
+                            revealDeck(pendingDecks.removeIndex(0));
+                        }
                     }
                 }
             });
@@ -1585,7 +1774,7 @@ public class RewardScene extends UIScene {
                         remainingSelections--;
                         if (price > 0)
                             Current.player().takeGold(price);
-                        Current.player().addReward(rewardActor.getReward());
+                        claimReward(rewardActor.getReward());
 
                         headerLabel.setVisible(remainingSelections > 0);
                         headerLabel.setText("Select " + remainingSelections + " rewards");

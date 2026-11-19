@@ -81,6 +81,7 @@ public class AdventureQuestStage implements Serializable {
     // Navigation-only town filter for the world-map quest arrow ("ruinedTown"/"survivingTown",
     // 2026-08-27 user request) - see getNavPOIs() for why this exists separately from validPOIs.
     public String navPOIFilter = "";
+    public boolean unseen; // status changed since the quest log last showed this quest
 
     public UUID stageID;
 
@@ -100,6 +101,7 @@ public class AdventureQuestStage implements Serializable {
             }
         }
         status = ACTIVE;
+        unseen = true;
     }
 
     public AdventureQuestController.QuestStatus getStatus() {
@@ -339,6 +341,7 @@ public class AdventureQuestStage implements Serializable {
 
     public AdventureQuestStage(AdventureQuestStage other) {
         this.status = other.status;
+        this.unseen = other.unseen;
         this.prologueDisplayed = other.prologueDisplayed;
         this.prologue = new DialogData(other.prologue);
         this.epilogueDisplayed = other.epilogueDisplayed;
@@ -452,6 +455,14 @@ public class AdventureQuestStage implements Serializable {
     }
 
     public AdventureQuestController.QuestStatus handleEvent(AdventureQuestEvent event) {
+        boolean wasComplete = status == COMPLETE;
+        updateStatus(event);
+        if (!wasComplete && status == COMPLETE)
+            unseen = true;
+        return status;
+    }
+
+    private AdventureQuestController.QuestStatus updateStatus(AdventureQuestEvent event) {
         if (objective == Fetch && hasRequiredFetchItems()) {
             status = COMPLETE;
             return status;

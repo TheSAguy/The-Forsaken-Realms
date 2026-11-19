@@ -304,6 +304,24 @@ public class CardUtil {
             return this.shouldBeEqual;
         }
 
+        /** The printing that meets the rarity and edition filters, preferring the given one, or null if none does. */
+        private PaperCard getPrinting(final PaperCard card) {
+            if (matchesPrinting(card))
+                return card;
+            if (this.editions.isEmpty())
+                return null;
+            for (PaperCard c : FModel.getMagicDb().getCommonCards().getAllCards(card)) {
+                if (matchesPrinting(c))
+                    return c;
+            }
+            return null;
+        }
+
+        private boolean matchesPrinting(final PaperCard card) {
+            return (this.rarities.isEmpty() || this.rarities.contains(card.getRarity()))
+                    && (this.editions.isEmpty() || this.editions.contains(card.getEdition()));
+        }
+
         private Pattern getPattern(RewardData type) {
             if (type.cardText == null || type.cardText.isEmpty())
                 return null;
@@ -411,7 +429,7 @@ public class CardUtil {
 
         for (final PaperCard item : cards) {
             if (pre.test(item))
-                result.add(item);
+                result.add(pre.getPrinting(item));
         }
         return result;
     }
@@ -956,6 +974,12 @@ public class CardUtil {
     public static int getBoosterPrice(Deck booster) {
     	if (booster == null)
             return 0;
+        if (booster.getTags().contains(Reward.DECK_TAG)) {
+            int price = 0;
+            for (PaperCard card : booster.getAllCardsInASinglePool(true, true).toFlatList())
+                price += getCardPrice(card);
+            return price;
+        }
     	String editionCode = booster.getComment();
         AdventureReadPriceList.PriceData data = getPriceData();
         boolean useCustomPrices = data.mode == AdventureReadPriceList.PriceMode.FORCED
@@ -985,7 +1009,7 @@ public class CardUtil {
         if (reward.getType() == Reward.Type.Gold)
             return reward.getCount();
 		if(reward.getType() == Reward.Type.CardPack)                // TODO: Heitor - Price by card count and type of boosterPack.
-         return getBoosterPrice(booster);
+         return reward.getCost() > 0 ? reward.getCost() : getBoosterPrice(booster);
 		
         return 1000;
     }

@@ -351,7 +351,11 @@ public class PlayerControllerAi extends PlayerController {
 
     @Override
     public CardCollectionView choosePermanentsToSacrifice(SpellAbility sa, int min, int max, CardCollectionView validTargets, String message) {
-        return ComputerUtil.choosePermanentsToSacrifice(player, validTargets, max, sa, false, min == 0);
+        final CardCollectionView sacrificed = ComputerUtil.choosePermanentsToSacrifice(player, validTargets, max, sa, false, min == 0);
+        if (sacrificed != null && min == 0 && max > 1 && forge.ai.ability.SacrificeWorth.applies(sa)) {
+            return forge.ai.ability.MayDecisions.limitSacrifices(player, sa, sacrificed); // "any number": not all of them
+        }
+        return sacrificed;
     }
 
     @Override
@@ -1139,7 +1143,20 @@ public class PlayerControllerAi extends PlayerController {
     @Override
     public boolean chooseBinary(SpellAbility sa, String question, BinaryChoiceType kindOfChoice, Boolean defaultVal) {
         switch (kindOfChoice) {
-            case TapOrUntap: return true;
+            case TapOrUntap:
+                // the effect says what is natural for the target (tap an opponent's permanent, untap one's own); with no
+                // such hint (Turnabout) the player it is aimed at decides: untap one's own, tap the opponent's
+                if (defaultVal != null) {
+                    return defaultVal;
+                }
+                for (SpellAbility node = sa; node != null; node = node.getSubAbility()) {
+                    if (node.usesTargeting() && node.getTargets() != null) {
+                        for (final forge.game.player.Player p : node.getTargets().getTargetPlayers()) {
+                            return !p.equals(player);
+                        }
+                    }
+                }
+                return true;
             case UntapOrLeaveTapped:
                 Card source = sa.getHostCard();
                 if (source != null && source.hasSVar("AIUntapPreference")) {
@@ -1834,6 +1851,23 @@ public class PlayerControllerAi extends PlayerController {
                 if (pool.isEmpty()) {
                     pool = list;
                 }
+                // the opponent lists its key cards in the order it wants them answered: the first one that is still to come
+                // (not taken by another copy, not already on the battlefield) is the name, and only then the next one
+                for (final Player opp : player.getOpponents()) {
+                    if (opp.getRegisteredPlayer() == null || opp.getRegisteredPlayer().getDeck() == null) {
+                        continue;
+                    }
+                    final CardCollectionView inPlay = opp.getCardsIn(ZoneType.Battlefield);
+                    for (final String key : opp.getRegisteredPlayer().getDeck().getKeyCards()) {
+                        if (taken.contains(key) || CardLists.count(inPlay, c -> c.getName().equals(key)) > 0) {
+                            continue;
+                        }
+                        if (CardLists.count(pool, c -> c.getName().equals(key)) > 0) {
+                            return key;
+                        }
+                    }
+                }
+                // none of them is left to name: the best of the key cards in the pool (even one already in play), then the best card
                 final CardCollection keyCards = new CardCollection();
                 for (final Player opp : player.getOpponents()) {
                     if (opp.getRegisteredPlayer() != null && opp.getRegisteredPlayer().getDeck() != null) {
@@ -1910,10 +1944,18 @@ public class PlayerControllerAi extends PlayerController {
         SpellAbility oldSA = sa;
         // TODO maybe add some more Logic into it
         for (final Card c : cards) {
+            final SpellAbility first = c.getFirstSpellAbility();
+            if (first != null && "ManaRitual".equals(first.getParam("AILogic"))) {
+                continue; // a ritual spliced onto a ritual earns one mana for {1}{R} more, and the second red was not there
+            }
             SpellAbility newSA = oldSA.copy();
             AbilityUtils.addSpliceEffect(newSA, c);
             // check if AI still wants or can play the card with spliced effect
-            if (AiPlayDecision.WillPlay == getAi().canPlayFromEffectAI((Spell) newSA, false, false)) {
+            // the splice cost is paid with the spell's: without this check the AI spliced a second Desperate Ritual onto the
+            // first with one red source and was left unable to pay, and the spell was lost
+            newSA.setActivatingPlayer(player);
+            if (ComputerUtilCost.canPayCost(newSA, player, false)
+                    && AiPlayDecision.WillPlay == getAi().canPlayFromEffectAI((Spell) newSA, false, false)) {
                 oldSA = newSA;
                 result.add(c);
             }

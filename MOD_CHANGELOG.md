@@ -14264,6 +14264,84 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 1049: the engine to the 11.18 daily (upstream `d9ae6615afc`, Forge 2.0.17-SNAPSHOT) (2026-11-19)
+
+The user: "I have updated Forge, let's update TFR1 to the latest version. Then we can probably do a 1.30 release.
+(E:\GAMES\Forge_2)". 62 first-parent commits, 1029 files (229 `.java`) since round 1031's `a8695ac23e2` (#12856 to
+#12816). Merged on the branch `engine-merge-1049` in the worktree `C:\CLAUDE\PROJECTS\TFR1\merge-1049`. Conflicts,
+impact, the user's answers and the shots: `C:\CLAUDE\PROJECTS\TFR1\notes\r1049\conflicts.md`.
+
+- **Matched**: BASE_INSTALL's `CHANGES.txt` is headed by #12816 (`d9ae6615afc`); `.installationinformation` says
+  `APP_VER 11.18`, the jar manifest `2.0.17-SNAPSHOT-11.18`; `build.txt` 2026-11-18 18:15:37. The 32 card scripts #12816
+  changed match `d9ae6615afc` inside BASE_INSTALL's `cardsfolder.zip`. The next commit, `2d8fef80a0a` (#12942, Java only),
+  is not in the install: its `SpellAbility.hurtsController` is missing from the install's class. It is the next merge's
+  first commit.
+- **The version stays 2.0.17-SNAPSHOT** (same jar name, no `clean` needed). `engineBuildVersion` `2.0.17-SNAPSHOT-11.18`:
+  the version backup runs once on the first launch (seen in the agent copy: `[TFR-Backup] new version TFR 1.29 engine
+  2.0.17-SNAPSHOT-11.18 (last backed-up ... 11.13)`).
+- **Upstream brought**:
+  - **AI** (large): Flat Monte Carlo - regeneration shields and wipes not wasted (#12891), block-enabling keywords
+    (#12897), evasion (#12905), High Tide and Splinter Twin (#12912), the attack (#12932: an added attacker that is a gift
+    to a blocker is dropped, an unblockable one the rollouts withdrew is put back); mana payment (color fixers, stored
+    counters, Nykthos, one-shot sources kept out);
+    `withoutHarmlessCreatures` for burn and exile/bounce; TargetOnlyAi, NothingAi, SacrificeWorth, MayDecisions,
+    TapAi, TapOrUntapAi (#12936); ActivationGuard/AnimateAi/ComboGuard (#12921); DeckPlan, ElfLoop, a VetoLog;
+    copies that would enter as 0/0 (#12880); FightAi targets (#12915); the Planar Die.
+  - **Rules**: last-known information only for cards that moved (#12816), every card exiled by a doubled ETB kept
+    (#12875), RAD counters, stack descriptions, Dune/NAU/SLD cards.
+  - **Adventure**: a two-column quest journal (#12881), decks as rewards and shop items (#12922), a scrolling reward
+    grid and inset item text (#12879, #12922), double-click to equip, an item card on the HUD ability buttons (#12879),
+    General Settings from inside Adventure (#12896), random rewards keep the specified printing (#12935), precon shop
+    areas and Realm of Legends map fixes (Shandalar/RoL data).
+  - **Other**: Commander Draft and Mystery Booster Commander, LimitedMatch, the iOS paste freeze, CI test speed.
+
+### The conflicts
+
+Nine text conflicts. Two needed the user; their answers (through the main thread): "Yes, all three" - the journal port,
+a cap of 10 on the finished-quests list, General Settings hidden.
+
+| File / feature | Upstream changed | Kept vs took | Impact |
+|---|---|---|---|
+| `QuestLogScene` (#12881), Q1 | Rewritten as a journal: story and side groups on the left, the selected quest's page on the right (portrait: one at a time with "< Quest List"), "New" tags, stages struck out when done, a fold-out of done stages, Track/Abandon beside Status/Back; `common/ui/quests*.json` changed with it | **Took the journal; ported every TFR addition onto it**: an "On the Map" group under the quests with the pillaged towns (round 484; selectable, the raid page with round 865's mini-map above its facts and Show on Map on the Track button) and the roaming legends (round 350); the side-quest timer on the row and the page title (QuestExpiry); " (2/5)" on active stages (round 240); the where-to-look hint (round 893); TFR's abandon text (round 992); hover tips (round 1000); unfilled-token logging (round 749) | The quest log looks like upstream's journal; nothing TFR showed is lost. Shots in both orientations in `notes\r1049` (20-25, 31-35) |
+| `AdventurePlayer` / `AdventureQuestController` (#12881, merged clean), Q1 follow-up | `unseenFinishedQuests` saved with the player: every finished quest since the log was last opened | **Capped at 10, newest kept** (`addUnseenFinishedQuest`, also trimmed on load) | The save never carries more than 10 finished-quest copies for the strike-out animation |
+| `SettingsScene` (#12896), Q2 | Rows rebuilt by `fillSettings()`; a General Settings button (`common/ui/settings*.json`) opens Forge's classic preferences | **Took the structure; kept every TFR row and the plane-switch confirm; the button hidden on an adventureOnly plane** (round 945's `Forge.isClassicLocked()`), portrait's Back given its full row back; `[TFR-Classic] Settings: General Settings hidden` | TFR's Settings look as before; Shandalar and other planes keep the button |
+| `RewardScene` (#12879, #12922) | The card grid in a scroll pane (below 60 px a card it scrolls), deck rewards, `claimReward` | **Both**; round 253's overflow shrink only when the grid does not scroll, round 253's mod-button lift kept, round 285's portrait reserve raises the scroller's bottom (`gridBottom`), the priced RewardChoice pick still takes its gold | Screens with 24+ cards scroll instead of shrinking cards to slivers |
+| `RewardActor` (#12879, #12922) | Item text inset inside the card back's border; a pack counts every section; deck names escape `[` | **Both**: the inset in round 907's try block (TFR's clean-font face text too); round 530's MapPiece title and text kept | Item names wrap a little narrower |
+| `CardUtil.CardPredicate` (#12935) | Rarity and edition tested on one printing, and the predicate hands on that printing | **Kept round 151's test with round 773's memo** (same answers, faster); **took** `getPrinting` for `getPredicateResult` | No change in which cards roll; `finishCandidate` still picks the printing |
+| `RewardData` (#12922) | A `deck` reward type | **Both** (rounds 204/206 and the 2026-08-30 shard rule kept) | Dormant (no TFR data uses it) |
+| `FlatMonteCarloPicker` (#12891) | Regeneration-shield and harmless-victim skips | **Both** beside round 1045's `EquipGuard.idle` skip | Trivial |
+| `AdventureQuestStage`, `GameHUD` imports | `unseen` field; preview imports | **Both** (pinned UID unchanged) | Trivial |
+
+Also decided in the merge: **HUD ability buttons** - upstream's item-card preview on hover (#12879) is added only where
+TFR's hover tips are off for the plane (`TfrTips.enabled()`), since TFR's own tip (round 993) opens on the same button.
+
+**The AI.** Every line TFR added since `a8695ac23e2` in the 32 files both sides touched is still in the merged files
+(checked line by line), so the stock hooks are intact: `GamePlayerUtil.createAiPlayer`, `AiController`'s `saSideEffects`
+and `refineAttackWithFlatMonteCarlo` lines, `ChangeZoneAi.willPayCosts`, the `DuelScene` difficulty line, `LiteTurnCap`
+and the priority-session hooks, `EquipGuard`, `ActivationGuard`'s TFR lines, `AiBlockController`'s trick allowance
+(untouched upstream), `DamageDealAi`'s chain reorder, `SpellApiToAi.get(null)`. Upstream's #12932 restores unblockable
+attackers after the rollouts change an attack, next to rule `mc-attack-cut-guard` (which runs first): P6 still fails
+with the rules off, so the rule stays. Every TFR rule is still live (no RETIRE?).
+
+### Tests
+
+- Maven `-B -o -pl forge-gui-mobile,forge-gui-desktop -am test`: exit 0, before and after the user's answers.
+  forge-game 32, forge-gui 29, forge-gui-mobile 265, forge-gui-desktop 2870 (0 failed, 11 skipped).
+  `TfrAiPuzzleTest`: 39 puzzles x off/lite/max = 117/117 ok, no rules-on failure, no RETIRE?. Logs
+  `C:\CLAUDE\PROJECTS\TFR1\notes\r1049\mvn_test1.log`, `mvn_test2.log`.
+- Shipping jar (`-pl forge-gui-mobile-dev -am package`): exit 0.
+- **Agent smoke test** in a test copy packaged from the branch (`C:\CLAUDE\PROJECTS\TFR1\agent-r1049`, the agent profile
+  copied): start screen `v2.0.17-SNAPSHOT-11.18`, the version backup and its notice once, saves 70 and 28 loaded, the
+  world map walked, two towns entered, 6 duels all at 50x (`mc=max aiTimeouts=0`, 16 `[TFR-AiRule]`), "How a Duel
+  Works" from the duel's Game menu, the reward and shop grids, Settings; the journal in landscape and portrait (story
+  and side quests, two timed side quests, a legend, a pillaged town's raid page, Show on Map). 0 exceptions in every log
+  (`agent-forge-smoke1.log`, `agent-forge-journal.log`); the round 1048 baselines also had 0.
+
+### Not done here
+
+Packaging (the main thread, after it reads the conflicts report). The Android build was not tried (upstream touched no
+Android file). The finished-quest cap is proven by reading, not in play (no quest was finished in the smoke test).
+
 ## Round 1048: "How a Duel Works" in the duel's Game menu, and words for touch and mouse (2026-11-18)
 
 The main thread's check of round 1047 found two gaps (the user: "Add the primer to the Game menu and fix the wording"):

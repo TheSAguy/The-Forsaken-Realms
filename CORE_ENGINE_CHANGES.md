@@ -35,6 +35,43 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 1049 - the engine to the 11.18 daily (upstream `d9ae6615afc`, Forge 2.0.17-SNAPSHOT)
+- Merge log and impact: `C:\CLAUDE\PROJECTS\TFR1\notes\r1049\conflicts.md`. The next merge starts at `2d8fef80a0a` (#12942).
+- `forge-gui-mobile/src/forge/adventure/scene/QuestLogScene.java` (STOCK, rewritten upstream by #12881): upstream's
+  journal with TFR's additions ported onto it, each marked `TFR` in the code: `addWorldGroup` ("On the Map": pillaged
+  towns from `TownPillage.questLogRows`, legends from `WorldStage.getLegendSightings`), `selectRaid`/`fillRaid` (round
+  865's raid page and `RaidMiniMap`, map above the facts), `trackPressed` (Track, or Show on Map on a raid page),
+  `selectedRaid`/`disposeRaidMap`; the QuestExpiry suffix in `questRow`, `typedName` and the page title; stage progress,
+  `logUnfilledTokens` and the prologue hint in `fillDetails`; `TfrLabels.abandonConfirm` in `confirmAbandon`;
+  `TfrScreenTips` on the buttons, row names, title and legend rows. **On a merge:** upstream's journal is the base; diff
+  upstream's change against `d9ae6615afc`'s version and re-apply it.
+- `forge-gui-mobile/src/forge/adventure/player/AdventurePlayer.java` (STOCK): `addUnseenFinishedQuest` /
+  `trimUnseenFinishedQuests`, `UNSEEN_FINISHED_CAP` 10 (also trimmed on load). `AdventureQuestController` (STOCK): its
+  `getUnseenFinishedQuests().add(...)` calls `addUnseenFinishedQuest` instead.
+- `forge-gui-mobile/src/forge/adventure/scene/SettingsScene.java` (STOCK, #12896): TFR's rows now live in upstream's
+  `fillSettings()`, the 2026-08-29 plane combo box first; upstream's rebuild-on-enter sits in TFR's `enter()`; the
+  `general` button is hidden when `Forge.isClassicLocked()` (round 945), with portrait's Back widened over its slot.
+- `forge-gui-mobile/src/forge/adventure/scene/RewardScene.java` (STOCK, #12879/#12922): upstream's `cardScroller` /
+  `cardGroup`; round 253's shrink only under `!scrolls`; round 285's `modReserve` raises `gridBottom` (the scroller's
+  bottom) instead of `yOff`; round 253's `liftModButtonsAboveCards` after the grid; the priced RewardChoice pick takes
+  its gold before `claimReward`.
+- `forge-gui-mobile/src/forge/adventure/util/RewardActor.java` (STOCK): upstream's text inset inside TFR's round 907 try
+  block; the pack title counts `getAllCardsInASinglePool(true, true)`; round 530's MapPiece branches beside upstream's
+  `[` escape.
+- `forge-gui-mobile/src/forge/adventure/util/CardUtil.java` (STOCK, #12935): `CardPredicate.test` keeps round 151's
+  one-printing rule with round 773's memo (`anyPrintingAllowed`); upstream's `getPrinting` serves `getPredicateResult`.
+- `forge-gui-mobile/src/forge/adventure/stage/GameHUD.java` (STOCK, #12879): the ability buttons' `RewardActor` preview
+  only when `!TfrTips.enabled()` (TFR's own tip, round 993, opens on the same button).
+- `forge-gui-mobile/src/forge/adventure/data/RewardData.java`, `AdventureQuestStage.java` (STOCK): upstream's `deck` reward
+  and `unseen` field beside ours; pinned UIDs unchanged.
+- `forge-ai/src/main/java/forge/ai/simulation/FlatMonteCarloPicker.java` (STOCK): upstream's `shieldAlreadyUp` and
+  `wastedOnHarmless` skips after round 1045's `EquipGuard.idle` skip.
+- `forge-gui/res/adventure/The Forsaken Realms/config.json`: `engineBuildVersion` `2.0.17-SNAPSHOT-11.18`.
+- Merged clean beside our edits (every TFR line checked present): `AiController` (the round 1018/1019 temporary lines,
+  rounds 924/1020/1044/1045), `AiAttackController`, `ComputerUtil`, `ComputerUtilCard`, `PlayerControllerAi`,
+  `SpellApiToAi`, `AttachAi`, `ChangeZoneAi`, `DamageDealAi`, `FightAi`, `PumpAi`, `ActivationGuard`, `GameCopier`,
+  `PhaseHandler`, `Player`, `Forge.java`, `DuelScene`, `InventoryScene`, `Reward`, `VPlayerPanel`, `en-US.properties`.
+
 ### Round 1048 - "How a Duel Works" in the duel's Game menu; the pages' pointer words per device
 - `forge-gui-mobile/src/forge/screens/match/views/VGameMenu.java` (STOCK, first TFR edit): `buildMenu` adds one item,
   "How a Duel Works", before the `if (!Forge.isMobileAdventureMode)` Settings block, guarded by

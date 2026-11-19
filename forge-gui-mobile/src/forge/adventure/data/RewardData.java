@@ -10,8 +10,10 @@ import forge.adventure.world.WorldSave;
 import forge.card.CardDb;
 import forge.card.CardEdition;
 import forge.deck.Deck;
+import forge.gamemodes.quest.QuestController;
 import forge.item.PaperCard;
 import forge.item.PaperCardPredicates;
+import forge.item.PreconDeck;
 import forge.localinstance.properties.ForgePreferences.FPref;
 import forge.model.FModel;
 import forge.util.IterableUtil;
@@ -76,6 +78,9 @@ public class RewardData implements Serializable {
     public RewardData[] rotation;
     public Deck cardPack;
     public String sourceDeck;
+    public String precon;
+    public String commanderPrecon;
+    public int cost;
     public String minDate;
     // Shop-only card dedup (2026-08-15): when true, CardUtil.generateCards()/the Union branch
     // pick unique card NAMES (shuffle-then-take-front, gracefully capped at the pool's own
@@ -129,6 +134,9 @@ public class RewardData implements Serializable {
         deckNeeds        = rewardData.deckNeeds == null ? null : rewardData.deckNeeds.clone();
         cardPack         = rewardData.cardPack;
         sourceDeck       = rewardData.sourceDeck;
+        precon           = rewardData.precon;
+        commanderPrecon  = rewardData.commanderPrecon;
+        cost             = rewardData.cost;
         minDate          = rewardData.minDate;
         uniqueCards      = rewardData.uniqueCards;
         armoryRarityVenue = rewardData.armoryRarityVenue; // restrictToEditions() clones - without
@@ -653,6 +661,14 @@ public class RewardData implements Serializable {
                         ret.add(new Reward(cardPack, isNoSell));
                     }
                     break;
+                case "deck": {
+                    Deck deck = loadRewardDeck();
+                    if (deck != null) {
+                        deck.getTags().add(Reward.DECK_TAG);
+                        ret.add(new Reward(deck, isNoSell, cost));
+                    }
+                    break;
+                }
                 case "deckCard": {
                     if (cards == null)
                         return ret;
@@ -763,6 +779,23 @@ public class RewardData implements Serializable {
         if (mapPath.contains("/fort/"))
             return Reward.Type.Wood;
         return Reward.Type.Shards;
+    }
+
+    private Deck loadRewardDeck() {
+        if (precon != null && !precon.isEmpty()) {
+            PreconDeck found = QuestController.getPrecons().get(precon);
+            if (found != null)
+                return (Deck) found.getDeck().copyTo(found.getDeck().getName());
+            System.err.println("Missing precon: " + precon);
+        } else if (commanderPrecon != null && !commanderPrecon.isEmpty()) {
+            Deck found = FModel.getDecks().getCommanderPrecons().get(commanderPrecon);
+            if (found != null)
+                return (Deck) found.copyTo(found.getName());
+            System.err.println("Missing commander precon: " + commanderPrecon);
+        } else if (sourceDeck != null && !sourceDeck.isEmpty()) {
+            return CardUtil.getDeck(sourceDeck, false, false, "", false, false);
+        }
+        return null;
     }
 
     static public List<PaperCard> generateAllCards(Iterable<RewardData> dataList, boolean isForEnemy) {

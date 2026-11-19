@@ -365,11 +365,18 @@ public class ComputerUtilCost {
         for (final CostPart part : cost.getCostParts()) {
             if (part instanceof CostSacrifice sac) {
                 if (sac.payCostFromSource()) {
+                    if (ComputerUtil.sacrificePunished(ai, source)) {
+                        return false; // the sacrifice is punished (Bloodroot Apothecary's poison)
+                    }
                     if (!important) {
                         return false;
                     }
                     if (!CardLists.filterControlledBy(source.getEnchantedBy(), source.getController()).isEmpty()) {
                         return false;
+                    }
+                    // Vampire Hexmage: giving up the source is the point when it frees an impending permanent or the like
+                    if (sourceAbility != null && forge.ai.ability.CountersRemoveAi.worthwhileOwnTarget(ai, sourceAbility) != null) {
+                        continue;
                     }
                     if (source.isCreature()) {
                         // e.g. Sakura-Tribe Elder
