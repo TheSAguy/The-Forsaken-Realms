@@ -14264,6 +14264,32 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 1054: the version is 1.30, with its release notes, guide and FAQ (2026-11-19)
+
+Part 1 of the 1.30 release the user called ("Let's start the 1.30 release candidate."), after rounds 1033-1053 were
+packaged into live at `4b9d33da2e9`. The RC build and its test follow (the 1.29 method); nothing is tagged or pushed.
+
+- **Version** (as round 1032 did): the plane's `config.json` `modVersion` 1.30 and `modVersionDate` 11.19
+  (`engineBuildVersion` already `2.0.17-SNAPSHOT-11.18` from round 1049); `forge-gui-android/pom.xml` `<tfr.version>`
+  1.30 and `<manifestVersionCode>` 13000.
+- **`RELEASE_NOTES_v1.30.md`**, written from this changelog (rounds 1033-1053), not from memory. Proposed title "The
+  Forsaken Realms 1.30: A Fair Start" (the week-1 ante grace and the duel pages lead; the user decides the name, which
+  is in no shipped file). Sections: a gentler first week (1046-1048), the new Quest Log (1049), a smarter AI
+  (1033-1037, 1043-1045, 1050, 1052), fixes (1038-1042, 1051, 1053), the 11.18 engine (1049). 1.29's Android section,
+  with round 1038's keep-on-screen advice in step 4. Left out on purpose: upstream's General Settings button (hidden in
+  TFR, so players see nothing), deck rewards (no TFR data uses them), the log-only changes (`reason=`, `[TFR-Backup]
+  nothing to back up`). **Saves:** no new game is needed; the grace reads the world's day at each duel, so a save past
+  day 7 antes as before.
+- **GUIDE:** "What's New in 1.30" above "Coming from 1.28?" (1.29's list; the contents link follows); Town Raids'
+  "Keeping track" names the journal's **On the Map** group and picking the town instead of the old Details button;
+  footer v1.30 as of 2026-11-19. `GUIDE.html` regenerated (`guide_html.py --check` OK).
+- **Discord FAQ** (`dev-tools/discord_faq/messages.py`): `FAQ_VERSION` "v1.30"; message 9's ante line says "none in
+  week 1 on Easy and Normal" (1,953 characters after two trims: the Mechanic clause, "let you watch ... first"); message
+  10's raid line names On the Map (1,600); message 23 gains a "How a Duel Works" duel-settings line (1,988 after trims:
+  the achievements list, Keep Mouse in Window's clause, the trigger-batch sentence). `EDITED` = {1, 9, 10, 23}; nothing
+  ADDED, so Support stays last. Paste list `C:\CLAUDE\PROJECTS\TFR1\notes\faq-1.30-edits.md`.
+- **Ledger:** `docs/tfr/releases.md` gets a v1.30 "ready for the tag" STATE block.
+
 ## Round 1053: the New Game+ Difficulty drop-down opens in front of the dialog (2026-11-19)
 
 Seen by round 1051 in the agent game: the New Game+ dialog's Difficulty drop-down opened its list *behind* the dialog,

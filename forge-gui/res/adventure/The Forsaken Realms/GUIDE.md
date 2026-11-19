@@ -11,7 +11,7 @@ are in the [FAQ](#faq) at the end.
 ## Table of Contents
 
 1. [Introduction](#introduction)
-2. [What's New in 1.29](#whats-new-in-129)
+2. [What's New in 1.30](#whats-new-in-130)
 3. [Starting Out](#starting-out)
 4. [Changes from the Base Game](#changes-from-the-base-game)
 5. [Early Game Advice](#early-game-advice)
@@ -41,10 +41,34 @@ the early game is meant to be a fight.
 *Windows, macOS and Linux launchers all ship (Windows is the tested one), and every release includes an Android
 version - playable, but it gets far less testing than the desktop builds.*
 
-## What's New in 1.29
+## What's New in 1.30
 
-The short version for returning players. Each item links to where the guide covers it in full. Mirror Gear needs a new
-game on Hard or Insane; everything else in 1.29 works on your current save.
+The short version for returning players. Each item links to where the guide covers it in full. Everything in 1.30
+works on your current save.
+
+- **No ante in your first week on Easy and Normal:** duels on days 1-7 risk no cards; ante starts on day 8. Hard and
+  Insane play for ante from the first duel, and New Game+ has no grace week. Custom difficulty has a "Weeks without
+  ante" setting. See [Ante, Tournaments & Hostile Lands](#ante-tournaments--hostile-lands).
+- **How a Duel Works:** five short pages before a new save's first duel - life and lands, your turn (**End Turn ends
+  your turn at once and skips your attack**), attacking and blocking, what a loss costs, and where Concede is. Read
+  them again from **Settings** or the duel's **Game menu**.
+- **A new Quest Log:** Forge's two-column journal, with story and side quests on the left and the quest's page on the
+  right (one at a time in portrait). Pillaged towns and roaming legends sit under **On the Map**; a raid's page has its
+  mini-map and **Show on Map**. See [Quests](#quests) and [Town Raids](#town-raids).
+- **A smarter AI:** enemies allow for your combat tricks and a team pump you have shown, trade to save a planeswalker,
+  stop trading at full life on Insane, keep a fetchland rather than pay life into lethal, wait for X=3 on Torment of
+  Hailfire, and no longer stall a duel trying to cast Life from the Loam or moving a free Equipment back and forth.
+  Felidar Sovereign and Test of Endurance are out of the enemy decks.
+- **New Game+:** the Difficulty drop-down works, and moving up to Hard or Insane turns
+  [Mirror Gear](#enemies-that-adapt-to-you) on (down to Easy or Normal turns it off).
+- **Fixes:** The War Begins pages and World Standings' **The War** on Android, Continue after Data > Restore, a restore
+  under a loaded game, Android's resource download (keep the game on screen), the version backup with two copies open,
+  and the Magma Ogre's animation.
+- **Engine:** Forge's 11.18 build. Reward screens with many cards scroll, and your adventure folder is backed up once
+  on the first launch of 1.30.
+
+Coming from 1.28? This is what 1.29 added. Mirror Gear needs a new game on Hard or Insane; everything else in 1.29
+works on your current save.
 
 - **Mirror Gear (Hard and Insane):** a New Game checkbox, on by default on Hard and Insane. Once you are dominating,
   Masters and Archmages copy 1 of your worn gear items (3+ worn), or 2 (5+ worn) - fair items only, and each copy adds
@@ -494,8 +518,8 @@ Raiders from the nearby dungeons can fall on a town - one of yours, or a neutral
   (and 21 Power). Let the days run out and it thinks less of you: **-2 town reputation**. If the town falls to an AI
   color or is sacked to ruins in the meantime, the raid simply ends.
 - **Keeping track.** A notice tells you when a raid starts, at each raider beaten and with 2 days left. Your quest log
-  lists every raided town with its count, direction and days left, and the world map's Details view marks it
-  "Pillaged! 2/5". The raid's **Details** button in the quest log opens its page: the count, the days left, how far
+  lists every raided town under **On the Map** with its count, direction and days left, and the world map's Details
+  view marks it "Pillaged! 2/5". Pick the town there to open its page: the count, the days left, how far
   away the town is, the reward and the penalty, and a mini-map of the town with the 20-tile raid range, you, and a red
   dot for each raider you can see. **Show on Map** opens the world map on the town.
 - **Telling raiders apart.** Hold Alt (the enemy info plates) and each raider's plate carries an orange
@@ -2502,7 +2526,7 @@ session (grab it before restarting, or pick the matching dated file). Screenshot
 
 ---
 
-*This guide covers The Forsaken Realms v1.29, as of 2026-11-14. See `MOD_CHANGELOG.md` in the
+*This guide covers The Forsaken Realms v1.30, as of 2026-11-19. See `MOD_CHANGELOG.md` in the
 repository for the full history of how the game got here, if you're curious.*
 
 ## Support & Community

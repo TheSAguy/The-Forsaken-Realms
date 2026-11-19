@@ -188,3 +188,18 @@ Gear paragraph under Enemies That Adapt to You. The Discord FAQ says v1.29 (`EDI
 The webhook token was checked absent from the unpushed history and the tree before the push. The main thread packages
 live from the tag commit. No itch.io upload by the session; the user posts the zip and APK. NOTHING is unreleased. Next
 version: 1.30 / 13000. Next merge from upstream after `a8695ac23e2` (its first commit is `3cfec26d1ed`, #12856).
+
+## STATE 2026-11-19: **v1.30 READY FOR THE TAG** (round 1054; the RC is built and tested next)
+Rounds 1033-1053 on top of v1.29. Engine = the 11.18 daily (upstream `d9ae6615afc`, round 1049, Forge 2.0.17-SNAPSHOT)
+on the matching BASE_INSTALL. `modVersion` 1.30 / `modVersionDate` 11.19, Android `tfr.version` 1.30 / versionCode
+13000. Proposed name "A Fair Start" (the user decides; the name is in the release notes only, nothing that ships). Assets
+to come in `C:\CLAUDE\PROJECTS\TFR1\release\v1.30` (the round 1054 follow-up fills in sizes and bytes):
+- `The-Forsaken-Realms-v1.30.zip` - MB;
+- `forsaken-realms-1.30-signed-aligned.apk` - MB (com.thesaguy.forsakenrealms, versionCode 13000, signer EE:60:39:25);
+- `assets.zip` - MB (one `mvn` run in `C:\TFR-build` via R:; carries `log_share.txt`).
+
+Notes = `RELEASE_NOTES_v1.30.md` (checked against the changelog, rounds 1033-1053; 1.29's Android section with the
+keep-on-screen line of round 1038). GUIDE What's New 1.30 above "Coming from 1.28?"; the raid page's wording follows
+the round 1049 journal. The Discord FAQ says v1.30 (`EDITED` {1, 9, 10, 23}, nothing new; paste list
+`notes/faq-1.30-edits.md`). Posts: `notes/release-1.30-posts.md`. The publish step tags, pushes, publishes and replaces
+this block with the RELEASED one.

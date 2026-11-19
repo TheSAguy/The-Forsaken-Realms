@@ -1,14 +1,15 @@
 """The Discord FAQ: (topic, short label, message). Each message must stay under Discord's 2,000 characters."""
 
 # The released version the FAQ describes; build_page.py shows it in the page header. One line to change per release.
-FAQ_VERSION = "v1.29"
+FAQ_VERSION = "v1.30"
 
 # What this version changed, by message number: EDITED are edited in place in Discord, ADDED are new topics. Support
 # is always the last message: new topics go before it, and the user reposts Support at the end of the channel.
 # build_page.py tags them. Reset both at the next release.
-# 1.30: nothing changed yet (round 1032's follow-up 2 reset them after 1.29; v1.29's own set was {1, 7, 23}, none
-# ADDED).
-EDITED = set()
+# 1.30 (round 1032's follow-up 2 reset them after 1.29; v1.29's own set was {1, 7, 23}, none ADDED): round 1054 edits
+# 1 (the header's version), 9 (no ante in week 1 on Easy and Normal, round 1046), 10 (the raid's page in the new quest
+# log, round 1049) and 23 (How a Duel Works, rounds 1047-1048).
+EDITED = {1, 9, 10, 23}
 ADDED = set()
 
 M = []
@@ -170,14 +171,14 @@ M.append(("Losing (and winning)", "Losing & winning", r"""**Losing (and winning)
 1. **Your Capitol falls.** A war mage that gets past your Capitol's guards forces you into a best-of-3 defense duel, wherever you are. Lose it and the run is over.
 2. **One AI color holds 3 of the 5 Ring Cities.** You're warned the moment any color holds 2.
 3. **No free town is left:** you hold no town and no Capitol, and an AI capture leaves no wasteland town anywhere (working, ruined, or an unclaimed Ring City).
-**To win:** hold all five Ring Cities AND bring down all five colors' castles. You can keep playing afterward. Both end screens let you watch the **History** replay first.
+**To win:** hold all five Ring Cities AND bring down all five colors' castles. You can keep playing afterward. Both end screens offer the **History** replay.
 
 **Q: What does losing a duel cost?**
 **A:**
 - **Gold:** a share of what you carry (2% / 5% / 10% / 15% from Easy to Insane). From week 2 that's at least 50 / 100 / 150 / 200, or all of it if you carry less; week 1 has no minimum. Gold in the Bank is safe.
 - **Life:** 10% / 20% / 30% / 30% of your max life.
-- **Your ante** (a Bronze Coin gets it back - see Challenge Coins).
-- **An item:** losing to a boss, or running out of life, cracks one item you wear. Repair it to wear it again (the Mender perk can save it, Mechanic makes repairs cheap).
+- **Your ante:** none in week 1 on Easy and Normal. A Bronze Coin gets it back.
+- **An item:** losing to a boss, or running out of life, cracks one item you wear. Repair it to wear it again (Mender can save it).
 If your life hits 0 you're carried home: to your Capitol, or to Orazca before it stands. Losing inside a rotating dungeon usually makes it vanish (a gauntlet stays). The Stubborn perk cuts the gold and life a loss costs.
 
 **Q: Can I just reload after a loss?**
@@ -190,7 +191,7 @@ M.append(("Your towns under attack: raids and war mages", "Raids & mages", r"""*
 - While you're near, 3 or 4 raiders stand just outside its walls, and each one that falls is replaced.
 - **Beat 5 raiders within 7 days:** +1 town reputation, 50 Wood, 50 Stone and 21 Power.
 - **Let the days run out:** -2 town reputation.
-- Your quest log lists every raided town with its count and days left; its **Details** page has a mini-map of the town, and **Show on Map**. The world map's Details view marks it "Pillaged! 2/5".
+- Your quest log lists every raided town under **On the Map** with its count and days left; pick it for a mini-map of the town and **Show on Map**. The world map's Details view marks it "Pillaged! 2/5".
 - Hold **Alt** and each raider's plate says "RAIDER" and the town it's raiding.
 - A **roaming guard** with "Help with pillaged towns" ticked (your Capitol's Armory, Manage Guards) rides out and fights the raiders for you, and its wins count toward the five.
 
@@ -452,18 +453,19 @@ Change it at the Job Board for half the town's restore fee in gold; then it's lo
 M.append(("Achievements, enemy plates, loops and duel settings", "Achievements & duels", r"""**Achievements, enemy plates and duels**
 
 **Q: Does the game have achievements?**
-**A:** Yes, 18 of its own (two hidden), listed first on your character sheet (Quest log > **Status**): castles, capitals, legends, Arena weeks, treasures, Partner standings, research and more. They belong to your profile, so a new game or New Game+ keeps them, and loading an older save awards what it has already done.
+**A:** Yes, 18 of its own (two hidden), listed first on your character sheet (Quest log > **Status**): castles, capitals, legends, Arena weeks, treasures and more. They belong to your profile, so a new game or New Game+ keeps them, and loading an older save awards what it has already done.
 
 **Q: How can I see an enemy's rank before I fight?**
 **A:** Hold **Alt** (touch: the Units button; controller: R3). A plate over every enemy on screen shows its rank. Fought another rank of its kind? You see its deck colors too. Fought this exact rank? Also the life it would start with now, in orange when it's above normal.
 
 **Q: My duel is stuck in an endless loop. What now?**
-**A:** The AI can't repeat the same ability more than 25 times in a turn while you lose no life (300 at most), and a trigger that comes back 25 times with nobody acting and nobody losing life ends the game in a draw. A combo that drains or burns runs to the end. So does a big batch of triggers resolving one by one, if under about 1,000 at once. The AI accepts the duel menu's **Offer Draw** while a trigger loop is running (10+ repeats), once it has had to stop repeating one of its own abilities that turn, or when the duel has stalled: 8 turns with no life lost, no poison, no library running out and the boards about the same. A draw is nothing won or lost: no ante, no gold, no notoriety.
+**A:** The AI can't repeat the same ability more than 25 times in a turn while you lose no life (300 at most), and a trigger that comes back 25 times with nobody acting and nobody losing life ends the game in a draw. A combo that drains or burns runs to the end, as does a batch of under about 1,000 triggers. The AI accepts the duel menu's **Offer Draw** while a trigger loop is running (10+ repeats), once it has had to stop repeating one of its own abilities that turn, or when the duel has stalled: 8 turns with no life lost, no poison, no library running out and the boards about the same. A draw is nothing won or lost: no ante, no gold, no notoriety.
 
 **Q: Which duel settings are worth knowing?**
+- **How a Duel Works** (Settings, or the duel's Game menu): turns, attacks, blocks, losses. End Turn skips your attack!
 - **Show land drops in duels** (off by default): lands played this turn out of lands allowed, under each player's counts.
 - **Always Yes** for a "you may" trigger like Valakut: open the stack, click the trigger, click it again and tick Always Yes. It holds for the rest of the duel.
-- **Keep Mouse in Window** (PC, fullscreen): keeps the cursor inside the game, handy with two monitors.
+- **Keep Mouse in Window** (PC, fullscreen): handy with two monitors.
 - **Disable Notoriety:** see Enemies that adapt to you."""))
 
 M.append(("Support The Forsaken Realms", "Support", r"""**☕ Support The Forsaken Realms**
