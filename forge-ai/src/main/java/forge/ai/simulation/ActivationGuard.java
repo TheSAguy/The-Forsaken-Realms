@@ -22,6 +22,7 @@ import forge.game.cost.CostSacrifice;
 import forge.game.cost.CostTapType;
 import forge.game.cost.CostUntapType;
 import forge.game.GameEntity;
+import forge.game.GameObject;
 import forge.game.player.Player;
 import forge.game.spellability.SpellAbility;
 import forge.game.spellability.TargetRestrictions;
@@ -38,8 +39,8 @@ import forge.game.zone.ZoneType;
  *
  * <p>Each effect of the chain (the ability and its sub-abilities) is judged:
  * <ul>
- *   <li><b>targeted</b>: no legal candidate for the targets it needs (or, for "up to", no candidate at all), or fewer
- *   candidates than the minimum;</li>
+ *   <li><b>targeted</b>: no legal candidate for the targets it needs (or, for "up to", no candidate at all, a legal
+ *   target already chosen counting as one), or fewer candidates than the minimum;</li>
  *   <li><b>"All" effects</b> (PutCounterAll, PumpAll, UntapAll, TapAll, DamageAll, DestroyAll, AnimateAll,
  *   ProtectionAll, RemoveCounterAll, SacrificeAll, TapOrUntapAll, ChangeZoneAll): the cards they name are not there (and for
  *   the one-sided ones, none on the side they would help or hurt);</li>
@@ -416,6 +417,15 @@ public final class ActivationGuard {
                 return refined;
             }
             final int min = node.getMinTargets();
+            // TFR round 1052: hasCandidates skips the targets already chosen, so an "up to N" spell asked after its
+            // targets are set (the combo guard asks about the chosen play) that took every candidate there is (Life from
+            // the Loam with 3 or fewer lands in the graveyard) read as having none. A chosen target that is still legal
+            // is a candidate. (getNumCandidates counts chosen targets already.)
+            if (min <= 0 && !node.getTargetRestrictions().hasCandidates(node) && hasLegalChosenTarget(node)) {
+                forge.ai.tfr.TfrAiRules.stockFix(ai, "chosen-target:" + node.getHostCard().getId(), node.getHostCard().getName()
+                        + ": every candidate is chosen (" + node.getTargets().size() + "), not idle");
+                return Verdict.USEFUL;
+            }
             final boolean idle = min > 0
                     ? node.getTargetRestrictions().getNumCandidates(node) < min
                     : !node.getTargetRestrictions().hasCandidates(node);
@@ -453,6 +463,19 @@ public final class ActivationGuard {
             default:
                 return Verdict.USEFUL;
         }
+    }
+
+    /** TFR round 1052: a target already chosen for this effect that it can still legally take. */
+    private static boolean hasLegalChosenTarget(final SpellAbility node) {
+        if (node.getTargets() == null) {
+            return false;
+        }
+        for (final GameObject o : node.getTargets()) {
+            if (node.canTarget(o)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /** The parameters of a Pump that do more than hand out keywords (a Pump with any of them is not judged here). */

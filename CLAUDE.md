@@ -52,7 +52,12 @@ times in a priority, `[TFR-LoopBreak] failed cast x3`; puzzles P22-P22c, `failed
 round 1051 (**New Game+ sets Mirror Gear from its difficulty**: the same difficulty keeps the save's flag, a changed one
 takes the New Game screen's default - on for Hard and Insane, off for Easy and Normal; Custom (X) counts as X;
 `MirrorGear.newGamePlus`, `[TFR-MirrorGear] new world: on (New Game+ raised Normal -> Insane, ...)`; the New Game+
-dialog's difficulty note says "- Mirror Gear on/off" on a changed pick); and round 1053 (**the New Game+ Difficulty drop-down opens in front of the dialog**: round 120's
+dialog's difficulty note says "- Mirror Gear on/off" on a changed pick); round 1052 (**Flat MC casts Life from the
+Loam again when it takes every land in its graveyard**, a 1.30 regression from round 1049: upstream #12905's `ComboGuard`
+asks stock `ActivationGuard.spellProblem` about the chosen play, and `hasCandidates` skips chosen targets, so an "up to
+N" spell that chose every candidate was vetoed `no-valid-targets`; a legal chosen target now counts, `[TFR-AiFix]
+chosen-target`; puzzles P23 and P23b; `LegalityGuardTest`; bench and draft in `C:\CLAUDE\PROJECTS\TFR1\notes\r1052\`);
+and round 1053 (**the New Game+ Difficulty drop-down opens in front of the dialog**: round 120's
 per-frame dialog re-assert in `UIScene.act` pulled every dialog over its own SelectBox list since round 837's picker, so a
 tap closed the list unchanged, desktop and touch; `UIScene.keepDialogInFront` leaves the dialog's own list on top,
 `DialogZOrderTest`; the bridge's `click text=` presses an open drop-down's item and any actor by name; shots

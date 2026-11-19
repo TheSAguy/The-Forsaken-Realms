@@ -14300,6 +14300,69 @@ Advanced...'s "Based on" list.
     Maven `-o -pl forge-gui-mobile -am test "-Dtest=forge/adventure/**/*Test"`: exit 0, 254 tests, 0 failures.
 - **Not checked:** an Android device. The fix is in shared scene2d code, the same path the portrait window ran.
 
+## Round 1052: the AI casts Life from the Loam again when it takes every land in its graveyard (2026-11-19)
+
+A 1.30 regression found by round 1050: on the 11.18 build (round 1049's merge), Flat Monte Carlo (lite and max, so
+every TFR duel) vetoed Life from the Loam whenever the AI had chosen every land in its graveyard as a target. Files:
+`forge-ai/.../simulation/ActivationGuard.java` (stock), `forge-gui-desktop/.../simulation/LegalityGuardTest.java`
+(stock test, one test), puzzles P23 and P23b. Bench, logs and the upstream draft:
+`C:\CLAUDE\PROJECTS\TFR1\notes\r1052\`.
+
+- **The cause (stock, upstream #12905 "FlatMC Evasion and other fixes", `fc65fb7a6ae`, 11.16):** `ComboGuard.problem`
+  asks `ActivationGuard.spellProblem` about the play the AI has chosen, with its targets set. For an "up to N" effect
+  `ActivationGuard.judge` calls it idle when `TargetRestrictions.hasCandidates` is false, and `hasCandidates` skips the
+  targets already chosen. So once the AI had picked every candidate, the spell read as having none:
+  `[veto] T6 MAIN1 AI | Life from the Loam | spell | reason=no-valid-targets | at=guard` (`-Dflatmc.veto=true`). The
+  heuristic (`off`) and the 11.13 build cast it. The same stale-target reading also vetoed it at discovery
+  (`at=discovery`), when the heuristic had left its targets set on the ability.
+- **The brief's premises, corrected:** (1) the brief named #12936; that PR only added `givesMoreThanItTakes` beside the
+  check, the `spellProblem` call on the chosen play came with #12905. (2) "3 or fewer lands": the heuristic itself casts
+  an "up to N" spell for fewer than N only when its life is in danger (`ComputerUtil.shouldCastLessThanMax`, stock since
+  2025), so with 1-2 lands it holds the Loam on every build. The regression is exactly 3 lands (all chosen) in normal
+  play, and 1-2 lands when the AI's life is in danger.
+- **The fix (stock, `ActivationGuard.judge`):** an "up to" node whose `hasCandidates` is false but that has a chosen
+  target it can still legally take (`node.canTarget(o)`: ValidTgts, zone, hexproof) is useful, logged once a game, turn
+  and card as `[TFR-AiFix] chosen-target turn N <player> <card>: every candidate is chosen (K), not idle` (never in a
+  rollout). `getNumCandidates` (the `min > 0` branch) already counts chosen targets, so that branch is unchanged. A spell
+  with no legal target at all is still vetoed (#12905's intent): the bench's remaining Loam vetoes are all at discovery
+  with no land in the graveyard.
+- **How wide:** 504 cards in the pool have an "up to N" target on a spell or activated ability (`TargetMin$ 0`), 324 of
+  them in TFR decks (Life from the Loam in 21). The bug bites only when the chosen targets cover every candidate:
+  graveyard returns with few cards there, "up to one target creature" with one creature in play. A planeswalker's plus
+  ability was never vetoed (the guard always allows a loyalty gain).
+- **Puzzles** (`forge-gui/res/ai/tfr-puzzles/`, `Expect:aiplayed has Life from the Loam`, `failedplays<=0`): P23,
+  three lands in the graveyard, a quiet board; P23b, two lands, the AI at 5 life facing four Grizzly Bears, round 1050's
+  busy board. On the 11.18 build with round 1050's classes (`bench\puzzle.sh`, round 1050's harness): P23 2/2 at off,
+  0/2 at lite and max; P23b 2/2 at off, 0/2 at lite and max (all vetoed `at=guard`). With the fix: 2/2 at all three.
+- **Headless bench** (`bench\duel.sh`, round 1050's AuditHarness pairs mode and 11.18 jar, Flat MC lite, round 1050's
+  six pairings (`pairs-ab.txt`: Gitrog against Uro, Damia, Borborygmos; Corrupted Treant against Teval; Slogurk against
+  Trystan; Teneb against Lluwen), 4 games each, seed 1052, both arms at once; `bench\counts.txt`):
+
+  | Arm | Games | Loam casts (by targets) | Loam `no-valid-targets` vetoes | `chosen-target` | `AI looped too much` | `failed cast x3` | Seconds a game |
+  |---|---|---|---|---|---|---|---|
+  | round 1050 (HEAD) | 24 | 5 (all 3 targets) | 90 (84 discovery, 6 guard) | 0 | 0 | 0 | 13.6 |
+  | round 1052 | 24 | 11 (2 with 2 targets, 9 with 3) | 41 (all discovery, no land) | 33 | 0 | 0 | 12.6 |
+
+  The stock arm never cast the Loam with fewer than 3 targets; round 1050's own bench shows the same (9 and 5 casts,
+  all 3 targets). The arms play different games after their first different decision.
+- **Agent game** (the 11.18 agent build, rounds 1049-1051, with this round's `ActivationGuard` ahead of the jar, `agent\r1052classes`,
+  plus a debug-only `[DBG-LOAM]` cast print, `agent\r1052dbg`, never committed; cheats; a fresh Normal character given
+  400 max life; spawned The Gitrog Monster (Master) and walked into it; the bridge's 50x; Flat MC max). Duels 1 and 2
+  (the real deck) were won on turns 32 and 12 and the Gitrog cast no Loam: it drew its one copy on turn 31, then never
+  in duel 2. Duel 3 had the agent copy of the Gitrog deck at 4 Life from the Loam (Culling Ritual, Lethal Scheme,
+  Overwhelming Remorse out; backed up and restored): lost after 155 s, and the Gitrog cast Life from the Loam 5 times
+  (turns 13, 15, 23, 25, 29, each with 3 targets and 4-11 lands in its graveyard), `[TFR-AiFix] chosen-target` 4 times,
+  no `AI looped too much`, no `failed cast x3` (`notes\r1052\agent-forge-3.log`). Those 5 casts had more lands than
+  targets, a case 11.18 also cast; the every-land case is proven by P23, P23b and the bench.
+- **Tested:** Maven `-o -pl forge-gui-desktop -am test -Dtest=TfrAiPuzzleTest,LoopBreakerTest,ParadoxOutcomeTargetsTest,LegalityGuardTest,FlatMonteCarlo*Test,FlatMc*Test,forge/ai/tfr/**/*Test`:
+  1026 tests, 0 failures, 1 skipped, Maven exit 0 (`notes\r1052\mvn-full.log`). `TfrAiPuzzleTest`: 44 puzzles x off,
+  lite, max, rules on and off, all `ok` (P22-P22c and P23-P23b
+  included), no "RULES ON FAILS" or "RETIRE?". `LegalityGuardTest.anUpToSpellThatChoseEveryCandidateIsStillCast`: an
+  illegal chosen target still reads `no-valid-targets`; a lone graveyard land, chosen or not, does not.
+- **Upstream PR draft** (the user posts it): `C:\CLAUDE\PROJECTS\TFR1\notes\r1052\upstream-pr\`, the fix without the
+  log call plus the test, against upstream `master` `2c27a4c797f` (2026-11-19), which still has the bug; `git apply
+  --check` passes there. Not run on upstream's tree.
+
 ## Round 1051: New Game+ into Hard or Insane turns Mirror Gear on (2026-11-19)
 
 The user: "Do the Mirror Gear New Game+ fix too." From the logs-1119 review (`C:\CLAUDE\PROJECTS\TFR1\notes\logs-1119.md`,

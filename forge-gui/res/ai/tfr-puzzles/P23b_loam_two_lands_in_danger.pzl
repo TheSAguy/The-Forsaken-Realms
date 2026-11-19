@@ -1,0 +1,18 @@
+[metadata]
+Name:P23b - Life from the Loam with two lands in the graveyard, life in danger, a busy board (round 1052)
+Description:As P23, with two lands in the graveyard. The heuristic casts an "up to N" spell for fewer than N only when its life is in danger (ComputerUtil.shouldCastLessThanMax), so the AI is at 5 life facing four Grizzly Bears; four nonland permanents on its side (round 1050's P22 board, where ParadoxOutcome.sureCast used to aim the Loam at them). The AI picks both lands, and upstream's guard vetoed that on 11.18 (no candidates left), at discovery and at the guard. Expect: the Loam is cast, and no play fails.
+Turns:1
+Expect:aiplayed has Life from the Loam
+Expect:failedplays<=0
+[state]
+humanlife=20
+ailife=5
+turn=6
+activeplayer=ai
+activephase=MAIN1
+humanlibrary=Island;Island;Island;Island;Island
+humanbattlefield=Grizzly Bears;Grizzly Bears;Grizzly Bears;Grizzly Bears;Forest;Forest
+aihand=Life from the Loam
+ailibrary=Swamp;Swamp;Swamp;Swamp;Swamp;Swamp;Swamp;Swamp;Swamp;Swamp;Swamp;Swamp
+aigraveyard=Forest;Swamp
+aibattlefield=Forest;Forest;Swamp;Sol Ring;Arcane Signet;Llanowar Elves;Elvish Mystic

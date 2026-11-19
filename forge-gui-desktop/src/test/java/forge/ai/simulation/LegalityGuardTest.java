@@ -392,6 +392,21 @@ public class LegalityGuardTest extends FlatMcTestBase {
     }
 
     @Test
+    public void anUpToSpellThatChoseEveryCandidateIsStillCast() {
+        // TFR round 1052: hasCandidates skips the targets already chosen, so Life from the Loam that had picked every land
+        // in the graveyard read as "no-valid-targets" and the guard vetoed the cast
+        final Card loam = put("Life from the Loam", ai, ZoneType.Hand);
+        final SpellAbility sa = cast(loam);
+        sa.getTargets().add(put("Forest", ai, ZoneType.Hand)); // a chosen target it cannot take (not in the graveyard)
+        AssertJUnit.assertEquals("no land in the graveyard", "no-valid-targets", ActivationGuard.spellProblem(ai, sa));
+        sa.resetTargets();
+        final Card forest = put("Forest", ai, ZoneType.Graveyard);
+        AssertJUnit.assertNull("a land to return", ActivationGuard.spellProblem(ai, sa));
+        sa.getTargets().add(forest);
+        AssertJUnit.assertNull("its only land, chosen", ActivationGuard.spellProblem(ai, sa));
+    }
+
+    @Test
     public void drawingMoreCardsThanTheLibraryHasIsNotCast() {
         final Card divination = put("Divination", ai, ZoneType.Hand);
         for (final Card c : new java.util.ArrayList<>(ai.getCardsIn(ZoneType.Library))) {

@@ -35,6 +35,23 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 1052 - Flat MC casts an "up to N" spell that chose every candidate again (Life from the Loam; one upstream PR draft)
+- `forge-ai/src/main/java/forge/ai/simulation/ActivationGuard.java` (STOCK; round 1045 made `attachPayoff`
+  package-private): in `judge`'s targeted branch, after `targetedRefinement` and before upstream's `idle` test, an "up to"
+  node (`min <= 0`) whose `hasCandidates` is false but that has a chosen target it can still take (`node.canTarget(o)`,
+  new private `hasLegalChosenTarget`) is `USEFUL`, logged `[TFR-AiFix] chosen-target` through `TfrAiRules.stockFix`.
+  Upstream's `idle` expression is unchanged. Import `forge.game.GameObject`; the class Javadoc's "targeted" bullet names
+  the chosen target. Marked `TFR round 1052`.
+- `forge-gui-desktop/src/test/java/forge/ai/simulation/LegalityGuardTest.java` (STOCK test): one test,
+  `anUpToSpellThatChoseEveryCandidateIsStillCast`.
+- TFR's own files: puzzles `forge-gui/res/ai/tfr-puzzles/P23_loam_all_lands_chosen.pzl` and
+  `P23b_loam_two_lands_in_danger.pzl`.
+- **On a merge:** upstream `master` at `2c27a4c797f` (2026-11-19) still has the bug (its `hasCandidates` line is at
+  L745; `ComboGuard.problem` still calls `spellProblem` on the chosen play). Upstream draft 0001
+  (`C:\CLAUDE\PROJECTS\TFR1\notes\r1052\upstream-pr\`) is the same change without the log call. If upstream takes it,
+  take theirs and drop ours (the block, `hasLegalChosenTarget`, the import, the test). If upstream rewrites `judge`,
+  keep P23 and P23b green: they fail on any build where Flat MC vetoes the Loam once it has chosen every land.
+
 ### Round 1051 - New Game+ sets Mirror Gear from its difficulty (logs-1119)
 - `forge-gui-mobile/src/forge/adventure/scene/SaveLoadScene.java` (STOCK, already TFR-edited): `startNewGamePlus` calls
   `MirrorGear.setPendingNewGamePlus(...)` (the save's flag, the player's difficulty name, the target's) after
