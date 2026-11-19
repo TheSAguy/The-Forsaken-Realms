@@ -28,12 +28,15 @@ stamp on a failure) and round 1039 (the version backup waits while another copy 
 TFR 2's equip-zero fix ported and extended: `EquipGuard` keeps discovery and its target variants off an Equip onto the
 creature already wearing it, and off a second move of an Equipment in one turn (a free Shuko ping-ponged 25 times a turn
 with TFR 2's fix alone); `[TFR-AiFix] equip-wearer` / `equip-move`; `FlatMonteCarloEquipTest`; bench and draft in
-`C:\CLAUDE\PROJECTS\TFR1\notes\r1045\`); `MOD_CHANGELOG.md`. Engine = the 11.13 daily (round 1031, upstream `a8695ac23e2`,
+`C:\CLAUDE\PROJECTS\TFR1\notes\r1045\`) and round 1046 (**no ante in week 1 on Easy and Normal**, the new-player
+study `C:\CLAUDE\PROJECTS\TFR1\notes\newplayer-1118.md`: `anteGraceWeeks{D}` in settings.json (1/1/0/0), the Custom knob
+"Weeks without ante", `util/AnteGrace` turns the duel's ante rule off through day 7 (no ante card, no Re-roll prompt),
+New Game+ never; `[TFR-AnteGrace]`; `AnteGraceTest`); `MOD_CHANGELOG.md`. Engine = the 11.13 daily (round 1031, upstream `a8695ac23e2`,
 Forge 2.0.17-SNAPSHOT; round 769's R1-R4 still keep TFR's synchronous auto save, eager shops, Inn events and place
 entry; bosses keep the player's AI setting through `bossAiFollowsSetting`; the TFR AI rules and their stock hooks, round
 1018); next merge from upstream after `a8695ac23e2` (its first commit is `3cfec26d1ed`, #12856, edition fixes);
 BASE_INSTALL is that daily, so packages need no `--allow-base-mismatch`. Next version: 1.30 / 13000. Next free round:
-1046. The agent profile's window is
+1048 (1047 is handed out). The agent profile's window is
 1280x720 - at 3840x2160 it covered the screen, got minimized, and a minimized game stops (the bridge times out, shots
 come back 1x1). Agent games keep their own LOCALAPPDATA cache (round 860). Log sharing (round 698) posts to Discord
 through a webhook kept OUT of git in `C:\TFR\secrets\discord_log_webhook.txt` - never commit it; the packager and

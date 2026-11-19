@@ -35,6 +35,17 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 1046 - no ante in week 1 on Easy and Normal (the new-player study)
+- `forge-gui-mobile/src/forge/adventure/scene/DuelScene.java` (STOCK, already TFR-edited): the `rules.setPlayForAnte(...)`
+  line in the match setup became a local `playForAnte` (the same stock condition), turned off when
+  `AnteGrace.skipsAnte(enemy name)` says the world is still in its ante grace, then passed to `setPlayForAnte`. A merge
+  that rewrites that line keeps the stock condition and re-applies the one `if`.
+- `forge-gui-mobile/src/forge/adventure/scene/NewGameScene.java` (STOCK, already TFR-edited): the Duels tab
+  (`matchImpacts.text`) gets one more line, "Ante: from day 8 ..." / "from the first duel", only while Play for Ante is on.
+- TFR's own files: new `util/AnteGrace.java`, `data/TuningData.java` (`anteGraceWeeks{D}`, `anteGraceWeeksFor`), new
+  `test/.../AnteGraceTest.java`; plane data `config tables/settings.json`, `config tables/custom_difficulty.json`,
+  `config.json` (welcome text), `GUIDE.md`/`GUIDE.html`.
+
 ### Round 1045 - Flat Monte Carlo no longer re-equips an Equipment onto its wearer, or moves it twice a turn (TFR 2's equip-zero fix, extended)
 - `forge-ai/src/main/java/forge/ai/simulation/FlatMonteCarloPicker.java` (STOCK, first TFR edit; upstream-identical at
   `a8695ac23e2` before this round), three checks marked `TFR round 1045`, each skipping when

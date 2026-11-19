@@ -988,7 +988,9 @@ its fourth).
 
 ### Ante, Tournaments & Hostile Lands
 
-Ordinary duels are played for ante (on by default): each side stakes a card, winner takes it. If
+Ordinary duels are played for ante (on by default): each side stakes a card, winner takes it. On
+**Easy and Normal, ante starts in week 2** (day 8): your first week's duels risk no cards. Hard and
+Insane play for ante from the first duel. If
 you lose a card you value, a **Buy Back** option lets you repurchase it on the spot (priced by
 rarity), and an escalating-cost **Re-roll** lets you swap out an ante you don't want to risk
 before the duel starts — re-rolls won't repeat a card you just rejected. Or hand over a **Bronze

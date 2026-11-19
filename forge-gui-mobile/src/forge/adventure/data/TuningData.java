@@ -94,6 +94,15 @@ public class TuningData {
     public int anteRerollBaseShardCost = 50;
     public float anteRerollEscalationRate = 1.5f;
 
+    // Round 1046 (the new-player study, notes\newplayer-1118.md: early losses on Easy and Normal took starter cards
+    // through ante before a new player knew how a duel works): in the world's first this-many weeks (the [TFR-EarlyLife]
+    // week count) a duel on that difficulty does not play for ante - no ante card, no Re-roll prompt, no card won or lost.
+    // Per difficulty; 0 (the default) never, so a stock plane is unchanged. util/AnteGrace reads it.
+    public int anteGraceWeeksEasy = 0;
+    public int anteGraceWeeksNormal = 0;
+    public int anteGraceWeeksHard = 0;
+    public int anteGraceWeeksInsane = 0;
+
     // Ante Buy Back (2026-08-16, user spec: "Let's use 150% Shop value"). Multiplies
     // AdventurePlayer.cardSellPrice() (already difficulty-scaled via sellFactor) - see
     // DuelScene.showAnteCardPopup().
@@ -1036,6 +1045,19 @@ public class TuningData {
             case "normal": return Math.max(0, defeatGoldLossMinNormal);
             case "hard":   return Math.max(0, defeatGoldLossMinHard);
             case "insane": return Math.max(0, defeatGoldLossMinInsane);
+            default:       return 0;
+        }
+    }
+
+    /** Round 1046: the weeks of ante grace for a difficulty name, 0 when none (an unknown name gets none). */
+    public int anteGraceWeeksFor(String difficultyName) {
+        if (difficultyName == null)
+            return 0;
+        switch (difficultyName.trim().toLowerCase()) {
+            case "easy":   return Math.max(0, anteGraceWeeksEasy);
+            case "normal": return Math.max(0, anteGraceWeeksNormal);
+            case "hard":   return Math.max(0, anteGraceWeeksHard);
+            case "insane": return Math.max(0, anteGraceWeeksInsane);
             default:       return 0;
         }
     }

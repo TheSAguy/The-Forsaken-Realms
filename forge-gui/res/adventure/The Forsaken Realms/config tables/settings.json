@@ -66,6 +66,13 @@
     // additional re-roll in the same duel multiplies the cost (1.5 = +50%).
     "anteRerollBaseShardCost": 10,
     "anteRerollEscalationRate": 1.5,
+    // Round 1046 (the new-player study): in the world's first this-many weeks a duel on that difficulty does not play
+    // for ante - no ante card, no Re-roll prompt, nothing won or lost. Week 1 = days 1-7, so ante starts on day 8.
+    // Hard and Insane keep ante from the first duel. 0 = never. Custom difficulty: "Weeks without ante".
+    "anteGraceWeeksEasy": 1,
+    "anteGraceWeeksNormal": 1,
+    "anteGraceWeeksHard": 0,
+    "anteGraceWeeksInsane": 0,
     // Ante buy-back price = this multiplier x the card's normal sell value...
     "anteBuyBackMultiplier": 1.5,
     // ...but never below these floors, by card rarity.

@@ -1601,7 +1601,12 @@ public class DuelScene extends ForgeScene {
         // DeckTesterSimulator's own rules.setPlayForAnte(false) used when "simulate AI matches"
         // is enabled; the default coin-flip AI-vs-AI resolution in EventScene.startRound() never
         // constructs a Game/GameRules at all).
-        rules.setPlayForAnte(eventData == null && !enemy.getData().noAnte && FModel.getPreferences().getPrefBoolean(ForgePreferences.FPref.UI_ANTE));
+        boolean playForAnte = eventData == null && !enemy.getData().noAnte && FModel.getPreferences().getPrefBoolean(ForgePreferences.FPref.UI_ANTE);
+        // Round 1046: no ante in the world's first anteGraceWeeks{D} weeks (TFR: week 1 on Easy and Normal) - no ante
+        // card, no Re-roll prompt, nothing won or lost. Logs [TFR-AnteGrace] once per duel it applies to.
+        if (playForAnte && !aiControlsPlayerSide && forge.adventure.util.AnteGrace.skipsAnte(enemy.getName()))
+            playForAnte = false;
+        rules.setPlayForAnte(playForAnte);
         rules.setMatchAnteRarity(FModel.getPreferences().getPrefBoolean(ForgePreferences.FPref.UI_ANTE_MATCH_RARITY));
         rules.setAnteIncludeBasicLands(FModel.getPreferences().getPrefBoolean(ForgePreferences.FPref.UI_ANTE_INCLUDE_BASIC_LANDS));
         rules.setManaBurn(false);

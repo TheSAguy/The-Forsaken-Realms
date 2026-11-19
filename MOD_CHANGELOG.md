@@ -14264,6 +14264,70 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 1046: no ante in the first week on Easy and Normal (2026-11-18)
+
+From the new-player study, `C:\CLAUDE\PROJECTS\TFR1\notes\newplayer-1118.md` (proposal 1, picked by the user). Of 60
+brand-new installs that could be judged, 21 stayed past week 1. The leavers who reached a duel shared one pattern: an early
+loss or concession at full life, a starter card lost to ante, then a quit or a restart. Ante has been on by default
+since 2026-08-19, from the very first duel, on every difficulty. Files: new `forge-gui-mobile/src/forge/adventure/util/AnteGrace.java`,
+`data/TuningData.java`, `scene/DuelScene.java` and `scene/NewGameScene.java` (both stock),
+`config tables/settings.json`, `config tables/custom_difficulty.json`, `config.json`, `GUIDE.md`/`GUIDE.html`, and new
+`forge-gui-mobile/test/forge/adventure/util/AnteGraceTest.java`.
+
+- **The rule:** in the world's first `anteGraceWeeks{D}` weeks (settings.json: Easy 1, Normal 1, Hard 0, Insane 0), a
+  duel does not play for ante. `DuelScene` turns the game's ante rule off for it, which means:
+  - no ante card is chosen;
+  - the Keep/Re-roll prompt never comes;
+  - nothing is won or lost.
+
+  Week 1 is days 1-7 (`SpawnTierWeighting.currentWeek`, the `[TFR-EarlyLife]` and round 785 week count), so ante
+  starts on day 8.
+- **Who gets the grace:**
+  - Hard and Insane keep ante from the first duel.
+  - The player's own Play for Ante switch still wins: off is off in every week.
+  - Arena and Inn fights already skip ante.
+  - New Game+ never gets the grace, since it is a returning player (the same exemption as `[TFR-EarlyLife]`).
+  - Deck Tester's simulated fights and watched guard fights (`aiControlsPlayerSide`) are left as they were.
+- **The Re-roll prompt:** during the grace it never comes, because no ante is chosen. Outside the grace it is unchanged
+  (the user's 2026-08-17 "always offer").
+- **Saves:** nothing is stored. The day is read at each duel, so:
+  - a save already past day 7 plays for ante exactly as before;
+  - a save loaded mid-week-1 has no ante for the rest of the week;
+  - a mid-game Change level or Custom edit takes effect at the next duel.
+- **Custom difficulty:** a new knob, "Weeks without ante" (`anteGraceWeeks`, Economy > Ante & coins, basic, 0-4,
+  anytime), writes every difficulty column (`{D}`).
+- **Text:**
+  - The welcome text's recommended-settings line adds "On Easy and Normal, ante starts in week 2: your first week's
+    duels risk no cards."
+  - The New Game screen's Duels tab adds "Ante: from day 8 (week 2) - no cards won or lost before then", or "from the
+    first duel". It only shows while Play for Ante is on.
+  - The guide's Ante paragraph says the same; `GUIDE.html` is regenerated.
+- **Log:** `[TFR-AnteGrace] week 1: no ante (until day 8) - day 3, Normal, vs <enemy>`, once for each duel it applies
+  to. Such a duel's `[TFR-AnteResult]` reads `won=0 lost=0`.
+- **Test:** `AnteGraceTest` reads the plane's own `settings.json`, because a misspelled key there fails silently. It
+  covers:
+  - Easy 1, Normal 1, Hard 0, Insane 0, and an unknown name 0;
+  - Easy and Normal skip ante on days 1-7 and play for ante on days 8, 9, 14, 15 and 60;
+  - Hard and Insane ante on day 1;
+  - New Game+, day 0 and 0 or negative weeks never get the grace;
+  - two weeks run through day 14;
+  - the knob's `{D}` target names fields that exist.
+
+  Maven `-o -pl forge-gui-mobile-dev -am package -Dtest=AnteGraceTest,RegexAndroidSafeTest
+  -Dsurefire.failIfNoSpecifiedTests=false` exits 0, 8/8.
+- **Agent game** (the round's jar ahead of the agent jar; the round's res files copied in and put back after; log and
+  shots in `C:\CLAUDE\PROJECTS\TFR1\notes\r1046\`): a fresh Normal world, at 50x.
+  - **Day 1:** `[TFR-AnteGrace] week 1: no ante (until day 8) - day 1, Normal, vs Badger`. The duel was lost with
+    `[TFR-AnteResult] winner=false won=0 lost=0` and no Card Lost screen. It took 12 of 250 gold, with round 785's
+    minimum waived.
+  - **`days skip 7` to day 8:** no `[TFR-AnteGrace]` line. The ante was chosen
+    (`[TFR-AnteReroll] agent pilots this seat - ante kept`), and the win took the Badger's card (`won=1`).
+  - The welcome text shows the new line.
+- **Not done:**
+  - The Bronze Coin, Buy Back and Re-roll prices are unchanged.
+  - No Hard or Insane change; Tibalt's Torturer and the Hard boss walls are a separate study.
+  - Not checked in the agent game: the New Game Duels tab line, and an Easy world (the unit test covers the column).
+
 ## Round 1045: the AI no longer re-equips a free Equipment onto its own wearer, or moves it back and forth all turn (2026-11-18)
 
 Ported from TFR 2's equip-zero fix (TFR 2 commit `c21c4d89a5b`, merged `cd1b63bb2a5`; the TFR 2 user: "'Grafted

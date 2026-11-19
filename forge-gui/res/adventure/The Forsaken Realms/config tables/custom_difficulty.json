@@ -458,6 +458,12 @@
             "tooltip": "Shards to re-roll an Inn tournament."
         },
         {
+            "id": "anteGraceWeeks", "label": "Weeks without ante", "category": "Economy", "group": "Ante & coins",
+            "target": "tuning.anteGraceWeeks{D}",
+            "min": 0, "max": 4, "step": 1,
+            "tooltip": "For this many weeks from the start, duels are not played for ante: no card is won or lost. 0 = ante from the first duel."
+        },
+        {
             "id": "anteReroll", "label": "Ante re-roll", "category": "Economy", "group": "Ante & coins",
             "target": "tuning.anteRerollBaseShardCost",
             "min": 1, "max": 100, "step": 1, "level": "expert",

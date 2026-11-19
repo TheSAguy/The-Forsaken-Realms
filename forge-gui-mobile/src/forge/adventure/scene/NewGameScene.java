@@ -1233,6 +1233,12 @@ public class NewGameScene extends MenuScene {
                     + (tuning.defeatGoldLossMinWaivedWeeks > 0 ? " - no minimum in week "
                     + (tuning.defeatGoldLossMinWaivedWeeks == 1 ? "1" : "1-" + tuning.defeatGoldLossMinWaivedWeeks) : "") : "");
         matchImpacts.text = String.format("Difficulty: %s\nStarting Life: %d\nEnemy Health: %d%%\nGold loss on defeat: %s\nLife loss on defeat: %d%%", shownName, selectedDifficulty.startingLife, (int) (selectedDifficulty.enemyLifeFactor * 100), goldLossText, (int) (selectedDifficulty.lifeLoss * 100));
+        // Round 1046: when ante starts (the week-1 ante grace, anteGraceWeeks{D}); only while Play for Ante is on.
+        if (FModel.getPreferences().getPrefBoolean(forge.localinstance.properties.ForgePreferences.FPref.UI_ANTE)) {
+            int graceWeeks = tuning == null ? 0 : tuning.anteGraceWeeksFor(selectedDifficulty.name);
+            matchImpacts.text += "\nAnte: " + (graceWeeks > 0 ? "from day " + forge.adventure.util.AnteGrace.anteFromDay(graceWeeks)
+                    + " (week " + (graceWeeks + 1) + ") - no cards won or lost before then" : "from the first duel");
+        }
         matchImpacts.name = "Duels";
 
         DialogData economyImpacts = new DialogData();
