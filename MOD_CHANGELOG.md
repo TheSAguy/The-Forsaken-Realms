@@ -14264,6 +14264,61 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 1048: "How a Duel Works" in the duel's Game menu, and words for touch and mouse (2026-11-18)
+
+The main thread's check of round 1047 found two gaps (the user: "Add the primer to the Game menu and fix the wording"):
+the pages could not be opened from inside a duel, and page 1's "Press and hold any card to read it" is touch phrasing on
+desktop. Files: `util/DuelPrimer.java`, `screens/match/views/VGameMenu.java` (stock, first TFR edit),
+`config tables/tips.json`, `agent/AgentActions.java`, `dev-tools/agent/tfr_agent.py`, `test/.../DuelPrimerTest.java`.
+
+- **Game menu entry:** the duel's Game menu (the same `VGameMenu` in the compact and the classic layout, touch and
+  desktop) has **How a Duel Works**, after Reset Saved Orders, only in adventure mode on a plane with the `duel.*` texts.
+  - The duel screen is Forge's own toolkit, not scene2d, so the pages show in Forge's popup (`FOptionPane`) instead of
+    the War Begins dialog. Buttons: Next and Close on pages 1-4 (Back from page 2), Back and Done on page 5. "Done", not
+    "Understood": the popup's corner slot shrank "Understood" to an unreadable size.
+  - Only the UI opens a popup; the game thread is not touched, so the match neither ends nor pauses (the AI's own turn
+    can go on under it, as under any Forge popup). Closing on any page returns to the duel at the same prompt.
+  - The page text's markup is turned into the engine's: `[GOLD]`/`[RED]` become `TextRenderer` color tags, `[+Gold]`
+    the registered `{Gold}` symbol (`ResourceGlyphs.register()` first; the word "gold" if none).
+- **Wording:** the pages now name the device's pointer (`GuiBase.isMobile()`).
+  - Page 1: `{Tap}` is "Tap"/"Click" a card in your hand, and `{readCard}` is `duel.readTouch` ("Press and hold any
+    card to read it.") or `duel.readMouse` ("Point at any card to see it larger. Hold the mouse button down on it to
+    read it in full."). Checked in the code: on desktop the duel's hover preview shows the card under the mouse
+    (`MatchScreen.isHoverPreviewEnabled`, magnifier on by default), and a held left button is the same long press that
+    opens the card zoom (`FGestureAdapter`). **Right-click does not zoom**: it toggles the hover preview off and on, so
+    the text never says right-click.
+  - Page 3: "tap each creature ... tap an attacker" is `{tap}` (tap/click). Its "(Alpha Strike picks them all)" and page
+    4's "(at least ... after your first week)" lost their parentheses: Forge's popup draws parentheses as reminder text,
+    which the Hide Reminder Text setting hides.
+  - Page 5: the compact duel layout (the default) draws the Game tab as a three-line icon, not the word, so it reads "The
+    Game menu, the three-line button at the top of the duel screen, has Concede", and the reopen line names both
+    places: "in a duel in the Game menu, or in Settings."
+  - Pages 2 and 4 had nothing touch- or mouse-only.
+- **Log:** `[TFR-DuelPrimer] reopened from the Game menu (source=game-menu, turn N, touch|desktop)` and
+  `... closed from the Game menu on page N - back to the duel`.
+- **Agent bridge:** `cmd click text=` also taps a Forge menu tab of the current screen (by its word, read even when the
+  compact layout draws an icon) or an item of an open Forge drop-down, through the item's own tap. Round 1047 could not
+  drive the duel's Game menu; this round's proof used it.
+- **Tests:** `DuelPrimerTest`, 6 tests:
+  - the 15 `duel.*` texts name only known fields (now also `{Tap}`, `{tap}`, `{readCard}`);
+  - no page has a mouse word on a touch screen or a touch word on a computer, and no page has a parenthesis;
+  - the popup's buttons page by page;
+  - the markup conversion.
+- **Maven:** `-o -pl forge-gui-mobile-dev -am package -Dtest=DuelPrimerTest,RegexAndroidSafeTest,TfrTipsTest,WarIntroTest
+  -Dsurefire.failIfNoSpecifiedTests=false` exits 0, 31/31 (run twice, the second on the final code).
+- **Agent game** (the round's jar ahead of the agent jar, the round's tips.json copied in and put back after; shots and
+  logs in `C:\CLAUDE\PROJECTS\TFR1\notes\r1048\`), slot 70, a Badger at 50x in manual-seat mode:
+  - the Game menu (three-line tab) opened with the new entry last (`game-menu-entry.png`);
+  - the entry opened page 1 over the duel in desktop words (`primer-over-duel.png`); pages 2-5 read right
+    (`pages2-5-strip.png`: the red End Turn line, the gold icons, "click"); page 5 with Done (`primer-last-page-done.png`);
+  - Done returned to the same priority prompt, and the duel went on (a land played; conceded after, `reason=conceded`);
+  - the two log lines above, `source=game-menu, turn 1, desktop`.
+- **Not done or not verified:**
+  - **Android:** the touch words and the popup on a phone were not driven (no APK build this round). The menu and
+    `FOptionPane` are the same widgets on Android; `pointerWords` picks the touch lines there (unit-tested).
+  - **Manual seat:** the Game menu's first item read "Stop Watching", not Concede, in the agent's manual-seat duel
+    (the bridge seat is not a local player). Not this round's change; a normal duel shows Concede.
+
 ## Round 1047: "How a Duel Works" before a new save's first duel, and how each duel was lost (2026-11-18)
 
 From the new-player study, `C:\CLAUDE\PROJECTS\TFR1\notes\newplayer-1118.md` (proposal 2, picked by the user). New

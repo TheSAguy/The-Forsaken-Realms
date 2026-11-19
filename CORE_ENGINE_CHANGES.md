@@ -35,6 +35,15 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 1048 - "How a Duel Works" in the duel's Game menu; the pages' pointer words per device
+- `forge-gui-mobile/src/forge/screens/match/views/VGameMenu.java` (STOCK, first TFR edit): `buildMenu` adds one item,
+  "How a Duel Works", before the `if (!Forge.isMobileAdventureMode)` Settings block, guarded by
+  `DuelPrimer.inGameMenu()` (adventure mode on a plane with the `duel.*` texts, so stock planes and classic Forge never
+  show it). A merge that rewrites the menu keeps that guarded `addItem` line.
+- TFR's own files: `util/DuelPrimer.java` (the popup pages, `pointerWords`, `forPopup`), `config tables/tips.json`,
+  `agent/AgentActions.java` (bridge `click text=` taps Forge menu tabs and items), `dev-tools/agent/tfr_agent.py`
+  (usage line), `test/.../DuelPrimerTest.java`.
+
 ### Round 1047 - "How a Duel Works" before a new save's first duel; reason= on [TFR-Duel] (the new-player study)
 - `forge-gui-mobile/src/forge/adventure/stage/WorldStage.java` (STOCK, already TFR-edited): the world-map collision's
   `startPause(attackDuration, () -> { ... })` body is now the third argument of `DuelPrimer.beforeDuel(this, foe name,

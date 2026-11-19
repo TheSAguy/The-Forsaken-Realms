@@ -235,6 +235,11 @@ final class AgentActions {
             fb.tap(fb.getWidth() / 2f, fb.getHeight() / 2f, 1);
             return now(true, "tapped '" + label + "'");
         }
+        if (a.has("text")) { // round 1048: a match screen's menu tab (Game, Log...) or an open drop-down's item
+            String menu = tapForgeMenu(a.getString("text").trim().toLowerCase());
+            if (menu != null)
+                return now(true, menu);
+        }
         Actor target = null;
         if (a.has("id"))
             target = observer.actor(a.getString("id"));
@@ -261,6 +266,60 @@ final class AgentActions {
         String label = target instanceof Button ? AgentObserver.buttonText((Button) target) : AgentObserver.labelText(target);
         press(target);
         return now(true, "clicked " + (label.isEmpty() ? String.valueOf(target.getName()) : "'" + label + "'"));
+    }
+
+    /**
+     * Round 1048: Forge's menus are neither FButtons nor scene2d actors. An open drop-down's item first (tapped as the
+     * menu tap does it: the item's own tap, then the drop-down hides), then a menu tab of the current screen (its own tap
+     * opens or closes its drop-down; the tab's word is read even when the compact layout draws an icon). Null if none.
+     */
+    private static String tapForgeMenu(String want) {
+        forge.screens.FScreen screen = Forge.getCurrentScreen();
+        if (screen == null)
+            return null;
+        List<forge.toolbox.FDisplayObject> all = new ArrayList<>();
+        collectForge(screen, all);
+        for (forge.toolbox.FOverlay overlay : forge.toolbox.FOverlay.getOverlaysTopDown())
+            if (overlay != null && overlay.isVisible())
+                collectForge(overlay, all);
+        for (forge.toolbox.FDisplayObject o : all) {
+            if (!(o instanceof forge.menu.FDropDown) || !o.isVisible())
+                continue;
+            for (forge.toolbox.FDisplayObject c : ((forge.menu.FDropDown) o).getChildren()) {
+                if (c instanceof forge.menu.FMenuItem && c.isVisible() && c.isEnabled()) {
+                    String t = Jsons.plain(String.valueOf(((forge.menu.FMenuItem) c).getText())).toLowerCase();
+                    if (t.equals(want) || t.contains(want)) {
+                        c.tap(c.getWidth() / 2f, c.getHeight() / 2f, 1);
+                        ((forge.menu.FDropDown) o).hide();
+                        return "tapped menu item '" + ((forge.menu.FMenuItem) c).getText() + "'";
+                    }
+                }
+            }
+        }
+        for (forge.toolbox.FDisplayObject o : all) {
+            if (!(o instanceof forge.menu.FMenuTab) || !o.isVisible())
+                continue;
+            try {
+                java.lang.reflect.Field f = forge.menu.FMenuTab.class.getDeclaredField("text");
+                f.setAccessible(true);
+                String t = String.valueOf(f.get(o)).toLowerCase();
+                if (t.equals(want) || (!t.isEmpty() && t.startsWith(want))) {
+                    o.tap(o.getWidth() / 2f, o.getHeight() / 2f, 1);
+                    return "tapped menu tab '" + f.get(o) + "'";
+                }
+            } catch (ReflectiveOperationException ignored) {
+                return null;
+            }
+        }
+        return null;
+    }
+
+    private static void collectForge(forge.toolbox.FContainer container, List<forge.toolbox.FDisplayObject> out) {
+        for (forge.toolbox.FDisplayObject child : container.getChildren()) {
+            out.add(child);
+            if (child instanceof forge.toolbox.FContainer && !(child instanceof forge.menu.FDropDown))
+                collectForge((forge.toolbox.FContainer) child, out);
+        }
     }
 
     /** A real touch on the actor's own stage: hit-testing, capture listeners and modality all apply. */

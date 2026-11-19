@@ -23,6 +23,7 @@ Then, from anywhere:
     python tfr_agent.py cmd wait days=2
     python tfr_agent.py cmd click id=d1            # a dialog option / UI button id from the last state
     python tfr_agent.py cmd click text="Done"
+    python tfr_agent.py cmd click text="Game"     # round 1048: a duel's menu tab, then an item of the open menu by its text
     python tfr_agent.py cmd leave | back | stop | key key=ESCAPE
     python tfr_agent.py cmd equip item="Torch" | unequip item=... | use item=... | sell item=...
     python tfr_agent.py cmd deck op=list | op=select index=1 | op=add card="Swamp" count=2 | op=remove card=...

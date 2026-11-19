@@ -209,31 +209,37 @@ Losing an ordinary duel never ends a run. Read this again any time: World Standi
   // save's first duel, on every platform; Settings, How a Duel Works opens them again. Filled by DuelPrimer: {lifePct}
   // (the difficulty's life loss), {ante} (one of the duel.ante* lines, {anteDay} the first ante day); {difficulty},
   // {lossPct} and {lossMin} as the hover tips. The button words are the duel screen's own (OK, End Turn, Alpha Strike, Auto).
+  // Round 1048: the duel's Game menu opens them too, in Forge's own popup (no parentheses there: a player who hides
+  // reminder text would lose them). The pointer words fit the device: {Tap}/{tap} is Tap/tap on a touch screen and
+  // Click/click on a computer, {readCard} is duel.readTouch or duel.readMouse. The compact duel layout (the default) draws
+  // the Game tab as a three-line icon, not the word, so page 5 names both.
   "duel.title1": "How a Duel Works",
   "duel.page1": "A duel is a game of Magic against the foe you ran into.
 You both start with a life total. Bring the foe's to 0 and you win.
 Each turn you draw a card and may play one land.
-Tap a card in your hand to play it. When it asks for mana, [GOLD]Auto[] pays from your lands.
-Press and hold any card to read it.",
+{Tap} a card in your hand to play it. When it asks for mana, [GOLD]Auto[] pays from your lands.
+{readCard}",
+  "duel.readTouch": "Press and hold any card to read it.",
+  "duel.readMouse": "Point at any card to see it larger. Hold the mouse button down on it to read it in full.",
   "duel.title2": "Your Turn",
   "duel.page2": "A creature can attack from the turn after you play it.
 In your main phase, [GOLD]OK[] moves the turn on: to combat, then past it.
 [RED]End Turn ends your turn at once and skips your attack.[]
 Use it only when you don't want to attack.",
   "duel.title3": "Attack and Block",
-  "duel.page3": "To attack: in combat, tap each creature that should attack ([GOLD]Alpha Strike[] picks them all), then OK.
-To block: when the foe attacks, tap an attacker, then the creature of yours that blocks it, then OK.
+  "duel.page3": "To attack: in combat, {tap} each creature that should attack, or [GOLD]Alpha Strike[] to pick them all, then OK.
+To block: when the foe attacks, {tap} an attacker, then the creature of yours that blocks it, then OK.
 A blocked attacker hits the blocker, not you.",
   "duel.title4": "Losing a Duel",
   "duel.page4": "Losing never ends your run. On {difficulty}, a lost duel costs:
-- {lossPct}% of the [+Gold] you carry (at least [+Gold] {lossMin} after your first week),
+- {lossPct}% of the [+Gold] you carry, at least [+Gold] {lossMin} after your first week,
 - {lifePct}% of your life{ante}.
 You carry on from where you stand.",
   "duel.anteLater": ", and from day {anteDay} the card you put up for ante",
   "duel.anteNow": ", and the card you put up for ante",
   "duel.anteOff": "",
   "duel.title5": "Stuck?",
-  "duel.page5": "The [GOLD]Game[] menu at the top of the duel screen has [GOLD]Concede[]: it ends the duel as a loss.
+  "duel.page5": "The [GOLD]Game[] menu, the three-line button at the top of the duel screen, has [GOLD]Concede[]: it ends the duel as a loss.
 Your first duels take a while. Each one teaches you your deck.
-Read these pages again any time: Settings, How a Duel Works."
+Read these pages again any time with How a Duel Works: in a duel in the [GOLD]Game[] menu, or in Settings."
 }

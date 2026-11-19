@@ -80,6 +80,8 @@ public class VGameMenu extends FDropDownMenu {
         addItem(new FMenuItem(Forge.getLocalizer().getMessage("lblResetSavedAbilityOrders"), FSkinImage.WARNING, e ->
                 MatchController.instance.getGameController().sendYieldUpdate(new YieldUpdate.ClearAbilityOrders())
         ));
+        if (forge.adventure.util.DuelPrimer.inGameMenu()) // TFR round 1048: the "How a Duel Works" pages over the duel
+            addItem(new FMenuItem("How a Duel Works", FSkinImage.INFORMATION, e -> forge.adventure.util.DuelPrimer.openFromGameMenu()));
         if (!Forge.isMobileAdventureMode) {
             addItem(new FMenuItem(Forge.getLocalizer().getMessage("lblSettings"), Forge.hdbuttons ? FSkinImage.HDPREFERENCE : FSkinImage.SETTINGS, e -> {
                 //pause game when spectating AI Match
