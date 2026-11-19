@@ -14332,6 +14332,51 @@ Notes, logs and bench: `C:\CLAUDE\PROJECTS\TFR1\notes\r1045\`.
   still has the Shuko ping-pong; reported to the TFR 1 main thread). The 1.30 log review should look for
   `[TFR-LoopBreak] ... Equip` (expect none) and count `equip-wearer` and `equip-move`.
 
+## Round 1044 (follow-up): the AI rolls its damage-chain chance before it predicts the next combat (2026-11-18)
+
+The main thread granted `forge-ai/.../ability/DamageDealAi.java` (stock) after round 1044 committed. Its conditions:
+- keep the `chance > 0` gate and both danger checks in their order;
+- a test that danger still always chains;
+- a `CORE_ENGINE_CHANGES.md` entry and an upstream draft;
+- the reorder and the escalation measured separately.
+
+- **The change:** `getDamagingSAToChain` used to ask `ComputerUtilCombat.lifeInDanger` and
+  `ComputerUtil.aiLifeInDanger` (a whole next-combat prediction) before its `CHANCE_TO_CHAIN_TWO_DAMAGE_SPELLS` roll,
+  at every evaluation of a numeric damage spell. Danger only mattered when the roll failed. Now it rolls first:
+  `if (!percentTrue(chance) && !(chance > 0 && (lifeInDanger || aiLifeInDanger))) return null;`.
+  - The original condition is verbatim, so the odds are the same (P(chain) = danger or roll).
+  - It's one draw either way.
+  - `chance <= 0` never chains and never pays for the scan.
+  - With TFR's 90, the prediction is skipped 9 times in 10.
+  - One caller, `DamageDealAi.canPlay:254` (graphify and Grep agree).
+- **Bench, four arms interleaved in one batch** (`C:\CLAUDE\PROJECTS\TFR1\notes\r1044\bench\table-batch4.md`). Mean AI
+  think time, timeouts and AI plays per game; stock / reorder only / escalation only / both:
+  - **45 Elves (8 each):**
+    - think time: 99.0 / **62.9** / 104.2 / 67.9 s;
+    - timeouts: 36.6 / **9.6** / 32.9 / 10.1;
+    - plays: 1.62 / **7.50** / 0.62 / 7.00.
+  - **80 Elves (4 each):**
+    - think time: 114.5 / 105.7 / **83.6** / 99.0 s;
+    - timeouts: 31.2 / 35.2 / 39.8 / 41.0.
+  - **160 Elves (4 each):**
+    - think time: 54.6 / 60.4 / 43.0 / **37.7** s;
+    - timeouts: 21.0 / 39.2 / 41.8 / 33.2.
+- **Reading it:**
+  - The reorder is the lever on mid-size boards. Priorities reach the burn in time, so the AI plays more: 7.5 plays
+    against 1.6.
+  - On giant boards it does nothing, because target choice (`getBestRemovalTargetAI`, a board evaluation per target)
+    then outlasts the second by itself.
+  - The escalation is the lever there, which is the phone duel's case, so both ship.
+  - My first read, from one 80-Elf game, was that the reorder only moved the timeouts deeper. That holds on giant
+    boards only.
+- **Tested:** `DamageChainInDangerTest` (new, 4 tests, dice fixed):
+  - in danger (life 3 against two Hill Giants), a failed roll still chains a second Lightning Bolt;
+  - out of danger, a failed roll doesn't chain and a passed roll does.
+
+  `theDiceAreFixed` guards a trap: `MyRandom` wraps the dice in a counting `Random` that draws through the delegate's no-argument `nextInt()`, so the test's first version (overriding `nextInt(int)`) had random dice and failed by chance. On the bench snapshot, 4/4 pass with stock `DamageDealAi` and with the reorder, as an odds-identical change should. A mutant with the danger check deleted fails `inDangerAFailedRollStillChains`. Maven: all of `forge.ai` with the TFR puzzles at lite, 1,743 tests: everything passed but the test's first version (the trap above). After the fix, `DamageChainInDangerTest` and `LiteTurnCapTest` pass 16/16, Maven exit 0.
+- **Upstream draft:** `C:\CLAUDE\PROJECTS\TFR1\notes\r1044\upstream-pr\` (a patch against `a8695ac23e2`; `git apply
+  --check` passes; not run on upstream's tree). Not posted.
+
 ## Round 1044: on a giant board the AI stops waiting a full second for a pass (2026-11-18)
 
 From the log review `C:\CLAUDE\PROJECTS\TFR1\notes\logs-1118.md` (P3-39). The user: "Let's do these". Files:

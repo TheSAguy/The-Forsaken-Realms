@@ -1051,12 +1051,12 @@ public class DamageDealAi extends DamageAiBase {
         Game game = ai.getGame();
         int chance = AiProfileUtil.getIntProperty(ai, AiProps.CHANCE_TO_CHAIN_TWO_DAMAGE_SPELLS);
 
-        if (chance > 0 && (ComputerUtilCombat.lifeInDanger(ai, game.getCombat()) || ComputerUtil.aiLifeInDanger(ai, true, 0))) {
-            chance = 100; // in danger, do it even if normally the chance is low (unless chaining is completely disabled)
-        }
-
-        if (!MyRandom.percentTrue(chance)) {
-            return null;
+        // TFR round 1044: roll first, and look for danger only when the roll says no. In danger it still always chains, with
+        // one draw either way, so the odds are unchanged; but aiLifeInDanger predicts the next combat, which on a big board
+        // outlasts a whole priority and ran at every priority before the roll (200 of 221 AI timeouts in one Android duel)
+        if (!MyRandom.percentTrue(chance)
+                && !(chance > 0 && (ComputerUtilCombat.lifeInDanger(ai, game.getCombat()) || ComputerUtil.aiLifeInDanger(ai, true, 0)))) {
+            return null; // the roll said no, and not in danger (or chaining is off)
         }
 
         // Try to chain damage/debuff effects

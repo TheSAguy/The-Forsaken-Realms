@@ -54,6 +54,14 @@ md` already gets updated after every change.
   If upstream takes it, drop ours (the three lines, the `attachPayoff` visibility edit, `EquipGuard`) and point the test
   at `idleEquip`.
 
+### Round 1044 (follow-up) - DamageDealAi rolls its chain chance before the danger check (one upstream PR draft)
+- `forge-ai/src/main/java/forge/ai/ability/DamageDealAi.java` (STOCK): in `getDamagingSAToChain`, the
+  `chance > 0 && (lifeInDanger || aiLifeInDanger)` test that set `chance = 100` now runs after the
+  `percentTrue(chance)` roll, only when it fails, in one `if` (marked `TFR round 1044`). The odds are the same, with
+  one draw either way; it skips a next-combat prediction 9 times in 10. Upstream draft
+  `C:\CLAUDE\PROJECTS\TFR1\notes\r1044\upstream-pr\`. If upstream takes it or rewrites the block, take theirs.
+- New test `forge-gui-desktop/src/test/java/forge/ai/ability/DamageChainInDangerTest.java`.
+
 ### Round 1044 - the lite cap escalates after timeouts in a row (logs-1118 P3-39)
 - `forge-ai/src/main/java/forge/ai/AiController.java` (STOCK), all marked `TFR round 1044`:
   - two fields, `liteTimeoutStreak` and `priorityTimedOut`;
