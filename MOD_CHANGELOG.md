@@ -14264,6 +14264,21 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 1054 (follow-up 2): 1.30 released (2026-11-19)
+
+- **Published** 2026-11-19 18:15:41 UTC (10:15 Pacific) on the user's call ("Yes, publish") after the main thread's GO
+  on the RC: tag `tfr-v1.30` @ `369834d40fd` (annotated), Latest, title "The Forsaken Realms v1.30 — A Fair Start", body
+  `RELEASE_NOTES_v1.30.md`; `main` pushed to `origin master` at `369834d40fd` (a fast-forward from `ee2e535df98`, 29
+  first-parent commits), with the Windows zip (518.7 MB), the APK (16.2 MB, versionCode 13000) and `assets.zip`
+  (428.9 MB). GitHub's SHA-256 digest and byte size of each asset match the ledger, and the APK's `assets.zip` URL
+  answers with the full size. Before the push the unpushed history and the tree were checked for the log-sharing
+  webhook token: none. Ledger: `docs/tfr/releases.md`.
+- **FAQ**: `EDITED` and `ADDED` in `dev-tools/discord_faq/messages.py` are empty sets again, v1.30's set kept in the
+  comment.
+- **Docs**: the v1.30 RELEASED block in `docs/tfr/releases.md`; the NOW block is rewritten short (rounds 1033-1054 now
+  released; their detail stays in this file). Next version 1.31 / 13100, next free round 1055, next engine merge after
+  `d9ae6615afc`. No code change, no build.
+
 ## Round 1054 (follow-up): the 1.30 RC is built and tested - sizes and hashes in the ledger (2026-11-19)
 
 The RC from `d8a85299d0f`, by the 1.29 method; checklist and evidence

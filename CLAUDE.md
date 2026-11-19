@@ -6,71 +6,16 @@ every round built. If you find something missing, fix the docs rather than going
 
 ## NOW (rewrite this block each round; never append a new one)
 
-**v1.30 is in release (round 1054)**: `modVersion` 1.30 / 11.19, Android `tfr.version` 1.30 / versionCode 13000,
-`RELEASE_NOTES_v1.30.md` (proposed name "A Fair Start"), GUIDE's What's New in 1.30, the Discord FAQ at v1.30 (`EDITED`
-{1, 9, 10, 23}); the RC (`C:\CLAUDE\PROJECTS\TFR1\notes\release-1.30-rc-checklist.md`) is built and tested, GO (round 1054's
-follow-up; assets in `C:\CLAUDE\PROJECTS\TFR1\release\v1.30`); next the tag `tfr-v1.30` (rounds 1033-1053 on top of v1.29). **v1.29 "Sharper Foes" was the last release before it** (tag `tfr-v1.29` @ `1a42b93c2a7`, published 2026-11-14
-18:00 UTC (10:00 Pacific); rounds 1004-1032 on top of v1.28; assets, notes and the tag commit in `docs/tfr/releases.md`;
-the round detail in `MOD_CHANGELOG.md`). `modVersion` 1.29 / `modVersionDate` 11.14, Android `tfr.version` 1.29 /
-versionCode 12900, `RELEASE_NOTES_v1.29.md`, GUIDE's What's New in 1.29, the Discord FAQ at v1.29 (`EDITED`/`ADDED`
-reset by round 1032's follow-up 2). Unreleased (for 1.30): round 1033 (Felidar Sovereign and Test of Endurance swapped
-out of the 8 TFR enemy decks that held them) and round 1034 (AI stock fixes: a MaxX repeat waits for X >= 2, a trade
-block saves a planeswalker, the trade chance's float step; rule `fetch-life-guard`, a fourth rule hook in
-`ChangeZoneAi`; three upstream drafts in `C:\CLAUDE\PROJECTS\TFR1\notes\r1034\upstream-pr\`) and round 1035 (stock
-combat trick allowance: blocks and attacks allow for a pump when the opponent has cards and open mana,
-`TRICK_ALLOWANCE_ON_ATTACK` and `TRICK_ALLOWANCE_ON_BLOCK` in TFR's Default.ai; a profile key the jar lacks throws, so
-`AiProfileKeysTest` guards it; draft in `C:\CLAUDE\PROJECTS\TFR1\notes\r1035\upstream-pr\`) and round 1036 (**the block
-half back on**: the danger term counts a team pump the opponent has shown on every unblocked attacker, puzzles P17 and
-P17c; a fixed-vs-stock **strength bench** for AI rounds, `C:\CLAUDE\PROJECTS\TFR1\notes\r1036\bench\README.md`, found
-no arm measurably different from stock (all 48.8-49.5% vs Stock; A/A control 48.1 +- 2.3); draft 0002 in
-`C:\CLAUDE\PROJECTS\TFR1\notes\r1036\upstream-pr\`) and round 1037 (stock `EffectAi`: the `AILogic$ Pump` branch
-no longer throws on an untargeted Effect (Giant Koi), which made the AI pass its priority; `EffectAiPumpUntargetedTest`;
-draft in `C:\CLAUDE\PROJECTS\TFR1\notes\r1037\upstream-pr\`) and round 1038 (Android asset download: a
-keep-on-screen line on its prompt, a "Download Stopped" message before the restart when it fails, no `version.txt`
-stamp on a failure) and round 1039 (the version backup waits while another copy holds `lastexit.lock`, and runs in the copy that plays: after Play anyway, or in the next copy that opens alone; the engine-merge list in `docs/tfr/build-and-deploy.md` names the `engineBuildVersion` bump) and round 1040 (Data > Restore then Continue no longer crashes: stock `WorldSave.isSafeFile(null)` is false and the restore hides Continue; a `[TFR-Restore]` log line; the version-backup notice says the saves are safe, `versionBackup.done` in tips.json; its follow-up: a restore under a loaded game drops it through round 183's save block, so Resume and Save hide and no save writes the old world over the restored files, `WorldSaveRestoreBlockTest`; drafts 0001 and 0002 in `C:\CLAUDE\PROJECTS\TFR1\notes\r1040\upstream-pr\`) and round 1041 (**Android: TfrTips' regex had a bare `}` that ICU rejects**, so 1.29's War Begins pages never showed on Android and "The War" crashed; every `}`/`]` escaped, `RegexAndroidSafeTest` scans the Android-run sources for bare ones; `WarIntro.check` builds the pages before setting the flag; Android saves 1.29 spent are re-armed once through `warIntroRetried`, desktop never; proved on LDPlayer, `C:\CLAUDE\PROJECTS\TFR1\notes\r1041\shots\`) and round 1042 (Magma Ogre: watermark erased from the last Death frame, Idle 1-1-2-3-3-2) and round 1043 (stock `SpellApiToAi.get(null)` answers `CannotPlayAi` instead of throwing, so an AI copy spell no longer drops a priority over a face-down spell, `CopySpellNoApiTest`, draft in `C:\CLAUDE\PROJECTS\TFR1\notes\r1043\upstream-pr\`; `[TFR-Backup] nothing to back up` on a fresh install; a re-armed War Begins logs `re-armed: 1.29 marked it shown without the pages`) and round 1044 (**lite AI cap escalation**: in a turn round 924 capped, 3 shortened priorities in a row that time out put the later ones on 250 ms, every 4th still 1000 ms, until one finishes in time; `[TFR-AiCap] ... in a row` and the summary's `of them at 250 ms`; its follow-up: stock `DamageDealAi.getDamagingSAToChain` rolls its chain chance before the next-combat danger check, same odds, `DamageChainInDangerTest`, draft in `C:\CLAUDE\PROJECTS\TFR1\notes\r1044\upstream-pr\`; bench `C:\CLAUDE\PROJECTS\TFR1\notes\r1044\`: on a 45-Elf board the reorder cuts AI think time 36% and timeouts 74% and the AI plays 7.5 times a game instead of 1.6; on 80-160 Elf boards the escalation cuts 21-27%; both together -31% on the biggest) and round 1045 (**stock Flat MC equip loop**,
-TFR 2's equip-zero fix ported and extended: `EquipGuard` keeps discovery and its target variants off an Equip onto the
-creature already wearing it, and off a second move of an Equipment in one turn (a free Shuko ping-ponged 25 times a turn
-with TFR 2's fix alone); `[TFR-AiFix] equip-wearer` / `equip-move`; `FlatMonteCarloEquipTest`; bench and draft in
-`C:\CLAUDE\PROJECTS\TFR1\notes\r1045\`) and round 1046 (**no ante in week 1 on Easy and Normal**, the new-player
-study `C:\CLAUDE\PROJECTS\TFR1\notes\newplayer-1118.md`: `anteGraceWeeks{D}` in settings.json (1/1/0/0), the Custom knob
-"Weeks without ante", `util/AnteGrace` turns the duel's ante rule off through day 7 (no ante card, no Re-roll prompt),
-New Game+ never; `[TFR-AnteGrace]`; `AnteGraceTest`) and round 1047 (**"How a Duel Works"**: `util/DuelPrimer`, five pages
-(tips.json `duel.*`, End Turn skips the attack) shown once before a save's first ordinary duel - unflagged and no duel on
-record, so a save that has fought never sees them - at the world-map and map fight starts, before the duel exists;
-Settings > How a Duel Works; `[TFR-DuelPrimer]`; **`reason=life|conceded|decked|poison|other` at the end of
-`[TFR-Duel]`**, `duel_table.py --by reason`; `tfr_agent.py settle` reads on through page dialogs; `DuelPrimerTest`) and
-round 1048 (the pages also in the **duel's Game menu**, "How a Duel Works" in stock `VGameMenu`, shown in Forge's popup
-over the match, `source=game-menu`; the pages name the pointer: Tap/press and hold on touch, Click/point at on desktop
-(right-click does not zoom); page 5 names the three-line Game button; bridge `click text=` taps Forge menu tabs and items)
-and round 1049 (**the engine to the 11.18 daily**: upstream's two-column quest journal with TFR's legends, raids and
-their mini-map page, timers, progress, hints and tips ported onto it; its finished-quests list capped at 10; upstream's
-General Settings button hidden on an adventureOnly plane; a scrolling reward grid; upstream's large Flat MC / mana / AI
-range under TFR's rules, all hooks intact, no rule retired; `C:\CLAUDE\PROJECTS\TFR1\notes\r1049\conflicts.md`) and
-round 1050 (**the AI's 999-try failed-cast loop**, logs-1119 P3-40: stock Flat MC `ParadoxOutcome.sureCast` took
-Life from the Loam, Raise Dead and 60 more graveyard-to-hand spells for a Paradoxical Outcome and aimed them at the
-AI's own permanents; it now takes only battlefield bounces with legal targets, `[TFR-AiFix] paradox-origin`; failed
-casts leave `AiController`'s play list; `LoopBreaker.FailedPlays` in PhaseHandler's loop bars an AI play that fails 3
-times in a priority, `[TFR-LoopBreak] failed cast x3`; puzzles P22-P22c, `failedplays<=N`; draft in
-`C:\CLAUDE\PROJECTS\TFR1\notes\r1050\upstream-pr\`) and
-round 1051 (**New Game+ sets Mirror Gear from its difficulty**: the same difficulty keeps the save's flag, a changed one
-takes the New Game screen's default - on for Hard and Insane, off for Easy and Normal; Custom (X) counts as X;
-`MirrorGear.newGamePlus`, `[TFR-MirrorGear] new world: on (New Game+ raised Normal -> Insane, ...)`; the New Game+
-dialog's difficulty note says "- Mirror Gear on/off" on a changed pick); round 1052 (**Flat MC casts Life from the
-Loam again when it takes every land in its graveyard**, a 1.30 regression from round 1049: upstream #12905's `ComboGuard`
-asks stock `ActivationGuard.spellProblem` about the chosen play, and `hasCandidates` skips chosen targets, so an "up to
-N" spell that chose every candidate was vetoed `no-valid-targets`; a legal chosen target now counts, `[TFR-AiFix]
-chosen-target`; puzzles P23 and P23b; `LegalityGuardTest`; bench and draft in `C:\CLAUDE\PROJECTS\TFR1\notes\r1052\`);
-and round 1053 (**the New Game+ Difficulty drop-down opens in front of the dialog**: round 120's
-per-frame dialog re-assert in `UIScene.act` pulled every dialog over its own SelectBox list since round 837's picker, so a
-tap closed the list unchanged, desktop and touch; `UIScene.keepDialogInFront` leaves the dialog's own list on top,
-`DialogZOrderTest`; the bridge's `click text=` presses an open drop-down's item and any actor by name; shots
-`C:\CLAUDE\PROJECTS\TFR1\notes\r1053\`);
-`MOD_CHANGELOG.md`. Engine = the 11.18 daily (round 1049, upstream `d9ae6615afc`,
+**v1.30 "A Fair Start" is the latest release** (tag `tfr-v1.30` @ `369834d40fd`, published 2026-11-19
+18:15 UTC (10:15 Pacific); rounds 1033-1054 on top of v1.29; assets, notes and the tag commit in `docs/tfr/releases.md`;
+the round detail in `MOD_CHANGELOG.md`). `modVersion` 1.30 / `modVersionDate` 11.19, Android `tfr.version` 1.30 /
+versionCode 13000, `RELEASE_NOTES_v1.30.md`, GUIDE's What's New in 1.30, the Discord FAQ at v1.30 (`EDITED`/`ADDED`
+reset by round 1054's follow-up 2). NOTHING is unreleased. Engine = the 11.18 daily (round 1049, upstream `d9ae6615afc`,
 Forge 2.0.17-SNAPSHOT; round 769's R1-R4 still keep TFR's synchronous auto save, eager shops, Inn events and place
 entry; bosses keep the player's AI setting through `bossAiFollowsSetting`; the TFR AI rules and their stock hooks, round
 1018); next merge from upstream after `d9ae6615afc` (its first commit is `2d8fef80a0a`, #12942, pain lands);
-BASE_INSTALL is that daily, so packages need no `--allow-base-mismatch`. Next version after the 1.30 tag: 1.31 / 13100. Next free
-round: 1055. The agent profile's window is
+BASE_INSTALL is that daily, so packages need no `--allow-base-mismatch`. Next version: 1.31 / 13100. Next free round:
+1055. The agent profile's window is
 1280x720 - at 3840x2160 it covered the screen, got minimized, and a minimized game stops (the bridge times out, shots
 come back 1x1). Agent games keep their own LOCALAPPDATA cache (round 860). Log sharing (round 698) posts to Discord
 through a webhook kept OUT of git in `C:\TFR\secrets\discord_log_webhook.txt` - never commit it; the packager and

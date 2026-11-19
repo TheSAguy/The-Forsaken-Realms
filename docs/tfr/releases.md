@@ -189,17 +189,19 @@ The webhook token was checked absent from the unpushed history and the tree befo
 live from the tag commit. No itch.io upload by the session; the user posts the zip and APK. NOTHING is unreleased. Next
 version: 1.30 / 13000. Next merge from upstream after `a8695ac23e2` (its first commit is `3cfec26d1ed`, #12856).
 
-## STATE 2026-11-19: **v1.30 READY FOR THE TAG** (round 1054; RC built and tested, GO)
-Rounds 1033-1053 on top of v1.29. Engine = the 11.18 daily (upstream `d9ae6615afc`, round 1049, Forge 2.0.17-SNAPSHOT)
+## STATE 2026-11-19 (18:15 UTC): **v1.30 "A Fair Start" RELEASED** - tag `tfr-v1.30` @ `369834d40fd` (annotated),
+published 18:15:41 UTC (10:15 Pacific), Latest. Rounds 1033-1054 on top of v1.29; `master` was pushed at `369834d40fd`
+(the tag commit, a fast-forward from `ee2e535df98`; round 1054's follow-up 2 after it). RC built and tested, GO. Engine = the 11.18 daily (upstream `d9ae6615afc`, round 1049, Forge 2.0.17-SNAPSHOT)
 on the matching BASE_INSTALL. `modVersion` 1.30 / `modVersionDate` 11.19, Android `tfr.version` 1.30 / versionCode
-13000. Proposed name "A Fair Start" (the user decides; the name is in the release notes only, nothing that ships). Assets
+13000. Name "A Fair Start" (the user's call; the name is in the release notes only, nothing that ships). Assets
 in `C:\CLAUDE\PROJECTS\TFR1\release\v1.30`, built from `d8a85299d0f` (round 1054; the follow-up after it is docs only):
 - `The-Forsaken-Realms-v1.30.zip` 518.7 MB (518,674,199 bytes; SHA-256 `a06289e9c218...`);
 - `forsaken-realms-1.30-signed-aligned.apk` 16.2 MB (16,183,148 bytes; SHA-256 `57668c46e021...`;
   com.thesaguy.forsakenrealms, versionCode 13000, signer EE:60:39:25);
 - `assets.zip` 428.9 MB (428,933,242 bytes; SHA-256 `04853823c071...`; build.txt pair 2026-11-19 17:24:38, one `mvn`
   run in `C:\TFR-build` via R:; carries `log_share.txt`, no `pc_*.ogg`). Round 792's prompts ("430MB" / "16MB")
-  still fit (-0.3% / +1.1%), so unchanged.
+  still fit (-0.3% / +1.1%), so unchanged; the APK's download URL `releases/download/tfr-v1.30/assets.zip` answers
+  with the full size. Each asset's size and SHA-256 digest on GitHub match these.
 
 RC test (`C:\CLAUDE\PROJECTS\TFR1\notes\release-1.30-rc-checklist.md`): GO, no blocker - the desktop zip fresh
 (1.30 on screen, the version backup once, log sharing No, the journal in landscape and portrait with a raid page,
@@ -214,5 +216,7 @@ grid scroll and the Android landscape journal. Four small non-blocking notes in 
 Notes = `RELEASE_NOTES_v1.30.md` (checked against the changelog, rounds 1033-1053; 1.29's Android section with the
 keep-on-screen line of round 1038). GUIDE What's New 1.30 above "Coming from 1.28?"; the raid page's wording follows
 the round 1049 journal. The Discord FAQ says v1.30 (`EDITED` {1, 9, 10, 23}, nothing new; paste list
-`notes/faq-1.30-edits.md`). Posts: `notes/release-1.30-posts.md`. The publish step tags, pushes, publishes and replaces
-this block with the RELEASED one.
+`notes/faq-1.30-edits.md`; `EDITED`/`ADDED` reset by round 1054's follow-up 2). Posts: `notes/release-1.30-posts.md`.
+The webhook token was checked absent from the unpushed history and the tree before the push. No itch.io upload by the
+session; the user posts the zip and APK. NOTHING is unreleased. Next version: 1.31 / 13100. Next merge from upstream
+after `d9ae6615afc` (its first commit is `2d8fef80a0a`, #12942).
