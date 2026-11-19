@@ -35,6 +35,25 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 1045 - Flat Monte Carlo no longer re-equips an Equipment onto its wearer, or moves it twice a turn (TFR 2's equip-zero fix, extended)
+- `forge-ai/src/main/java/forge/ai/simulation/FlatMonteCarloPicker.java` (STOCK, first TFR edit; upstream-identical at
+  `a8695ac23e2` before this round), three checks marked `TFR round 1045`, each skipping when
+  `EquipGuard.idle(player, sa, x) != null`:
+  - `buildCandidates`' discovered plays (the extras loop), just before `cands.add(new Candidate(sa, target, true))`;
+  - `loyaltyTarget`'s candidate loop, after the Untap line;
+  - `alternativeTargets`' `usable` filter, a fourth condition.
+- `forge-ai/src/main/java/forge/ai/simulation/ActivationGuard.java` (STOCK, first TFR edit): `attachPayoff` is
+  package-private instead of private, so `EquipGuard` keeps upstream's combo exception.
+- TFR's own files, new in a stock package: `forge-ai/.../simulation/EquipGuard.java` (logs `[TFR-AiFix] equip-wearer`
+  and `equip-move` through `TfrAiRules.stockFix`; `-Dtfr.equipZeroOld=true` turns it off) and
+  `forge-gui-desktop/src/test/java/forge/ai/FlatMonteCarloEquipTest.java`. No `ComputerUtil` line (TFR 2 has one for
+  its `[TFR2-AiEquip]` counter; TFR 1 reads the engine's own `getActivationsThisTurn()` instead).
+- **On a merge:** upstream `master` at `2d8fef80a0a` (2026-11-18) still has the hole, and added `shieldAlreadyUp` and
+  `wastedOnHarmless` right beside the first site, so expect a textual conflict there: keep both. Upstream draft 0001
+  (`C:\CLAUDE\PROJECTS\TFR1\notes\r1045\upstream-pr\`) is the same rule as a `FlatMonteCarloPicker.idleEquip` predicate.
+  If upstream takes it, drop ours (the three lines, the `attachPayoff` visibility edit, `EquipGuard`) and point the test
+  at `idleEquip`.
+
 ### Round 1044 - the lite cap escalates after timeouts in a row (logs-1118 P3-39)
 - `forge-ai/src/main/java/forge/ai/AiController.java` (STOCK), all marked `TFR round 1044`:
   - two fields, `liteTimeoutStreak` and `priorityTimedOut`;

@@ -979,6 +979,9 @@ public final class FlatMonteCarloPicker {
                     continue; // a targeted play with nothing sensible to aim at is not worth a rollout
                 }
             }
+            if (EquipGuard.idle(player, sa, target) != null) {
+                continue; // TFR round 1045: an Equip onto the creature already wearing it does nothing
+            }
             cands.add(new Candidate(sa, target, true));
             extrasLeft--;
         }
@@ -1343,6 +1346,9 @@ public final class FlatMonteCarloPicker {
             if (api == ApiType.Untap && e instanceof Card && !((Card) e).isTapped()) {
                 continue; // an untap is for something that is tapped
             }
+            if (EquipGuard.idle(player, sa, e) != null) {
+                continue; // TFR round 1045: an Equip onto the creature already wearing it does nothing
+            }
             final int rank = targetRank(player, e);
             if (rank > bestRank) {
                 bestRank = rank;
@@ -1542,7 +1548,8 @@ public final class FlatMonteCarloPicker {
         final List<GameEntity> usable = new ArrayList<>();
         for (final GameEntity e : candidates) {
             // never offer the legend the AI already has working as a target to bring back: the legend rule ends it
-            if (e != current && wantsOwn == isOwnSide(player, e) && !ComboGuard.wouldBreakLegendRule(player, ts, e)) {
+            if (e != current && wantsOwn == isOwnSide(player, e) && !ComboGuard.wouldBreakLegendRule(player, ts, e)
+                    && EquipGuard.idle(player, sa, e) == null) { // TFR round 1045: never the creature already wearing it
                 usable.add(e);
             }
         }

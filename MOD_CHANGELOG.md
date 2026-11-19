@@ -14264,6 +14264,74 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 1045: the AI no longer re-equips a free Equipment onto its own wearer, or moves it back and forth all turn (2026-11-18)
+
+Ported from TFR 2's equip-zero fix (TFR 2 commit `c21c4d89a5b`, merged `cd1b63bb2a5`; the TFR 2 user: "'Grafted
+Wargear' was like triggering 10+ times each turn"), then extended after TFR 1's own bench showed TFR 2's fix left a
+second loop. Files: `forge-ai/.../simulation/FlatMonteCarloPicker.java` and `ActivationGuard.java` (stock, first TFR
+edits), new `forge-ai/.../simulation/EquipGuard.java`, new `forge-gui-desktop/src/test/java/forge/ai/FlatMonteCarloEquipTest.java`.
+Notes, logs and bench: `C:\CLAUDE\PROJECTS\TFR1\notes\r1045\`.
+
+- **The bug (stock Forge, in TFR 1 since Flat Monte Carlo):** Flat MC's discovery aims an activation it adds through
+  `loyaltyTarget`, the AI's best creature. For an Equip that is the creature already wearing the Equipment, since the
+  bonus counts in its value. The Equip then does nothing (rule 701.3b), but the rollouts score it like any quiet line, so
+  on the AI's own main phase, when they dislike the heuristics' favorite, it wins as a pass that keeps priority, and the
+  next decision offers it again until the loop breaker bars it at 25 (`[TFR-LoopBreak] ... used Shuko - Equip {0} ... 25
+  times this turn`). Upstream guards only the lone-wearer case (`ActivationGuard`), and `AttachAi` refuses it.
+- **Proved in TFR 1 first:** `FlatMonteCarloPicker.java` and `ActivationGuard.java` were byte-identical to TFR 2's
+  pre-fix copies and to upstream `a8695ac23e2`; upstream `master` (`2d8fef80a0a`, fetched 2026-11-18) still has the hole.
+  TFR 2's 7 tests, ported before the fix, failed 3 (`notes\r1045\red.log`): `loyaltyTarget` picked the wearer, the wearer
+  was a target variant, and Flat MC chose "Equip {0}" onto the Hill Giant wearing it over Pyroclasm
+  (`FlatMC[target-override, Equip {0} ...]`).
+- **Which decks carry it:** Equip {0} gear in TFR 1 enemy decks is Grafted Wargear (`miniboss/zedruubis` x4, `legends/`
+  feather, jeska, obeka, obosh, ragavan, skithiryx, skrelv, and the 3 `legends_jeska_*` tiers), Shuko (`standard/`
+  forge_blacksmith and ratfolk_scavenger, and their 6 tiers), Umbral Mantle (`legends/` redshift, shauku) and Leather
+  Armor (`standard_kor_warrior_adept`, `_apprentice`). Lightning Greaves (Equip {0}, ~200 decks) cannot loop this way:
+  shroud keeps its wearer from being targeted, even by its own Equip.
+- **The port (TFR 2's `EquipGuard`, adapted):** `EquipGuard.idle` keeps the wearer out of discovery's aim
+  (`loyaltyTarget`), out of the target variants (`alternativeTargets`), and drops a discovered play still aimed there
+  (`buildCandidates`), with upstream's `attachPayoff` combo exception. TFR 1 differences from TFR 2: the log goes through
+  TFR 1's stock-fix convention, `TfrAiRules.stockFix` (`[TFR-AiFix] equip-wearer`, once a game, turn and card, never in a
+  rollout, counted as `fix:equip-wearer`), instead of `[TFR2-AiEquip]`, so there is no `ComputerUtil` line and no
+  per-equip counter (`[TFR-LoopBreak]` already shows any loop); the off switch is `-Dtfr.equipZeroOld=true`.
+- **The extension (TFR 1 only so far):** with the wearer barred, the next best aim is another creature. For Grafted
+  Wargear a move sacrifices the old wearer, so the rollouts reject a ping-pong, which is why TFR 2's Wargear duels came
+  out clean. A drawback-free free Equip moves for nothing: in 48 duels with TFR 2's fix, Shuko went back and forth
+  between two creatures up to 25 times a turn, 5 loop-breaker bars. Stock `AttachAi` already moves an Equipment at most
+  once a turn ("avoid randomly moving the equipment back and forth"); discovery and the target variants bypassed that.
+  `EquipGuard.idle` now also refuses moving an attachment off one of the AI's creatures once that ability was activated
+  this turn (`getActivationsThisTurn() > 0`, the engine's own count), logged `[TFR-AiFix] equip-move`. The first move of
+  a turn stays the rollouts' call.
+- **Bench** (`notes\r1045\bench\`: `duel.sh`, round 1036's `AuditHarness` on a snapshot of this round's classes,
+  headless AI vs AI at Flat MC max, the desktop setting; a headless duel runs unthrottled, faster than 50x; `summary.py`
+  counts the game logs; the table is `summary.txt`):
+
+  | Arm | Games | Equips | Onto the wearer | Most of one card in a turn | `[TFR-LoopBreak]` Equip |
+  |---|---|---|---|---|---|
+  | stock (guard off), 2 Shuko decks | 48 | 165 | 140 | 25 | 3 |
+  | TFR 2's fix (wearer only), same seeds | 48 | 264 | 1 | 25 (a ping-pong) | 5 |
+  | this round (wearer and second move), same seeds | 48 | 33 | 2 (*) | 1 | 0 |
+  | stock, 4 Wargear/Shuko decks | 16 | 16 | 7 | 5 | 0 |
+  | this round, the same 4 decks | 16 | 11 | 0 (**) | 1 | 0 |
+
+  (*) Both were Shuko on a Genju-animated Swamp, re-equipped on a later turn after it fell off when the land stopped being
+  a creature (the script does not see that unattach). (**) The script counts 2: Zedruubis put two different Grafted
+  Wargear copies (16 and 17) onto one creature, which its by-name count takes for a re-equip; its "most in a turn" of 2
+  is the same pair. The Shuko decks won 8/48 (stock) and 5/48 (this round): too few
+  games to say anything about strength.
+- **Tested:** `FlatMonteCarloEquipTest`, 9 tests (TFR 2's 7, plus `aMoveIsOfferedOnceATurn` and
+  `aSecondMoveIsNoDisguisedPass`). With the guard off (`-Dtfr.equipZeroOld=true`), 5 fail, including "a second move this
+  turn was chosen: FlatMC[target-override, Equip {0} ...]" (`notes\r1045\red2-offswitch.log`). With it on,
+  `-Dtest=FlatMonteCarlo*Test,FlatMc*Test,TfrAiPuzzleTest`: 901 tests, 0 failures, 1 skipped, Maven exit 0, no "RULES
+  ON FAILS" or "RETIRE?" (`notes\r1045\green2.log`). The Maven runs compiled another session's uncommitted
+  `DamageDealAi.java` edit too (shared tree); it is not part of this round.
+- **Upstream PR draft** (the user posts it): `C:\CLAUDE\PROJECTS\TFR1\notes\r1045\upstream-pr\`, against upstream
+  `master` `2d8fef80a0a`, as a `FlatMonteCarloPicker.idleEquip` predicate beside upstream's own `shieldAlreadyUp` and
+  `wastedOnHarmless`. Its test passes 9/9 on that upstream tree (Maven exit 0).
+- **Not done:** no live-game or agent-game duel (the headless bench plays the same AI code); no change for TFR 2 (its fix
+  still has the Shuko ping-pong; reported to the TFR 1 main thread). The 1.30 log review should look for
+  `[TFR-LoopBreak] ... Equip` (expect none) and count `equip-wearer` and `equip-move`.
+
 ## Round 1044: on a giant board the AI stops waiting a full second for a pass (2026-11-18)
 
 From the log review `C:\CLAUDE\PROJECTS\TFR1\notes\logs-1118.md` (P3-39). The user: "Let's do these". Files:

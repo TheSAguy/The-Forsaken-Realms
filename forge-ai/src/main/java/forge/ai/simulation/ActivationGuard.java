@@ -286,7 +286,7 @@ public final class ActivationGuard {
      * that triggers when something becomes attached as one of its pieces. A "becomes attached" trigger on its own is no
      * reason: most of them pay once, and an equip {0} loop for a trickle of value is how the AI burns its turn.
      */
-    private static boolean attachPayoff(final Player ai, final Card equipment) {
+    static boolean attachPayoff(final Player ai, final Card equipment) { // TFR round 1045: EquipGuard asks it too
         final CardCollection mine = new CardCollection(ai.getCardsIn(ZoneType.Battlefield));
         for (final ComboCatalog.Entry e : ComboCatalog.entries()) {
             if (!e.assembledBy(mine)) {
