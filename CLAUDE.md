@@ -8,8 +8,8 @@ every round built. If you find something missing, fix the docs rather than going
 
 **v1.30 is in release (round 1054)**: `modVersion` 1.30 / 11.19, Android `tfr.version` 1.30 / versionCode 13000,
 `RELEASE_NOTES_v1.30.md` (proposed name "A Fair Start"), GUIDE's What's New in 1.30, the Discord FAQ at v1.30 (`EDITED`
-{1, 9, 10, 23}); the RC (`C:\CLAUDE\PROJECTS\TFR1\notes\release-1.30-rc-checklist.md`) is built and tested next, then
-the tag `tfr-v1.30` (rounds 1033-1053 on top of v1.29). **v1.29 "Sharper Foes" was the last release before it** (tag `tfr-v1.29` @ `1a42b93c2a7`, published 2026-11-14
+{1, 9, 10, 23}); the RC (`C:\CLAUDE\PROJECTS\TFR1\notes\release-1.30-rc-checklist.md`) is built and tested, GO (round 1054's
+follow-up; assets in `C:\CLAUDE\PROJECTS\TFR1\release\v1.30`); next the tag `tfr-v1.30` (rounds 1033-1053 on top of v1.29). **v1.29 "Sharper Foes" was the last release before it** (tag `tfr-v1.29` @ `1a42b93c2a7`, published 2026-11-14
 18:00 UTC (10:00 Pacific); rounds 1004-1032 on top of v1.28; assets, notes and the tag commit in `docs/tfr/releases.md`;
 the round detail in `MOD_CHANGELOG.md`). `modVersion` 1.29 / `modVersionDate` 11.14, Android `tfr.version` 1.29 /
 versionCode 12900, `RELEASE_NOTES_v1.29.md`, GUIDE's What's New in 1.29, the Discord FAQ at v1.29 (`EDITED`/`ADDED`

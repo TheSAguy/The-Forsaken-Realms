@@ -189,14 +189,27 @@ The webhook token was checked absent from the unpushed history and the tree befo
 live from the tag commit. No itch.io upload by the session; the user posts the zip and APK. NOTHING is unreleased. Next
 version: 1.30 / 13000. Next merge from upstream after `a8695ac23e2` (its first commit is `3cfec26d1ed`, #12856).
 
-## STATE 2026-11-19: **v1.30 READY FOR THE TAG** (round 1054; the RC is built and tested next)
+## STATE 2026-11-19: **v1.30 READY FOR THE TAG** (round 1054; RC built and tested, GO)
 Rounds 1033-1053 on top of v1.29. Engine = the 11.18 daily (upstream `d9ae6615afc`, round 1049, Forge 2.0.17-SNAPSHOT)
 on the matching BASE_INSTALL. `modVersion` 1.30 / `modVersionDate` 11.19, Android `tfr.version` 1.30 / versionCode
 13000. Proposed name "A Fair Start" (the user decides; the name is in the release notes only, nothing that ships). Assets
-to come in `C:\CLAUDE\PROJECTS\TFR1\release\v1.30` (the round 1054 follow-up fills in sizes and bytes):
-- `The-Forsaken-Realms-v1.30.zip` - MB;
-- `forsaken-realms-1.30-signed-aligned.apk` - MB (com.thesaguy.forsakenrealms, versionCode 13000, signer EE:60:39:25);
-- `assets.zip` - MB (one `mvn` run in `C:\TFR-build` via R:; carries `log_share.txt`).
+in `C:\CLAUDE\PROJECTS\TFR1\release\v1.30`, built from `d8a85299d0f` (round 1054; the follow-up after it is docs only):
+- `The-Forsaken-Realms-v1.30.zip` 518.7 MB (518,674,199 bytes; SHA-256 `a06289e9c218...`);
+- `forsaken-realms-1.30-signed-aligned.apk` 16.2 MB (16,183,148 bytes; SHA-256 `57668c46e021...`;
+  com.thesaguy.forsakenrealms, versionCode 13000, signer EE:60:39:25);
+- `assets.zip` 428.9 MB (428,933,242 bytes; SHA-256 `04853823c071...`; build.txt pair 2026-11-19 17:24:38, one `mvn`
+  run in `C:\TFR-build` via R:; carries `log_share.txt`, no `pc_*.ogg`). Round 792's prompts ("430MB" / "16MB")
+  still fit (-0.3% / +1.1%), so unchanged.
+
+RC test (`C:\CLAUDE\PROJECTS\TFR1\notes\release-1.30-rc-checklist.md`): GO, no blocker - the desktop zip fresh
+(1.30 on screen, the version backup once, log sharing No, the journal in landscape and portrait with a raid page,
+a legend and a timed side quest, no General Settings, the duel pages before the first duel and from the Game menu,
+week-1 ante grace on Normal and ante on day 8 and on Insane, a save written by the released 1.29 loaded with its
+quest, raid and legend, the Armory in portrait, 5 duels at 50x, `errors=0`); the signed APK over 1.29 on LDPlayer
+(assets, 1.30 on screen, the backup notice, log sharing No, The War Begins on a pre-1.29 save and "The War" with
+no crash, the duel pages in touch words, the New Game+ drop-down on touch to Insane with Mirror Gear on, a new
+game, save/load); the Android 50x duel on a test-only autopilot build of the same commit. Not run: the 24+ card
+grid scroll and the Android landscape journal. Four small non-blocking notes in the checklist.
 
 Notes = `RELEASE_NOTES_v1.30.md` (checked against the changelog, rounds 1033-1053; 1.29's Android section with the
 keep-on-screen line of round 1038). GUIDE What's New 1.30 above "Coming from 1.28?"; the raid page's wording follows

@@ -14264,6 +14264,23 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 1054 (follow-up): the 1.30 RC is built and tested - sizes and hashes in the ledger (2026-11-19)
+
+The RC from `d8a85299d0f`, by the 1.29 method; checklist and evidence
+`C:\CLAUDE\PROJECTS\TFR1\notes\release-1.30-rc-checklist.md`, shots and logs in `C:\CLAUDE\PROJECTS\TFR1\notes\r1054\`.
+- **Built** (`C:\CLAUDE\PROJECTS\TFR1\release\v1.30`): the desktop zip 518,674,199 bytes, the signed APK 16,183,148
+  (versionCode 13000, signer EE:60:39:25), `assets.zip` 428,933,242 (stamp pair 2026-11-19 17:24:38); Maven and the
+  packager exit 0; round 792's download sizes unchanged. The webhook token is absent from the repo, the unpushed
+  history and the `C:\TFR-build` tree.
+- **Result: GO.** Every 1.30 check passed on desktop (the zip unzipped fresh) and on LDPlayer (the signed APK over 1.29;
+  the 50x duel on an autopilot test build): the journal, the duel pages, the ante grace, New Game+ on touch, The War
+  Begins on Android, a save written by the released 1.29. Not run: the 24+ card grid scroll, the Android landscape
+  journal.
+- **Not blocking, for later rounds:** a caught `[TFR-AiRule] fetch-life-guard error` (NullPointerException, "activator"
+  is null; the hook falls back to Forge's play) once in 5 duels; a new side quest's portrait list row hides its timer
+  until opened; the landscape raid page's "Show on Map" label is wider than its button; the "Stuck?" page names the
+  three-line Game button, which a classic-layout phone shows as the word "Game".
+
 ## Round 1054: the version is 1.30, with its release notes, guide and FAQ (2026-11-19)
 
 Part 1 of the 1.30 release the user called ("Let's start the 1.30 release candidate."), after rounds 1033-1053 were
