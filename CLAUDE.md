@@ -42,13 +42,17 @@ over the match, `source=game-menu`; the pages name the pointer: Tap/press and ho
 and round 1049 (**the engine to the 11.18 daily**: upstream's two-column quest journal with TFR's legends, raids and
 their mini-map page, timers, progress, hints and tips ported onto it; its finished-quests list capped at 10; upstream's
 General Settings button hidden on an adventureOnly plane; a scrolling reward grid; upstream's large Flat MC / mana / AI
-range under TFR's rules, all hooks intact, no rule retired; `C:\CLAUDE\PROJECTS\TFR1\notes\r1049\conflicts.md`);
+range under TFR's rules, all hooks intact, no rule retired; `C:\CLAUDE\PROJECTS\TFR1\notes\r1049\conflicts.md`) and
+round 1051 (**New Game+ sets Mirror Gear from its difficulty**: the same difficulty keeps the save's flag, a changed one
+takes the New Game screen's default - on for Hard and Insane, off for Easy and Normal; Custom (X) counts as X;
+`MirrorGear.newGamePlus`, `[TFR-MirrorGear] new world: on (New Game+ raised Normal -> Insane, ...)`; the New Game+
+dialog's difficulty note says "- Mirror Gear on/off" on a changed pick);
 `MOD_CHANGELOG.md`. Engine = the 11.18 daily (round 1049, upstream `d9ae6615afc`,
 Forge 2.0.17-SNAPSHOT; round 769's R1-R4 still keep TFR's synchronous auto save, eager shops, Inn events and place
 entry; bosses keep the player's AI setting through `bossAiFollowsSetting`; the TFR AI rules and their stock hooks, round
 1018); next merge from upstream after `d9ae6615afc` (its first commit is `2d8fef80a0a`, #12942, pain lands);
 BASE_INSTALL is that daily, so packages need no `--allow-base-mismatch`. Next version: 1.30 / 13000. Next free round:
-1050. The agent profile's window is
+1052. The agent profile's window is
 1280x720 - at 3840x2160 it covered the screen, got minimized, and a minimized game stops (the bridge times out, shots
 come back 1x1). Agent games keep their own LOCALAPPDATA cache (round 860). Log sharing (round 698) posts to Discord
 through a webhook kept OUT of git in `C:\TFR\secrets\discord_log_webhook.txt` - never commit it; the packager and

@@ -14264,6 +14264,43 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 1051: New Game+ into Hard or Insane turns Mirror Gear on (2026-11-19)
+
+The user: "Do the Mirror Gear New Game+ fix too." From the logs-1119 review (`C:\CLAUDE\PROJECTS\TFR1\notes\logs-1119.md`,
+"Design gap: Mirror Gear stays off when New Game+ moves up to Hard or Insane"): install 465855fc took a Custom (Normal)
+save into a Custom (Insane) New Game+ and logged `[TFR-MirrorGear] new world: off (kept: New Game+)`. New Game+ has no
+Mirror Gear checkbox, so `MirrorGear.takePendingNewGame` kept the old save's flag, and a Normal save's flag is off.
+
+- **The rule** (`MirrorGear.newGamePlus(table, saveOn, was, now)`, pure and tested):
+  - **Same difficulty:** keeps the save's flag (the player chose it at that New Game).
+  - **Changed difficulty:** takes what the New Game screen's checkbox shows for it (`availableOn`, the same as
+    `defaultOn`). That is on for Hard and Insane, and off for Easy and Normal, where the box is greyed out and unchecked.
+    So a lowered run (Insane -> Normal) is off, and Hard <-> Insane is on even when the save had it off.
+  - **An unknown difficulty on either side** keeps the save's flag. **No table** (another plane) is never on.
+- **Custom difficulty:** "Custom (Insane)" counts as Insane. The player's `DifficultyData.name` under the custom
+  overrides is the preset's own name (`CustomDifficulty.name` wraps it as "Custom (X)"), and the gate (`gateNow`) and the
+  New Game screen already read it that way. The 465855fc case (Custom (Normal) -> Custom (Insane)) is now on.
+- **Where:** `SaveLoadScene.startNewGamePlus` calls `MirrorGear.setPendingNewGamePlus(world.isMirrorGear(), the player's
+  difficulty name, the target preset's name)` right before `World.generateNew(0)`, which takes the choice as before.
+- **The log line gives the reason:** `[TFR-MirrorGear] new world: on (New Game+ raised Normal -> Insane, the save had it
+  off)`, `... off (New Game+ lowered Insane -> Normal, the save had it on)`, `... (kept: New Game+ on Hard)`,
+  `... (New Game screen)`.
+- **The New Game+ dialog:** it said nothing about Mirror Gear before. It still has no checkbox. Its difficulty note
+  gets a tail only when the pick changes the difficulty: "(this save: Normal) - Mirror Gear on". With the same
+  difficulty it says nothing, since the save's flag is not read until Start loads the save.
+- **Proof:**
+  - `MirrorGearTest.newGamePlus`: same (on and off), raised, Hard <-> Insane, lowered, Custom (through
+    `SaveLoadScene.presetOf("Custom (Insane)")`), unknown difficulty and no table.
+  - Maven `-o -pl forge-gui-mobile -am test "-Dtest=forge/adventure/**/*Test"`: exit 0, 250 tests, 0 failures.
+  - Agent game (fresh classes ahead of the jar): a Normal save's New Game+ into Insane logged
+    `[TFR-MirrorGear] new world: on (New Game+ raised Normal -> Insane, the save had it off)` and
+    `[TFR-NewGamePlus] difficulty Insane (the save was Normal)`. Shot of the dialog:
+    `C:\CLAUDE\PROJECTS\TFR1\notes\r1051-ngplus-dialog.png`. No duel played.
+- **Not done:** no Mirror Gear checkbox on New Game+. A world that actually copies gear is still unseen in the logs.
+- **Seen, not fixed:** in the agent game (1280x720, desktop) the New Game+ dialog's Difficulty drop-down opens its list
+  *behind* the dialog. A click on it closes it with no change. The Advanced... panel's "Based on" list works and moves
+  the dialog's picker. It is unknown whether touch devices see the same thing.
+
 ## Round 1049: the engine to the 11.18 daily (upstream `d9ae6615afc`, Forge 2.0.17-SNAPSHOT) (2026-11-19)
 
 The user: "I have updated Forge, let's update TFR1 to the latest version. Then we can probably do a 1.30 release.

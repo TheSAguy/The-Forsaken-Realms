@@ -220,4 +220,37 @@ public class MirrorGearTest {
         for (String name : t.pool.keySet())
             AssertJUnit.assertTrue("not a gear item in items.json: " + name, gear.contains(name));
     }
+    /** Round 1051: New Game+ (no checkbox) - the same difficulty keeps the save's flag, a changed one takes the New
+     *  Game screen's default for it. Custom(X) arrives as X (the player's DifficultyData name is the preset's). */
+    @Test
+    public void newGamePlus() {
+        MirrorGear.Table t = table();
+        // same difficulty: the save's flag, either way
+        AssertJUnit.assertFalse(MirrorGear.newGamePlus(t, false, "Insane", "Insane").on);
+        AssertJUnit.assertTrue(MirrorGear.newGamePlus(t, true, "Hard", "hard").on);
+        AssertJUnit.assertFalse("Normal stays Normal", MirrorGear.newGamePlus(t, false, "Normal", "Normal").on);
+        AssertJUnit.assertTrue(MirrorGear.newGamePlus(t, true, "Hard", "Hard").why.startsWith("kept"));
+        // raised: on
+        MirrorGear.Choice up = MirrorGear.newGamePlus(t, false, "Normal", "Insane");
+        AssertJUnit.assertTrue(up.on);
+        AssertJUnit.assertEquals("New Game+ raised Normal -> Insane, the save had it off", up.why);
+        AssertJUnit.assertTrue(MirrorGear.newGamePlus(t, false, "Easy", "Hard").on);
+        // between Hard and Insane: on, even when the save had it off (the New Game screen's default)
+        AssertJUnit.assertTrue(MirrorGear.newGamePlus(t, false, "Hard", "Insane").on);
+        AssertJUnit.assertTrue(MirrorGear.newGamePlus(t, true, "Insane", "Hard").on);
+        // lowered: off, as the greyed-out box
+        MirrorGear.Choice down = MirrorGear.newGamePlus(t, true, "Insane", "Normal");
+        AssertJUnit.assertFalse(down.on);
+        AssertJUnit.assertEquals("New Game+ lowered Insane -> Normal, the save had it on", down.why);
+        AssertJUnit.assertFalse(MirrorGear.newGamePlus(t, false, "Normal", "Easy").on);
+        // Custom: the 465855fc case, Custom (Normal) into Custom (Insane). New Game+ passes the player's DifficultyData
+        // name, the preset under the overrides; the slot words read back the same way
+        AssertJUnit.assertTrue(MirrorGear.newGamePlus(t, false, forge.adventure.scene.SaveLoadScene.presetOf("Custom (Normal)"),
+                forge.adventure.scene.SaveLoadScene.presetOf("Custom (Insane)")).on);
+        // unknown difficulty: the save's flag
+        AssertJUnit.assertTrue(MirrorGear.newGamePlus(t, true, null, "Normal").on);
+        AssertJUnit.assertFalse(MirrorGear.newGamePlus(t, false, "Normal", null).on);
+        // no table (another plane): never on
+        AssertJUnit.assertFalse(MirrorGear.newGamePlus(null, false, "Normal", "Insane").on);
+    }
 }

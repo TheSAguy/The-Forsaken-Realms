@@ -178,7 +178,10 @@ public final class MirrorGear {
 
     /** Can a game on this difficulty have it at all (the checkbox is greyed out where not)? */
     public static boolean availableOn(String difficulty) {
-        Table t = table();
+        return availableOn(table(), difficulty);
+    }
+
+    static boolean availableOn(Table t, String difficulty) {
         if (t == null || difficulty == null)
             return false;
         for (Map<String, float[]> byDifficulty : t.gates.values())
@@ -194,19 +197,59 @@ public final class MirrorGear {
 
     /** The New Game screen's choice for the world about to be generated; null = none (New Game+ keeps the save's). */
     private static Boolean pendingNewGame;
+    /** Why pendingNewGame is what it is, for the log ("New Game screen", or New Game+'s reason). */
+    private static String pendingReason;
 
     public static void setPendingNewGame(boolean on) {
         pendingNewGame = on;
+        pendingReason = "New Game screen";
     }
 
-    /** World.generateNew: the flag the new world starts with - the New Game screen's choice, or the current one (New
-     *  Game+ regenerates the loaded save's world and keeps its choice). The choice is used once. */
+    /** New Game+'s choice and its words for the log. */
+    public static final class Choice {
+        public boolean on;
+        public String why = "";
+    }
+
+    /**
+     * Round 1051: New Game+'s Mirror Gear (it has no checkbox). Difficulties are preset names - a Custom save's is the
+     * preset under its overrides ("Custom (Insane)" is "Insane"), as the gate and the New Game screen's box read it.
+     * The same difficulty keeps the save's flag (the player chose it at that New Game). A changed one takes what the New
+     * Game screen would show for it: on where Mirror Gear is available (Hard, Insane), off where the box is greyed out
+     * (Easy, Normal). An unknown difficulty on either side keeps the save's flag.
+     */
+    public static Choice newGamePlus(Table t, boolean saveOn, String was, String now) {
+        Choice c = new Choice();
+        if (was == null || now == null || was.equalsIgnoreCase(now)) {
+            c.on = saveOn;
+            c.why = "kept: New Game+ on " + (now != null ? now : was != null ? was : "the save's difficulty");
+            return c;
+        }
+        c.on = availableOn(t, now);
+        boolean raised = !availableOn(t, was) && c.on;
+        boolean lowered = availableOn(t, was) && !c.on;
+        c.why = "New Game+ " + (raised ? "raised " : lowered ? "lowered " : "moved ") + was + " -> " + now
+                + (c.on == saveOn ? ", as the save had it" : ", the save had it " + (saveOn ? "on" : "off"));
+        return c;
+    }
+
+    /** SaveLoadScene's New Game+, before World.generateNew: the save's flag, its difficulty and the new run's. */
+    public static void setPendingNewGamePlus(boolean saveOn, String was, String now) {
+        Choice c = newGamePlus(table(), saveOn, was, now);
+        pendingNewGame = c.on;
+        pendingReason = c.why;
+    }
+
+    /** World.generateNew: the flag the new world starts with - the New Game screen's or New Game+'s choice, or the
+     *  current one when nothing chose. The choice is used once. */
     public static boolean takePendingNewGame(boolean current) {
         Boolean p = pendingNewGame;
+        String why = pendingReason;
         pendingNewGame = null;
+        pendingReason = null;
         boolean on = p != null ? p : current;
         System.out.println("[TFR-MirrorGear] new world: " + (on ? "on" : "off")
-                + (p != null ? " (New Game screen)" : " (kept: New Game+)"));
+                + " (" + (p != null && why != null ? why : "kept: nothing chose") + ")");
         return on;
     }
 

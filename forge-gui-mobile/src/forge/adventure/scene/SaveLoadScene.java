@@ -379,7 +379,11 @@ public class SaveLoadScene extends UIScene {
             boolean same = i < 0 || presets[i].name.equalsIgnoreCase(savePreset);
             boolean custom = saveWords != null && !saveWords.equalsIgnoreCase(savePreset);
             diffNote.setText("[%80]" + (i < 0 ? "" : same ? "(this save's)" : saveWords == null ? "" : "(this save: " + saveWords + ")")
-                    + (custom ? (same ? " - its custom settings come along" : " - custom settings come along") : ""));
+                    + (custom ? (same ? " - its custom settings come along" : " - custom settings come along") : "")
+                    // Round 1051: a changed difficulty sets Mirror Gear to that difficulty's default (the same one keeps
+                    // the save's, unread until Start loads it, so nothing is said then)
+                    + (i < 0 || same || savePreset == null || forge.adventure.util.MirrorGear.table() == null ? ""
+                    : " - Mirror Gear " + (forge.adventure.util.MirrorGear.defaultOn(presets[i].name) ? "on" : "off")));
         };
         pick.addListener(new com.badlogic.gdx.scenes.scene2d.utils.ChangeListener() {
             @Override
@@ -572,6 +576,11 @@ public class SaveLoadScene extends UIScene {
                     // difficulty is only applied to the player below - so the World is told first.
                     WorldSave.getCurrentSave().getWorld().setGenerationDifficulty(target != null
                             ? target.name : Current.player().getDifficulty().name);
+                    // Round 1051: a changed difficulty takes the New Game screen's Mirror Gear default for it (on for
+                    // Hard and Insane), the same one keeps the save's - generateNew below takes the choice
+                    forge.adventure.util.MirrorGear.setPendingNewGamePlus(WorldSave.getCurrentSave().getWorld().isMirrorGear(),
+                            Current.player().getDifficulty() == null ? null : Current.player().getDifficulty().name,
+                            target != null ? target.name : null);
                     if (WorldSave.getCurrentSave().getWorld().generateNew(0)) {
                         WorldSave.getCurrentSave().getWorld().setWarIntroShown(warIntroShown);
                         System.out.println("[TFR-NewGamePlus] The War Begins " + (warIntroShown ? "already read - carried" : "not read yet"));

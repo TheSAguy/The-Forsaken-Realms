@@ -35,6 +35,16 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 1051 - New Game+ sets Mirror Gear from its difficulty (logs-1119)
+- `forge-gui-mobile/src/forge/adventure/scene/SaveLoadScene.java` (STOCK, already TFR-edited): `startNewGamePlus` calls
+  `MirrorGear.setPendingNewGamePlus(...)` (the save's flag, the player's difficulty name, the target's) after
+  `setGenerationDifficulty` and before `generateNew(0)`. `askNewGamePlusCarry`'s `describe` adds " - Mirror Gear on/off"
+  to the difficulty note when the pick differs from the save's preset. On a merge, keep both after round 837's picker code.
+- `forge-gui-mobile/src/forge/adventure/world/World.java` (STOCK, already TFR-edited): the comment above round 1030's
+  `takePendingNewGame` line only.
+- TFR's own files: `util/MirrorGear.java` (`newGamePlus`, `Choice`, `setPendingNewGamePlus`, `pendingReason`,
+  `availableOn(Table, String)`), `test/.../MirrorGearTest.java` (`newGamePlus`).
+
 ### Round 1049 - the engine to the 11.18 daily (upstream `d9ae6615afc`, Forge 2.0.17-SNAPSHOT)
 - Merge log and impact: `C:\CLAUDE\PROJECTS\TFR1\notes\r1049\conflicts.md`. The next merge starts at `2d8fef80a0a` (#12942).
 - `forge-gui-mobile/src/forge/adventure/scene/QuestLogScene.java` (STOCK, rewritten upstream by #12881): upstream's

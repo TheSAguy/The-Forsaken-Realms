@@ -3022,7 +3022,8 @@ public class World implements Disposable, SaveFileContent {
             ngPlusWaveMages = 0; // round 425: New Game+ sets it after generateNew when the invested resources came back
             warIntroShown = false; // round 1005: a new run waits for its first attack (New Game+ carries it, SaveLoadScene)
             warIntroOldSave = false;
-            // Round 1030: the New Game screen's Mirror Gear choice; New Game+ (no choice made) keeps the save's.
+            // Round 1030: the New Game screen's Mirror Gear choice; round 1051: New Game+'s (the save's on the same difficulty,
+            // the New Game screen's default on a changed one; MirrorGear.newGamePlus).
             mirrorGear = forge.adventure.util.MirrorGear.takePendingNewGame(mirrorGear);
             mirrorGearNoticeShown = false;
             colorTerritoryRadius.clear();
