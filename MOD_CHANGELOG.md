@@ -14362,6 +14362,12 @@ every TFR duel) vetoed Life from the Loam whenever the AI had chosen every land 
 - **Upstream PR draft** (the user posts it): `C:\CLAUDE\PROJECTS\TFR1\notes\r1052\upstream-pr\`, the fix without the
   log call plus the test, against upstream `master` `2c27a4c797f` (2026-11-19), which still has the bug; `git apply
   --check` passes there. Not run on upstream's tree.
+- **Notes lost and re-run:** at about 08:35 round 1053's cleanup removed `C:\CLAUDE\PROJECTS\TFR1\notes\r1052\` (it had
+  used that folder before it got its round number; a hard delete). Lost: the first upstream draft and README, the
+  core-engine draft, the first Maven log, the bench scripts and overlay, the puzzle-run outputs (red and fixed) and a
+  bench run that was starting. Rebuilt from this round's session: the scripts, the overlay, the upstream draft (checked
+  again on `2c27a4c797f`); re-run: the whole bench (the table above) and Maven (same result as the lost run). The puzzle
+  results above are from the lost run, as read at the time; the Maven run repeats them for the puzzles in the repo.
 
 ## Round 1051: New Game+ into Hard or Insane turns Mirror Gear on (2026-11-19)
 
