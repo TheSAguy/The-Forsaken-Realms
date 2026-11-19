@@ -52,13 +52,17 @@ times in a priority, `[TFR-LoopBreak] failed cast x3`; puzzles P22-P22c, `failed
 round 1051 (**New Game+ sets Mirror Gear from its difficulty**: the same difficulty keeps the save's flag, a changed one
 takes the New Game screen's default - on for Hard and Insane, off for Easy and Normal; Custom (X) counts as X;
 `MirrorGear.newGamePlus`, `[TFR-MirrorGear] new world: on (New Game+ raised Normal -> Insane, ...)`; the New Game+
-dialog's difficulty note says "- Mirror Gear on/off" on a changed pick);
+dialog's difficulty note says "- Mirror Gear on/off" on a changed pick); and round 1053 (**the New Game+ Difficulty drop-down opens in front of the dialog**: round 120's
+per-frame dialog re-assert in `UIScene.act` pulled every dialog over its own SelectBox list since round 837's picker, so a
+tap closed the list unchanged, desktop and touch; `UIScene.keepDialogInFront` leaves the dialog's own list on top,
+`DialogZOrderTest`; the bridge's `click text=` presses an open drop-down's item and any actor by name; shots
+`C:\CLAUDE\PROJECTS\TFR1\notes\r1053\`);
 `MOD_CHANGELOG.md`. Engine = the 11.18 daily (round 1049, upstream `d9ae6615afc`,
 Forge 2.0.17-SNAPSHOT; round 769's R1-R4 still keep TFR's synchronous auto save, eager shops, Inn events and place
 entry; bosses keep the player's AI setting through `bossAiFollowsSetting`; the TFR AI rules and their stock hooks, round
 1018); next merge from upstream after `d9ae6615afc` (its first commit is `2d8fef80a0a`, #12942, pain lands);
 BASE_INSTALL is that daily, so packages need no `--allow-base-mismatch`. Next version: 1.30 / 13000. Next free round:
-1052. The agent profile's window is
+1054. The agent profile's window is
 1280x720 - at 3840x2160 it covered the screen, got minimized, and a minimized game stops (the bridge times out, shots
 come back 1x1). Agent games keep their own LOCALAPPDATA cache (round 860). Log sharing (round 698) posts to Discord
 through a webhook kept OUT of git in `C:\TFR\secrets\discord_log_webhook.txt` - never commit it; the packager and

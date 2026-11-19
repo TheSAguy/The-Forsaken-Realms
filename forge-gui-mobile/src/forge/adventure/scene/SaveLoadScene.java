@@ -374,6 +374,7 @@ public class SaveLoadScene extends UIScene {
         }
         TextraLabel diffNote = Controls.newTextraLabel("");
         SelectBox<String> pick = Controls.newComboBox(names, names[selected], o -> null);
+        pick.setName("ngPlusDifficulty"); // round 1053: the agent bridge opens it by name
         Runnable describe = () -> {
             int i = pick.getSelectedIndex() - offset;
             boolean same = i < 0 || presets[i].name.equalsIgnoreCase(savePreset);

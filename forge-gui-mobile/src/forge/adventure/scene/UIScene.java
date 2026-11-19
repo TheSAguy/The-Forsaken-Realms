@@ -339,8 +339,9 @@ public class UIScene extends Scene {
         // neither draws on top nor blocks the cards' touches. Re-assert the top dialog's z-order every frame.
         if (!dialogs.isEmpty()) {
             Dialog top = dialogs.get(dialogs.size - 1);
-            if (top.getStage() == stage && top.getZIndex() != stage.getActors().size - 1)
-                top.toFront();
+            if (top.getStage() == stage)
+                keepDialogInFront(stage.getRoot(), top, a -> a instanceof SelectBox.SelectBoxScrollPane
+                        && ((SelectBox.SelectBoxScrollPane<?>) a).getSelectBox().isDescendantOf(top));
         }
         if (timeOfDay < targetTime) {
             timeOfDay += (delta * 1.5f);
@@ -351,6 +352,32 @@ public class UIScene extends Scene {
             if (timeOfDay < targetTime)
                 timeOfDay = targetTime;
         }
+    }
+
+    /**
+     * Round 1053: round 120's per-frame re-assert, minus the dialog's own drop-down. A SelectBox opens its list as a
+     * popup added to the stage root, above the dialog; pulling the dialog back over it every frame hid the list (the
+     * New Game+ dialog's Difficulty picker since round 837), and the modal dialog took the click meant for an item, so
+     * the list closed with no change. Now the dialog comes to the front only when something else sits above it, and
+     * its own popup is put back above it. {@code ownPopup} says which actors are the dialog's popups.
+     */
+    static void keepDialogInFront(com.badlogic.gdx.scenes.scene2d.Group root, Actor top,
+                                  java.util.function.Predicate<Actor> ownPopup) {
+        com.badlogic.gdx.utils.SnapshotArray<Actor> all = root.getChildren();
+        Actor popup = null;
+        boolean misplaced = false;
+        for (int i = top.getZIndex() + 1; i < all.size; i++) {
+            Actor a = all.get(i);
+            if (ownPopup.test(a))
+                popup = a;
+            else
+                misplaced = true;
+        }
+        if (!misplaced)
+            return;
+        top.toFront();
+        if (popup != null)
+            popup.toFront();
     }
 
     @Override

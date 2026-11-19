@@ -14264,6 +14264,42 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 1053: the New Game+ Difficulty drop-down opens in front of the dialog (2026-11-19)
+
+Seen by round 1051 in the agent game: the New Game+ dialog's Difficulty drop-down opened its list *behind* the dialog,
+and a tap on an item closed the list with no change. A player could change the difficulty there only through
+Advanced...'s "Based on" list.
+
+- **Cause:** round 120's re-assert in `UIScene.act` brought the top dialog to the front every frame when anything sat
+  above it. That was meant for RewardScene's rebuilt cards. A SelectBox opens its list as a popup on the stage root,
+  above the dialog, so the dialog was pulled back over its own list on the next frame. The modal dialog then took the
+  tap meant for an item, and the list's outside-tap listener closed it.
+- **Not new:** `tfr-v1.29` has the same code (round 120's re-assert, round 837's picker), so every New Game+ picker
+  since round 837 had it. It was not caused by round 1049's engine merge. That was checked in the code, not by running
+  1.29.
+- **Touch layouts too:** the portrait agent window (540x960, landscape mode off) showed the same thing before the fix.
+- **The fix:** `UIScene.keepDialogInFront(root, top, ownPopup)` moves the dialog to the front only when something
+  other than its own drop-down list sits above it. It then puts that list back above it. A SelectBox list counts as
+  the dialog's own when its SelectBox is inside the dialog. This covers every UIScene dialog with a drop-down, not
+  only New Game+.
+- **Agent bridge:** `cmd click text=X` now also presses an open drop-down's item and any stage actor by name, at its
+  screen point through the stage. It reports whether the touch landed on the list. The New Game+ picker is named
+  `ngPlusDifficulty`.
+- **Proof:**
+  - **Before (classes ahead of the agent jar, UIScene as shipped):** pressing "Insane" logged
+    `touch landed on ..., NOT the list; the box now shows 'Normal'` in landscape and portrait.
+    Shots: `C:\CLAUDE\PROJECTS\TFR1\notes\r1053\before-landscape-open.png` and `before-portrait-open.png`.
+  - **After:** the list draws over the dialog. "Hard" (portrait) and "Insane" (landscape) took, and the note read
+    "(this save: Normal) - Mirror Gear on". Shots: `after-landscape-open.png`, `after-landscape-picked.png`,
+    `after-portrait-open.png` and `after-portrait-picked.png` in the same folder.
+  - **The landscape New Game+ started** on Insane picked through the drop-down. It logged
+    `[TFR-MirrorGear] new world: on (New Game+ raised Normal -> Insane, the save had it off)` and
+    `[TFR-NewGamePlus] difficulty Insane (the save was Normal)`. No duel was played.
+  - **Tests:** `DialogZOrderTest` covers four cases: the dialog's own popup stays on top, a card above comes below the
+    dialog, a card above both still leaves the popup on top, and a dialog already on top is left alone.
+    Maven `-o -pl forge-gui-mobile -am test "-Dtest=forge/adventure/**/*Test"`: exit 0, 254 tests, 0 failures.
+- **Not checked:** an Android device. The fix is in shared scene2d code, the same path the portrait window ran.
+
 ## Round 1051: New Game+ into Hard or Insane turns Mirror Gear on (2026-11-19)
 
 The user: "Do the Mirror Gear New Game+ fix too." From the logs-1119 review (`C:\CLAUDE\PROJECTS\TFR1\notes\logs-1119.md`,

@@ -257,6 +257,20 @@ final class AgentActions {
                 for (Map.Entry<String, Actor> e : observer.lastActors().entrySet())
                     if (want.equals(e.getValue().getName())) { target = e.getValue(); break; }
         }
+        if (target == null && a.has("text")) { // round 1053: an open drop-down's item, then any actor by its name
+            Stage stage = AgentSceneAccess.stageOf(Forge.getCurrentScene());
+            String want = a.getString("text").trim();
+            if (stage != null) {
+                String item = pressDropDownItem(stage, want);
+                if (item != null)
+                    return now(true, item);
+                Actor named = stage.getRoot().findActor(want);
+                if (named != null && AgentObserver.visible(named)) {
+                    press(named);
+                    return now(true, "pressed '" + want + "' at its center (the stage picks what is on top there)");
+                }
+            }
+        }
         if (target == null)
             return now(false, "nothing to click - take a fresh /state and use its ids, or a button text");
         if (!AgentObserver.visible(target))
@@ -323,6 +337,41 @@ final class AgentActions {
     }
 
     /** A real touch on the actor's own stage: hit-testing, capture listeners and modality all apply. */
+    /**
+     * Round 1053: an open SelectBox list's item, pressed at its screen point through the stage, so whatever is drawn
+     * on top there takes the touch (a list hidden behind a modal dialog loses it to the dialog, as a player's tap
+     * would). Reports which item the list then shows selected and what took the touch. Null when no open list has it.
+     */
+    private static String pressDropDownItem(Stage stage, String want) {
+        for (Actor actor : stage.getActors()) {
+            if (!(actor instanceof com.badlogic.gdx.scenes.scene2d.ui.SelectBox.SelectBoxScrollPane))
+                continue;
+            com.badlogic.gdx.scenes.scene2d.ui.SelectBox.SelectBoxScrollPane<?> pane =
+                    (com.badlogic.gdx.scenes.scene2d.ui.SelectBox.SelectBoxScrollPane<?>) actor;
+            com.badlogic.gdx.scenes.scene2d.ui.List<?> list = pane.getList();
+            float lo = -1, hi = -1;
+            for (float y = 0; y < list.getHeight(); y += 1f) {
+                Object at = list.getItemAt(y);
+                if (at != null && String.valueOf(at).equalsIgnoreCase(want)) {
+                    if (lo < 0) lo = y;
+                    hi = y;
+                }
+            }
+            if (lo < 0)
+                continue;
+            Vector2 v = list.localToStageCoordinates(new Vector2(list.getWidth() / 2f, (lo + hi) / 2f));
+            Actor hit = stage.hit(v.x, v.y, true);
+            stage.stageToScreenCoordinates(v);
+            int sx = Math.round(v.x), sy = Math.round(v.y);
+            stage.touchDown(sx, sy, 0, Input.Buttons.LEFT);
+            stage.touchUp(sx, sy, 0, Input.Buttons.LEFT);
+            return "pressed drop-down item '" + want + "' (touch landed on " + (hit == null ? "nothing"
+                    : hit.isDescendantOf(pane) ? "the list" : hit.getClass().getName() + ", NOT the list")
+                    + "); the box now shows '" + pane.getSelectBox().getSelected() + "'";
+        }
+        return null;
+    }
+
     static void press(Actor target) {
         Stage stage = target.getStage();
         Vector2 v = target.localToStageCoordinates(new Vector2(target.getWidth() / 2f, target.getHeight() / 2f));
