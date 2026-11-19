@@ -64,12 +64,24 @@ public final class ParadoxOutcome {
                     || !sa.getParamOrDefault("ValidTgts", "").contains("YouCtrl")) {
                 continue;
             }
+            // TFR round 1050 (stock fix, upstream draft in notes\r1050): only a bounce from the battlefield, with the
+            // targets it can legally take. Life from the Loam, Raise Dead, Regrowth (Origin$ Graveyard, ValidTgts$
+            // ...YouCtrl) passed the test above, got four permanents as targets, could not be cast, and were offered
+            // again up to 999 times a priority (PhaseHandler's "AI looped too much").
+            if (!ZoneType.listValueOf(sa.getParamOrDefault("Origin", "Battlefield")).contains(ZoneType.Battlefield)) {
+                forge.ai.tfr.TfrAiRules.stockFix(ai, "paradox-origin:" + host.getId(),
+                        host.getName() + ": returns from " + sa.getParam("Origin") + ", not a Paradoxical Outcome");
+                continue;
+            }
             sa.setActivatingPlayer(ai);
             sa.resetTargets();
             for (final Card c : returned) {
-                sa.getTargets().add(c);
+                if (sa.getTargets().size() < sa.getMaxTargets() && sa.canTarget(c)) {
+                    sa.getTargets().add(c);
+                }
             }
-            if (sa.canPlay() && ComputerUtilCost.canPayCost(sa, ai, false)) {
+            if (sa.getTargets().size() >= MIN_TARGETS && sa.isTargetNumberValid()
+                    && sa.canPlay() && ComputerUtilCost.canPayCost(sa, ai, false)) {
                 return sa;
             }
             sa.resetTargets();

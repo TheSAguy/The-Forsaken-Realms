@@ -53,7 +53,8 @@ import static org.testng.Assert.fail;
  *   round 1035), {@code fired <rule id>=N},
  *   {@code aiattackers>=N} / {@code aiattackers<=N} (the most attackers the AI declared in one combat, round 1019),
  *   {@code aiplayed has|lacks NAME} / {@code humanplayed ...} (a spell cast or ability activated from that card, round
- *   1025);</li>
+ *   1025), {@code failedplays<=N} (AI plays, either seat, that were chosen but never cast: LoopBreaker.FailedPlays,
+ *   round 1050);</li>
  *   <li>{@code RulesOff:pass|fail} or per strength {@code RulesOff:off=fail,lite=fail,max=pass}: what the puzzle does
  *   with the rules off (default pass). With the rules on every puzzle must pass every run.</li>
  * </ul>
@@ -260,6 +261,9 @@ public class TfrAiPuzzleTest extends AITest {
         }
         if (ex.startsWith("ailife>=")) {
             return ap.getLife() >= Integer.parseInt(ex.substring(8));
+        }
+        if (ex.startsWith("failedplays<=")) { // round 1050: AI plays (either seat) that left no trace, LoopBreaker.FailedPlays
+            return forge.game.LoopBreaker.failedPlays(ap.getGame()) <= Integer.parseInt(ex.substring(13).trim());
         }
         if (ex.startsWith("fired ")) {
             final String[] kv = ex.substring(6).split("=");

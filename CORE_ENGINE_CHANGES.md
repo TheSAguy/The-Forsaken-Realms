@@ -45,6 +45,31 @@ md` already gets updated after every change.
 - TFR's own files: `util/MirrorGear.java` (`newGamePlus`, `Choice`, `setPendingNewGamePlus`, `pendingReason`,
   `availableOn(Table, String)`), `test/.../MirrorGearTest.java` (`newGamePlus`).
 
+### Round 1050 - the AI's failed-cast loop (logs-1119 P3-40): Flat MC's Paradoxical Outcome sure-cast, failed casts off the play list, a 3-failure bar in the priority loop (one upstream PR draft)
+- `forge-ai/src/main/java/forge/ai/simulation/ParadoxOutcome.java` (STOCK, first TFR edit; upstream-identical at
+  `d9ae6615afc` and at `master` `9748ef2c96d` before this round): in `sureCast`, after upstream's shape test, a spell
+  whose `Origin` doesn't include the battlefield is skipped (logged `[TFR-AiFix] paradox-origin` through
+  `TfrAiRules.stockFix`), targets are added only when `sa.canTarget(c)` and below `sa.getMaxTargets()`, and the spell is
+  returned only with `MIN_TARGETS` targets and `sa.isTargetNumberValid()`. Marked `TFR round 1050`.
+- `forge-ai/src/main/java/forge/ai/AiController.java` (STOCK): in `getSpellAbilityToPlay`'s `saList.removeIf`, a
+  `hasFailedToCast(spellAbility)` test right after round 708's `LoopBreaker.isBarred` line. One line, marked
+  `TFR round 1050`.
+- `forge-game/src/main/java/forge/game/phase/PhaseHandler.java` (STOCK): three lines in `mainLoopStep`'s priority loop,
+  all marked `TFR round 1050`: a `LoopBreaker.FailedPlays` made before `int loopCount = 0;`, a
+  `failedPlays.passInstead(...)` break right after the `chosenSa == null` pass, and `failedPlays.after(...)` right after
+  the `for (SpellAbility sa : chosenSa)` loop, before `if (acted)`. Upstream's 999 cap and its warning are unchanged.
+  Upstream's 11.18 edit to this file is near L970, away from the loop.
+- TFR's own files: `forge-game/.../LoopBreaker.java` (`FAILED_PLAY_BAR_AT`, `FailedPlays`, `failedPlays(Game)`, the
+  `failBarred` set in `isBarred`; logs `[TFR-LoopBreak] failed cast x3`), puzzles
+  `forge-gui/res/ai/tfr-puzzles/P22_loam_failed_cast_lands.pzl`, `P22b_loam_failed_cast_no_lands.pzl`,
+  `P22c_raise_dead_failed_cast.pzl`, the puzzle check `failedplays<=N` in `TfrAiPuzzleTest`, two tests in
+  `LoopBreakerTest`, and the new `forge-gui-desktop/src/test/java/forge/ai/simulation/ParadoxOutcomeTargetsTest.java`.
+- **On a merge:** upstream draft 0001 (`C:\CLAUDE\PROJECTS\TFR1\notes\r1050\upstream-pr\`) is the same two AI fixes
+  without the log call. If upstream takes it, take theirs and drop ours (keep `ParadoxOutcomeTargetsTest` if upstream
+  doesn't add it). If upstream rewrites `sureCast` or the `saList` filter, keep P22, P22b and P22c green: they fail on
+  any build where a graveyard-to-hand spell becomes a failed cast. The PhaseHandler guard stays as long as TFR has
+  `LoopBreaker`.
+
 ### Round 1049 - the engine to the 11.18 daily (upstream `d9ae6615afc`, Forge 2.0.17-SNAPSHOT)
 - Merge log and impact: `C:\CLAUDE\PROJECTS\TFR1\notes\r1049\conflicts.md`. The next merge starts at `2d8fef80a0a` (#12942).
 - `forge-gui-mobile/src/forge/adventure/scene/QuestLogScene.java` (STOCK, rewritten upstream by #12881): upstream's

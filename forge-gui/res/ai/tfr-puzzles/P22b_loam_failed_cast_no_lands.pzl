@@ -1,0 +1,17 @@
+[metadata]
+Name:P22b - Life from the Loam with no land in the graveyard is never a failed cast (round 1050, P3-40)
+Description:Stock Flat MC's ParadoxOutcome.sureCast took any ChangeZone-to-hand spell whose ValidTgts says YouCtrl for a Paradoxical Outcome, set the AI's four nonland permanents as its targets and offered it without a legality check. Life from the Loam (Origin Graveyard) could never be cast that way, and PhaseHandler asked the AI again up to 999 times a priority (P3-40, logs-1119: 11 times in one Gitrog match, about 25 minutes on a phone). Round 1050: only battlefield bounces, legal targets only; failed casts leave the AI's play list. Expect: no AI play is chosen and then fails. No land in the graveyard.
+Turns:1
+Expect:failedplays<=0
+[state]
+humanlife=20
+ailife=20
+turn=6
+activeplayer=ai
+activephase=MAIN1
+humanlibrary=Island;Island;Island;Island;Island
+humanbattlefield=Grizzly Bears;Island;Island
+aihand=Life from the Loam
+ailibrary=Swamp;Swamp;Swamp;Swamp;Swamp;Swamp;Swamp;Swamp;Swamp;Swamp;Swamp;Swamp
+aigraveyard=Grizzly Bears;Lightning Bolt
+aibattlefield=Forest;Forest;Forest;Swamp;Sol Ring;Arcane Signet;Llanowar Elves;Elvish Mystic

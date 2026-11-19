@@ -43,6 +43,12 @@ and round 1049 (**the engine to the 11.18 daily**: upstream's two-column quest j
 their mini-map page, timers, progress, hints and tips ported onto it; its finished-quests list capped at 10; upstream's
 General Settings button hidden on an adventureOnly plane; a scrolling reward grid; upstream's large Flat MC / mana / AI
 range under TFR's rules, all hooks intact, no rule retired; `C:\CLAUDE\PROJECTS\TFR1\notes\r1049\conflicts.md`) and
+round 1050 (**the AI's 999-try failed-cast loop**, logs-1119 P3-40: stock Flat MC `ParadoxOutcome.sureCast` took
+Life from the Loam, Raise Dead and 60 more graveyard-to-hand spells for a Paradoxical Outcome and aimed them at the
+AI's own permanents; it now takes only battlefield bounces with legal targets, `[TFR-AiFix] paradox-origin`; failed
+casts leave `AiController`'s play list; `LoopBreaker.FailedPlays` in PhaseHandler's loop bars an AI play that fails 3
+times in a priority, `[TFR-LoopBreak] failed cast x3`; puzzles P22-P22c, `failedplays<=N`; draft in
+`C:\CLAUDE\PROJECTS\TFR1\notes\r1050\upstream-pr\`) and
 round 1051 (**New Game+ sets Mirror Gear from its difficulty**: the same difficulty keeps the save's flag, a changed one
 takes the New Game screen's default - on for Hard and Insane, off for Easy and Normal; Custom (X) counts as X;
 `MirrorGear.newGamePlus`, `[TFR-MirrorGear] new world: on (New Game+ raised Normal -> Insane, ...)`; the New Game+

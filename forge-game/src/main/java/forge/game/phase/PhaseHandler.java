@@ -1185,6 +1185,7 @@ public class PhaseHandler implements IHasForgeLog {
 
             List<SpellAbility> chosenSa = null;
 
+            final forge.game.LoopBreaker.FailedPlays failedPlays = new forge.game.LoopBreaker.FailedPlays(game); // TFR round 1050
             int loopCount = 0;
             do {
                 if (checkStateBasedEffects()) {
@@ -1204,6 +1205,9 @@ public class PhaseHandler implements IHasForgeLog {
 
                 if (chosenSa == null) {
                     break; // that means 'I pass'
+                }
+                if (failedPlays.passInstead(pPlayerPriority, chosenSa)) {
+                    break; // TFR round 1050: an AI play that failed 3 times this priority is barred for the turn
                 }
 
                 // An opponent (AI or remote human) acted: the player now knows something, so no undo past this point
@@ -1240,6 +1244,7 @@ public class PhaseHandler implements IHasForgeLog {
                         triggerList.triggerChangesZoneAll(game, sa);
                     }
                 }
+                failedPlays.after(pPlayerPriority, chosenSa); // TFR round 1050: counts a play that left no trace
                 if (acted) {
                     // all opponents have to pass before stack is allowed to resolve; a team keeps priority (CR 805.5)
                     setPriority(teamLead(pPlayerPriority));

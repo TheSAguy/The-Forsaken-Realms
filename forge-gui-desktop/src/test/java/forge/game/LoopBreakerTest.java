@@ -504,6 +504,62 @@ public class LoopBreakerTest extends AITest {
         return sa;
     }
 
+    /** Round 1050 (P3-40): an AI play chosen but never cast - nothing on the stack, the card still in hand - is barred for
+     *  the turn at its 3rd failure in one priority, and a barred play chosen again is a pass. */
+    @Test
+    public void anAiPlayThatFailsThreeTimesInOnePriorityIsBarredForTheTurn() {
+        Game game = initAndCreateGame();
+        Player ai = game.getPlayers().get(1);
+        game.getPhaseHandler().devModeSet(PhaseType.MAIN1, ai);
+        SpellAbility loam = addCardToZone("Life from the Loam", ai, ZoneType.Hand).getFirstSpellAbility();
+        loam.setActivatingPlayer(ai);
+        java.util.List<SpellAbility> chosen = java.util.List.of(loam);
+
+        LoopBreaker.FailedPlays priority = new LoopBreaker.FailedPlays(game);
+        for (int i = 1; i <= 2; i++) {
+            AssertJUnit.assertFalse(priority.passInstead(ai, chosen));
+            priority.after(ai, chosen); // nothing happened: the cast failed
+            AssertJUnit.assertFalse("not barred after " + i + " failure(s)", LoopBreaker.isBarred(game, loam));
+        }
+        AssertJUnit.assertFalse(priority.passInstead(ai, chosen));
+        priority.after(ai, chosen);
+        AssertJUnit.assertTrue("the 3rd failure in one priority bars it", LoopBreaker.isBarred(game, loam));
+        AssertJUnit.assertEquals(3, LoopBreaker.failedPlays(game));
+        AssertJUnit.assertTrue("chosen again: the AI passes instead", priority.passInstead(ai, chosen));
+        AssertJUnit.assertTrue("the bar holds in the turn's next priority", new LoopBreaker.FailedPlays(game).passInstead(ai, chosen));
+        AssertJUnit.assertFalse("a failed play is not a loop for the draw offer", LoopBreaker.loopSeen(game));
+        AssertJUnit.assertFalse("nor for ReloadJab", LoopBreaker.firedIn(game));
+    }
+
+    /** Round 1050: a play that went on the stack is never counted, nor is a land play, however often it comes. */
+    @Test
+    public void castsThatReachTheStackAndLandPlaysAreNeverFailures() {
+        Game game = initAndCreateGame();
+        Player ai = game.getPlayers().get(1);
+        game.getPhaseHandler().devModeSet(PhaseType.MAIN1, ai);
+        SpellAbility pump = AbilityFactory.getAbility("AB$ GainLife | Cost$ 0 | LifeAmount$ 1 | SpellDescription$ Gain 1 life.",
+                addCard("Runeclaw Bear", ai));
+        pump.setActivatingPlayer(ai);
+        java.util.List<SpellAbility> chosen = java.util.List.of(pump);
+
+        LoopBreaker.FailedPlays priority = new LoopBreaker.FailedPlays(game);
+        for (int i = 1; i <= 5; i++) {
+            AssertJUnit.assertFalse(priority.passInstead(ai, chosen));
+            game.getStack().add(pump); // it was activated: the stack grew
+            priority.after(ai, chosen);
+        }
+        AssertJUnit.assertFalse(LoopBreaker.isBarred(game, pump));
+
+        SpellAbility land = addCardToZone("Forest", ai, ZoneType.Hand).getFirstSpellAbility();
+        land.setActivatingPlayer(ai);
+        java.util.List<SpellAbility> landPlay = java.util.List.of(land);
+        for (int i = 1; i <= 3; i++) {
+            AssertJUnit.assertFalse(priority.passInstead(ai, landPlay));
+            priority.after(ai, landPlay);
+        }
+        AssertJUnit.assertEquals("neither the activations nor the land plays count", 0, LoopBreaker.failedPlays(game));
+    }
+
     /** Creatures enter one at a time, every trigger resolving before the next; returns how many entered. */
     private int enterOneAtATime(Game game, Player p, int max) {
         int creatures = 0;

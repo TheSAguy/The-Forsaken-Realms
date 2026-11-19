@@ -14301,6 +14301,92 @@ Mirror Gear checkbox, so `MirrorGear.takePendingNewGame` kept the old save's fla
   *behind* the dialog. A click on it closes it with no change. The Advanced... panel's "Based on" list works and moves
   the dialog's picker. It is unknown whether touch devices see the same thing.
 
+## Round 1050: the AI no longer stalls a duel trying to cast Life from the Loam (or Raise Dead) 999 times (2026-11-19)
+
+From the logs-1119 review, P3-40 (`C:\CLAUDE\PROJECTS\TFR1\notes\logs-1119.md`): player aeab35b5 (1.29, Pixel 8 Pro)
+waited about 25 minutes on `PhaseHandler: AI looped too much with: [Return up to three target land cards from your
+graveyard to your hand.]` 11 times in one best-of-3 against The Gitrog Monster (Master), then left mid-duel; logs-1113
+saw the same line 10 times for another player. Files: `forge-ai/.../simulation/ParadoxOutcome.java` (stock, first TFR
+edit), `forge-ai/.../AiController.java` (stock, one line), `forge-game/.../phase/PhaseHandler.java` (stock, three
+lines), `forge-game/.../LoopBreaker.java` (TFR), puzzles P22, P22b, P22c, `TfrAiPuzzleTest` (`failedplays<=N`),
+`LoopBreakerTest` (two tests), new `forge-gui-desktop/src/test/java/forge/ai/simulation/ParadoxOutcomeTargetsTest.java`.
+Bench, logs and the upstream draft: `C:\CLAUDE\PROJECTS\TFR1\notes\r1050\`.
+
+- **The brief's premise, corrected:** the brief said `playChosenSpellAbility` returns false and the loop retries.
+  `PlayerControllerAi.playChosenSpellAbility` always returns true; the loop goes on because the AI keeps choosing the
+  same play, which fails each time, until `loopCount` reaches 999.
+- **The cause (stock, upstream #12606 "Vintage Meta ComboPlan"):** Flat MC's `ParadoxOutcome.sureCast` looks for
+  Paradoxical Outcome by shape (a ChangeZone spell from hand, `Destination$ Hand`, targeted, `YouCtrl` in `ValidTgts`).
+  Life from the Loam (`Origin$ Graveyard`, `ValidTgts$ Land.YouCtrl`) fits that shape. With 4+ nonland, nontoken
+  permanents on the AI's side, a deep library and its own empty-stack main phase, `sureCast` set those permanents as the
+  Loam's targets (Exploration, Perennial Behemoth, Llanowar Elves, Titania in one game) and returned it, after checking
+  only `canPlay()` and the mana. `ComputerUtil.handlePlayingSpellAbility` refused it ("AI did not cast, no legal
+  targets") and noted the failed cast. But `VaultLoop.sureCast` runs on the play list in `getSpellAbilityToPlay`, which
+  never dropped failed casts (only `canPlaySa` checks them, and the sure casts don't call it), so the same Loam came back
+  until the 999th try, in both main phases of every turn the board fit, and the Loam was never cast. Found with a
+  debug overlay: a stack trace on `TargetChoices.add` (`ParadoxOutcome.sureCast:70` <- `VaultLoop.sureCast:180` <-
+  `AiController.getSpellAbilityToPlay:2238`). Flat MC is on in every TFR duel (lite on Android, max on desktop), so
+  every platform had it; at `off` the loop never happens.
+- **Not only Life from the Loam:** the same shape catches 62 graveyard-to-hand spells in the card pool (Raise Dead,
+  Regrowth, Disentomb, Death's Duet, ...) and single-target bounces (Narrow Escape,
+  Scapegoat, Rescue, ...). Puzzle P22c shows Raise Dead looping the same way on stock. Only Life from the Loam showed in
+  players' logs: TFR's Loam decks (The Gitrog Monster, Slogurk, Trystan, Damia, Borborygmos, Teval, Teneb, Lluwen, Uro,
+  Corrupted Treant) fill the battlefield with permanents.
+- **Fix 1, the root cause (stock, `ParadoxOutcome.sureCast`):** a spell whose `Origin` doesn't include the battlefield
+  is skipped (`[TFR-AiFix] paradox-origin turn N <player> <card>: returns from Graveyard, not a Paradoxical Outcome`,
+  once a game, turn and card, never in a rollout); targets are added only if the spell can legally take them and only up
+  to its maximum; it's returned only with `MIN_TARGETS` (4) targets and a valid target number. Paradoxical Outcome itself
+  is unchanged.
+- **Fix 2 (stock, `AiController.getSpellAbilityToPlay`):** a cast that already failed this turn leaves the play list,
+  next to round 708's barred plays, so no sure-cast shortcut can hand it back again.
+- **The guard (TFR, `LoopBreaker.FailedPlays` + three PhaseHandler lines), a backstop for the next path like this:**
+  in one priority, an AI play that was chosen and left no trace (nothing went on the stack, its card stayed in its
+  zone; land plays and mana abilities never count, nor anything the human does) is counted per ability; the 3rd failure
+  bars it for the AI for the rest of the turn and logs `[TFR-LoopBreak] failed cast x3: <card> - <ability>, barred this
+  turn (<player>, turn N, <phase>)`; if the AI chooses a barred play anyway, it passes. 999 tries become 3. The bar is
+  not a "loop" for the draw offer or ReloadJab (nothing repeats on the board). With fixes 1 and 2 in, the bench never
+  fired it.
+- **Puzzles** (`forge-gui/res/ai/tfr-puzzles/`, `Expect:failedplays<=0`, a new `TfrAiPuzzleTest` check that reads
+  `LoopBreaker.failedPlays(game)`): P22 Life from the Loam with lands in the graveyard, P22b with none, P22c Raise Dead;
+  each with 4 nonland permanents on the AI's side at its main phase. On the stock 11.18 build at lite (round 1050's
+  bench, `bench\puzzle.sh`), each loops twice (main 1 and main 2: `AI looped too much` x2); with the guard alone, each
+  logs `failed cast x3` once and is barred for the turn; with all three changes, nothing fails and Raise Dead is cast
+  with its legal target.
+- **Headless bench** (`bench\duel.sh`, AuditHarness pairs mode on the 11.18 agent jar, Flat MC lite, the same 24
+  pairings and seed; `pairs-ab.txt`: Gitrog against Uro, Damia, Borborygmos; Corrupted Treant against Teval; Slogurk
+  against Trystan; Teneb against Lluwen; 4 games each):
+
+  | Arm | Games | `AI looped too much` | `failed cast x3` | `paradox-origin` | Seconds a game |
+  |---|---|---|---|---|---|
+  | stock | 24 | 18 (all Life from the Loam) | 0 | 0 | 24.7 |
+  | round 1050 | 24 | 0 | 0 | 8 | 17.2 |
+
+  On a desktop CPU each loop cost a few seconds; on the player's phone, about two minutes. The two arms play different
+  games after their first different decision, so the times are a rough guide only.
+
+- **Agent game** (the 11.18 agent build with this round's classes ahead of the jar, `agent\r1050classes`, cheats; a
+  fresh Normal character given 400 max life so the duel lasts; spawned The Gitrog Monster (Master) and walked into it;
+  the bridge's 50x): a duel at Flat MC max (the desktop
+  setting), lost after 257 s (`[TFR-Duel] lost enemy="The Gitrog Monster (Master)" ... secs=257 ... mc=max`). The case
+  came up on 14 of the Gitrog's turns (`[TFR-AiFix] paradox-origin`, turns 9 to 35), each a turn where stock would have
+  looped in both main phases; the log has no `AI looped too much` line and no `failed cast x3` line
+  (`notes\r1050\agent-forge-1.log`). The Loam sat in the Gitrog's hand on each of those turns and was not cast: see "Found, not fixed" below.
+- **Tested:** Maven `-o -pl forge-gui-desktop -am test -Dtest=TfrAiPuzzleTest,LoopBreakerTest,ParadoxOutcomeTargetsTest,FlatMonteCarlo*Test,FlatMc*Test,forge/ai/tfr/**/*Test`:
+  985 tests, 0 failures, 1 skipped, Maven exit 0 (`notes\r1050\mvn-full.log`). `TfrAiPuzzleTest`: 42 puzzles x off,
+  lite, max, rules on and off, all `ok`, no "RULES ON FAILS" or "RETIRE?". `ParadoxOutcomeTargetsTest` (3): Loam and
+  Raise Dead get no targets and aren't returned; Paradoxical Outcome still is, with 4 legal targets; Narrow Escape isn't.
+  `LoopBreakerTest` (+2): the 3rd failure bars, a barred play is a pass, the bar holds for the turn and isn't a loop
+  for the draw offer or ReloadJab; a play that reached the stack and a land play never count.
+- **Upstream PR draft** (the user posts it): `C:\CLAUDE\PROJECTS\TFR1\notes\r1050\upstream-pr\`, fixes 1 and 2 plus
+  `ParadoxOutcomeTargetsTest`, against upstream `master` `9748ef2c96d` (which still has the bug); `git apply --check`
+  passes there. Not run on upstream's tree.
+- **Found, not fixed (a 1.30 regression from round 1049, for its own round):** on the 11.18 build, Flat MC (lite and
+  max) never casts Life from the Loam when the AI has chosen every land in its graveyard as targets (3 or fewer lands
+  there). Upstream #12936's `ActivationGuard.spellProblem` asks `TargetRestrictions.hasCandidates`, which skips targets
+  already chosen, so it sees "no candidates left" and vetoes the cast (`[veto] ... Life from the Loam | spell |
+  reason=no-valid-targets | at=guard` with `-Dflatmc.veto=true`). The heuristic (`off`) and the 11.13 build cast it. Not
+  a stall (no loop), but Loam decks lose the card.
+
 ## Round 1049: the engine to the 11.18 daily (upstream `d9ae6615afc`, Forge 2.0.17-SNAPSHOT) (2026-11-19)
 
 The user: "I have updated Forge, let's update TFR1 to the latest version. Then we can probably do a 1.30 release.

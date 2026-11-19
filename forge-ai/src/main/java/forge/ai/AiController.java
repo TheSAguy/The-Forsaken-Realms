@@ -2215,6 +2215,9 @@ public class AiController {
             if (forge.game.LoopBreaker.isBarred(game, spellAbility)) { // TFR round 708: used 25 times this turn
                 return true;
             }
+            if (hasFailedToCast(spellAbility)) { // TFR round 1050 (stock fix): the sure-cast picks below never ask canPlaySa
+                return true;
+            }
             final Card h = spellAbility.getHostCard();
             return h != null && ((ComputerUtilCard.isCardRemAIDeck(h) && !flatMc) || (ComboAssembly.deadOnArrival(player, spellAbility) && vetoed(spellAbility, "dead-on-arrival"))
                     || (flatMc && LoopRunner.held(player, spellAbility) && vetoed(spellAbility, "held-for-loop"))

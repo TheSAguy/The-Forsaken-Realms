@@ -1,0 +1,17 @@
+[metadata]
+Name:P22c - Raise Dead is never a failed cast (round 1050, P3-40)
+Description:The same stock filter caught 62 graveyard-to-hand spells; Raise Dead (Creature.YouCtrl) stands for them. Expect: no AI play is chosen and then fails.
+Turns:1
+Expect:failedplays<=0
+[state]
+humanlife=20
+ailife=20
+turn=6
+activeplayer=ai
+activephase=MAIN1
+humanlibrary=Island;Island;Island;Island;Island
+humanbattlefield=Grizzly Bears;Island;Island
+aihand=Raise Dead
+ailibrary=Swamp;Swamp;Swamp;Swamp;Swamp;Swamp;Swamp;Swamp;Swamp;Swamp;Swamp;Swamp
+aigraveyard=Grizzly Bears;Forest
+aibattlefield=Forest;Forest;Forest;Swamp;Sol Ring;Arcane Signet;Llanowar Elves;Elvish Mystic

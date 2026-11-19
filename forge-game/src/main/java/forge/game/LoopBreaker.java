@@ -44,6 +44,10 @@ import java.util.WeakHashMap;
  *   two-sided lifegain stall that only a concession, and the ante it costs, could end before.
  *   Otherwise it declines, as it always did, so the offer cannot dodge an ordinary losing duel.</li>
  * </ul>
+ * Round 1050: <b>an AI play that fails</b> - the AI chose it, but nothing went on the stack and the card stayed where it
+ * was (illegal targets) - {@link #FAILED_PLAY_BAR_AT} times in one priority is barred for the AI for the rest of the turn
+ * ({@link FailedPlays}, from PhaseHandler's priority loop), where stock Forge asked the AI again up to 999 times. That
+ * bar is not a loop for the draw offer or ReloadJab: nothing repeats on the board.
  * The human's own repeated activations are never barred or turned into a draw - a combo is the player's to run.
  * [TFR-LoopBreak] logs every bar and draw with the card and ability, and the game log says it too.
  */
@@ -59,6 +63,8 @@ public final class LoopBreaker {
     public static final int AI_BACKSTOP_AT = 300;
     /** Round 1028: the no-progress draw's window, in game turns (each player's turn counts). */
     public static final int NO_PROGRESS_TURNS = 8;
+    /** Round 1050: failed AI plays of one ability in one priority before it is barred for the turn. */
+    public static final int FAILED_PLAY_BAR_AT = 3;
 
     // round 1028: a snapshot's fields
     private static final int LIFE = 0, POISON = 1, LIBRARY = 2, POWER = 3, LOYALTY = 4;
@@ -74,6 +80,8 @@ public final class LoopBreaker {
         final Map<String, Integer> triggerLows = new HashMap<>();    // round 930: each live chain's lowest stack size
         final Map<String, String> labels = new HashMap<>();          // round 840: key -> label, for the log
         final Set<String> barred = new HashSet<>();
+        final Set<String> failBarred = new HashSet<>(); // round 1050: failed FAILED_PLAY_BAR_AT times in one priority
+        int failedPlays;   // round 1050: every failed AI play this game, never reset by a turn (for the puzzle tests)
         String barredWhat; // round 840: the first ability barred this turn
         int lifeLostMark;  // round 840: every player's life lost this turn, at the last trigger
         int most;          // the highest count this turn (for the log)
@@ -101,6 +109,7 @@ public final class LoopBreaker {
             s.triggerLows.clear();
             s.labels.clear();
             s.barred.clear();
+            s.failBarred.clear();
             s.barredWhat = null;
             s.lifeLostMark = lifeLost(game);
             s.most = 0;
@@ -232,7 +241,85 @@ public final class LoopBreaker {
             return false;
         State s = states.get(game);
         return s != null && s.turn == currentTurn(game)
-                && (s.barred.contains(key(sa)) || s.barredRaw.contains(rawKey(sa))); // round 994: the backstop too
+                && (s.barred.contains(key(sa)) || s.barredRaw.contains(rawKey(sa)) // round 994: the backstop too
+                || s.failBarred.contains(key(sa))); // round 1050: failed 3 times in one priority
+    }
+
+    /** Round 1050: AI plays that failed in this game so far (see {@link FailedPlays}). */
+    public static synchronized int failedPlays(Game game) {
+        State s = game == null ? null : states.get(game);
+        return s == null ? 0 : s.failedPlays;
+    }
+
+    /**
+     * Round 1050 (P3-40 in logs-1119): one priority of PhaseHandler's loop. Stock Forge asks the player for a play until
+     * it passes, and an AI whose chosen play cannot be cast is asked again, up to 999 times (each a full AI choice:
+     * minutes on a phone), then passes with "AI looped too much". A play here failed when the AI chose it and nothing
+     * went on the stack and its card stayed in its zone; land plays and mana abilities are never counted, nor is anything
+     * the human does. The {@link #FAILED_PLAY_BAR_AT}th failure of one ability bars it for the AI for the rest of the
+     * turn (AiController drops barred plays from its list) and logs {@code [TFR-LoopBreak] failed cast x3}; should the AI
+     * choose a barred play anyway, it passes.
+     */
+    public static final class FailedPlays {
+        private final Game game;
+        private final Map<String, Integer> counts = new HashMap<>();
+        private int stackBefore;
+        private final Map<SpellAbility, forge.game.zone.Zone> zonesBefore = new HashMap<>();
+
+        public FailedPlays(Game game) {
+            this.game = game;
+        }
+
+        private static boolean watched(Player p) {
+            return p != null && p.getController() != null && p.getController().isAI();
+        }
+
+        /** Before the play: true when the AI chose a play barred for failing - the caller passes priority instead. */
+        public boolean passInstead(Player p, java.util.List<SpellAbility> chosen) {
+            zonesBefore.clear();
+            if (!watched(p) || chosen == null)
+                return false;
+            synchronized (LoopBreaker.class) {
+                State s = state(game);
+                for (SpellAbility sa : chosen) {
+                    if (s.failBarred.contains(key(sa)))
+                        return true;
+                }
+            }
+            stackBefore = game.getStack().size();
+            for (SpellAbility sa : chosen) {
+                if (sa.getHostCard() != null)
+                    zonesBefore.put(sa, sa.getHostCard().getZone());
+            }
+            return false;
+        }
+
+        /** After the play: counts it when it failed, and bars it at the {@link #FAILED_PLAY_BAR_AT}th failure. */
+        public void after(Player p, java.util.List<SpellAbility> chosen) {
+            if (!watched(p) || chosen == null || zonesBefore.isEmpty() || game.isGameOver()
+                    || game.getStack().size() != stackBefore)
+                return;
+            for (SpellAbility sa : chosen) {
+                if (sa.isLandAbility() || sa.isManaAbility() || !zonesBefore.containsKey(sa))
+                    continue;
+                Card now = game.getCardState(sa.getHostCard());
+                forge.game.zone.Zone zone = now == null ? null : now.getZone();
+                if (zone == null || !zone.equals(zonesBefore.get(sa)))
+                    continue; // the card moved: something happened
+                String k = key(sa);
+                int n = counts.merge(k, 1, Integer::sum);
+                synchronized (LoopBreaker.class) {
+                    State s = state(game);
+                    s.failedPlays++;
+                    if (n == FAILED_PLAY_BAR_AT) {
+                        s.failBarred.add(k);
+                        if (!game.isSimulationCopy())
+                            System.out.println("[TFR-LoopBreak] failed cast x" + n + ": " + label(sa) + ", barred this turn ("
+                                    + p.getName() + ", turn " + s.turn + ", " + game.getPhaseHandler().getPhase() + ")");
+                    }
+                }
+            }
+        }
     }
 
     /**
