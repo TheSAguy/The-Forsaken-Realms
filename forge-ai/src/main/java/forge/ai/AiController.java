@@ -119,6 +119,10 @@ public class AiController {
     private Boolean flatMcMaxOverride;
     /** TFR round 924: the turn an AI timeout cut short on lite settings; see {@link LiteTurnCap}. */
     private int liteTimeoutTurn = -1;
+    /** TFR round 1044: shortened priorities in a row that still timed out, this capped turn; see {@link LiteTurnCap}. */
+    private int liteTimeoutStreak;
+    /** TFR round 1044: the running priority session ran out of time. */
+    private boolean priorityTimedOut;
 
     /**
      * Casts and activations that could not be put on the stack this turn (illegal targets), by card and ability, to
@@ -1761,6 +1765,7 @@ public class AiController {
     public List<SpellAbility> chooseSpellAbilityToPlay() {
         final long id = AITimeoutTracker.key(game.getId(), player.getId());
         final long timeoutNanos = prioritySessionNanos(); // TFR round 924
+        final boolean shortenedSession = notePriorityStart(); // TFR round 1044
         AITimeoutTracker.begin(id, timeoutNanos);
         final Object limit = AITimeoutTracker.arm(AITimeoutTracker.deadlineNanos(id, timeoutNanos), false);
         try {
@@ -1773,10 +1778,14 @@ public class AiController {
             }
             return chosen;
         } catch (AITimeoutTracker.Expired e) {
+            priorityTimedOut = true; // TFR round 1044
             return null; // out of time: pass priority
         } finally {
             AITimeoutTracker.disarm(limit);
             AITimeoutTracker.end(id);
+            if (shortenedSession) {
+                notePriorityEnd(); // TFR round 1044
+            }
         }
     }
 
@@ -2729,17 +2738,41 @@ public class AiController {
     void noteLiteTimeout() {
         LiteTurnCap.noteTimeout(game.isSimulationCopy()); // TFR round 1020: every timeout, for [TFR-Duel] aiTimeouts=
         final int turn = game.getPhaseHandler().getTurn();
+        priorityTimedOut = true; // TFR round 1044
         if (game.getAIFlatMonteCarloLite() && turn != liteTimeoutTurn) {
             liteTimeoutTurn = turn;
+            liteTimeoutStreak = 0;
             flatMcPausedUntilTurn = Math.max(flatMcPausedUntilTurn, turn + 1);
             LiteTurnCap.noteTrip(player, turn);
+        }
+    }
+
+    /** TFR round 1044: a priority session starts; true when it runs on a capped turn's shortened limit. */
+    boolean notePriorityStart() {
+        priorityTimedOut = false;
+        return liteTimeoutTurn == game.getPhaseHandler().getTurn();
+    }
+
+    /**
+     * TFR round 1044: a shortened priority session of a capped turn ended. A timeout extends the streak (at
+     * {@link LiteTurnCap#STREAK_TO_ESCALATE} the later priorities get the streak limit); a priority that finished in time
+     * ends it.
+     */
+    void notePriorityEnd() {
+        if (liteTimeoutTurn != game.getPhaseHandler().getTurn()) {
+            return;
+        }
+        if (!priorityTimedOut) {
+            liteTimeoutStreak = 0;
+        } else if (++liteTimeoutStreak == LiteTurnCap.STREAK_TO_ESCALATE) {
+            LiteTurnCap.noteStreak(player, liteTimeoutTurn);
         }
     }
 
     /** TFR round 924: one priority's time: the game's timeout, or the short limit in a turn that has timed out. */
     long prioritySessionNanos() {
         final long full = TimeUnit.SECONDS.toNanos(game.getAITimeout());
-        return liteTimeoutTurn == game.getPhaseHandler().getTurn() ? LiteTurnCap.shortened(full) : full;
+        return liteTimeoutTurn == game.getPhaseHandler().getTurn() ? LiteTurnCap.shortened(full, liteTimeoutStreak) : full;
     }
 
     /** Monte Carlo is off for this player: tripped by errors, or paused after slowness. */

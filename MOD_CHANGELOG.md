@@ -14264,6 +14264,70 @@ quests.json (Q54-73).
   elsewhere, so the "no neutrals left" half of the condition was false. User confirmed: keep
   the rule exactly as-is, no code change.
 
+## Round 1044: on a giant board the AI stops waiting a full second for a pass (2026-11-18)
+
+From the log review `C:\CLAUDE\PROJECTS\TFR1\notes\logs-1118.md` (P3-39). The user: "Let's do these". Files:
+`forge-ai/.../AiController.java` (stock, round 924's TFR methods), `forge-ai/.../LiteTurnCap.java`,
+`forge-gui-desktop/src/test/java/forge/ai/LiteTurnCapTest.java`. Notes and bench: `C:\CLAUDE\PROJECTS\TFR1\notes\r1044\`.
+
+- **The finding:** one Hard duel on a Galaxy S24 Ultra (c199f1b7, an Elf swarm at 208) ran 989 s with
+  `aiTimeouts=221`, and `2 turn(s) capped, 247 priorities shortened`. 219 of the 247 still hit round 924's 1 s, so
+  about 3.7 minutes were AI wait.
+- **Checked in the code:**
+  - A timed-out priority passes; no partial choice survives (the game thread is past the same deadline).
+  - The 1 s is per priority session, and nested calls share its deadline.
+  - Desktop has no cap: `noteLiteTimeout` marks the turn only with `AI_FLAT_MONTE_CARLO_LITE`.
+- **Where the time goes:**
+  - 200 of the log's 221 eval samples sit in stock `DamageDealAi.getDamagingSAToChain`. It calls
+    `ComputerUtil.aiLifeInDanger`, a whole next-combat prediction, before its 90% chain roll, at every priority
+    (`AiCache` clears per priority).
+  - A bench overlay that rolled first (same odds, same single draw) only moved the timeouts to
+    `getBestRemovalTargetAI`, which runs `evaluateBoardPosition`, another combat prediction, for each of ~100 targets.
+  - So the cost is several whole-board predictions, and cheaper scans would mean rewriting stock AI. That was dropped,
+    and the stock file is untouched.
+- **The change (lite only, inside a turn round 924 already capped):**
+  - After `STREAK_TO_ESCALATE` (3) shortened priorities in a row time out, later priorities get `LIMIT_AFTER_STREAK_MS`
+    (250 ms).
+  - Every `PROBE_EVERY`th (4th) of those still gets 1000 ms (250, 250, 250, 1000, ...).
+  - A priority that finishes in time ends the streak, and a new turn starts whole.
+  - `AiController` keeps `liteTimeoutStreak` and `priorityTimedOut`. `chooseSpellAbilityToPlay` brackets its session
+    with `notePriorityStart()` and `notePriorityEnd()`, its `Expired` catch counts as a timeout, and
+    `prioritySessionNanos` passes the streak to `LiteTurnCap.shortened(full, streak)`. Attackers, blockers and the
+    turn's first timeout keep their full time.
+- **Why the probe:** without it, on a borderline board (40 Elves), the games that tripped the cap fell from 4.2 AI
+  plays to 1.8. At 250 ms no priority finished, so the streak never ended and the AI lost its Bolts for the rest of the
+  turn. With the probe it was 4.0.
+- **Bench** (`notes\r1044\bench\`: `BigBoardBench` on a generated Elf-swarm puzzle at lite, two AIs, one snapshot,
+  stock and fixed as overlays, 6 JVMs). Mean AI think time per game, stock to fixed:
+
+  | Board | AI think time | Games | AI plays |
+  |---|---|---|---|
+  | 160 Elves | 64.2 to 49.8 s (-22%) | 4 + 4 | 0 in both |
+  | 80 Elves | 114.8 to 87.0 s (-24%) | 4 + 4 | 0 in both |
+  | 45 Elves | 103.4 to 91.8 s (-11%) | 12 + 12 | 2.67 vs 2.50 |
+  | 40 Elves | 80.9 to 71.5 s (-12%) | 20 + 12 | 6.85 vs 7.33 |
+
+  The timeout count rises (a 250 ms priority times out where 1 s sometimes finished); the wait is what falls. For the
+  phone duel, an estimate (not measured): 75-120 s of the ~221 s saved, so roughly 870-910 s instead of 989 s. **A
+  trim, not a cure:** the player's turns, the attack and block sessions and each turn's first full timeout remain.
+- **Log:** `[TFR-AiCap] <player> turn T: 3 shortened priorities in a row timed out, later priorities 250 ms (every 4th
+  1000 ms) until one finishes in time`, 3 lines a duel at most. The duel summary adds `, N of them at 250 ms after 3
+  timeouts in a row (K time(s))` only when it fired, so the old line is unchanged otherwise.
+- **Tested:** `LiteTurnCapTest`, 12 tests (7 new):
+  - the escalation after 3 timeouts in a row;
+  - the probe, timing out and finishing;
+  - a finish ending the streak;
+  - an interrupted streak not escalating;
+  - the next turn starting whole;
+  - a desktop never escalating;
+  - real 0-second timeouts escalating through `chooseSpellAbilityToPlay`.
+
+  All of `forge.ai` with the TFR puzzles at lite: 1,731 tests, 0 failures, 1 skipped, Maven exit 0.
+- **Not done:**
+  - No desktop cap: a PC still waits its full timeout per priority, as before.
+  - No change to the stock scans.
+  - No device run: the 1.30 log review should look for `in a row` and `of them at 250 ms`.
+
 ## Round 1043: the AI no longer drops a priority over a face-down spell on the stack; two clearer log lines (2026-11-18)
 
 From the log reviews `C:\CLAUDE\PROJECTS\TFR1\notes\logs-1118.md` (P3-38) and `C:\CLAUDE\PROJECTS\TFR1\notes\logs-1116.md`

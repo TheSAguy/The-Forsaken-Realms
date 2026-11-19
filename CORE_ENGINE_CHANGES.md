@@ -35,6 +35,21 @@ md` already gets updated after every change.
 
 ## Modified files (existing engine code, edited)
 
+### Round 1044 - the lite cap escalates after timeouts in a row (logs-1118 P3-39)
+- `forge-ai/src/main/java/forge/ai/AiController.java` (STOCK), all marked `TFR round 1044`:
+  - two fields, `liteTimeoutStreak` and `priorityTimedOut`;
+  - in `chooseSpellAbilityToPlay`, a `notePriorityStart()` call after round 924's `prioritySessionNanos()`, a flag in
+    its `Expired` catch, and a `notePriorityEnd()` call in its `finally`;
+  - in round 924's `noteLiteTimeout()`, the flag and a streak reset;
+  - in `prioritySessionNanos()`, the streak passed to `LiteTurnCap.shortened`;
+  - the new TFR methods `notePriorityStart` and `notePriorityEnd`.
+
+  The only new site in stock code is `chooseSpellAbilityToPlay`, which round 924 already touched. Check it with
+  round 924's four sites at a merge.
+- TFR's own files: `forge-ai/.../LiteTurnCap.java` (`STREAK_TO_ESCALATE`, `LIMIT_AFTER_STREAK_MS`, `PROBE_EVERY`,
+  `shortened(full, streak)`, `noteStreak`, the summary's extra clause) and
+  `forge-gui-desktop/src/test/java/forge/ai/LiteTurnCapTest.java`.
+
 ### Round 1043 - a null API no longer throws in SpellApiToAi; two TFR log lines (logs-1118 P3-38, logs-1116)
 - `forge-ai/src/main/java/forge/ai/SpellApiToAi.java` (STOCK, already TFR-edited for map lines): in `get(ApiType)`,
   `apiToInstance.put(api, result)` runs only when `api != null`, so a spell with no API (a face-down cast) gets a
